@@ -113,6 +113,7 @@ namespace AppService.Repository
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 _ = await _userManager.AddToRoleAsync(user, "Vendor");
+                _ = _emailService.SendEmail(model.Email, "Account Setup", "Welcome to OIDC");
            
                 if (!result.Succeeded) return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ");
 

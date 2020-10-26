@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using AppService.Helpers;
@@ -21,35 +22,40 @@ namespace AppService.Services
 
         public async Task SendEmail(string email, string subject, string message)
         {
-            using (var client = new SmtpClient())
-            {
-                var credential = new NetworkCredential
+            try {
+                using (var client = new SmtpClient())
                 {
-                    UserName = _setting.EmailConfiguration.Username,
-                    Password = _setting.EmailConfiguration.Password
-                };
+                    var credential = new NetworkCredential
+                    {
+                        UserName = _setting.EmailConfiguration.Username,
+                        Password = _setting.EmailConfiguration.Password
+                    };
 
-                client.Credentials = credential;
-                client.Host = _setting.EmailConfiguration.SmtpServer;
-                client.Port = _setting.EmailConfiguration.Port;
-                client.Timeout = 100000000;
+                    client.Credentials = credential;
+                    client.Host = _setting.EmailConfiguration.SmtpServer;
+                    client.Port = _setting.EmailConfiguration.Port;
+                    client.Timeout = 100000000;
 
-                if (_env.IsProduction())
-                {
-                    client.EnableSsl = true;
-                    client.Port = 587;
+                    if (_env.IsProduction())
+                    {
+                        client.EnableSsl = true;
+                        client.Port = 587;
+                    }
+
+                    using (var emailMessage = new MailMessage())
+                    {
+                        emailMessage.To.Add(new MailAddress(email));
+                        emailMessage.From = new MailAddress(_setting.EmailConfiguration.From);
+                        emailMessage.Subject = subject;
+                        emailMessage.Body = message;
+                        client.Send(emailMessage);
+                    }
                 }
+                await Task.CompletedTask;
 
-                using (var emailMessage = new MailMessage())
-                {
-                    emailMessage.To.Add(new MailAddress(email));
-                    emailMessage.From = new MailAddress(_setting.EmailConfiguration.From);
-                    emailMessage.Subject = subject;
-                    emailMessage.Body = message;
-                    client.Send(emailMessage);
-                }
+            } catch (Exception e) {  
+
             }
-            await Task.CompletedTask;
         }
     }
 }
