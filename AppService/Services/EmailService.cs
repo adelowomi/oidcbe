@@ -31,16 +31,20 @@ namespace AppService.Services
                         Password = _setting.EmailConfiguration.Password
                     };
 
-                    client.Credentials = credential;
+                    client.Credentials = new NetworkCredential(_setting.EmailConfiguration.Username, _setting.EmailConfiguration.Password);
                     client.Host = _setting.EmailConfiguration.SmtpServer;
                     client.Port = _setting.EmailConfiguration.Port;
                     client.Timeout = 100000000;
+                    client.UseDefaultCredentials = true;
 
                     if (_env.IsProduction())
                     {
                         client.EnableSsl = true;
                         client.Port = 587;
                     }
+
+   
+                    client.EnableSsl = true;
 
                     using (var emailMessage = new MailMessage())
                     {

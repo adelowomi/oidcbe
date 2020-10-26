@@ -53,6 +53,14 @@ namespace AppService.AppModel.ViewModel
             Data = data;
         }
 
+        private ResponseViewModel(bool status, string message, object data, string statusCode)
+        {
+            Status = status;
+            Message = message;
+            Data = data;
+            StatusCode = statusCode;
+        }
+
         public static ResponseViewModel Create()
         {
             return new ResponseViewModel();
@@ -124,6 +132,15 @@ namespace AppService.AppModel.ViewModel
             return new ResponseViewModel(false, message);
         }
 
+        /// <summary>
+        /// Error that return this
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static ResponseViewModel Error(string message, string statusCode)
+        {
+            return new ResponseViewModel(false, message, null, statusCode);
+        }
         /// <summary>
         ///  Ok that return this
         /// </summary>
@@ -201,20 +218,8 @@ namespace AppService.AppModel.ViewModel
         public static string OK => SUCCESSFUL;
         public static string SUCCESSFUL = "Successful";
         public static string UNSUCCESSFUL = "Unsuccessful";
-        public static string INVALID_FIRST_NAME = "Invalid First Name";
-        public static string INVALID_LAST_NAME = "Invalid Last Name";
-        public static string INVALID_MIDDLE_NAME = "Invalid Middle Name";
-        public static string INVALID_BUSINESS_NAME = "Invalid Business Name";
-        public static string INVALID_CREDENTIALS = "Invalid credentials, please try again";
-        public static string AUTHENTICATION_SUCCESSFUL = "Authentication successful";
-        public static string TRANSACTION_NOT_FOUND = "Transaction not found";
-        public static string TRANSACTION_NOT_BELONG_TO_USER = "An account with {{email}} doesn't have transaction with TrnxRef {{trnxRef}}.";
-        public static string PASSWORD_MISMATCH = "Password mismatch, please try again";
-        public static string PAYMENT_UNSUCCESSFUL = "Payment validation from provider failed";
-        public static string REQUERY_FAILED = "B2B requery failed";
-        public static string SOMETHING_WENT_WRONG = "Something went wrong!!!";
-        public static string PRODUCT_REF_UNAVAILABLE = "Product reference not available";
-        public static string TRNX_REF_UNAVAILABLE = "Transaction reference not available";
+        public static string ACCOUNT_ALREADY_EXITS = "Account already exits, please try again.";
+
     }
 
     /// <summary>
@@ -237,10 +242,7 @@ namespace AppService.AppModel.ViewModel
     {
         public static readonly string OK = "00";
         public static readonly string FAIL = "01";
-        public static readonly string INVALID_FIRST_NAME = "02";
-        public static readonly string INVALID_LAST_NAME = "03";
-        public static readonly string INVALID_MIDDLE_NAME = "04";
-        public static readonly string INVALID_BUSINESS_NAME = "05";
+        public static readonly string ACCOUNT_ALREADY_EXIST = "03";
     }
 }
 

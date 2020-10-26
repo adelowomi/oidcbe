@@ -115,7 +115,7 @@ namespace AppService.Repository
                 _ = await _userManager.AddToRoleAsync(user, "Vendor");
                 _ = _emailService.SendEmail(model.Email, "Account Setup", "Welcome to OIDC");
            
-                if (!result.Succeeded) return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ");
+                if (!result.Succeeded) return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ", ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
 
                 var mappedUser = _mapper.Map<AppUser, UserViewModel>(user);
 
