@@ -28,13 +28,20 @@ namespace AppService.Repository
         protected readonly AppSettings _appSettings;
         protected readonly UserManager<AppUser> _userManager;
         protected readonly SignInManager<AppUser> _signInManager;
+        protected readonly RoleManager<Role> _roleManager;
         protected readonly IMapper _mapper;
         protected readonly IUtilityRepository _utilityRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailService _emailService;
         private readonly AppDbContext _context;
 
-        public UserService(IOptions<AppSettings> appSettings, IMapper mapper, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IUtilityRepository utilityRepository, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AppDbContext context)
+        public UserService(IOptions<AppSettings> appSettings,
+                           IMapper mapper,IEmailService emailService,
+                           IHttpContextAccessor httpContextAccessor,
+                           IUtilityRepository utilityRepository,
+                           UserManager<AppUser> userManager,
+                           SignInManager<AppUser> signInManager,
+                           AppDbContext context, RoleManager<Role> roleManager)
         {
             _appSettings = appSettings.Value;
             _userManager = userManager;
@@ -44,6 +51,7 @@ namespace AppService.Repository
             _httpContextAccessor = httpContextAccessor;
             _emailService = emailService;
             _context = context;
+            _roleManager = roleManager;
         }
 
         public async Task<ResponseViewModel> AuthenticateAsync(LoginInputModel model)
@@ -68,19 +76,19 @@ namespace AppService.Repository
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.GivenName, $"{user.FirstName} {user.LastName}")
+                        new Claim(ClaimTypes.Name, user.Id.ToString()),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.GivenName, $"{user.FirstName} {user.LastName}")
                     }),
-                    Expires = DateTime.UtcNow.AddDays(7),
+                    Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 user.Token = tokenHandler.WriteToken(token);
                 var mappedUser = _mapper.Map<AppUser, UserViewModel>(user);
-                mappedUser.Gender = _utilityRepository.GetGenderById(user.GenderId)?.Name;
+                //mappedUser.Gender = _utilityRepository.GetGenderById(user.GenderId)?.Name;
 
                 return ResponseViewModel.Create(true).AddData(mappedUser).AddStatusCode(ResponseStatusCode.OK).AddStatusMessage(ResponseMessageViewModel.AUTHENTICATION_SUCCESSFUL);
 
@@ -96,30 +104,16 @@ namespace AppService.Repository
         {
             try
             {
-                var genderId = _utilityRepository.GetGenderByName(model.Gender).Id;
-
-                var profilePath = string.Empty;
-
-                if (!string.IsNullOrEmpty(model.ProfilePhoto))
-                {
-                    profilePath = model.SaveProfilePhoto(_appSettings);
-                }
-
                 var user = new AppUser
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    MiddleName = model.MiddleName,
-                    PhoneNumber = model.PhoneNumber,
-                    GenderId = genderId,
-                    ProfilePhoto = profilePath
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                //TODO: COMPLETE ROLES AND PRIVILEDGES
+                _ = await _userManager.AddToRoleAsync(user, "Vendor");
+           
                 if (!result.Succeeded) return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ");
 
                 var mappedUser = _mapper.Map<AppUser, UserViewModel>(user);
@@ -132,6 +126,7 @@ namespace AppService.Repository
                 return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseStatusCode.FAIL).AddData(e);
             }
         }
+
 
         public async Task<ResponseViewModel> UpdateAsync(UserInputModel model)
         {

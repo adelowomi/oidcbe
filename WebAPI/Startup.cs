@@ -42,9 +42,7 @@ namespace WebAPI
 
             services.AddMvcCore(options => { }).AddAuthorization();
 
-            services.AddIdentity<AppUser, Role>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+          
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -71,6 +69,17 @@ namespace WebAPI
                    ValidateAudience = false
                };
            });
+
+           services.AddAuthorization(options =>
+           {
+                options.AddPolicy("PlotPolicy", policy => policy.RequireRole("Super Admin", "Admin", "Vendor"));
+                //options.AddPolicy("Admin", policy => policy.RequireRole("Admin", "Vendor"));
+                //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
+           });
+
+           services.AddIdentity<AppUser, Role>()
+                  .AddEntityFrameworkStores <AppDbContext>()
+                  .AddDefaultTokenProviders();
 
             //UserService Dependencies Injection Configurations
             services.AddScoped<IUserService, UserService>();
@@ -131,7 +140,7 @@ namespace WebAPI
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/help/swagger.json", "Gate'vest API Endpoint");
+                options.SwaggerEndpoint("/swagger/help/swagger.json", "Orange Island API Endpoint");
             });
             app.UseAuthentication();
             app.UseDeveloperExceptionPage();

@@ -10,7 +10,7 @@ namespace AppService.AppModel.ViewModel
         public bool Status { get; set; }
         public string Message { get; set; }
         public object Data { get; set; }
-        public ResponseStatusCode StatusCode { get; set; }
+        public string StatusCode { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ApplicationService.ViewModel.ResponseViewModel"/> class.
@@ -99,7 +99,7 @@ namespace AppService.AppModel.ViewModel
 
         public ResponseViewModel AddStatusCode(ResponseStatusCode statusCode)
         {
-            StatusCode = statusCode;
+            StatusCode = statusCode.ToString();
             return this;
         }
 
@@ -220,7 +220,7 @@ namespace AppService.AppModel.ViewModel
     /// <summary>
     /// Response status code.
     /// </summary>
-    public enum ResponseStatusCode
+    public enum ResponseStatusCode 
     {
         OK = 00,
         FAIL = 01,

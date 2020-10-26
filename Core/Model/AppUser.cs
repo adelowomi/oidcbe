@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace Core.Model
@@ -11,7 +12,7 @@ namespace Core.Model
 
         public string MiddleName { get; set; }
 
-        public int GenderId { get; set; }
+        public int? GenderId { get; set; }
 
         public Gender Gender { get; set; }
 
@@ -20,5 +21,16 @@ namespace Core.Model
         public string Token { get; set; }
 
         public string OTP { get; set; }
+
+        public int AppUserTypeId { get; set; }
+
+        public IEnumerable<OTP> OTPs { get; set; }
+
+        public IEnumerable<Subscription> Subscriptions { get; set; }
+
+        public int? IdentificationId { get; set; }
+
+        public Identification Identification { get; set; }
+
     }
 }

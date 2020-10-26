@@ -26,55 +26,54 @@ namespace AppService.AppModel.InputModel
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string Gender { get; set; }
-
-        public string PhoneNumber { get; set; }
-
-        public string ProfilePhoto { get; set; }
+        [Required]
+        public UserTypeEnum UserType { get; set; }
 
         public string SaveProfilePhoto(AppSettings _settings)
         {
-            try
-            {
-                var profilePhotoPath = string.Empty;
+            return string.Empty;
+            //    try
+            //    {
+            //        var profilePhotoPath = string.Empty;
 
-                var bytes = Convert.FromBase64String(ProfilePhoto);
+            //        var bytes = Convert.FromBase64String(ProfilePhoto);
 
-                var uniqueFileName = GetUniqueFileName(FirstName + "-" + LastName + ".jpg");
+            //        var uniqueFileName = GetUniqueFileName(FirstName + "-" + LastName + ".jpg");
 
-                var parentFolder = Path.Combine(_settings.UploadDrive, _settings.DriveName);
+            //        var parentFolder = Path.Combine(_settings.UploadDrive, _settings.DriveName);
 
-                if (!Directory.Exists(parentFolder))
-                {
-                    Directory.CreateDirectory(parentFolder);
-                }
+            //        if (!Directory.Exists(parentFolder))
+            //        {
+            //            Directory.CreateDirectory(parentFolder);
+            //        }
 
-                profilePhotoPath = Path.Combine(parentFolder, uniqueFileName);
+            //        profilePhotoPath = Path.Combine(parentFolder, uniqueFileName);
 
-                using (var imageFile = new FileStream(profilePhotoPath, FileMode.Create))
-                {
-                    imageFile.Write(bytes, 0, bytes.Length);
-                    imageFile.Flush();
-                }
+            //        using (var imageFile = new FileStream(profilePhotoPath, FileMode.Create))
+            //        {
+            //            imageFile.Write(bytes, 0, bytes.Length);
+            //            imageFile.Flush();
+            //        }
 
-                profilePhotoPath = uniqueFileName;
+            //        profilePhotoPath = uniqueFileName;
 
-                return profilePhotoPath;
+            //        return profilePhotoPath;
 
-            }
-            catch (Exception e) { return null; }
+            //    }
+            //    catch (Exception e) { return null; }
+            //}
+
+            //public string GetUniqueFileName(string fileName)
+            //{
+            //    fileName = Path.GetFileName(fileName);
+            //    return Path.GetFileNameWithoutExtension(fileName) + "_" + Guid.NewGuid().ToString().Substring(5, 5) + Path.GetExtension(fileName);
+            //}
         }
+    }
 
-        public string GetUniqueFileName(string fileName)
-        {
-            fileName = Path.GetFileName(fileName);
-            return Path.GetFileNameWithoutExtension(fileName) + "_" + Guid.NewGuid().ToString().Substring(5, 5) + Path.GetExtension(fileName);
-        }
+    public enum UserTypeEnum
+    {
+        INDIVIDUAL = 1,
+        CORPORATE
     }
 }
