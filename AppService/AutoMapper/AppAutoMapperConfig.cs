@@ -24,6 +24,10 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.GenderName, opts => opts.MapFrom(src => src.Name))
                 ;
 
+            CreateMap<AppUser, RegisterViewModel>()
+                .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
+                .ForMember(dest => dest.ConcurrencyStamp, opts => opts.MapFrom(src => src.ConcurrencyStamp ))
+                ;
 
             CreateMap<AppUser, UserViewModel>()
                 .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))

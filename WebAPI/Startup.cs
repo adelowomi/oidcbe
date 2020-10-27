@@ -15,6 +15,7 @@ using Infrastructure.DataAccess.Repository.Abstractions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -52,30 +53,9 @@ namespace WebAPI
 
             services.AddSingleton(new MapperConfiguration(config => { config.AddProfile(new AppAutoMapperConfig(appSettings)); }).CreateMapper());
 
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-           .AddJwtBearer(x =>
-           {
-               x.RequireHttpsMetadata = false;
-               x.SaveToken = true;
-               x.TokenValidationParameters = new TokenValidationParameters
-               {
-                   ValidateIssuerSigningKey = true,
-                   IssuerSigningKey = new SymmetricSecurityKey(key),
-                   ValidateIssuer = false,
-                   ValidateAudience = false
-               };
-           });
+           
 
-           services.AddAuthorization(options =>
-           {
-                options.AddPolicy("PlotPolicy", policy => policy.RequireRole("Super Admin", "Admin", "Vendor"));
-                //options.AddPolicy("Admin", policy => policy.RequireRole("Admin", "Vendor"));
-                //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
-           });
+ 
 
            services.AddIdentity<AppUser, Role>()
                   .AddEntityFrameworkStores <AppDbContext>()
@@ -89,6 +69,9 @@ namespace WebAPI
             services.AddTransient<IUtilityRepository, UtilityRepository>();
             services.AddTransient<IUtilityService, UtilityService>();
             services.AddTransient<IUtilityAppService, UtilityAppService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -109,6 +92,30 @@ namespace WebAPI
                 });
             });
 
+            services.AddAuthentication(x =>
+            {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+              {
+                  x.RequireHttpsMetadata = false;
+                  x.SaveToken = true;
+                  x.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuerSigningKey = true,
+                      IssuerSigningKey = new SymmetricSecurityKey(key),
+                      ValidateIssuer = false,
+                      ValidateAudience = false
+                  };
+             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("PlotPolicy", policy => policy.RequireRole("Super Admin", "Admin", "Vendor"));
+                //options.AddPolicy("Admin", policy => policy.RequireRole("Admin", "Vendor"));
+                //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,11 +128,13 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             } 
             
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();
+
+           // app.UseMvc();
 
             app.UseEndpoints(endpoints =>
             {
@@ -142,7 +151,7 @@ namespace WebAPI
             {
                 options.SwaggerEndpoint("/swagger/help/swagger.json", "Orange Island API Endpoint");
             });
-            app.UseAuthentication();
+            
             app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
          

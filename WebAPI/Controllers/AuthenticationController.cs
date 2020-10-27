@@ -1,24 +1,28 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-
+    [Authorize(Policy = "PlotPolicy")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthenticationController(IUserService userService, UserManager<AppUser> userManager)
+        public AuthenticationController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost]
@@ -29,6 +33,8 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
+
+           
 
             return Ok(await _userService.AuthenticateAsync(model));
         }
@@ -45,6 +51,7 @@ namespace WebAPI.Controllers
             return Ok(await _userService.RegisterAsync(model));
         }
 
+        [AllowAnonymous]
         [HttpPut]
         [Route("api/profile/update")]
         public async Task<IActionResult> ProfileUpdate([FromBody] UserInputModel model)
@@ -57,7 +64,7 @@ namespace WebAPI.Controllers
             return Ok(await _userService.UpdateAsync(model));
         }
 
-        [AllowAnonymous]
+        
         [HttpGet]
         [Route("api/auth/reset")]
         public async Task<IActionResult> GetResetToken(string email)

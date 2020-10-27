@@ -105,9 +105,9 @@ namespace AppService.AppModel.ViewModel
         /// <returns>The status code.</returns>
         /// <param name="statusCode">Status code.</param>
 
-        public ResponseViewModel AddStatusCode(ResponseStatusCode statusCode)
+        public ResponseViewModel AddStatusCode(string statusCode)
         {
-            StatusCode = statusCode.ToString();
+            StatusCode = statusCode;
             return this;
         }
 
@@ -219,7 +219,9 @@ namespace AppService.AppModel.ViewModel
         public static string SUCCESSFUL = "Successful";
         public static string UNSUCCESSFUL = "Unsuccessful";
         public static string ACCOUNT_ALREADY_EXITS = "Account already exits, please try again.";
-
+        public static string INVALID_CREDENTIALS = "Invalid credentials";
+        public static string AUTHENTICATION_SUCCESSFUL = "Authentication Successful";
+        public static string PASSWORD_MISMATCH = "Password mistmatch, please try again later";
     }
 
     /// <summary>
@@ -241,8 +243,9 @@ namespace AppService.AppModel.ViewModel
     public static class ResponseErrorCodeStatus
     {
         public static readonly string OK = "00";
-        public static readonly string FAIL = "01";
+        public static readonly string FAIL = "99";
         public static readonly string ACCOUNT_ALREADY_EXIST = "03";
+        public static readonly string INVALID_CREDENTIALS = "04";
     }
 }
 

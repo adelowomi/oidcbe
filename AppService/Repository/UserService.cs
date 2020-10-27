@@ -19,10 +19,11 @@ using Infrastructure.DataAccess.DataContext;
 using AppService.Extensions;
 using AppService.Services.Abstractions;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppService.Repository
 {
-
+    
     public class UserService : IUserService
     {
         protected readonly AppSettings _appSettings;
@@ -62,7 +63,7 @@ namespace AppService.Repository
                 AppUser user = new AppUser();
 
                 if (!result.Succeeded) return ResponseViewModel.Create(false)
-                            .AddStatusCode(ResponseStatusCode.INVALID_CREDENTIALS)
+                            .AddStatusCode(ResponseErrorCodeStatus.INVALID_CREDENTIALS)
                             .AddStatusMessage(ResponseMessageViewModel.INVALID_CREDENTIALS);
 
                 //Find User by Email Address after successful Authentication
@@ -90,13 +91,16 @@ namespace AppService.Repository
                 var mappedUser = _mapper.Map<AppUser, UserViewModel>(user);
                 //mappedUser.Gender = _utilityRepository.GetGenderById(user.GenderId)?.Name;
 
-                return ResponseViewModel.Create(true).AddData(mappedUser).AddStatusCode(ResponseStatusCode.OK).AddStatusMessage(ResponseMessageViewModel.AUTHENTICATION_SUCCESSFUL);
+                return ResponseViewModel.Create(true)
+                    .AddData(mappedUser)
+                    .AddStatusCode(ResponseErrorCodeStatus.OK)
+                    .AddStatusMessage(ResponseMessageViewModel.AUTHENTICATION_SUCCESSFUL);
 
             }
             catch (Exception e)
             {
                 //Added Comment
-                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseStatusCode.FAIL).AddData(e);
+                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
             }
         }
 
@@ -113,18 +117,18 @@ namespace AppService.Repository
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 _ = await _userManager.AddToRoleAsync(user, "Vendor");
-                _ = _emailService.SendEmail(model.Email, "Account Setup", "Welcome to OIDC");
+               // _ = _emailService.SendEmail(model.Email, "Account Setup", "Welcome to OIDC");
            
                 if (!result.Succeeded) return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ", ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
 
-                var mappedUser = _mapper.Map<AppUser, UserViewModel>(user);
+                var mappedUser = _mapper.Map<AppUser, RegisterViewModel>(user);
 
-                return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedUser);
+                return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedUser).AddStatusCode(ResponseErrorCodeStatus.OK);
 
             }
             catch (Exception e)
             {
-                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseStatusCode.FAIL).AddData(e);
+                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
             }
         }
 
@@ -133,29 +137,38 @@ namespace AppService.Repository
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
-
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.MiddleName = model.MiddleName;
-                user.PhoneNumber = model.PhoneNumber;
-
-                if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
+                var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+                 
+                if(currentUser != null)
                 {
-                    user.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                    currentUser.FirstName = model.FirstName;
+                    currentUser.LastName = model.LastName;
+                    currentUser.MiddleName = model.MiddleName;
+                    currentUser.PhoneNumber = model.PhoneNumber;
+
+                    if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
+                    {
+                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                    }
+
+                    currentUser.GenderId = _utilityRepository.GetGenderByName(model.Gender).Id;
+
+                    await _userManager.UpdateAsync(currentUser);
+
+                    var mappedResult = _mapper.Map<AppUser, UserViewModel>(currentUser);
+
+                    return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
+
+                } else
+                {
+                    return ResponseViewModel.Failed().AddStatusMessage(ResponseMessageViewModel.INVALID_CREDENTIALS).AddStatusCode(ResponseErrorCodeStatus.INVALID_CREDENTIALS);
+                       
                 }
-
-                user.GenderId = _utilityRepository.GetGenderByName(model.Gender).Id;
-
-                await _userManager.UpdateAsync(user);
-
-                var mappedResult = _mapper.Map<AppUser, UserViewModel>(user);
-
-                return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
+                
             }
             catch (Exception e)
             {
-                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseStatusCode.FAIL).AddData(e);
+                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
             }
         }
 
