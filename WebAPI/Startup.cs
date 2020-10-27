@@ -39,7 +39,10 @@ namespace WebAPI
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection"), b => b.MigrationsAssembly("WebAPI")));
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddMvcCore(options => { }).AddAuthorization();
 
@@ -54,9 +57,6 @@ namespace WebAPI
             services.AddSingleton(new MapperConfiguration(config => { config.AddProfile(new AppAutoMapperConfig(appSettings)); }).CreateMapper());
 
            
-
- 
-
            services.AddIdentity<AppUser, Role>()
                   .AddEntityFrameworkStores <AppDbContext>()
                   .AddDefaultTokenProviders();
@@ -116,6 +116,7 @@ namespace WebAPI
                 //options.AddPolicy("Admin", policy => policy.RequireRole("Admin", "Vendor"));
                 //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
             });
+                      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -151,7 +151,14 @@ namespace AppService.Repository
                         currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
                     }
 
-                    currentUser.GenderId = _utilityRepository.GetGenderByName(model.Gender).Id;
+                    var gender = _utilityRepository.GetGenderByName(model.Gender);
+
+                    if (gender == null)
+                    {
+                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
+                    }
+
+                    currentUser.GenderId = gender.Id;
 
                     await _userManager.UpdateAsync(currentUser);
 
@@ -161,7 +168,7 @@ namespace AppService.Repository
 
                 } else
                 {
-                    return ResponseViewModel.Failed().AddStatusMessage(ResponseMessageViewModel.INVALID_CREDENTIALS).AddStatusCode(ResponseErrorCodeStatus.INVALID_CREDENTIALS);
+                    return ResponseViewModel.Failed();
                        
                 }
                 

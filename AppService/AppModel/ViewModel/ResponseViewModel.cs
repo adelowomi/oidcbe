@@ -183,6 +183,16 @@ namespace AppService.AppModel.ViewModel
             return new ResponseViewModel(false, ResponseMessageViewModel.UNSUCCESSFUL);
         }
 
+        /// <summary>
+        ///  Failed that return this
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static ResponseViewModel Failed(string message, string statusCode)
+        {
+            return new ResponseViewModel(false, message, null, statusCode);
+        }
+
 
         /// <summary>
         /// Build this instance.
@@ -222,6 +232,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_CREDENTIALS = "Invalid credentials";
         public static string AUTHENTICATION_SUCCESSFUL = "Authentication Successful";
         public static string PASSWORD_MISMATCH = "Password mistmatch, please try again later";
+        public static string INVALID_GENDER = "Invalid gender selected please try again!";
     }
 
     /// <summary>
@@ -246,6 +257,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string FAIL = "99";
         public static readonly string ACCOUNT_ALREADY_EXIST = "03";
         public static readonly string INVALID_CREDENTIALS = "04";
+        public static readonly string INVALID_GENDER = "05";
     }
 }
 
