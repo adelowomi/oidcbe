@@ -34,8 +34,6 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-           
-
             return Ok(await _userService.AuthenticateAsync(model));
         }
 
