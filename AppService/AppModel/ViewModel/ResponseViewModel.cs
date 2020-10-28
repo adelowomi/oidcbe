@@ -159,7 +159,7 @@ namespace AppService.AppModel.ViewModel
         /// <returns></returns>
         public static ResponseViewModel Ok(object data)
         {
-            return new ResponseViewModel(true, ResponseMessageViewModel.SUCCESSFUL, data);
+            return new ResponseViewModel(true, ResponseMessageViewModel.SUCCESSFUL, data, ResponseErrorCodeStatus.OK);
         }
 
 

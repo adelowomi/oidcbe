@@ -135,12 +135,11 @@ namespace WebAPI
             } 
             
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseAuthentication();
 
-           // app.UseMvc();
+            // app.UseMvc();
 
             app.UseEndpoints(endpoints =>
             {

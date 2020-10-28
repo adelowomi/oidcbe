@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppService.AppModel.ViewModel;
+﻿using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -10,12 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
-    public class StateController : ControllerBase
+   
+    public class StatesController : ControllerBase
     {
 
         private readonly IUserService _userService;
@@ -23,7 +19,7 @@ namespace WebAPI.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStateAppService _stateAppService;
 
-        public StateController(IUserService userService,
+        public StatesController(IUserService userService,
             UserManager<AppUser> userManager,
             IHttpContextAccessor httpContextAccessor,
             IStateAppService stateAppService)
@@ -34,6 +30,7 @@ namespace WebAPI.Controllers
             _stateAppService = stateAppService;
         }
 
+        [Authorize(Policy = "PlotPolicy")]
         [HttpGet]
         [Route("api/states")]
         public IActionResult GetAllStates()
