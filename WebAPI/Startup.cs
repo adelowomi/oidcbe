@@ -71,6 +71,11 @@ namespace WebAPI
             services.AddTransient<IUtilityAppService, UtilityAppService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            //Dependency Injection for StateRepository
+            services.AddTransient<IStateRepository, StateRepository>();
+            services.AddTransient<IStateService, StateService>();
+            services.AddTransient<IStateAppService, StateAppService>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

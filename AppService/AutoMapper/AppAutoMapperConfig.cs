@@ -38,6 +38,11 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.FirstName))
                 ;
+
+            CreateMap<State, StateViewModel>()
+                .ForMember(dest => dest.StateId, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.StateName, opts => opts.MapFrom(src => src.Name))
+                ;
         }
     }
 }
