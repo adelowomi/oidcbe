@@ -121,7 +121,9 @@ namespace WebAPI
                 //options.AddPolicy("Admin", policy => policy.RequireRole("Admin", "Vendor"));
                 //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
             });
-                      
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -137,7 +139,7 @@ namespace WebAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
 
             // app.UseMvc();
 

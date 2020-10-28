@@ -1,5 +1,6 @@
 ﻿using AppService.AppModel.ViewModel;
 using AppService.Helpers;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,9 +8,28 @@ using System.Text;
 
 namespace AppService.AppModel.InputModel
 {
-    public class UserInputModel : UserViewModel
+    public class UserInputModel
     {
-        public bool IsProfilePhotoChanged { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string NextOfKin { get; set; }
+
+        public string NextOfKinPhoneNumber { get; set; }
+
+        public string ProfilePhoto { get; set; }
+
+        public string ProfilePhotoName { get; set; }
+
+        public string Gender { get; set; }
 
         public string SaveProfilePhoto(AppSettings _settings)
         {
@@ -50,7 +70,7 @@ namespace AppService.AppModel.InputModel
             return Path.GetFileNameWithoutExtension(fileName) + "_" + Guid.NewGuid().ToString().Substring(5, 5) + Path.GetExtension(fileName);
         }
 
-        public string Role { get; set; }
+        public bool IsProfilePhotoChanged { get; set; }
     }
 }
 

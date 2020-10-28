@@ -21,6 +21,10 @@ namespace AppService.AppModel.ViewModel
 
         public string ProfilePhotoName { get; set; }
 
+        public string NextOfKin { get; set; }
+
+        public string NextOfKinPhoneNumber { get; set; }
+
         public string Gender { get; set; }
 
         public string Token { get; set; }

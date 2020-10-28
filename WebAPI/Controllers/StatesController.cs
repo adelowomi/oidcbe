@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-   
+    [Authorize]
     public class StatesController : ControllerBase
     {
 
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
             _stateAppService = stateAppService;
         }
 
-        [Authorize(Policy = "PlotPolicy")]
+         
         [HttpGet]
         [Route("api/states")]
         public IActionResult GetAllStates()
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/state/{stateName}")]
+        [Route("api/state/name/{stateName}")]
         public IActionResult GetStateBy(string stateName)
         {
             return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));

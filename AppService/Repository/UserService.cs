@@ -73,18 +73,24 @@ namespace AppService.Repository
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
-                var tokenDescriptor = new SecurityTokenDescriptor
+
+                var claims = new List<Claim>()
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
                         new Claim(ClaimTypes.Name, user.Id.ToString()),
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.GivenName, $"{user.FirstName} {user.LastName}")
-                    }),
+                        new Claim(ClaimTypes.GivenName, $"{user.FirstName} {user.LastName}"),
+
+                };
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
+
+                var roles = await _userManager.GetRolesAsync(user);
+                AddRolesToClaims(claims, roles);
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 user.Token = tokenHandler.WriteToken(token);
@@ -101,6 +107,15 @@ namespace AppService.Repository
             {
                 //Added Comment
                 return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
+            }
+        }
+
+        private void AddRolesToClaims(List<Claim> claims, IEnumerable<string> roles)
+        {
+            foreach (var role in roles)
+            {
+                var roleClaim = new Claim(ClaimTypes.Role, role);
+                claims.Add(roleClaim);
             }
         }
 
