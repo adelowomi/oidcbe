@@ -430,3 +430,63 @@ VALUES (N'20201026145838_anothermigrationadding', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [MailingAddress] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [ResidentialAddress] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [StateId] int NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [StateOfOriginId] int NULL;
+
+GO
+
+CREATE TABLE [NextOfKins] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [AppUserId] int NOT NULL,
+    [FirstName] nvarchar(max) NULL,
+    [LastName] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [Gender] nvarchar(max) NULL,
+    CONSTRAINT [PK_NextOfKins] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_NextOfKins_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [States] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_States] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_AspNetUsers_StateId] ON [AspNetUsers] ([StateId]);
+
+GO
+
+CREATE INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins] ([AppUserId]);
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD CONSTRAINT [FK_AspNetUsers_States_StateId] FOREIGN KEY ([StateId]) REFERENCES [States] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201028041307_MoreFieldsAdded', N'3.1.8');
+
+GO
+

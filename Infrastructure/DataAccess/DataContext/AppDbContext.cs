@@ -39,5 +39,9 @@ namespace Infrastructure.DataAccess.DataContext
         public DbSet<PaymentType> PaymentTypes { get; set; }
 
         public DbSet<Gender> Genders { get; set; }
+
+        public DbSet<NextOfKin> NextOfKins { get; set; }
+
+        public DbSet<State> States { get; set; }
     }
 }

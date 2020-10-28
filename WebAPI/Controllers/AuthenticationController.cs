@@ -25,6 +25,7 @@ namespace WebAPI.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/auth/token")]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginInputModel model)
@@ -37,6 +38,7 @@ namespace WebAPI.Controllers
             return Ok(await _userService.AuthenticateAsync(model));
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/auth/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterInputModel model)

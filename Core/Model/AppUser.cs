@@ -32,5 +32,14 @@ namespace Core.Model
 
         public Identification Identification { get; set; }
 
+        public string ResidentialAddress { get; set; }
+
+        public string MailingAddress { get; set; }
+
+        public int? StateOfOriginId { get; set; }
+
+        public State State { get; set; }
+
+        public IEnumerable<NextOfKin> NextOfKins { get; set; }
     }
 }
