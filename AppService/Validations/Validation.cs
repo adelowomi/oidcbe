@@ -26,6 +26,7 @@ namespace AppService.Validations
     }
     public class ValidationResultModel
     {
+        public object Data { get; }
         public string Message { get; }
         public List<ValidationError> Errors { get; }
         public bool Status;

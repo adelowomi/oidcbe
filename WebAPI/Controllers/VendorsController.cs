@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("api/vendor/auth")]
+        [Route("api/vendor/login")]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginInputModel model)
         {
             if (!ModelState.IsValid)

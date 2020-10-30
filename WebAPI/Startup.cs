@@ -9,6 +9,7 @@ using AppService.Repository;
 using AppService.Repository.Abstractions;
 using AppService.Services;
 using AppService.Services.Abstractions;
+using AppService.Validations;
 using AutoMapper;
 using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
@@ -47,11 +48,19 @@ namespace WebAPI
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                
             );
 
-            services.AddMvcCore(options => { }).AddAuthorization();
+            services.AddMvcCore(options =>
+            {
+                options.MaxModelValidationErrors = 50;
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "The field is required");
+                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(_ => "Invalid value");
+                options.Filters.Add(new ValidateModelAttribute());
 
-          
+            })
+            .AddAuthorization()
+            .AddNewtonsoftJson();
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -61,8 +70,7 @@ namespace WebAPI
 
             services.AddSingleton(new MapperConfiguration(config => { config.AddProfile(new AppAutoMapperConfig(appSettings)); }).CreateMapper());
 
-           
-           services.AddIdentity<AppUser, Role>()
+            services.AddIdentity<AppUser, Role>()
                   .AddEntityFrameworkStores <AppDbContext>()
                   .AddDefaultTokenProviders();
 
@@ -182,8 +190,6 @@ namespace WebAPI
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-
                 app.UseDeveloperExceptionPage();
             } 
             
