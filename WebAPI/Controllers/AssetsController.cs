@@ -26,6 +26,14 @@ namespace WebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly AppSettings _settings;
 
+        /// <summary>
+        /// AssetsController constructor
+        /// </summary>
+        /// <param name="userService"></param>
+        /// <param name="userManager"></param>
+        /// <param name="httpContextAccessor"></param>
+        /// <param name="mapper"></param>
+        /// <param name="options"></param>
         public AssetsController(IUserService userService, UserManager<AppUser> userManager,
                                 IHttpContextAccessor httpContextAccessor,
                                 IMapper mapper, IOptions<AppSettings> options)
@@ -42,13 +50,12 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/profile/photo")]
+        [Route("api/assets/photo")]
         public async Task<IActionResult> GetProfilePictureAsync()
         {
             var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
-            var mappedUser = _mapper.Map<AppUser, UserViewModel>(currentUser);
             var fullPath = Path.Combine(_settings.UploadDrive, _settings.DriveName);
-            var file = Path.Combine(fullPath, mappedUser.ProfilePhoto ?? "Avatar.png");
+            var file = Path.Combine(fullPath, currentUser.ProfilePhoto ?? "Avatar.png");
             Byte[] bytes = System.IO.File.ReadAllBytes(file);
             return File(bytes, "image/jpeg");
         }

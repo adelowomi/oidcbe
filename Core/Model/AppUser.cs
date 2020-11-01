@@ -18,6 +18,8 @@ namespace Core.Model
 
         public string ProfilePhoto { get; set; }
 
+        public string IdentityDocument { get; set; }
+
         public string Token { get; set; }
 
         public string OTP { get; set; }
@@ -41,5 +43,7 @@ namespace Core.Model
         public State State { get; set; }
 
         public IEnumerable<NextOfKin> NextOfKins { get; set; }
+
+        public IEnumerable<Plot> Plots { get; set; }
     }
 }

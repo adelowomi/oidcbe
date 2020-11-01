@@ -117,5 +117,12 @@ namespace WebAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("api/vendor/details")]
+        public IActionResult VendorDetails ()
+        {
+            return Ok();
+        }
     }
 }

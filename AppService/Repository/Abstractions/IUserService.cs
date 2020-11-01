@@ -16,6 +16,8 @@ namespace AppService.Repository.Abstractions
 
         Task<ResponseViewModel> UpdateAsync(UserInputModel model);
 
+        Task<ResponseViewModel> UpdateVendorAsync(VendorInputModel model);
+
         IEnumerable<ResponseViewModel> GetAll();
 
         Task<ResponseViewModel> ResetPasswordAsync(string username);

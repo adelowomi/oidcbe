@@ -37,6 +37,7 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
                 .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.BaseUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/profile/photo"))
                 ;
 
             CreateMap<State, StateViewModel>()

@@ -17,10 +17,6 @@ namespace AppService.AppModel.ViewModel
 
         public string PhoneNumber { get; set; }
 
-        public string ProfilePhoto { get; set; }
-
-        public string ProfilePhotoName { get; set; }
-
         public string NextOfKin { get; set; }
 
         public string NextOfKinPhoneNumber { get; set; }
@@ -29,6 +25,6 @@ namespace AppService.AppModel.ViewModel
 
         public string Token { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public string BaseUrl { get; set; }
     }
 }

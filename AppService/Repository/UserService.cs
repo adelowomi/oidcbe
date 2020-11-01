@@ -194,6 +194,58 @@ namespace AppService.Repository
             }
         }
 
+        public async Task<ResponseViewModel> UpdateVendorAsync(VendorInputModel model)
+        {
+            try
+            {
+                var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+
+                if (currentUser != null)
+                {
+                    currentUser.FirstName = model.FirstName;
+                    currentUser.LastName = model.LastName;
+                    currentUser.MiddleName = model.MiddleName;
+                    currentUser.PhoneNumber = model.PhoneNumber;
+
+                    if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
+                    {
+                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                    }
+
+                    if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
+                    {
+                        currentUser.IdentityDocument = model.SaveIdentityDocument(_appSettings);
+                    }
+
+                    var gender = _utilityRepository.GetGenderByName(model.Gender);
+
+                    if (gender == null)
+                    {
+                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
+                    }
+
+                    currentUser.GenderId = gender.Id;
+
+                    await _userManager.UpdateAsync(currentUser);
+
+                    var mappedResult = _mapper.Map<AppUser, UserViewModel>(currentUser);
+
+                    return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
+
+                }
+                else
+                {
+                    return ResponseViewModel.Failed();
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
+            }
+        }
+
         public IEnumerable<ResponseViewModel> GetAll()
         {
             return null;
