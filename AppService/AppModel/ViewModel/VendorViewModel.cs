@@ -25,6 +25,6 @@ namespace AppService.AppModel.ViewModel
 
         public int ProfileProgess { get; set; }
 
-        public VendorNextOfKinViewModel NextOfKin { get; set; }
+        public VendorNextOfKinInputModel NextOfKin { get; set; }
     }
 }

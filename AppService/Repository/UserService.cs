@@ -198,23 +198,26 @@ namespace AppService.Repository
         {
             try
             {
-                var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+                AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
-                if (currentUser != null)
+                if (currentUser  != null)
                 {
+
                     currentUser.FirstName = model.FirstName;
                     currentUser.LastName = model.LastName;
                     currentUser.MiddleName = model.MiddleName;
                     currentUser.PhoneNumber = model.PhoneNumber;
+                    currentUser.ResidentialAddress = model.ResidentialAddress;
+                    currentUser.MailingAddress = model.MailingAddress;
 
                     if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
                     {
-                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                       // currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
                     }
 
                     if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
                     {
-                        currentUser.IdentityDocument = model.SaveIdentityDocument(_appSettings);
+                        //currentUser.IdentityDocument = model.SaveIdentityDocument(_appSettings);
                     }
 
                     var gender = _utilityRepository.GetGenderByName(model.Gender);

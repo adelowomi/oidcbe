@@ -51,10 +51,21 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/profile/photo"))
                ;
 
-            CreateMap<VendorInputModel, AppUser>()
-               .ForMember(dest => dest.Gender, opts => opts.Ignore())
-               .ForMember(dest => dest.Email, opts => opts.Ignore())
+            CreateMap<VendorNextOfKinInputModel, NextOfKin>()
+                .ForMember(dest => dest.Gender, opts => opts.Ignore())
+                .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Address))
+                ;
 
+
+            CreateMap<NextOfKin, VendorNextOfKinInputModel>()
+               .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
+               .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+               .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+               .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+               .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Address))
                ;
 
 
