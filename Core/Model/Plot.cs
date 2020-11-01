@@ -7,7 +7,7 @@ namespace Core.Model
 
         public PlotType PlotType { get; set; }
 
-        public int? UserId { get; set; }
+        public int? AppUserId { get; set; }
 
         public AppUser AppUser { get; set; }
 

@@ -42,7 +42,7 @@ namespace Core.Model
 
         public State State { get; set; }
 
-        public IEnumerable<NextOfKin> NextOfKins { get; set; }
+        public NextOfKin NextOfKin { get; set; }
 
         public IEnumerable<Plot> Plots { get; set; }
     }

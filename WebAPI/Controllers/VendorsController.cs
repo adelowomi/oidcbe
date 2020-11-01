@@ -54,14 +54,14 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         [HttpPut]
         [Route("api/vendor/profile/completion")]
-        public async Task<IActionResult> ProfileUpdate([FromBody] UserInputModel model)
+        public async Task<IActionResult> ProfileUpdate([FromBody] VendorInputModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(await _userService.UpdateAsync(model));
+            return Ok(await _userService.UpdateVendorAsync(model));
         }
 
 
