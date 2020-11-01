@@ -12,13 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     [Authorize(Policy = "PlotPolicy")]
-    public class SubscriptionsController : ControllerBase
+    public class SubscribersController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SubscriptionsController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public SubscribersController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _userManager = userManager;
