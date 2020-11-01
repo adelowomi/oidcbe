@@ -26,13 +26,15 @@ namespace AppService.Validations
     }
     public class ValidationResultModel
     {
+        public object Data { get; }
         public string Message { get; }
         public List<ValidationError> Errors { get; }
+        public string StatusCode { get; }
         public bool Status;
 
         public ValidationResultModel(ModelStateDictionary modelState)
         {
-            Message = "Validation Failed";
+            Message = Errors.First().Message;
             Errors = modelState.Keys
                             .SelectMany(key => modelState[key].Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
                             .ToList();

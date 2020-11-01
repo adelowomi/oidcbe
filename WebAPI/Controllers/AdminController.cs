@@ -12,13 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     [Authorize(Policy = "PlotPolicy")]
-    public class AuthenticationController : ControllerBase
+    public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthenticationController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public AdminController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _userManager = userManager;
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("api/auth/token")]
+        [Route("api/admin/token")]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginInputModel model)
         {
             if (!ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("api/auth/register")]
+        [Route("api/admin/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterInputModel model)
         {
             if (!ModelState.IsValid)
@@ -51,22 +51,22 @@ namespace WebAPI.Controllers
             return Ok(await _userService.RegisterAsync(model));
         }
 
-        [AllowAnonymous]
-        [HttpPut]
-        [Route("api/profile/update")]
-        public async Task<IActionResult> ProfileUpdate([FromBody] UserInputModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+        //[AllowAnonymous]
+        //[HttpPut]
+        //[Route("api/admin/update")]
+        //public async Task<IActionResult> ProfileUpdate([FromBody] UserInputModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return Ok(await _userService.UpdateAsync(model));
-        }
+        //    return Ok(await _userService.UpdateAsync(model));
+        //}
 
         
         [HttpGet]
-        [Route("api/auth/reset")]
+        [Route("api/admin/reset")]
         public async Task<IActionResult> GetResetToken(string email)
         {
             if (!ModelState.IsValid)
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPut]
-        [Route("api/auth/complete-reset")]
+        [Route("api/admin/complete-reset")]
         public async Task<IActionResult> CompleteResetAsync([FromBody] CompleteForgotPasswordInputModel model)
         {
             if (!ModelState.IsValid)
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("api/auth/change-password")]
+        [Route("api/admin/change-password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordInputModel model)
         {
             if (!ModelState.IsValid)

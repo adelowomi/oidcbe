@@ -3,6 +3,7 @@ using AppService.Helpers;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text;
 
@@ -10,26 +11,22 @@ namespace AppService.AppModel.InputModel
 {
     public class UserInputModel
     {
-
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
+        [Required]
         public string MiddleName { get; set; }
 
-        public string Email { get; set; }
-
+        [Required]
         public string PhoneNumber { get; set; }
 
-        public string NextOfKin { get; set; }
-
-        public string NextOfKinPhoneNumber { get; set; }
+        [Required]
+        public string Gender { get; set; }
 
         public string ProfilePhoto { get; set; }
-
-        public string ProfilePhotoName { get; set; }
-
-        public string Gender { get; set; }
 
         public string SaveProfilePhoto(AppSettings _settings)
         {
@@ -39,7 +36,7 @@ namespace AppService.AppModel.InputModel
 
                 var bytes = Convert.FromBase64String(ProfilePhoto);
 
-                var uniqueFileName = GetUniqueFileName(FirstName + "-" + LastName + ".jpg");
+                var uniqueFileName = Utility.GetUniqueFileName(FirstName + "-" + LastName + ".jpg");
 
                 var parentFolder = Path.Combine(_settings.UploadDrive, _settings.DriveName);
 
@@ -64,12 +61,7 @@ namespace AppService.AppModel.InputModel
             catch (Exception e) { return null; }
         }
 
-        public string GetUniqueFileName(string fileName)
-        {
-            fileName = Path.GetFileName(fileName);
-            return Path.GetFileNameWithoutExtension(fileName) + "_" + Guid.NewGuid().ToString().Substring(5, 5) + Path.GetExtension(fileName);
-        }
-
+        [Required]
         public bool IsProfilePhotoChanged { get; set; }
     }
 }

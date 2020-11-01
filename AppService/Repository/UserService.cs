@@ -20,6 +20,7 @@ using AppService.Extensions;
 using AppService.Services.Abstractions;
 using Infrastructure.DataAccess.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using BusinessLogic.Repository.Abstractions;
 
 namespace AppService.Repository
 {
@@ -35,6 +36,7 @@ namespace AppService.Repository
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailService _emailService;
         private readonly AppDbContext _context;
+        private readonly IStateService _stateService;
 
         public UserService(IOptions<AppSettings> appSettings,
                            IMapper mapper,IEmailService emailService,
@@ -42,7 +44,9 @@ namespace AppService.Repository
                            IUtilityRepository utilityRepository,
                            UserManager<AppUser> userManager,
                            SignInManager<AppUser> signInManager,
-                           AppDbContext context, RoleManager<Role> roleManager)
+                           AppDbContext context,
+                           RoleManager<Role> roleManager,
+                           IStateService stateService)
         {
             _appSettings = appSettings.Value;
             _userManager = userManager;
@@ -53,6 +57,7 @@ namespace AppService.Repository
             _emailService = emailService;
             _context = context;
             _roleManager = roleManager;
+            _stateService = stateService;
         }
 
         public async Task<ResponseViewModel> AuthenticateAsync(LoginInputModel model)
@@ -131,7 +136,7 @@ namespace AppService.Repository
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                _ = await _userManager.AddToRoleAsync(user, "Vendor");
+                _ = await _userManager.AddToRoleAsync(user, "Admin");
                // _ = _emailService.SendEmail(model.Email, "Account Setup", "Welcome to OIDC");
            
                 if (!result.Succeeded) return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ", ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
@@ -191,6 +196,87 @@ namespace AppService.Repository
             catch (Exception e)
             {
                 return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
+            }
+        }
+
+        public async Task<ResponseViewModel> UpdateVendorAsync(VendorInputModel model)
+        {
+            try
+            {
+                AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+
+                if (currentUser  != null)
+                {
+
+                    currentUser.FirstName = model.FirstName;
+                    currentUser.LastName = model.LastName;
+                    currentUser.MiddleName = model.MiddleName;
+                    currentUser.PhoneNumber = model.PhoneNumber;
+                    currentUser.ResidentialAddress = model.ResidentialAddress;
+                    currentUser.MailingAddress = model.MailingAddress;
+
+                    if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
+                    {
+                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                    }
+
+                    if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
+                    {
+                        currentUser.IdentityDocument = model.SaveIdentityDocument(_appSettings);
+                    }
+
+                    var gender = _utilityRepository.GetGenderByName(model.Gender);
+
+                    if (gender == null)
+                    {
+                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
+                    }
+
+                    currentUser.GenderId = gender.Id;
+
+                    var state = _stateService.GetState(model.StateOfOriginId);
+
+                    if (state == null)
+                    {
+                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_STATE);
+                    }
+
+                    currentUser.StateOfOriginId = state.Id;
+
+                    if (model.NextOfKin != null)
+                    {
+                        var nextOfKin = _mapper.Map<VendorNextOfKinInputModel, NextOfKin>(model.NextOfKin);
+
+                        nextOfKin.AppUserId = currentUser.Id;
+
+                        var nextOfKinGender = _utilityRepository.GetGenderByName(model.NextOfKin.Gender);
+
+                        if (nextOfKinGender == null)
+                        {
+                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
+                        }
+
+                        nextOfKin.GenderId = nextOfKinGender.Id;
+
+                        _utilityRepository.AddNextOfKin(nextOfKin);
+                    }
+
+                    await _userManager.UpdateAsync(currentUser);
+
+                    var mappedResult = _mapper.Map<AppUser, VendorViewModel>(currentUser);
+
+                    return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
+                }
+                else
+                {
+                    return ResponseViewModel.Failed();
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                return ResponseViewModel.Create(false, e.Message).AddStatusCode(ResponseErrorCodeStatus.FAIL);
             }
         }
 

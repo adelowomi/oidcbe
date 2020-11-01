@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using AppService.AutoMapper;
 using AppService.Helpers;
@@ -5,6 +9,7 @@ using AppService.Repository;
 using AppService.Repository.Abstractions;
 using AppService.Services;
 using AppService.Services.Abstractions;
+using AppService.Validations;
 using AutoMapper;
 using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
@@ -22,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace WebAPI
 {
@@ -42,11 +48,19 @@ namespace WebAPI
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                
             );
 
-            services.AddMvcCore(options => { }).AddAuthorization();
+            services.AddMvcCore(options =>
+            {
+                options.MaxModelValidationErrors = 50;
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "The field is required");
+                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(_ => "Invalid value");
+                options.Filters.Add(new ValidateModelAttribute());
 
-          
+            })
+            .AddAuthorization()
+            .AddNewtonsoftJson();
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -56,8 +70,7 @@ namespace WebAPI
 
             services.AddSingleton(new MapperConfiguration(config => { config.AddProfile(new AppAutoMapperConfig(appSettings)); }).CreateMapper());
 
-           
-           services.AddIdentity<AppUser, Role>()
+            services.AddIdentity<AppUser, Role>()
                   .AddEntityFrameworkStores <AppDbContext>()
                   .AddDefaultTokenProviders();
 
@@ -88,14 +101,60 @@ namespace WebAPI
                 options.Password.RequiredUniqueChars = 0;
             });
 
+            //services.AddSwaggerGen(options =>
+            //{
+            //    options.SwaggerDoc("help", new Microsoft.OpenApi.Models.OpenApiInfo
+            //    {
+            //        Title = "API Docs",
+            //        Version = "v1"
+            //    });
+            //});
+
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("help", new Microsoft.OpenApi.Models.OpenApiInfo
+                options.SwaggerDoc("help", new OpenApiInfo
                 {
-                    Title = "API Docs",
-                    Version = "v1"
+                    Version = "v1",
+                    Title = "OIDC API",
+                    Description = "OIDC Portal / App API Methods",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Cousant Limited",
+                        Email = "info@cousant.com",
+                        Url = new Uri("https://www.oidc.com")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Licensed To Cousant Limited",
+                        Url = new Uri("https://www.cousant/privacy-policy")
+                    }
+
                 });
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                 });
             });
+
 
             services.AddAuthentication(x =>
             {
@@ -131,8 +190,6 @@ namespace WebAPI
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-
                 app.UseDeveloperExceptionPage();
             } 
             

@@ -29,6 +29,18 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.ConcurrencyStamp, opts => opts.MapFrom(src => src.ConcurrencyStamp ))
                 ;
 
+            CreateMap<AppUser, VendorViewModel>()
+               .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
+               .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+               .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+               .ForMember(dest => dest.MiddleName, opts => opts.MapFrom(src => src.MiddleName))
+               .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
+               .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+               .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender.Name))
+               .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/photo"))
+               .ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/documents"))
+               ;
+
             CreateMap<AppUser, UserViewModel>()
                 .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
@@ -36,8 +48,25 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.MiddleName, opts => opts.MapFrom(src => src.MiddleName))
                 .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
                 .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
-                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender.Name))
+                .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/photo"))
                 ;
+
+            CreateMap<VendorNextOfKinInputModel, NextOfKin>()
+                .ForMember(dest => dest.Gender, opts => opts.Ignore())
+                .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Address))
+                ;
+
+            CreateMap<NextOfKin, VendorNextOfKinInputModel>()
+               .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
+               .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+               .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+               .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+               .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Address))
+               ;
 
             CreateMap<State, StateViewModel>()
                 .ForMember(dest => dest.StateId, opts => opts.MapFrom(src => src.Id))
