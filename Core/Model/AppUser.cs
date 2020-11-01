@@ -24,8 +24,6 @@ namespace Core.Model
 
         public string OTP { get; set; }
 
-        public int AppUserTypeId { get; set; }
-
         public IEnumerable<OTP> OTPs { get; set; }
 
         public IEnumerable<Subscription> Subscriptions { get; set; }

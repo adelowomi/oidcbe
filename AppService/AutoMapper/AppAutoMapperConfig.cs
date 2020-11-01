@@ -37,8 +37,26 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
                 .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.FirstName))
-                .ForMember(dest => dest.BaseUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/profile/photo"))
+                .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/profile/photo"))
                 ;
+
+            CreateMap<AppUser, VendorViewModel>()
+               .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
+               .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+               .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+               .ForMember(dest => dest.MiddleName, opts => opts.MapFrom(src => src.MiddleName))
+               .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
+               .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+               .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.FirstName))
+               .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/profile/photo"))
+               ;
+
+            CreateMap<VendorInputModel, AppUser>()
+               .ForMember(dest => dest.Gender, opts => opts.Ignore())
+               .ForMember(dest => dest.Email, opts => opts.Ignore())
+
+               ;
+
 
             CreateMap<State, StateViewModel>()
                 .ForMember(dest => dest.StateId, opts => opts.MapFrom(src => src.Id))

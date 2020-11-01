@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using AppService.AppModel.ViewModel;
 using AppService.Helpers;
@@ -7,21 +8,14 @@ namespace AppService.AppModel.InputModel
 {
     public class VendorInputModel : VendorViewModel
     {
+        [Required]
         public string ResidentialAddress { get; set; }
 
+        [Required]
         public string MailingAddress { get; set; }
 
-        public string Email { get; set; }
-
-        public string PhoneNumber { get; set; }
-
+        [Required]
         public int StateOfOriginId { get; set; }
-
-        public VendorNextOfKin NextOfKin { get; set; }
-
-        public string ProfilePhotoName { get; set; }
-
-        public string Gender { get; set; }
 
         public string ProfilePhoto { get; set; }
 
@@ -58,6 +52,7 @@ namespace AppService.AppModel.InputModel
             catch (Exception e) { return null; }
         }
 
+        [Required]
         public string IdentityDocument { get; set; }
 
         public string SaveIdentityDocument(AppSettings _settings)
@@ -93,12 +88,19 @@ namespace AppService.AppModel.InputModel
             catch (Exception e) { return null; }
         }
 
+        [Required]
         public bool IsProfilePhotoChanged { get; set; }
 
+        [Required]
         public bool IsIdentityDocumentChanged { get; set; }
+
+        public int UserTypeId { get; set; }
+
+        [Required]
+        public int IdentificationId { get; set; }
     }
 
-    public class VendorNextOfKin
+    public class VendorNextOfKinInputModel
     {
         public string Name { get; set; }
 
@@ -107,5 +109,10 @@ namespace AppService.AppModel.InputModel
         public string PhoneNumer { get; set; }
 
         public string Address { get; set; }
+    }
+
+    public class VendorNextOfKinViewModel : VendorNextOfKinInputModel
+    {
+        
     }
 }

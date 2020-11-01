@@ -25,6 +25,6 @@ namespace AppService.AppModel.ViewModel
 
         public string Token { get; set; }
 
-        public string BaseUrl { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }
