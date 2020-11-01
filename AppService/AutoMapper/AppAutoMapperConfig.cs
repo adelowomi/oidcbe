@@ -59,7 +59,6 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Address))
                 ;
 
-
             CreateMap<NextOfKin, VendorNextOfKinInputModel>()
                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
                .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))

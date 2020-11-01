@@ -463,3 +463,54 @@ VALUES (N'20201101145733_ChangesInSoManyFields', N'3.1.8');
 
 GO
 
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Plots]') AND [c].[name] = N'UserId');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Plots] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [Plots] DROP COLUMN [UserId];
+
+GO
+
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[NextOfKins]') AND [c].[name] = N'Gender');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [NextOfKins] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [NextOfKins] DROP COLUMN [Gender];
+
+GO
+
+DECLARE @var2 sysname;
+SELECT @var2 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUsers]') AND [c].[name] = N'AppUserTypeId');
+IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUsers] DROP CONSTRAINT [' + @var2 + '];');
+ALTER TABLE [AspNetUsers] DROP COLUMN [AppUserTypeId];
+
+GO
+
+ALTER TABLE [NextOfKins] ADD [Address] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [NextOfKins] ADD [GenderId] int NULL;
+
+GO
+
+CREATE INDEX [IX_NextOfKins_GenderId] ON [NextOfKins] ([GenderId]);
+
+GO
+
+ALTER TABLE [NextOfKins] ADD CONSTRAINT [FK_NextOfKins_Genders_GenderId] FOREIGN KEY ([GenderId]) REFERENCES [Genders] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201101155343_MajorModelDataChanged', N'3.1.8');
+
+GO
+

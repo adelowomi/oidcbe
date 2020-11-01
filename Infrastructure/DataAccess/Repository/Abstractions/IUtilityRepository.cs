@@ -10,5 +10,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         Gender GetGenderByName(string gender);
 
         Gender GetGenderById(int genderId);
+
+        NextOfKin AddNextOfKin(NextOfKin nextOfKin);
     }
 }

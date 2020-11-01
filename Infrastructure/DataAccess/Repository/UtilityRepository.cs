@@ -13,6 +13,14 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
+        public NextOfKin AddNextOfKin(NextOfKin nextOfKin)
+        {
+            _context.NextOfKins.Add(nextOfKin);
+            _context.SaveChanges();
+
+            return nextOfKin;
+        }
+
         public Gender GetGenderById(int genderId)
         {
             return GetById(genderId);

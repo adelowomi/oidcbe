@@ -20,6 +20,7 @@ using AppService.Extensions;
 using AppService.Services.Abstractions;
 using Infrastructure.DataAccess.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using BusinessLogic.Repository.Abstractions;
 
 namespace AppService.Repository
 {
@@ -35,6 +36,7 @@ namespace AppService.Repository
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailService _emailService;
         private readonly AppDbContext _context;
+        private readonly IStateService _stateService;
 
         public UserService(IOptions<AppSettings> appSettings,
                            IMapper mapper,IEmailService emailService,
@@ -42,7 +44,9 @@ namespace AppService.Repository
                            IUtilityRepository utilityRepository,
                            UserManager<AppUser> userManager,
                            SignInManager<AppUser> signInManager,
-                           AppDbContext context, RoleManager<Role> roleManager)
+                           AppDbContext context,
+                           RoleManager<Role> roleManager,
+                           IStateService stateService)
         {
             _appSettings = appSettings.Value;
             _userManager = userManager;
@@ -53,6 +57,7 @@ namespace AppService.Repository
             _emailService = emailService;
             _context = context;
             _roleManager = roleManager;
+            _stateService = stateService;
         }
 
         public async Task<ResponseViewModel> AuthenticateAsync(LoginInputModel model)
@@ -212,12 +217,12 @@ namespace AppService.Repository
 
                     if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
                     {
-                       // currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
                     }
 
                     if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
                     {
-                        //currentUser.IdentityDocument = model.SaveIdentityDocument(_appSettings);
+                        currentUser.IdentityDocument = model.SaveIdentityDocument(_appSettings);
                     }
 
                     var gender = _utilityRepository.GetGenderByName(model.Gender);
@@ -229,9 +234,37 @@ namespace AppService.Repository
 
                     currentUser.GenderId = gender.Id;
 
+                    var state = _stateService.GetState(model.StateOfOriginId);
+
+                    if (state == null)
+                    {
+                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_STATE);
+                    }
+
+                    currentUser.StateOfOriginId = state.Id;
+
+                    //if(currentUser)
+                    if (model.NextOfKin != null)
+                    {
+                        var nextOfKin = _mapper.Map<VendorNextOfKinInputModel, NextOfKin>(model.NextOfKin);
+
+                        nextOfKin.AppUserId = currentUser.Id;
+
+                        var nextOfKinGender = _utilityRepository.GetGenderByName(model.NextOfKin.Gender);
+
+                        if (nextOfKinGender == null)
+                        {
+                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
+                        }
+
+                        nextOfKin.GenderId = nextOfKinGender.Id;
+
+                        _utilityRepository.AddNextOfKin(nextOfKin);
+                    }
+
                     await _userManager.UpdateAsync(currentUser);
 
-                    var mappedResult = _mapper.Map<AppUser, UserViewModel>(currentUser);
+                    var mappedResult = _mapper.Map<AppUser, VendorViewModel>(currentUser);
 
                     return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
 
@@ -245,7 +278,7 @@ namespace AppService.Repository
             }
             catch (Exception e)
             {
-                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
+                return ResponseViewModel.Create(false, e.Message).AddStatusCode(ResponseErrorCodeStatus.FAIL);
             }
         }
 

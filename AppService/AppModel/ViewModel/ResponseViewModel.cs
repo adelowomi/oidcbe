@@ -233,6 +233,8 @@ namespace AppService.AppModel.ViewModel
         public static string AUTHENTICATION_SUCCESSFUL = "Authentication Successful";
         public static string PASSWORD_MISMATCH = "Password mistmatch, please try again later";
         public static string INVALID_GENDER = "Invalid gender selected please try again!";
+        public static string INVALID_STATE = "Invalid State, please try again";
+        public static string INVALID_NEXT_OF_KIN_GENDER = "Invalid Next Of Kin Gender, please try again";
     }
 
     /// <summary>
@@ -258,6 +260,8 @@ namespace AppService.AppModel.ViewModel
         public static readonly string ACCOUNT_ALREADY_EXIST = "03";
         public static readonly string INVALID_CREDENTIALS = "04";
         public static readonly string INVALID_GENDER = "05";
+        public static readonly string INVALID_STATE = "06";
+        public static readonly string INVALID_NEXT_OF_KIN_GENDER = "07";
     }
 }
 
