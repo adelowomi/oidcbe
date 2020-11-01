@@ -11,6 +11,7 @@ namespace AppService.AppModel.ViewModel
         public string Message { get; set; }
         public object Data { get; set; }
         public string StatusCode { get; set; }
+        public object Errors { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ApplicationService.ViewModel.ResponseViewModel"/> class.

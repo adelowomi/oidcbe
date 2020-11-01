@@ -514,3 +514,16 @@ VALUES (N'20201101155343_MajorModelDataChanged', N'3.1.8');
 
 GO
 
+DROP INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins];
+
+GO
+
+CREATE INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins] ([AppUserId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201101161447_RemoveNextOfKinObjectFromAppUser', N'3.1.8');
+
+GO
+

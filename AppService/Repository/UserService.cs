@@ -243,7 +243,6 @@ namespace AppService.Repository
 
                     currentUser.StateOfOriginId = state.Id;
 
-                    //if(currentUser)
                     if (model.NextOfKin != null)
                     {
                         var nextOfKin = _mapper.Map<VendorNextOfKinInputModel, NextOfKin>(model.NextOfKin);
@@ -267,7 +266,6 @@ namespace AppService.Repository
                     var mappedResult = _mapper.Map<AppUser, VendorViewModel>(currentUser);
 
                     return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
-
                 }
                 else
                 {

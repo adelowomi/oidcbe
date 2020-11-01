@@ -19,9 +19,15 @@ namespace AppService.AppModel.ViewModel
 
         public string PhoneNumber { get; set; }
 
+        public string ResidentialAddress { get; set; }
+
+        public string MailingAddress { get; set; }
+
         public string Email { get; set; }
 
         public string PhotoUrl { get; set; }
+
+        public string DocumentUrl { get; set; }
 
         public int ProfileProgess { get; set; }
 
