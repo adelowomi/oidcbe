@@ -12,13 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     [Authorize(Policy = "PlotPolicy")]
-    public class SubscribersController : ControllerBase
+    public class VendorsController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SubscribersController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public VendorsController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _userManager = userManager;
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("api/subscriber/login")]
+        [Route("api/auth/login")]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginInputModel model)
         {
             if (!ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("api/subscriber/register")]
+        [Route("api/auth/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterInputModel model)
         {
             if (!ModelState.IsValid)
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPut]
-        [Route("api/subscriber/profile/completion")]
+        [Route("api/auth/profile/completion")]
         public async Task<IActionResult> ProfileUpdate([FromBody] VendorInputModel model)
         {
             if (!ModelState.IsValid)
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
 
 
         [HttpGet]
-        [Route("api/subscriber/reset-password")]
+        [Route("api/vendor/reset-password")]
         public async Task<IActionResult> GetResetToken(string email)
         {
             if (!ModelState.IsValid)
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPut]
-        [Route("api/subscriber/complete-reset")]
+        [Route("api/auth/complete-reset")]
         public async Task<IActionResult> CompleteResetAsync([FromBody] CompleteForgotPasswordInputModel model)
         {
             if (!ModelState.IsValid)
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("api/subscriber/change-password")]
+        [Route("api/auth/change-password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordInputModel model)
         {
             if (!ModelState.IsValid)
@@ -119,7 +119,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/subscriber/details")]
+        [Route("api/auth/details")]
         public IActionResult VendorDetails()
         {
             return Ok();
