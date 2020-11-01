@@ -12,13 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
 {
     [Authorize(Policy = "PlotPolicy")]
-    public class VendorsController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public VendorsController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public AuthController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _userManager = userManager;
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
 
 
         [HttpGet]
-        [Route("api/vendor/reset-password")]
+        [Route("api/auth/reset-password")]
         public async Task<IActionResult> GetResetToken(string email)
         {
             if (!ModelState.IsValid)
