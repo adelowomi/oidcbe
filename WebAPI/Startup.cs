@@ -45,6 +45,16 @@ namespace WebAPI
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection"), b => b.MigrationsAssembly("WebAPI")));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
+                });
+            });
+
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -186,15 +196,7 @@ namespace WebAPI
             //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             //});
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("EnableCORS", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                       .AllowAnyHeader()
-                       .AllowAnyMethod();
-                });
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -206,19 +208,13 @@ namespace WebAPI
             } 
             
             app.UseRouting();
+            app.UseCors("EnableCORS");
             app.UseAuthentication();
             app.UseAuthorization();
-            
-
-            // app.UseMvc();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.UseCors("EnableCORS");
-
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
