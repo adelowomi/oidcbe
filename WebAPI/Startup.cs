@@ -181,7 +181,10 @@ namespace WebAPI
                 //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
             });
 
-
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
 
         }
 
