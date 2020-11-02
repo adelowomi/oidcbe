@@ -66,6 +66,7 @@ namespace WebAPI.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/auth/reset-password")]
         public async Task<IActionResult> GetResetToken(string email)
         {
@@ -105,6 +106,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
+        [AllowAnonymous]
         [Route("api/auth/change-password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordInputModel model)
         {
@@ -119,6 +121,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/auth/details")]
         public IActionResult VendorDetails()
         {

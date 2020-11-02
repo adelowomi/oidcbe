@@ -43,8 +43,7 @@ namespace AppService.Services
                         client.Port = 587;
                     }
 
-   
-                    client.EnableSsl = true;
+                    //client.EnableSsl = true;
 
                     using (var emailMessage = new MailMessage())
                     {
