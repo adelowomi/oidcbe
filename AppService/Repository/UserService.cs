@@ -241,7 +241,7 @@ namespace AppService.Repository
 
                     if (state == null)
                     {
-                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_STATE);
+                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_STATE, ResponseErrorCodeStatus.INVALID_STATE);
                     }
 
                     currentUser.StateOfOriginId = state.Id;
