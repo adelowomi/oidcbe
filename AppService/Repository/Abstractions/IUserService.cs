@@ -28,6 +28,6 @@ namespace AppService.Repository.Abstractions
 
         UserInputModel GetUserById(int id);
 
-        VendorViewModel GetUserDetails();
+        Task<VendorViewModel> GetUserDetails();
     }
 }

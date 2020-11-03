@@ -367,7 +367,7 @@ namespace AppService.Repository
             return _mapper.Map<AppUser, UserInputModel>(user);
         }
 
-        public VendorViewModel GetUserDetails()
+        public async Task<VendorViewModel> GetUserDetails()
         {
             var vendor = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
