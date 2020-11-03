@@ -27,5 +27,7 @@ namespace AppService.Repository.Abstractions
         Task<ResponseViewModel> ChangePasswordAsync(ChangePasswordInputModel model);
 
         UserInputModel GetUserById(int id);
+
+        VendorViewModel GetUserDetails();
     }
 }

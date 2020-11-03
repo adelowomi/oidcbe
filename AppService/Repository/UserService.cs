@@ -366,5 +366,14 @@ namespace AppService.Repository
 
             return _mapper.Map<AppUser, UserInputModel>(user);
         }
+
+        public VendorViewModel GetUserDetails()
+        {
+            var vendor = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+
+            var mappedResult = _mapper.Map<AppUser, VendorViewModel>(vendor);
+
+            return mappedResult;
+        }
     }
 }
