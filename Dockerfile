@@ -17,6 +17,7 @@ COPY BusinessLogic/. ./BusinessLogic/
 COPY Core/. ./Core/ 
 COPY Infrastructure/. ./Infrastructure/ 
 COPY WebAPI/. ./WebAPI/ 
+COPY WebAPI/Templates/. ./WebAPI/Templates
 #
 WORKDIR /app/WebAPI
 RUN dotnet publish -c Release -o out 

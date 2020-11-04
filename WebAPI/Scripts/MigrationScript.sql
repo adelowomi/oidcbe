@@ -527,3 +527,8 @@ VALUES (N'20201101161447_RemoveNextOfKinObjectFromAppUser', N'3.1.8');
 
 GO
 
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201104172252_OtpAppUserId', N'3.1.8');
+
+GO
+
