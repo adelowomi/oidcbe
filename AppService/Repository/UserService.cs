@@ -142,8 +142,6 @@ namespace AppService.Repository
                     Email = model.Email,
                 };
 
-                
-
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, "Welcome.html");

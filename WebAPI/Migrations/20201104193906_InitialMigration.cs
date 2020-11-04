@@ -220,35 +220,6 @@ namespace WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Plots",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    DateModified = table.Column<DateTime>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    PlotTypeId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    KilometerSquare = table.Column<double>(nullable: false),
-                    Acres = table.Column<double>(nullable: false),
-                    Longitude = table.Column<double>(nullable: false),
-                    Lattitude = table.Column<double>(nullable: false),
-                    IsAvailable = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Plots", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Plots_PlotTypes_PlotTypeId",
-                        column: x => x.PlotTypeId,
-                        principalTable: "PlotTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -271,15 +242,15 @@ namespace WebAPI.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     MiddleName = table.Column<string>(nullable: true),
-                    GenderId = table.Column<int>(nullable: true),
                     ProfilePhoto = table.Column<string>(nullable: true),
+                    IdentityDocument = table.Column<string>(nullable: true),
                     Token = table.Column<string>(nullable: true),
                     OTP = table.Column<string>(nullable: true),
-                    AppUserTypeId = table.Column<int>(nullable: false),
-                    IdentificationId = table.Column<int>(nullable: true),
                     ResidentialAddress = table.Column<string>(nullable: true),
                     MailingAddress = table.Column<string>(nullable: true),
                     StateOfOriginId = table.Column<int>(nullable: true),
+                    GenderId = table.Column<int>(nullable: true),
+                    IdentificationId = table.Column<int>(nullable: true),
                     StateId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -303,36 +274,6 @@ namespace WebAPI.Migrations
                         principalTable: "States",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Offers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    DateModified = table.Column<DateTime>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    PlotId = table.Column<int>(nullable: false),
-                    OfferStatusId = table.Column<int>(nullable: true),
-                    DocumentPath = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Offers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Offers_OfferStatuses_OfferStatusId",
-                        column: x => x.OfferStatusId,
-                        principalTable: "OfferStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Offers_Plots_PlotId",
-                        column: x => x.PlotId,
-                        principalTable: "Plots",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -433,7 +374,8 @@ namespace WebAPI.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(nullable: true),
+                    GenderId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -444,6 +386,12 @@ namespace WebAPI.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NextOfKins_Genders_GenderId",
+                        column: x => x.GenderId,
+                        principalTable: "Genders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -465,6 +413,72 @@ namespace WebAPI.Migrations
                         name: "FK_OTPs_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plots",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
+                    IsEnabled = table.Column<bool>(nullable: false),
+                    PlotTypeId = table.Column<int>(nullable: false),
+                    AppUserId = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    KilometerSquare = table.Column<double>(nullable: false),
+                    Acres = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
+                    Lattitude = table.Column<double>(nullable: false),
+                    IsAvailable = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plots", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Plots_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Plots_PlotTypes_PlotTypeId",
+                        column: x => x.PlotTypeId,
+                        principalTable: "PlotTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Offers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
+                    IsEnabled = table.Column<bool>(nullable: false),
+                    PlotId = table.Column<int>(nullable: false),
+                    OfferStatusId = table.Column<int>(nullable: true),
+                    DocumentPath = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Offers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Offers_OfferStatuses_OfferStatusId",
+                        column: x => x.OfferStatusId,
+                        principalTable: "OfferStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Offers_Plots_PlotId",
+                        column: x => x.PlotId,
+                        principalTable: "Plots",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -618,6 +632,11 @@ namespace WebAPI.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NextOfKins_GenderId",
+                table: "NextOfKins",
+                column: "GenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offers_OfferStatusId",
                 table: "Offers",
                 column: "OfferStatusId");
@@ -656,6 +675,11 @@ namespace WebAPI.Migrations
                 name: "IX_Payments_PaymentTypeId",
                 table: "Payments",
                 column: "PaymentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Plots_AppUserId",
+                table: "Plots",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Plots_PlotTypeId",
@@ -726,13 +750,22 @@ namespace WebAPI.Migrations
                 name: "PaymentTypes");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Offers");
 
             migrationBuilder.DropTable(
                 name: "OrganizationTypes");
+
+            migrationBuilder.DropTable(
+                name: "OfferStatuses");
+
+            migrationBuilder.DropTable(
+                name: "Plots");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "PlotTypes");
 
             migrationBuilder.DropTable(
                 name: "Genders");
@@ -742,15 +775,6 @@ namespace WebAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "States");
-
-            migrationBuilder.DropTable(
-                name: "OfferStatuses");
-
-            migrationBuilder.DropTable(
-                name: "Plots");
-
-            migrationBuilder.DropTable(
-                name: "PlotTypes");
         }
     }
 }

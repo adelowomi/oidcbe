@@ -151,25 +151,6 @@ CREATE TABLE [AspNetRoleClaims] (
 
 GO
 
-CREATE TABLE [Plots] (
-    [Id] int NOT NULL IDENTITY,
-    [DateCreated] datetime2 NOT NULL,
-    [DateModified] datetime2 NOT NULL,
-    [IsEnabled] bit NOT NULL,
-    [PlotTypeId] int NOT NULL,
-    [Name] nvarchar(max) NULL,
-    [Address] nvarchar(max) NULL,
-    [KilometerSquare] float NOT NULL,
-    [Acres] float NOT NULL,
-    [Longitude] float NOT NULL,
-    [Lattitude] float NOT NULL,
-    [IsAvailable] bit NOT NULL,
-    CONSTRAINT [PK_Plots] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Plots_PlotTypes_PlotTypeId] FOREIGN KEY ([PlotTypeId]) REFERENCES [PlotTypes] ([Id]) ON DELETE CASCADE
-);
-
-GO
-
 CREATE TABLE [AspNetUsers] (
     [Id] int NOT NULL IDENTITY,
     [UserName] nvarchar(256) NULL,
@@ -189,35 +170,20 @@ CREATE TABLE [AspNetUsers] (
     [FirstName] nvarchar(max) NULL,
     [LastName] nvarchar(max) NULL,
     [MiddleName] nvarchar(max) NULL,
-    [GenderId] int NULL,
     [ProfilePhoto] nvarchar(max) NULL,
+    [IdentityDocument] nvarchar(max) NULL,
     [Token] nvarchar(max) NULL,
     [OTP] nvarchar(max) NULL,
-    [AppUserTypeId] int NOT NULL,
-    [IdentificationId] int NULL,
     [ResidentialAddress] nvarchar(max) NULL,
     [MailingAddress] nvarchar(max) NULL,
     [StateOfOriginId] int NULL,
+    [GenderId] int NULL,
+    [IdentificationId] int NULL,
     [StateId] int NULL,
     CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_AspNetUsers_Genders_GenderId] FOREIGN KEY ([GenderId]) REFERENCES [Genders] ([Id]) ON DELETE NO ACTION,
     CONSTRAINT [FK_AspNetUsers_Identification_IdentificationId] FOREIGN KEY ([IdentificationId]) REFERENCES [Identification] ([Id]) ON DELETE NO ACTION,
     CONSTRAINT [FK_AspNetUsers_States_StateId] FOREIGN KEY ([StateId]) REFERENCES [States] ([Id]) ON DELETE NO ACTION
-);
-
-GO
-
-CREATE TABLE [Offers] (
-    [Id] int NOT NULL IDENTITY,
-    [DateCreated] datetime2 NOT NULL,
-    [DateModified] datetime2 NOT NULL,
-    [IsEnabled] bit NOT NULL,
-    [PlotId] int NOT NULL,
-    [OfferStatusId] int NULL,
-    [DocumentPath] nvarchar(max) NULL,
-    CONSTRAINT [PK_Offers] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Offers_OfferStatuses_OfferStatusId] FOREIGN KEY ([OfferStatusId]) REFERENCES [OfferStatuses] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Offers_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -274,9 +240,11 @@ CREATE TABLE [NextOfKins] (
     [FirstName] nvarchar(max) NULL,
     [LastName] nvarchar(max) NULL,
     [PhoneNumber] nvarchar(max) NULL,
-    [Gender] nvarchar(max) NULL,
+    [Address] nvarchar(max) NULL,
+    [GenderId] int NULL,
     CONSTRAINT [PK_NextOfKins] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_NextOfKins_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [FK_NextOfKins_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_NextOfKins_Genders_GenderId] FOREIGN KEY ([GenderId]) REFERENCES [Genders] ([Id]) ON DELETE NO ACTION
 );
 
 GO
@@ -290,6 +258,42 @@ CREATE TABLE [OTPs] (
     [Code] nvarchar(max) NULL,
     CONSTRAINT [PK_OTPs] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_OTPs_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Plots] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [PlotTypeId] int NOT NULL,
+    [AppUserId] int NULL,
+    [Name] nvarchar(max) NULL,
+    [Address] nvarchar(max) NULL,
+    [KilometerSquare] float NOT NULL,
+    [Acres] float NOT NULL,
+    [Longitude] float NOT NULL,
+    [Lattitude] float NOT NULL,
+    [IsAvailable] bit NOT NULL,
+    CONSTRAINT [PK_Plots] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Plots_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Plots_PlotTypes_PlotTypeId] FOREIGN KEY ([PlotTypeId]) REFERENCES [PlotTypes] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Offers] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [PlotId] int NOT NULL,
+    [OfferStatusId] int NULL,
+    [DocumentPath] nvarchar(max) NULL,
+    CONSTRAINT [PK_Offers] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Offers_OfferStatuses_OfferStatusId] FOREIGN KEY ([OfferStatusId]) REFERENCES [OfferStatuses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Offers_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -377,6 +381,10 @@ CREATE INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins] ([AppUserId]);
 
 GO
 
+CREATE INDEX [IX_NextOfKins_GenderId] ON [NextOfKins] ([GenderId]);
+
+GO
+
 CREATE INDEX [IX_Offers_OfferStatusId] ON [Offers] ([OfferStatusId]);
 
 GO
@@ -409,6 +417,10 @@ CREATE INDEX [IX_Payments_PaymentTypeId] ON [Payments] ([PaymentTypeId]);
 
 GO
 
+CREATE INDEX [IX_Plots_AppUserId] ON [Plots] ([AppUserId]);
+
+GO
+
 CREATE INDEX [IX_Plots_PlotTypeId] ON [Plots] ([PlotTypeId]);
 
 GO
@@ -426,109 +438,7 @@ CREATE INDEX [IX_Subscriptions_OrganizationTypeId] ON [Subscriptions] ([Organiza
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20201028080712_InitialMigration', N'3.1.8');
-
-GO
-
-DROP INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins];
-
-GO
-
-ALTER TABLE [Plots] ADD [AppUserId] int NULL;
-
-GO
-
-ALTER TABLE [Plots] ADD [UserId] int NULL;
-
-GO
-
-ALTER TABLE [AspNetUsers] ADD [IdentityDocument] nvarchar(max) NULL;
-
-GO
-
-CREATE INDEX [IX_Plots_AppUserId] ON [Plots] ([AppUserId]);
-
-GO
-
-CREATE UNIQUE INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins] ([AppUserId]);
-
-GO
-
-ALTER TABLE [Plots] ADD CONSTRAINT [FK_Plots_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION;
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20201101145733_ChangesInSoManyFields', N'3.1.8');
-
-GO
-
-DECLARE @var0 sysname;
-SELECT @var0 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Plots]') AND [c].[name] = N'UserId');
-IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Plots] DROP CONSTRAINT [' + @var0 + '];');
-ALTER TABLE [Plots] DROP COLUMN [UserId];
-
-GO
-
-DECLARE @var1 sysname;
-SELECT @var1 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[NextOfKins]') AND [c].[name] = N'Gender');
-IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [NextOfKins] DROP CONSTRAINT [' + @var1 + '];');
-ALTER TABLE [NextOfKins] DROP COLUMN [Gender];
-
-GO
-
-DECLARE @var2 sysname;
-SELECT @var2 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUsers]') AND [c].[name] = N'AppUserTypeId');
-IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUsers] DROP CONSTRAINT [' + @var2 + '];');
-ALTER TABLE [AspNetUsers] DROP COLUMN [AppUserTypeId];
-
-GO
-
-ALTER TABLE [NextOfKins] ADD [Address] nvarchar(max) NULL;
-
-GO
-
-ALTER TABLE [NextOfKins] ADD [GenderId] int NULL;
-
-GO
-
-CREATE INDEX [IX_NextOfKins_GenderId] ON [NextOfKins] ([GenderId]);
-
-GO
-
-ALTER TABLE [NextOfKins] ADD CONSTRAINT [FK_NextOfKins_Genders_GenderId] FOREIGN KEY ([GenderId]) REFERENCES [Genders] ([Id]) ON DELETE NO ACTION;
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20201101155343_MajorModelDataChanged', N'3.1.8');
-
-GO
-
-DROP INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins];
-
-GO
-
-CREATE INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins] ([AppUserId]);
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20201101161447_RemoveNextOfKinObjectFromAppUser', N'3.1.8');
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20201104172252_OtpAppUserId', N'3.1.8');
+VALUES (N'20201104193906_InitialMigration', N'3.1.8');
 
 GO
 
