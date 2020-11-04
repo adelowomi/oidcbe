@@ -28,47 +28,6 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public UserTypeEnum UserType { get; set; }
-
-        public string SaveProfilePhoto(AppSettings _settings)
-        {
-            return string.Empty;
-            //    try
-            //    {
-            //        var profilePhotoPath = string.Empty;
-
-            //        var bytes = Convert.FromBase64String(ProfilePhoto);
-
-            //        var uniqueFileName = GetUniqueFileName(FirstName + "-" + LastName + ".jpg");
-
-            //        var parentFolder = Path.Combine(_settings.UploadDrive, _settings.DriveName);
-
-            //        if (!Directory.Exists(parentFolder))
-            //        {
-            //            Directory.CreateDirectory(parentFolder);
-            //        }
-
-            //        profilePhotoPath = Path.Combine(parentFolder, uniqueFileName);
-
-            //        using (var imageFile = new FileStream(profilePhotoPath, FileMode.Create))
-            //        {
-            //            imageFile.Write(bytes, 0, bytes.Length);
-            //            imageFile.Flush();
-            //        }
-
-            //        profilePhotoPath = uniqueFileName;
-
-            //        return profilePhotoPath;
-
-            //    }
-            //    catch (Exception e) { return null; }
-            //}
-
-            //public string GetUniqueFileName(string fileName)
-            //{
-            //    fileName = Path.GetFileName(fileName);
-            //    return Path.GetFileNameWithoutExtension(fileName) + "_" + Guid.NewGuid().ToString().Substring(5, 5) + Path.GetExtension(fileName);
-            //}
-        }
     }
 
     public enum UserTypeEnum
