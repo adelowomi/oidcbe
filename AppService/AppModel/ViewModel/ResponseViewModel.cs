@@ -236,6 +236,9 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_GENDER = "Invalid gender selected please try again!";
         public static string INVALID_STATE = "Invalid State, please try again";
         public static string INVALID_NEXT_OF_KIN_GENDER = "Invalid Next Of Kin Gender, please try again";
+        public static string UNKOWN_ERROR = "Unkown error, please try again!";
+        public static string INVALID_CONFIRMATION_CODE = "The Confirmation Code '[code]' you entered is invalid, kindly enter the correct on and try again!";
+        public static string EXPIRED_CONFIRMATION_CODE = "The Confirmation Code '[code]' you entered has expired. Do you want to request for a new one?";
     }
 
     /// <summary>
@@ -263,6 +266,12 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_GENDER = "05";
         public static readonly string INVALID_STATE = "06";
         public static readonly string INVALID_NEXT_OF_KIN_GENDER = "07";
+        public static readonly string INVALID_CONFIRMATION_CODE = "08";
+        public static readonly string EXPIRED_CONFIRMATION_CODE = "09";
+
+
+        //Unknown Error
+        public static readonly string UNKOWN_ERROR = "99";
     }
 }
 

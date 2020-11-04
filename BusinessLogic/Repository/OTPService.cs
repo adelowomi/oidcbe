@@ -1,5 +1,6 @@
 ﻿using System;
 using BusinessLogic.Repository.Abstractions;
+using Core.Model;
 using Infrastructure.DataAccess.Repository.Abstractions;
 
 namespace BusinessLogic.Repository
@@ -13,9 +14,16 @@ namespace BusinessLogic.Repository
             _otpRepository = otpRepository;
         }
 
-        public string GenerateCode(int appUserId)
+        public OTP ConfirmToken(int appUserId, string token)
         {
-            var code  = _otpRepository.GenerateOTP(appUserId);
+            var code = _otpRepository.ConfirmToken(appUserId, token);
+
+            return code;
+        }
+
+        public string GenerateCode(int appUserId, int expirationInMunites)
+        {
+            var code  = _otpRepository.GenerateOTP(appUserId, expirationInMunites);
 
             return code.Code;
         }

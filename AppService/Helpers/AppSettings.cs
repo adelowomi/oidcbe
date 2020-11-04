@@ -16,6 +16,8 @@ namespace AppService.Helpers
         public string PepipostBaseUrl { get; set; }
 
         public string PepipostApiKey { get; set; }
+
+        public int OtpExpirationInMinutes { get; set; }
     }
 
     public class EmailConfiguration

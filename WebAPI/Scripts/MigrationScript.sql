@@ -442,3 +442,20 @@ VALUES (N'20201104193906_InitialMigration', N'3.1.8');
 
 GO
 
+ALTER TABLE [OTPs] ADD [ExpiryDateTime] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';
+
+GO
+
+ALTER TABLE [OTPs] ADD [IsExpired] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+ALTER TABLE [OTPs] ADD [UsedDateTime] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201104232306_UseDateTimeMigrations', N'3.1.8');
+
+GO
+

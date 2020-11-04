@@ -104,7 +104,8 @@ namespace WebAPI
 
             services.AddTransient<IOTPRepository, OTPRepository>();
             services.AddTransient<IOTPService, OTPService>();
-          
+            services.AddTransient<IOTPAppService, OTPAppService>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

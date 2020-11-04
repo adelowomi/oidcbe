@@ -5,6 +5,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 {
     public interface IOTPRepository
     {
-        OTP GenerateOTP(int userId);
+        OTP GenerateOTP(int userId, int expiryInMinutes);
+
+        OTP ConfirmToken(int userId, string token);
     }
 }

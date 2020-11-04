@@ -23,6 +23,7 @@
     <Folder Include="Services\Request\" />
     <Folder Include="Services\Response\" />
     <Folder Include="Services\Settings\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />

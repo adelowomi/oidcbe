@@ -15,11 +15,48 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
-        public OTP GenerateOTP(int userId)
+        public OTP GenerateOTP(int userId, int expiryInMinutes)
         {
             var token = RandomNumber(4);
-            var otp =  CreateAndReturn(new OTP { AppUserId = userId, Code = token , DateCreated = DateTime.Now, DateModified = DateTime.Now });
+
+            //var count = GetAll().Count(x => x.AppUserId == userId && x.Code == token);
+
+            //while(count == 0)
+            //{
+                
+            //}
+
+            var otp = CreateAndReturn(new OTP {
+                AppUserId = userId,
+                Code = token,
+                IsExpired = false,
+                ExpiryDateTime = DateTime.Now.AddMinutes(expiryInMinutes),
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+            });
+
             return otp;
+        }
+
+        public OTP ConfirmToken(int userId, string token)
+        {
+            var code = GetAll().FirstOrDefault(x => x.AppUserId == userId && x.Code == token);
+
+            if(code != null) {
+                if (DateTime.Now > code.ExpiryDateTime)
+                {
+                    code.IsExpired = true;
+                    Update(code);
+                    return code;
+                }
+            }
+
+            return code;
+        }
+
+        public OTP ConfirmToken(int userId, OTP token)
+        {
+            return ConfirmToken(userId, token.Code);
         }
 
         public static string RandomNumber(int length)

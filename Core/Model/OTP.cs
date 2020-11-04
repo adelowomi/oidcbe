@@ -8,5 +8,11 @@ namespace Core.Model
         public AppUser AppUser { get; set; }
 
         public string Code { get; set; }
+
+        public bool IsExpired { get; set; }
+
+        public DateTime ExpiryDateTime { get; set; }
+
+        public DateTime UsedDateTime { get; set; }
     }
 }

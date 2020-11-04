@@ -22,13 +22,14 @@ using Infrastructure.DataAccess.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using BusinessLogic.Repository.Abstractions;
 using Microsoft.AspNetCore.Hosting;
+using AppService.Exceptions;
 
 namespace AppService.Repository
 {
     
     public class UserService : IUserService
     {
-        protected readonly AppSettings _appSettings;
+        protected readonly AppSettings _settings;
         protected readonly UserManager<AppUser> _userManager;
         protected readonly SignInManager<AppUser> _signInManager;
         protected readonly RoleManager<Role> _roleManager;
@@ -40,6 +41,7 @@ namespace AppService.Repository
         private readonly IStateService _stateService;
         private readonly IHostingEnvironment _env;
         private readonly IOTPService _otpService;
+        private readonly IOTPAppService _otpAppService;
 
         public UserService(IOptions<AppSettings> appSettings,
                            IMapper mapper, IEmailService emailService,
@@ -51,9 +53,10 @@ namespace AppService.Repository
                            RoleManager<Role> roleManager,
                            IHostingEnvironment env,
                            IOTPService otpService,
+                           IOTPAppService otpAppService,
                            IStateService stateService)
         {
-            _appSettings = appSettings.Value;
+            _settings = appSettings.Value;
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
@@ -64,6 +67,7 @@ namespace AppService.Repository
             _roleManager = roleManager;
             _stateService = stateService;
             _otpService = otpService;
+            _otpAppService = otpAppService;
             _env = env;
         }
 
@@ -83,7 +87,7 @@ namespace AppService.Repository
 
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var key = Encoding.ASCII.GetBytes(_settings.Secret);
 
 
                 var claims = new List<Claim>()
@@ -144,33 +148,37 @@ namespace AppService.Repository
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, "Welcome.html");
+                if(result.Succeeded) {
 
-                Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
-                {
-                    { "{{email}}", user.Email },
-                    { "{{otp}}", _otpService.GenerateCode(user.Id) }
-                };
-                
-                if(contentReplacements != null)
-                {
-                    foreach(KeyValuePair<string, string> pair in contentReplacements)
+                   var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, "Welcome.html");
+
+                    Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                     {
-                        emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                        { "{{email}}", user.Email },
+                        { "{{otp}}", _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes) }
+                    };
+
+                    if (contentReplacements != null)
+                    {
+                        foreach (KeyValuePair<string, string> pair in contentReplacements)
+                        {
+                            emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                        }
                     }
+
+                    _ = _emailService.SendEmail(model.Email, "Account Setup", emailHtmlTemplate);
+
+                    _ = await _userManager.AddToRoleAsync(user, model.UserType == UserTypeEnum.VENDOR ? UserType.VENDOR : UserType.VENDOR);
+                      
+                    var mappedUser = _mapper.Map<AppUser, RegisterViewModel>(user);
+
+                    return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedUser).AddStatusCode(ResponseErrorCodeStatus.OK);
+
+                } else {
+
+                   return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ", ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
+
                 }
-
-                _ = _emailService.SendEmail(model.Email, "Account Setup", emailHtmlTemplate);
-
-                _ = await _userManager.AddToRoleAsync(user, "Admin");
-                
-           
-                if (!result.Succeeded) return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ", ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
-
-                var mappedUser = _mapper.Map<AppUser, RegisterViewModel>(user);
-
-                return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedUser).AddStatusCode(ResponseErrorCodeStatus.OK);
-
             }
             catch (Exception e)
             {
@@ -193,7 +201,7 @@ namespace AppService.Repository
 
                     if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
                     {
-                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_settings);
                     }
 
                     var gender = _utilityRepository.GetGenderByName(model.Gender);
@@ -232,6 +240,19 @@ namespace AppService.Repository
 
                 if (currentUser  != null)
                 {
+                    try
+                    {
+                       _otpAppService.ValidateOTP(currentUser.Id, model.OtpCode);
+
+                    } catch(InvalidTokenCodeExcepton e) {
+
+                        return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
+
+                    } catch (ExpiredTokenCodeException e){
+
+                        return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
+                        
+                    }
 
                     currentUser.FirstName = model.FirstName;
                     currentUser.LastName = model.LastName;
@@ -242,12 +263,12 @@ namespace AppService.Repository
 
                     if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
                     {
-                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_appSettings);
+                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_settings);
                     }
 
                     if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
                     {
-                        currentUser.IdentityDocument = model.SaveIdentityDocument(_appSettings);
+                        currentUser.IdentityDocument = model.SaveIdentityDocument(_settings);
                     }
 
                     var gender = _utilityRepository.GetGenderByName(model.Gender);
@@ -314,12 +335,12 @@ namespace AppService.Repository
         {
             try
             {
-                //var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
                 var user = await _userManager.FindByEmailAsync(email);
 
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
                 user.Token = token;
+
                 user.OTP = Core.Helpers.Utility.GenerateRandomNumber(4);
 
                 await _userManager.UpdateAsync(user);
