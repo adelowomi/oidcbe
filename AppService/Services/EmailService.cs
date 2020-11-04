@@ -47,19 +47,17 @@ namespace AppService.Services
 
         }
 
-        public static string GetEmailTemplate(IHostingEnvironment env, string name)
+        public string GetEmailTemplate(IHostingEnvironment env, string name)
         {
             var emailTemplate = string.Empty;
 
-            var emailFolder = Path.Combine(env.WebRootPath ?? env.ContentRootPath, "Templates"); //ContentRootPath
+            var emailFolder = Path.Combine(env.WebRootPath ?? env.ContentRootPath, "Templates");
 
             if (!Directory.Exists(emailFolder))
             {
                 Directory.CreateDirectory(emailFolder);
 
-            }
-            else
-            {
+            } else {
                 var path = Path.Combine(emailFolder, name ?? "EmailTemplate.html");
 
                 using (var templateFile = new FileStream(path, FileMode.Open))

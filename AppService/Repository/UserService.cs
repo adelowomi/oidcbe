@@ -21,6 +21,7 @@ using AppService.Services.Abstractions;
 using Infrastructure.DataAccess.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using BusinessLogic.Repository.Abstractions;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AppService.Repository
 {
@@ -37,6 +38,7 @@ namespace AppService.Repository
         private readonly IEmailService _emailService;
         private readonly AppDbContext _context;
         private readonly IStateService _stateService;
+        private readonly IHostingEnvironment _env;
 
         public UserService(IOptions<AppSettings> appSettings,
                            IMapper mapper,IEmailService emailService,
@@ -46,6 +48,7 @@ namespace AppService.Repository
                            SignInManager<AppUser> signInManager,
                            AppDbContext context,
                            RoleManager<Role> roleManager,
+                           IHostingEnvironment env,
                            IStateService stateService)
         {
             _appSettings = appSettings.Value;
@@ -58,6 +61,7 @@ namespace AppService.Repository
             _context = context;
             _roleManager = roleManager;
             _stateService = stateService;
+            _env = env;
         }
 
         public async Task<ResponseViewModel> AuthenticateAsync(LoginInputModel model)
@@ -137,7 +141,22 @@ namespace AppService.Repository
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                _ = _emailService.SendEmail(model.Email, "Account Setup", "Welcome to OIDC");
+                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, "Welcome.html");
+
+                Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
+                {
+                    { "{{email}}", user.Email}
+                };
+                
+                if(contentReplacements != null)
+                {
+                    foreach(KeyValuePair<string, string> pair in contentReplacements)
+                    {
+                        emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                    }
+                }
+
+                _ = _emailService.SendEmail(model.Email, "Account Setup", emailHtmlTemplate);
 
                 _ = await _userManager.AddToRoleAsync(user, "Admin");
                 
@@ -154,7 +173,6 @@ namespace AppService.Repository
                 return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
             }
         }
-
 
         public async Task<ResponseViewModel> UpdateAsync(UserInputModel model)
         {
