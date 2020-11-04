@@ -48,7 +48,7 @@
     <None Remove="Templates\Welcome.html" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Templates\EmailTemplate.html" />
-    <Compile Include="Templates\Welcome.html" />
+    <Content Include="Templates\EmailTemplate.html" />
+    <Content Include="Templates\Welcome.html" />
   </ItemGroup>
 </Project>
