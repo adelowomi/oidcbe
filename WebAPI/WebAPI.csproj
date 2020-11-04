@@ -43,4 +43,12 @@
     <Folder Include="Scripts\" />
     <Folder Include="Templates\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Templates\EmailTemplate.html" />
+    <None Remove="Templates\Welcome.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Templates\EmailTemplate.html" />
+    <Compile Include="Templates\Welcome.html" />
+  </ItemGroup>
 </Project>
