@@ -101,6 +101,10 @@ namespace WebAPI
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<IStateAppService, StateAppService>();
             services.AddTransient<RestEmailService, RestEmailService>();
+
+            services.AddTransient<IOTPRepository, OTPRepository>();
+            services.AddTransient<IOTPService, OTPService>();
+          
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

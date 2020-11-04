@@ -18,7 +18,7 @@ namespace Infrastructure.DataAccess.Repository
         public OTP GenerateOTP(int userId)
         {
             var token = RandomNumber(4);
-            var otp = new OTP { AppUserId = userId, Code = token };
+            var otp =  CreateAndReturn(new OTP { AppUserId = userId, Code = token , DateCreated = DateTime.Now, DateModified = DateTime.Now });
             return otp;
         }
 

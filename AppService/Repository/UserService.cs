@@ -39,9 +39,10 @@ namespace AppService.Repository
         private readonly AppDbContext _context;
         private readonly IStateService _stateService;
         private readonly IHostingEnvironment _env;
+        private readonly IOTPService _otpService;
 
         public UserService(IOptions<AppSettings> appSettings,
-                           IMapper mapper,IEmailService emailService,
+                           IMapper mapper, IEmailService emailService,
                            IHttpContextAccessor httpContextAccessor,
                            IUtilityRepository utilityRepository,
                            UserManager<AppUser> userManager,
@@ -49,6 +50,7 @@ namespace AppService.Repository
                            AppDbContext context,
                            RoleManager<Role> roleManager,
                            IHostingEnvironment env,
+                           IOTPService otpService,
                            IStateService stateService)
         {
             _appSettings = appSettings.Value;
@@ -61,6 +63,7 @@ namespace AppService.Repository
             _context = context;
             _roleManager = roleManager;
             _stateService = stateService;
+            _otpService = otpService;
             _env = env;
         }
 
@@ -139,13 +142,16 @@ namespace AppService.Repository
                     Email = model.Email,
                 };
 
+                
+
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, "Welcome.html");
 
                 Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                 {
-                    { "{{email}}", user.Email}
+                    { "{{email}}", user.Email },
+                    { "{{otp}}", _otpService.GenerateCode(user.Id) }
                 };
                 
                 if(contentReplacements != null)
