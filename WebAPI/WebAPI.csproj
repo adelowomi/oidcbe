@@ -41,14 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />
-    <Folder Include="Templates\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="Templates\EmailTemplate.html" />
-    <None Remove="Templates\Welcome.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Templates\EmailTemplate.html" />
-    <Content Include="Templates\Welcome.html" />
-  </ItemGroup>
+  <ItemGroup> 
+  <Content Include="Templates\**"> 
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+  </Content> 
+</ItemGroup>
 </Project>
