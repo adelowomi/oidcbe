@@ -222,9 +222,11 @@ namespace WebAPI
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-            } 
-            
+                
+            }
+
+            app.UseDeveloperExceptionPage();
+
             app.UseRouting();
             app.UseCors("EnableCORS");
             app.UseAuthentication();
