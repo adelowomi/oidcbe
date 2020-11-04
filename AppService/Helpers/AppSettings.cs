@@ -12,6 +12,10 @@ namespace AppService.Helpers
         public EmailConfiguration EmailConfiguration { get; set; }
 
         public string BaseUrl { get; set; }
+
+        public string PepipostBaseUrl { get; set; }
+
+        public string PepipostApiKey { get; set; }
     }
 
     public class EmailConfiguration

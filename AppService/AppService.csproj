@@ -16,6 +16,13 @@
     <Folder Include="Validations\" />
     <Folder Include="Repository\Abstractions\" />
     <Folder Include="Services\Abstractions\" />
+    <Folder Include="Services\Background\" />
+    <Folder Include="Services\Event\" />
+    <Folder Include="Services\Job\" />
+    <Folder Include="Services\Middleware\" />
+    <Folder Include="Services\Request\" />
+    <Folder Include="Services\Response\" />
+    <Folder Include="Services\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />

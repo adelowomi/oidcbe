@@ -28,6 +28,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 
 namespace WebAPI
 {
@@ -98,7 +100,7 @@ namespace WebAPI
             services.AddTransient<IStateRepository, StateRepository>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<IStateAppService, StateAppService>();
-
+            services.AddTransient<RestEmailService, RestEmailService>();
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
@@ -191,12 +193,24 @@ namespace WebAPI
                 //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
             });
 
-            //services.AddCors(c =>
-            //{
-            //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-            //});
+            services.AddMailKit(optionBuilder =>
+            {
+                optionBuilder.UseMailKit(new MailKitOptions()
+                {
+                    //get options from sercets.json
+                    Server = appSettings.EmailConfiguration.SmtpServer,
+                    Port = appSettings.EmailConfiguration.Port,
+                    SenderName = appSettings.EmailConfiguration.From,
+                    SenderEmail = appSettings.EmailConfiguration.From,
 
-            
+                    // can be optional with no authentication 
+                    Account = appSettings.EmailConfiguration.Username,
+                    Password = appSettings.EmailConfiguration.Password,
+                    // enable ssl or tls
+                    Security = true
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

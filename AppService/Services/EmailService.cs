@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using AppService.Helpers;
 using AppService.Services.Abstractions;
+using AppService.Services.Request;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 
@@ -13,52 +16,62 @@ namespace AppService.Services
     {
         private readonly AppSettings _setting;
         private readonly IHostingEnvironment _env;
+        private readonly RestEmailService _restEmailService;
 
-        public EmailService(IOptions<AppSettings> options, IHostingEnvironment env)
+        public EmailService(IOptions<AppSettings> options, IHostingEnvironment env, RestEmailService restEmailService)
         {
             _setting = options.Value;
             _env = env;
+            _restEmailService = restEmailService;
         }
 
         public async Task SendEmail(string email, string subject, string message)
         {
-            try {
-                using (var client = new SmtpClient())
+            await _restEmailService.SendEmail(new EmailRequest
+            {
+                from = new From
                 {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = _setting.EmailConfiguration.Username,
-                        Password = _setting.EmailConfiguration.Password
-                    };
-
-                    client.Credentials = new NetworkCredential(_setting.EmailConfiguration.Username, _setting.EmailConfiguration.Password);
-                    client.Host = _setting.EmailConfiguration.SmtpServer;
-                    client.Port = _setting.EmailConfiguration.Port;
-                    client.Timeout = 100000000;
-                    client.UseDefaultCredentials = true;
-
-                    if (_env.IsProduction())
-                    {
-                        client.EnableSsl = true;
-                        client.Port = 587;
-                    }
-
-                    //client.EnableSsl = true;
-
-                    using (var emailMessage = new MailMessage())
-                    {
-                        emailMessage.To.Add(new MailAddress(email));
-                        emailMessage.From = new MailAddress(_setting.EmailConfiguration.From);
-                        emailMessage.Subject = subject;
-                        emailMessage.Body = message;
-                        client.Send(emailMessage);
-                    }
+                    email = "confirmation@pepisandbox.com",
+                    name = "OIDC"
+                },
+                subject = subject,
+                content = new List<Content>()
+                {
+                    new Content { type = "html", value = message },
+                },
+                personalizations = new List<Personalization>()
+                {
+                    new Personalization{ to = new List<To> { new To { email = email, name = "Osinnowo Emmanuel" } } }
                 }
-                await Task.CompletedTask;
+            });
 
-            } catch (Exception e) {  
+        }
+
+        public static string GetEmailTemplate(IHostingEnvironment env, string name)
+        {
+            var emailTemplate = string.Empty;
+
+            var emailFolder = Path.Combine(env.WebRootPath ?? env.ContentRootPath, "Templates"); //ContentRootPath
+
+            if (!Directory.Exists(emailFolder))
+            {
+                Directory.CreateDirectory(emailFolder);
 
             }
+            else
+            {
+                var path = Path.Combine(emailFolder, name ?? "EmailTemplate.html");
+
+                using (var templateFile = new FileStream(path, FileMode.Open))
+                {
+                    using (StreamReader reader = new StreamReader(templateFile))
+                    {
+                        emailTemplate = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            return emailTemplate;
         }
     }
 }
