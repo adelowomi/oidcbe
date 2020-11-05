@@ -18,8 +18,6 @@ namespace AppService.Repository.Abstractions
 
         Task<ResponseViewModel> UpdateVendorAsync(VendorInputModel model);
 
-        IEnumerable<ResponseViewModel> GetAll();
-
         Task<ResponseViewModel> ResetPasswordAsync(string username);
 
         Task<ResponseViewModel> CompleteResetPasswordAsync(CompleteForgotPasswordInputModel model);
@@ -29,5 +27,7 @@ namespace AppService.Repository.Abstractions
         UserInputModel GetUserById(int id);
 
         Task<VendorViewModel> GetUserDetails();
+
+        ResponseViewModel RequestForOTP(string emailAddress);
     }
 }

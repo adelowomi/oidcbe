@@ -239,6 +239,7 @@ namespace AppService.AppModel.ViewModel
         public static string UNKOWN_ERROR = "Unkown error, please try again!";
         public static string INVALID_CONFIRMATION_CODE = "The Confirmation Code '[code]' you entered is invalid, kindly enter the correct on and try again!";
         public static string EXPIRED_CONFIRMATION_CODE = "The Confirmation Code '[code]' you entered has expired. Do you want to request for a new one?";
+        public static string CONFIRMATION_CODE_SENT = "You've successfully requested for a new Confirmation Code. Kindly check your email '[email]'";
     }
 
     /// <summary>
@@ -268,6 +269,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_NEXT_OF_KIN_GENDER = "07";
         public static readonly string INVALID_CONFIRMATION_CODE = "08";
         public static readonly string EXPIRED_CONFIRMATION_CODE = "09";
+        public static readonly string CONFIRMATION_CODE_SENT = "10";
 
 
         //Unknown Error

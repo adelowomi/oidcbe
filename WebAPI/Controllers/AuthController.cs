@@ -127,5 +127,18 @@ namespace WebAPI.Controllers
         {
             return Ok(ResponseViewModel.Ok(await _userService.GetUserDetails()));
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/auth/request-otp")]
+        public IActionResult RequestOtp(string emailAddress)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_userService.RequestForOTP(emailAddress));
+        }
     }
 }

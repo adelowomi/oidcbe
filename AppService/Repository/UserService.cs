@@ -71,6 +71,11 @@ namespace AppService.Repository
             _env = env;
         }
 
+        /// <summary>
+        /// Authenticate Asynchronous Method
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<ResponseViewModel> AuthenticateAsync(LoginInputModel model)
         {
             try
@@ -127,6 +132,12 @@ namespace AppService.Repository
             }
         }
 
+
+        /// <summary>
+        /// Utility Methods to Process Roles's Claims
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <param name="roles"></param>
         private void AddRolesToClaims(List<Claim> claims, IEnumerable<string> roles)
         {
             foreach (var role in roles)
@@ -136,6 +147,11 @@ namespace AppService.Repository
             }
         }
 
+        /// <summary>
+        /// This Method Handles User Registration
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<ResponseViewModel> RegisterAsync(RegisterInputModel model)
         {
             try
@@ -186,6 +202,12 @@ namespace AppService.Repository
             }
         }
 
+
+        /// <summary>
+        /// This Method Handles Completion Of Vendor / Subscriber's Profile
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<ResponseViewModel> UpdateAsync(UserInputModel model)
         {
             try
@@ -231,6 +253,12 @@ namespace AppService.Repository
                 return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
             }
         }
+
+        /// <summary>
+        /// This Method Update Vendor's Information
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         public async Task<ResponseViewModel> UpdateVendorAsync(VendorInputModel model)
         {
@@ -326,11 +354,11 @@ namespace AppService.Repository
             }
         }
 
-        public IEnumerable<ResponseViewModel> GetAll()
-        {
-            return null;
-        }
-
+        /// <summary>
+        /// Asynchronous Method, To Reset Password
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public async Task<ResponseViewModel> ResetPasswordAsync(string email)
         {
             try
@@ -356,6 +384,12 @@ namespace AppService.Repository
             }
         }
 
+
+        /// <summary>
+        /// Asynchronous Method To Complete Password Change
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<ResponseViewModel> CompleteResetPasswordAsync(CompleteForgotPasswordInputModel model)
         {
             try
@@ -382,6 +416,11 @@ namespace AppService.Repository
             }
         }
 
+        /// <summary>
+        ///  Asynchronous Method to Change Password
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<ResponseViewModel> ChangePasswordAsync(ChangePasswordInputModel model)
         {
             var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
@@ -403,6 +442,11 @@ namespace AppService.Repository
             return ResponseViewModel.Ok();
         }
 
+        /// <summary>
+        /// This Method Get User By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public UserInputModel GetUserById(int id)
         {
             var user = _context.Users.FirstOrDefault(x => x.Id == id);
@@ -410,6 +454,10 @@ namespace AppService.Repository
             return _mapper.Map<AppUser, UserInputModel>(user);
         }
 
+        /// <summary>
+        ///  This method Returns Current Logged On User Details
+        /// </summary>
+        /// <returns></returns>
         public async Task<VendorViewModel> GetUserDetails()
         {
             var vendor = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
@@ -417,6 +465,46 @@ namespace AppService.Repository
             var mappedResult = _mapper.Map<AppUser, VendorViewModel>(vendor);
 
             return mappedResult;
+        }
+
+        /// <summary>
+        ///  Method To Request For A New Token / OTP / Confirmation Code
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        public ResponseViewModel RequestForOTP (string emailAddress)
+        {
+            try
+            {
+                var user = _userManager.FindByEmailAsync(emailAddress).Result;
+
+                var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
+
+                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.REQUEST_OTP_EMAIL_TEMPLATE);
+
+                Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
+                {
+                     { Placeholder.OTP, code },
+                     { Placeholder.EXPIRES, $"{_settings.OtpExpirationInMinutes} ${Placeholder.MINUTES}" }
+                };
+
+                if (contentReplacements != null)
+                {
+                    foreach (KeyValuePair<string, string> pair in contentReplacements)
+                    {
+                        emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                    }
+                }
+
+                _ = _emailService.SendEmail(user.Email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
+
+                return ResponseViewModel.Ok(ResponseMessageViewModel.CONFIRMATION_CODE_SENT.Replace(Placeholder.EMAIL_PLACEHOLDER, user.Email)).AddStatusCode(ResponseErrorCodeStatus.CONFIRMATION_CODE_SENT);
+
+            } catch (Exception e){
+
+                return ResponseViewModel.Failed(ResponseMessageViewModel.UNKOWN_ERROR, ResponseErrorCodeStatus.UNKOWN_ERROR);
+
+            }
         }
     }
 }
