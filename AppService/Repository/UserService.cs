@@ -19,7 +19,6 @@ using Infrastructure.DataAccess.DataContext;
 using AppService.Extensions;
 using AppService.Services.Abstractions;
 using Infrastructure.DataAccess.Repository.Abstractions;
-using Microsoft.AspNetCore.Authorization;
 using BusinessLogic.Repository.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using AppService.Exceptions;
@@ -369,18 +368,34 @@ namespace AppService.Repository
 
                 user.Token = token;
 
-                user.OTP = Core.Helpers.Utility.GenerateRandomNumber(4);
+                user.OTP = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
+
+                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.REQUEST_RESET_PASSWORD_TEMPLATE);
+
+                Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
+                {
+                     { Placeholder.OTP, user.OTP },
+                     { Placeholder.EXPIRES, $"{_settings.OtpExpirationInMinutes} {Placeholder.MINUTES}" }
+                };
+
+                if (contentReplacements != null)
+                {
+                    foreach (KeyValuePair<string, string> pair in contentReplacements)
+                    {
+                        emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                    }
+                }
+
+                _ = _emailService.SendEmail(user.Email, Res.REQUEST_PASSWORD_RESET, emailHtmlTemplate);
 
                 await _userManager.UpdateAsync(user);
 
-                await _emailService.SendEmail(user.Email, "Reset Password", $"You've reset your password. Kinly use {user.OTP} to continue RESET PASSWORD!");
-
-                return ResponseViewModel.Create(true, ResponseMessageViewModel.SUCCESSFUL, new { token });
+                return ResponseViewModel.Ok(ResponseMessageViewModel.PASSWORD_RESET_SUCCESSFUL);
 
             }
             catch (Exception e)
             {
-                return ResponseViewModel.Create(true, ResponseMessageViewModel.SUCCESSFUL);
+                return ResponseViewModel.Failed(ResponseMessageViewModel.UNKOWN_ERROR, ResponseErrorCodeStatus.UNKOWN_ERROR);
             }
         }
 
@@ -394,20 +409,49 @@ namespace AppService.Repository
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email); // await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if (!user.OTP.Equals(model.OTP))
+                try
                 {
-                    return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL);
+                    _otpAppService.ValidateOTP(user.Id, model.OtpCode);
+
                 }
+                catch (InvalidTokenCodeExcepton e) {
+
+                    return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
+
+                }
+                catch (ExpiredTokenCodeException e) {
+
+                    return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
+
+                }
+
                 var token = await _userManager.ResetPasswordAsync(user, user.Token, model.Password);
 
                 if (token.Succeeded)
                 {
-                    await _emailService.SendEmail(user.Email, "Reset Password", "You've successfully reset your password");
+                    var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.COMPLETE_RESET_PASSWORD_EMAIL_TEMPLATE);
+
+                    Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
+                    {
+                         { Placeholder.NAME, user.FirstName }
+                    };
+
+                    if (contentReplacements != null)
+                    {
+                        foreach (KeyValuePair<string, string> pair in contentReplacements)
+                        {
+                            emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                        }
+                    }
+
+                    _ = _emailService.SendEmail(user.Email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
+
+                    return ResponseViewModel.Ok();
                 }
 
-                return ResponseViewModel.Create(true, ResponseMessageViewModel.SUCCESSFUL, new { token });
+                return ResponseViewModel.Failed(ResponseMessageViewModel.UNABLE_TO_RESET_PASSWORD, ResponseErrorCodeStatus.UNABLE_TO_RESET_PASSWORD);
 
             }
             catch (Exception e)
@@ -485,7 +529,7 @@ namespace AppService.Repository
                 Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                 {
                      { Placeholder.OTP, code },
-                     { Placeholder.EXPIRES, $"{_settings.OtpExpirationInMinutes} ${Placeholder.MINUTES}" }
+                     { Placeholder.EXPIRES, $"{_settings.OtpExpirationInMinutes} {Placeholder.MINUTES}" }
                 };
 
                 if (contentReplacements != null)

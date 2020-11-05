@@ -149,7 +149,7 @@ namespace AppService.AppModel.ViewModel
         /// <returns></returns>
         public static ResponseViewModel Ok(string message)
         {
-            return new ResponseViewModel(true, message);
+            return new ResponseViewModel(true, message, null, ResponseErrorCodeStatus.OK);
         }
 
 
@@ -171,7 +171,7 @@ namespace AppService.AppModel.ViewModel
         /// <returns></returns>
         public static ResponseViewModel Ok()
         {
-            return new ResponseViewModel(true, ResponseMessageViewModel.SUCCESSFUL);
+            return new ResponseViewModel(true, ResponseMessageViewModel.SUCCESSFUL, null, ResponseErrorCodeStatus.OK);
         }
 
         /// <summary>
@@ -240,6 +240,8 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_CONFIRMATION_CODE = "The Confirmation Code '[code]' you entered is invalid, kindly enter the correct on and try again!";
         public static string EXPIRED_CONFIRMATION_CODE = "The Confirmation Code '[code]' you entered has expired. Do you want to request for a new one?";
         public static string CONFIRMATION_CODE_SENT = "You've successfully requested for a new Confirmation Code. Kindly check your email '[email]'";
+        public static string PASSWORD_RESET_SUCCESSFUL = "Your request to reset your password was successful, kindly check your email";
+        public static string UNABLE_TO_RESET_PASSWORD = "Unable to reset password, please try again!";
     }
 
     /// <summary>
@@ -260,19 +262,25 @@ namespace AppService.AppModel.ViewModel
 
     public static class ResponseErrorCodeStatus
     {
+        //COMMON
         public static readonly string OK = "00";
-        public static readonly string FAIL = "99";
         public static readonly string ACCOUNT_ALREADY_EXIST = "03";
+
+        //INVALIDS
         public static readonly string INVALID_CREDENTIALS = "04";
         public static readonly string INVALID_GENDER = "05";
         public static readonly string INVALID_STATE = "06";
         public static readonly string INVALID_NEXT_OF_KIN_GENDER = "07";
         public static readonly string INVALID_CONFIRMATION_CODE = "08";
+
+        //OTHERS
         public static readonly string EXPIRED_CONFIRMATION_CODE = "09";
         public static readonly string CONFIRMATION_CODE_SENT = "10";
+        public static readonly string UNABLE_TO_RESET_PASSWORD = "11";
 
 
-        //Unknown Error
+        //FAILURES
+        public static readonly string FAIL = "91";
         public static readonly string UNKOWN_ERROR = "99";
     }
 }
