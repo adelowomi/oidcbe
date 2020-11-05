@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AppService.AppModel.ViewModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,10 +36,22 @@ namespace AppService.Validations
 
         public ValidationResultModel(ModelStateDictionary modelState)
         {
-            Message = Errors.First().Message;
-            Errors = modelState.Keys
-                            .SelectMany(key => modelState[key].Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
-                            .ToList();
+            try
+            {
+                Message = Errors.First().Message;
+                Errors = modelState.Keys
+                                .SelectMany(key => modelState[key].Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
+                                .ToList();
+                StatusCode = ResponseErrorCodeStatus.VALIDATION_ERROR;
+            }
+            catch(Exception e)
+            {
+                Message = "Validation Errors";
+                Errors = modelState.Keys
+                                .SelectMany(key => modelState[key].Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
+                                .ToList();
+                StatusCode = ResponseErrorCodeStatus.VALIDATION_ERROR;
+            }
         }
     }
 

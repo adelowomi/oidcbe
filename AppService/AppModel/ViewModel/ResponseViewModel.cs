@@ -267,6 +267,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string ACCOUNT_ALREADY_EXIST = "03";
 
         //INVALIDS
+        public static readonly string VALIDATION_ERROR = "02";
         public static readonly string INVALID_CREDENTIALS = "04";
         public static readonly string INVALID_GENDER = "05";
         public static readonly string INVALID_STATE = "06";

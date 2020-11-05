@@ -370,7 +370,7 @@ namespace AppService.Repository
 
                 user.OTP = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
 
-                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.REQUEST_RESET_PASSWORD_TEMPLATE);
+                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE);
 
                 Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                 {
