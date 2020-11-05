@@ -26,5 +26,9 @@ namespace AppService.AppModel.ViewModel
         public string Token { get; set; }
 
         public string PhotoUrl { get; set; }
+
+        public bool HasConfirmedEmail { get; set; }
+
+        public bool HasUploadedDocument { get; set; }
     }
 }

@@ -41,5 +41,7 @@ namespace Core.Model
         public IEnumerable<OTP> OTPs { get; set; }
 
         public IEnumerable<Subscription> Subscriptions { get; set; }
+
+        public bool HasUploadedDocument { get; set; }
     }
 }

@@ -13,11 +13,13 @@ namespace AppService.Helpers
 
         public string BaseUrl { get; set; }
 
-        public string PepipostBaseUrl { get; set; }
-
-        public string PepipostApiKey { get; set; }
-
         public int OtpExpirationInMinutes { get; set; }
+
+        public string SendGridApiKey { get; set; }
+
+        public string SendGridSenderEmail { get; set; }
+
+        public string SendGridSenderName { get; set; }
     }
 
     public class EmailConfiguration
