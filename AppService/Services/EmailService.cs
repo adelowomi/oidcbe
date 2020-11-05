@@ -9,6 +9,8 @@ using AppService.Services.Abstractions;
 using AppService.Services.Request;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace AppService.Services
 {
@@ -17,36 +19,51 @@ namespace AppService.Services
         private readonly AppSettings _setting;
         private readonly IHostingEnvironment _env;
         private readonly RestEmailService _restEmailService;
+        private readonly ISendGridClient _sendGridClient;
 
-        public EmailService(IOptions<AppSettings> options, IHostingEnvironment env, RestEmailService restEmailService)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="env"></param>
+        /// <param name="restEmailService"></param>
+        public EmailService(IOptions<AppSettings> options, IHostingEnvironment env, RestEmailService restEmailService, ISendGridClient sendGridClient)
         {
             _setting = options.Value;
             _env = env;
             _restEmailService = restEmailService;
+            _sendGridClient = sendGridClient;
         }
 
+
+        /// <summary>
+        /// Send Email Via Rest API Service
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="subject"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task SendEmail(string email, string subject, string message)
         {
-            await _restEmailService.SendEmail(new EmailRequest
+            var sendGridMessage = new SendGridMessage
             {
-                from = new From
-                {
-                    email = "confirmation@pepisandbox.com",
-                    name = "OIDC"
-                },
-                subject = subject,
-                content = new List<Content>()
-                {
-                    new Content { type = "html", value = message },
-                },
-                personalizations = new List<Personalization>()
-                {
-                    new Personalization{ to = new List<To> { new To { email = email, name = "Osinnowo Emmanuel" } } }
-                }
-            });
+                From = new EmailAddress(_setting.SendGridSenderEmail),
+                Subject = subject
+            };
 
+            sendGridMessage.AddTo(new EmailAddress(email));
+
+            sendGridMessage.AddContent(MimeType.Html, message);
+
+            await _sendGridClient.SendEmailAsync(sendGridMessage).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// This Method Helps Get The Email Template In Html
+        /// </summary>
+        /// <param name="env"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public string GetEmailTemplate(IHostingEnvironment env, string name)
         {
             var emailTemplate = string.Empty;

@@ -459,3 +459,12 @@ VALUES (N'20201104232306_UseDateTimeMigrations', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [HasUploadedDocument] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201105171458_BooleanModelAspNetUsers', N'3.1.8');
+
+GO
+

@@ -30,6 +30,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
+using SendGrid;
+using SendGrid.Extensions.DependencyInjection;
 
 namespace WebAPI
 {
@@ -105,7 +107,7 @@ namespace WebAPI
             services.AddTransient<IOTPRepository, OTPRepository>();
             services.AddTransient<IOTPService, OTPService>();
             services.AddTransient<IOTPAppService, OTPAppService>();
-
+           // services.AddTransient<ISendGridClient, SendGridClient>();
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
@@ -117,15 +119,6 @@ namespace WebAPI
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 0;
             });
-
-            //services.AddSwaggerGen(options =>
-            //{
-            //    options.SwaggerDoc("help", new Microsoft.OpenApi.Models.OpenApiInfo
-            //    {
-            //        Title = "API Docs",
-            //        Version = "v1"
-            //    });
-            //});
 
             services.AddSwaggerGen(options =>
             {
@@ -172,7 +165,6 @@ namespace WebAPI
                  });
             });
 
-
             services.AddAuthentication(x =>
             {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -198,22 +190,10 @@ namespace WebAPI
                 //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
             });
 
-            services.AddMailKit(optionBuilder =>
-            {
-                optionBuilder.UseMailKit(new MailKitOptions()
-                {
-                    //get options from sercets.json
-                    Server = appSettings.EmailConfiguration.SmtpServer,
-                    Port = appSettings.EmailConfiguration.Port,
-                    SenderName = appSettings.EmailConfiguration.From,
-                    SenderEmail = appSettings.EmailConfiguration.From,
+            services.AddSendGrid(options => {
 
-                    // can be optional with no authentication 
-                    Account = appSettings.EmailConfiguration.Username,
-                    Password = appSettings.EmailConfiguration.Password,
-                    // enable ssl or tls
-                    Security = true
-                });
+                options.ApiKey = appSettings.SendGridApiKey;
+                
             });
 
         }

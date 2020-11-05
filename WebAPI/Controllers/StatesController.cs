@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
         [Route("api/state/test")]
         public IActionResult TestAsync(string stateName)
         {
-            _emailService.SendEmail("liquidcoding2009@gmail.com", "New Account", "Your account has been registered, Regards");
+            _emailService.SendEmail("liquidcoding2009@gmail.com", "Hey", "How are you?");
 
             return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));
         }
