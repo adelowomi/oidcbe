@@ -41,6 +41,7 @@ namespace AppService.Helpers
         public static readonly string REQUEST_OTP_EMAIL_TEMPLATE = "RequestOTP.html";
         public static readonly string REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE = "ResetPasswordRequest.html";
         public static readonly string COMPLETE_RESET_PASSWORD_EMAIL_TEMPLATE = "ResetPasswordSuccessful.html";
+        public static readonly string WELCOME_EMAIL_TEMPLATE = "Welcome.html";
     }
 
 
@@ -51,6 +52,7 @@ namespace AppService.Helpers
     {
         public static readonly string YOUR_NEW_CONFIRMATION_CODE = "New Confirmation Code";
         public static readonly string REQUEST_PASSWORD_RESET = "Request For Password Reset";
+        public static readonly string ACCOUNT_SETUP = "Account Setup";
     }
 
 
@@ -60,6 +62,7 @@ namespace AppService.Helpers
     public class Placeholder
     {
         public static readonly string EMAIL_PLACEHOLDER = "[email]";
+        public static readonly string EMAIL = "{{email}}";
         public static readonly string MINUTES = "minutes";
         public static readonly string OTP = "{{otp}}";
         public static readonly string EXPIRES = "{{expire}}";

@@ -165,12 +165,12 @@ namespace AppService.Repository
 
                 if(result.Succeeded) {
 
-                   var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, "Welcome.html");
+                   var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.WELCOME_EMAIL_TEMPLATE);
 
                     Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                     {
-                        { "{{email}}", user.Email },
-                        { "{{otp}}", _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes) }
+                        { Placeholder.EMAIL, user.Email },
+                        { Placeholder.OTP, _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes) }
                     };
 
                     if (contentReplacements != null)
@@ -181,7 +181,7 @@ namespace AppService.Repository
                         }
                     }
 
-                    _ = _emailService.SendEmail(model.Email, "Account Setup", emailHtmlTemplate);
+                    _ = _emailService.SendEmail(model.Email, Res.ACCOUNT_SETUP, emailHtmlTemplate);
 
                     _ = await _userManager.AddToRoleAsync(user, model.UserType == UserTypeEnum.VENDOR ? UserType.VENDOR : UserType.VENDOR);
                       
@@ -191,7 +191,7 @@ namespace AppService.Repository
 
                 } else {
 
-                   return ResponseViewModel.Error($"Unable to create account. {result.Errors.First().Description} ", ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
+                   return ResponseViewModel.Error($"{ResponseMessageViewModel.UNABLE_TO_CREATE} {result.Errors.First().Description} ", ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
 
                 }
             }
@@ -469,19 +469,12 @@ namespace AppService.Repository
         {
             var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
-            if (!model.Password.Equals(model.ConfirmPassword))
-            {
-                return ResponseViewModel.Create(false, ResponseMessageViewModel.PASSWORD_MISMATCH, null);
-            }
-
             var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
 
             if (!result.Succeeded)
             {
-                return ResponseViewModel.Error("Unable to change password, please try again");
+                return ResponseViewModel.Failed(ResponseMessageViewModel.CHANGE_PASSWORD_FAILED, ResponseErrorCodeStatus.CHANGE_PASSWORD_FAILED);
             }
-
-            await _emailService.SendEmail(user.Email, "Change Password", "You've successfully changed your password");
 
             return ResponseViewModel.Ok();
         }

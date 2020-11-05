@@ -242,6 +242,8 @@ namespace AppService.AppModel.ViewModel
         public static string CONFIRMATION_CODE_SENT = "You've successfully requested for a new Confirmation Code. Kindly check your email '[email]'";
         public static string PASSWORD_RESET_SUCCESSFUL = "Your request to reset your password was successful, kindly check your email";
         public static string UNABLE_TO_RESET_PASSWORD = "Unable to reset password, please try again!";
+        public static string CHANGE_PASSWORD_FAILED = "Change Password Failed, Please try again!";
+        public static string UNABLE_TO_CREATE = "Unable to create account";
     }
 
     /// <summary>
@@ -262,12 +264,13 @@ namespace AppService.AppModel.ViewModel
 
     public static class ResponseErrorCodeStatus
     {
-        //COMMON
+        //OK = GOOD(LOL, LMAO)
         public static readonly string OK = "00";
-        public static readonly string ACCOUNT_ALREADY_EXIST = "03";
+        
 
         //INVALIDS
         public static readonly string VALIDATION_ERROR = "02";
+        public static readonly string ACCOUNT_ALREADY_EXIST = "03";
         public static readonly string INVALID_CREDENTIALS = "04";
         public static readonly string INVALID_GENDER = "05";
         public static readonly string INVALID_STATE = "06";
@@ -278,6 +281,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string EXPIRED_CONFIRMATION_CODE = "09";
         public static readonly string CONFIRMATION_CODE_SENT = "10";
         public static readonly string UNABLE_TO_RESET_PASSWORD = "11";
+        public static readonly string CHANGE_PASSWORD_FAILED = "12";
 
 
         //FAILURES
