@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.Mail;
+﻿using System.IO;
 using System.Threading.Tasks;
 using AppService.Helpers;
 using AppService.Services.Abstractions;
-using AppService.Services.Request;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using SendGrid;
@@ -35,7 +30,6 @@ namespace AppService.Services
             _sendGridClient = sendGridClient;
         }
 
-
         /// <summary>
         /// Send Email Via Rest API Service
         /// </summary>
@@ -48,6 +42,7 @@ namespace AppService.Services
             var sendGridMessage = new SendGridMessage
             {
                 From = new EmailAddress(_setting.SendGridSenderEmail),
+
                 Subject = subject
             };
 
