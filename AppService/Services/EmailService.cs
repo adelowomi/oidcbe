@@ -13,7 +13,6 @@ namespace AppService.Services
     {
         private readonly AppSettings _setting;
         private readonly IHostingEnvironment _env;
-        private readonly RestEmailService _restEmailService;
         private readonly ISendGridClient _sendGridClient;
 
         /// <summary>
@@ -22,11 +21,10 @@ namespace AppService.Services
         /// <param name="options"></param>
         /// <param name="env"></param>
         /// <param name="restEmailService"></param>
-        public EmailService(IOptions<AppSettings> options, IHostingEnvironment env, RestEmailService restEmailService, ISendGridClient sendGridClient)
+        public EmailService(IOptions<AppSettings> options, IHostingEnvironment env, ISendGridClient sendGridClient)
         {
             _setting = options.Value;
             _env = env;
-            _restEmailService = restEmailService;
             _sendGridClient = sendGridClient;
         }
 
