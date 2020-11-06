@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Text;
 using AppService.AutoMapper;
 using AppService.Helpers;
@@ -28,9 +25,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using NETCore.MailKit.Extensions;
-using NETCore.MailKit.Infrastructure.Internal;
-using SendGrid;
 using SendGrid.Extensions.DependencyInjection;
 
 namespace WebAPI

@@ -140,5 +140,18 @@ namespace WebAPI.Controllers
 
             return Ok(_userService.RequestForOTP(emailAddress));
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/auth/confirm-otp")]
+        public IActionResult ConfirmOTP ([FromBody] ConfirmOTPInputModel request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_userService.ConfirmOTP(request));
+        } 
     }
 }

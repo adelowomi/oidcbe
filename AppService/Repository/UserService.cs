@@ -267,20 +267,7 @@ namespace AppService.Repository
 
                 if (currentUser  != null)
                 {
-                    try
-                    {
-                       _otpAppService.ValidateOTP(currentUser.Id, model.OtpCode);
-
-                    } catch(InvalidTokenCodeExcepton e) {
-
-                        return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
-
-                    } catch (ExpiredTokenCodeException e){
-
-                        return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
-                        
-                    }
-
+                  
                     currentUser.FirstName = model.FirstName;
                     currentUser.LastName = model.LastName;
                     currentUser.MiddleName = model.MiddleName;
@@ -353,6 +340,26 @@ namespace AppService.Repository
             }
         }
 
+
+        public ResponseViewModel ConfirmOTP(ConfirmOTPInputModel model)
+        {
+            var currentUser = _userManager.FindByEmailAsync(model.EmailAddress);
+
+            try
+            {
+                _otpAppService.ValidateOTP(currentUser.Id, model.Code);
+            }
+            catch (InvalidTokenCodeExcepton e)
+            {
+                return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
+            }
+            catch (ExpiredTokenCodeException e)
+            {
+                return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
+            }
+
+            return ResponseViewModel.Ok();
+        }
         /// <summary>
         /// Asynchronous Method, To Reset Password
         /// </summary>
