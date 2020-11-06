@@ -11,6 +11,8 @@ namespace Core.Model
 
         public bool IsExpired { get; set; }
 
+        public bool IsUsed { get; set; }
+
         public DateTime ExpiryDateTime { get; set; }
 
         public DateTime UsedDateTime { get; set; }
