@@ -40,12 +40,18 @@ namespace Infrastructure.DataAccess.Repository
 
         public OTP ConfirmToken(int userId, string token)
         {
-            var code = GetAll().FirstOrDefault(x => x.AppUserId == userId && x.Code == token && x.IsExpired == false);
+            var code = GetAll().FirstOrDefault(x => x.AppUserId == userId && x.Code == token); //&& x.IsExpired == false)
 
-            if(code != null) {
+            if (code != null) {
                 if (DateTime.Now > code.ExpiryDateTime)
                 {
                     code.IsExpired = true;
+                    Update(code);
+                    return code;
+                } else
+                {
+                    code.IsUsed = true;
+                    code.UsedDateTime = DateTime.Now;
                     Update(code);
                     return code;
                 }

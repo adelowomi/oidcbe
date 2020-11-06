@@ -468,3 +468,12 @@ VALUES (N'20201105171458_BooleanModelAspNetUsers', N'3.1.8');
 
 GO
 
+ALTER TABLE [OTPs] ADD [IsUsed] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201106095957_AddedIsUsed', N'3.1.8');
+
+GO
+
