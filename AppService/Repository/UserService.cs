@@ -265,6 +265,11 @@ namespace AppService.Repository
             {
                 AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
+                if (!currentUser.EmailConfirmed)
+                {
+                    return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
+                }
+
                 if (currentUser  != null)
                 {
                   
@@ -343,7 +348,7 @@ namespace AppService.Repository
 
         public ResponseViewModel ConfirmOTP(ConfirmOTPInputModel model)
         {
-            var currentUser = _userManager.FindByEmailAsync(model.EmailAddress);
+            var currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
             try
             {
@@ -370,6 +375,11 @@ namespace AppService.Repository
             try
             {
                 var user = await _userManager.FindByEmailAsync(email);
+
+                if (!user.EmailConfirmed)
+                {
+                    return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
+                }
 
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -417,6 +427,11 @@ namespace AppService.Repository
             try
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (!user.EmailConfirmed)
+                {
+                    return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
+                }
 
                 try
                 {
@@ -476,6 +491,11 @@ namespace AppService.Repository
         {
             var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
+            if (!user.EmailConfirmed)
+            {
+                return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
+            }
+
             var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
 
             if (!result.Succeeded)
@@ -502,13 +522,19 @@ namespace AppService.Repository
         ///  This method Returns Current Logged On User Details
         /// </summary>
         /// <returns></returns>
-        public async Task<VendorViewModel> GetUserDetails()
+        public ResponseViewModel GetUserDetails()
         {
-            var vendor = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+            var vendor = _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString()).Result;
+
+            if(!vendor.EmailConfirmed)
+            {
+                return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
+            }
 
             var mappedResult = _mapper.Map<AppUser, VendorViewModel>(vendor);
 
-            return mappedResult;
+
+            return ResponseViewModel.Ok(mappedResult);
         }
 
         /// <summary>
