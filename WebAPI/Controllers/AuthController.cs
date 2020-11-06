@@ -123,9 +123,9 @@ namespace WebAPI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/auth/details")]
-        public async Task<IActionResult> VendorDetails()
+        public IActionResult VendorDetails()
         {
-            return Ok(ResponseViewModel.Ok(await _userService.GetUserDetails()));
+            return Ok( _userService.GetUserDetails());
         }
 
         [HttpGet]

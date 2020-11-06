@@ -244,6 +244,7 @@ namespace AppService.AppModel.ViewModel
         public static string UNABLE_TO_RESET_PASSWORD = "Unable to reset password, please try again!";
         public static string CHANGE_PASSWORD_FAILED = "Change Password Failed, Please try again!";
         public static string UNABLE_TO_CREATE = "Unable to create account";
+        public static string EMAIL_NOT_CONFIRMED = "Email has not been confirmed, kindly confirm.";
     }
 
     /// <summary>
@@ -282,6 +283,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string CONFIRMATION_CODE_SENT = "10";
         public static readonly string UNABLE_TO_RESET_PASSWORD = "11";
         public static readonly string CHANGE_PASSWORD_FAILED = "12";
+        public static readonly string EMAIL_NOT_CONFIRMED = "13";
 
 
         //FAILURES

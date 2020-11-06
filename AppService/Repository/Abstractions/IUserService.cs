@@ -26,7 +26,7 @@ namespace AppService.Repository.Abstractions
 
         UserInputModel GetUserById(int id);
 
-        Task<VendorViewModel> GetUserDetails();
+        ResponseViewModel GetUserDetails();
 
         ResponseViewModel RequestForOTP(string emailAddress);
 
