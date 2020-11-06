@@ -29,5 +29,7 @@ namespace AppService.Repository.Abstractions
         Task<VendorViewModel> GetUserDetails();
 
         ResponseViewModel RequestForOTP(string emailAddress);
+
+        ResponseViewModel ConfirmOTP(ConfirmOTPInputModel model);
     }
 }

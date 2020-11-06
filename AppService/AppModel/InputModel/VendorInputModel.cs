@@ -98,9 +98,6 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public int IdentificationId { get; set; }
-
-        [Required]
-        public string OtpCode { get; set; }
     }
 
     public class VendorNextOfKinInputModel
