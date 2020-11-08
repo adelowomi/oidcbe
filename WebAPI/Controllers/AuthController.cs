@@ -68,14 +68,14 @@ namespace WebAPI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/auth/reset-password")]
-        public async Task<IActionResult> GetResetToken(string email)
+        public async Task<IActionResult> GetResetToken(string email, string platform)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var result = await _userService.ResetPasswordAsync(email);
+            var result = await _userService.ResetPasswordAsync(email, platform);
 
             if (result.Status)
             {
@@ -131,14 +131,14 @@ namespace WebAPI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/auth/request-otp")]
-        public IActionResult RequestOtp(string emailAddress)
+        public IActionResult RequestOtp(string emailAddress, string platform)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_userService.RequestForOTP(emailAddress));
+            return Ok(_userService.RequestForOTP(emailAddress, platform));
         }
 
         [HttpPost]

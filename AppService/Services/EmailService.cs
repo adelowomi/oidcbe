@@ -89,9 +89,9 @@ namespace AppService.Services
         /// <param name="email"></param>
         /// <param name="code"></param>
         /// <returns></returns>
-        public async Task SendRequestTokenEmail(string email, string code)
+        public async Task SendRequestTokenEmail(string email, string code, string platform)
         {
-            var emailHtmlTemplate = GetEmailTemplate(_env, EmailTemplate.REQUEST_OTP_EMAIL_TEMPLATE);
+            var emailHtmlTemplate = GetEmailTemplate(_env, EmailTemplate.RequestOtp(platform));
 
             Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
             {
@@ -134,5 +134,7 @@ namespace AppService.Services
 
             await SendEmail(email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
         }
+
+        
     }
 }

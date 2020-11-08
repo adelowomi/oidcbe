@@ -20,6 +20,18 @@ namespace AppService.Helpers
         public string SendGridSenderEmail { get; set; }
 
         public string SendGridSenderName { get; set; }
+
+        public WebApp WebApp { get; set; }
+          
+    }
+
+    public class WebApp
+    {
+        public string BaseUrl { get; set; }
+
+        public string Register { get ; set;}
+
+        public string ResetPassword { get; set; }
     }
 
     public class EmailConfiguration

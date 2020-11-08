@@ -1,9 +1,5 @@
 ﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
-using Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AppService.Repository.Abstractions
@@ -18,7 +14,7 @@ namespace AppService.Repository.Abstractions
 
         Task<ResponseViewModel> UpdateVendorAsync(VendorInputModel model);
 
-        Task<ResponseViewModel> ResetPasswordAsync(string username);
+        Task<ResponseViewModel> ResetPasswordAsync(string username, string platform);
 
         Task<ResponseViewModel> CompleteResetPasswordAsync(CompleteForgotPasswordInputModel model);
 
@@ -28,7 +24,7 @@ namespace AppService.Repository.Abstractions
 
         ResponseViewModel GetUserDetails();
 
-        ResponseViewModel RequestForOTP(string emailAddress);
+        ResponseViewModel RequestForOTP(string emailAddress, string platform);
 
         ResponseViewModel ConfirmOTP(ConfirmOTPInputModel model);
     }

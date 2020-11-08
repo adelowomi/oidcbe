@@ -165,7 +165,7 @@ namespace AppService.Repository
 
                 if(result.Succeeded) {
 
-                   var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.WELCOME_EMAIL_TEMPLATE);
+                   var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.Welcome(model.Platform));
 
                     Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                     {
@@ -370,7 +370,7 @@ namespace AppService.Repository
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public async Task<ResponseViewModel> ResetPasswordAsync(string email)
+        public async Task<ResponseViewModel> ResetPasswordAsync(string email, string platform)
         {
             try
             {
@@ -387,11 +387,11 @@ namespace AppService.Repository
 
                 user.OTP = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
 
-                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE);
+                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.ResetPassword(platform));
 
                 Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                 {
-                     { Placeholder.OTP, user.OTP },
+                     { Placeholder.OTP, platform.ToLower() ==  Res.WEB_PLATFORM ? $"{_settings.WebApp.BaseUrl}{_settings.WebApp.Register}{user.OTP}" : user.OTP },
                      { Placeholder.EXPIRES, $"{_settings.OtpExpirationInMinutes} {Placeholder.MINUTES}" }
                 };
 
@@ -527,7 +527,7 @@ namespace AppService.Repository
         /// </summary>
         /// <param name="emailAddress"></param>
         /// <returns></returns>
-        public ResponseViewModel RequestForOTP (string emailAddress)
+        public ResponseViewModel RequestForOTP (string emailAddress, string platform)
         {
             try
             {
@@ -535,7 +535,7 @@ namespace AppService.Repository
 
                 var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
 
-                _ = _emailService.SendRequestTokenEmail(user.Email, code);
+                _ = _emailService.SendRequestTokenEmail(user.Email, code, platform);
 
                 return ResponseViewModel.Ok(ResponseMessageViewModel.CONFIRMATION_CODE_SENT.Replace(Placeholder.EMAIL_PLACEHOLDER, user.Email)).AddStatusCode(ResponseErrorCodeStatus.CONFIRMATION_CODE_SENT);
 
