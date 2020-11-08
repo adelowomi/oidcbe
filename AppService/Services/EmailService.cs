@@ -95,7 +95,7 @@ namespace AppService.Services
 
             Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
             {
-                { Placeholder.OTP, code },
+                { Placeholder.OTP, platform.ToLower() ==  Res.WEB_PLATFORM ? $"{_setting.WebApp.BaseUrl}{_setting.WebApp.Register}{code}" : code },
                 { Placeholder.EXPIRES, $"{_setting.OtpExpirationInMinutes} {Placeholder.MINUTES}" }
             };
 
@@ -134,7 +134,5 @@ namespace AppService.Services
 
             await SendEmail(email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
         }
-
-        
     }
 }

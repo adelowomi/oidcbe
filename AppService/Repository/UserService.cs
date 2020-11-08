@@ -170,7 +170,7 @@ namespace AppService.Repository
                     Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                     {
                         { Placeholder.EMAIL, user.Email },
-                        { Placeholder.OTP, _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes) }
+                        { Placeholder.OTP, _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes, model.Platform) }
                     };
 
                     if (contentReplacements != null)
@@ -385,7 +385,7 @@ namespace AppService.Repository
 
                 user.Token = token;
 
-                user.OTP = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
+                user.OTP = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes, platform);
 
                 var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.ResetPassword(platform));
 
@@ -533,7 +533,7 @@ namespace AppService.Repository
             {
                 var user = _userManager.FindByEmailAsync(emailAddress).Result;
 
-                var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
+                var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes, platform);
 
                 _ = _emailService.SendRequestTokenEmail(user.Email, code, platform);
 

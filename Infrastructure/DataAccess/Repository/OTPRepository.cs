@@ -15,7 +15,7 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
-        public OTP GenerateOTP(int userId, int expiryInMinutes)
+        public OTP GenerateOTP(int userId, int expiryInMinutes, string platform)
         {
             var token = RandomNumber(4);
 
@@ -29,6 +29,7 @@ namespace Infrastructure.DataAccess.Repository
             var otp = CreateAndReturn(new OTP {
                 AppUserId = userId,
                 Code = token,
+                PlatformId = platform.ToLower() == "Web" ? 1 : 2,
                 IsExpired = false,
                 ExpiryDateTime = DateTime.Now.AddMinutes(expiryInMinutes),
                 DateCreated = DateTime.Now,
