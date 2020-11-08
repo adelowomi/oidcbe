@@ -8,6 +8,10 @@ namespace AppService.Services.Abstractions
     {
         Task SendEmail(string email, string subject, string message);
 
+        Task SendRequestTokenEmail(string email, string code);
+
+        Task SendCompleteResetPassword(string email, string firstName);
+
         string GetEmailTemplate(IHostingEnvironment env, string name);
     }
 }

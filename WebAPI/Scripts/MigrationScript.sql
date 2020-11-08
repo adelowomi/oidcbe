@@ -477,3 +477,24 @@ VALUES (N'20201106095957_AddedIsUsed', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [EntryName] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [OfficeAddress] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [RCNumber] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [WebsiteUrl] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201106134029_MoreFieldsToAspNetUsers', N'3.1.8');
+
+GO
+

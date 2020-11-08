@@ -43,5 +43,13 @@ namespace Core.Model
         public IEnumerable<Subscription> Subscriptions { get; set; }
 
         public bool HasUploadedDocument { get; set; }
+
+        public string EntryName { get; set; }
+
+        public string RCNumber { get; set; }
+
+        public string OfficeAddress { get; set; }
+
+        public string WebsiteUrl { get; set; }
     }
 }

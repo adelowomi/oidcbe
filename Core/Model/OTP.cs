@@ -9,6 +9,10 @@ namespace Core.Model
 
         public string Code { get; set; }
 
+        public int? PlatformId { get; set; }
+
+        public Platform Platform { get; set; }
+
         public bool IsExpired { get; set; }
 
         public bool IsUsed { get; set; }

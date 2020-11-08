@@ -1,9 +1,5 @@
-﻿using AppService.Helpers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Text;
 
 namespace AppService.AppModel.InputModel
 {
@@ -33,6 +29,9 @@ namespace AppService.AppModel.InputModel
         [Required]
         [Range(1, 2, ErrorMessage = "Invalid Organization Type")]
         public OrganizationEnumType OrganizationType { get; set; }
+
+        [Required]
+        public string Platform { get; set; }
     }
 
     public enum UserTypeEnum

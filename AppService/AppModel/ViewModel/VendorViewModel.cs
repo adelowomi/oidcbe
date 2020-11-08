@@ -31,6 +31,14 @@ namespace AppService.AppModel.ViewModel
 
         public int ProfileProgess { get; set; }
 
+        public string WebSiteUrl { get; set; }
+
+        public string OfficeAddress { get; set; }
+
+        public string RCNumber { get; set; }
+
+        public string NameOfEntry { get; set; }
+
         public VendorNextOfKinInputModel NextOfKin { get; set; }
     }
 }

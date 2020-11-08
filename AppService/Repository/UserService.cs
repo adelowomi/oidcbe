@@ -270,9 +270,8 @@ namespace AppService.Repository
                     return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
                 }
 
-                if (currentUser  != null)
+                if (currentUser != null)
                 {
-                  
                     currentUser.FirstName = model.FirstName;
                     currentUser.LastName = model.LastName;
                     currentUser.MiddleName = model.MiddleName;
@@ -350,6 +349,7 @@ namespace AppService.Repository
         {
             var currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
+            if (currentUser == null) return ResponseViewModel.Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
             try
             {
                 _otpAppService.ValidateOTP(currentUser.Id, model.Code);
@@ -426,7 +426,7 @@ namespace AppService.Repository
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                AppUser user = await _userManager.FindByEmailAsync(model.Email);
 
                 if (!user.EmailConfirmed)
                 {
@@ -453,22 +453,7 @@ namespace AppService.Repository
 
                 if (token.Succeeded)
                 {
-                    var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.COMPLETE_RESET_PASSWORD_EMAIL_TEMPLATE);
-
-                    Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
-                    {
-                         { Placeholder.NAME, user.FirstName }
-                    };
-
-                    if (contentReplacements != null)
-                    {
-                        foreach (KeyValuePair<string, string> pair in contentReplacements)
-                        {
-                            emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
-                        }
-                    }
-
-                    _ = _emailService.SendEmail(user.Email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
+                    _ = _emailService.SendCompleteResetPassword(user.Email, user.FirstName);
 
                     return ResponseViewModel.Ok();
                 }
@@ -550,23 +535,7 @@ namespace AppService.Repository
 
                 var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes);
 
-                var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.REQUEST_OTP_EMAIL_TEMPLATE);
-
-                Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
-                {
-                     { Placeholder.OTP, code },
-                     { Placeholder.EXPIRES, $"{_settings.OtpExpirationInMinutes} {Placeholder.MINUTES}" }
-                };
-
-                if (contentReplacements != null)
-                {
-                    foreach (KeyValuePair<string, string> pair in contentReplacements)
-                    {
-                        emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
-                    }
-                }
-
-                _ = _emailService.SendEmail(user.Email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
+                _ = _emailService.SendRequestTokenEmail(user.Email, code);
 
                 return ResponseViewModel.Ok(ResponseMessageViewModel.CONFIRMATION_CODE_SENT.Replace(Placeholder.EMAIL_PLACEHOLDER, user.Email)).AddStatusCode(ResponseErrorCodeStatus.CONFIRMATION_CODE_SENT);
 
