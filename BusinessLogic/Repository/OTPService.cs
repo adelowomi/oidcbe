@@ -21,9 +21,9 @@ namespace BusinessLogic.Repository
             return code;
         }
 
-        public string GenerateCode(int appUserId, int expirationInMunites)
+        public string GenerateCode(int appUserId, int expirationInMunites, string platform)
         {
-            var code  = _otpRepository.GenerateOTP(appUserId, expirationInMunites);
+            var code  = _otpRepository.GenerateOTP(appUserId, expirationInMunites, platform);
 
             return code.Code;
         }

@@ -4,14 +4,16 @@ using Infrastructure.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201106134029_MoreFieldsToAspNetUsers")]
+    partial class MoreFieldsToAspNetUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,17 +294,12 @@ namespace WebAPI.Migrations
                     b.Property<bool>("IsUsed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PlatformId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UsedDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("PlatformId");
 
                     b.ToTable("OTPs");
                 });
@@ -538,30 +535,6 @@ namespace WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentTypes");
-                });
-
-            modelBuilder.Entity("Core.Model.Platform", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Platform");
                 });
 
             modelBuilder.Entity("Core.Model.Plot", b =>
@@ -865,10 +838,6 @@ namespace WebAPI.Migrations
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Core.Model.Platform", "Platform")
-                        .WithMany()
-                        .HasForeignKey("PlatformId");
                 });
 
             modelBuilder.Entity("Core.Model.Offer", b =>

@@ -67,14 +67,14 @@ namespace WebAPI.Controllers
         
         [HttpGet]
         [Route("api/admin/reset")]
-        public async Task<IActionResult> GetResetToken(string email)
+        public async Task<IActionResult> GetResetToken(string email, string platform)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var result = await _userService.ResetPasswordAsync(email);
+            var result = await _userService.ResetPasswordAsync(email, platform);
 
             if (result.Status)
             {

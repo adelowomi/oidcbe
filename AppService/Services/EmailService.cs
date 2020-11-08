@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using AppService.Helpers;
 using AppService.Services.Abstractions;
@@ -80,6 +81,58 @@ namespace AppService.Services
             }
 
             return emailTemplate;
+        }
+
+        /// <summary>
+        /// Send Request Token Email Handler
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public async Task SendRequestTokenEmail(string email, string code, string platform)
+        {
+            var emailHtmlTemplate = GetEmailTemplate(_env, EmailTemplate.RequestOtp(platform));
+
+            Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
+            {
+                { Placeholder.OTP, platform.ToLower() ==  Res.WEB_PLATFORM ? $"{_setting.WebApp.BaseUrl}{_setting.WebApp.Register}{code}" : code },
+                { Placeholder.EXPIRES, $"{_setting.OtpExpirationInMinutes} {Placeholder.MINUTES}" }
+            };
+
+            if (contentReplacements != null)
+            {
+                foreach (KeyValuePair<string, string> pair in contentReplacements)
+                {
+                    emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                }
+            }
+
+            await SendEmail(email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
+        }
+
+        /// <summary>
+        /// Complete Reset Password Email Handler
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public async Task SendCompleteResetPassword(string email, string firstName)
+        {
+            var emailHtmlTemplate = GetEmailTemplate(_env, EmailTemplate.COMPLETE_RESET_PASSWORD_EMAIL_TEMPLATE);
+
+            Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
+                    {
+                         { Placeholder.NAME, firstName }
+                    };
+
+            if (contentReplacements != null)
+            {
+                foreach (KeyValuePair<string, string> pair in contentReplacements)
+                {
+                    emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                }
+            }
+
+            await SendEmail(email, Res.YOUR_NEW_CONFIRMATION_CODE, emailHtmlTemplate);
         }
     }
 }

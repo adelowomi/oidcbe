@@ -477,3 +477,52 @@ VALUES (N'20201106095957_AddedIsUsed', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [EntryName] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [OfficeAddress] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [RCNumber] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [WebsiteUrl] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201106134029_MoreFieldsToAspNetUsers', N'3.1.8');
+
+GO
+
+ALTER TABLE [OTPs] ADD [PlatformId] int NULL;
+
+GO
+
+CREATE TABLE [Platform] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_Platform] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_OTPs_PlatformId] ON [OTPs] ([PlatformId]);
+
+GO
+
+ALTER TABLE [OTPs] ADD CONSTRAINT [FK_OTPs_Platform_PlatformId] FOREIGN KEY ([PlatformId]) REFERENCES [Platform] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201108174902_SomeFieldsAdded', N'3.1.8');
+
+GO
+

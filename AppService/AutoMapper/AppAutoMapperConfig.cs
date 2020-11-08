@@ -29,17 +29,6 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.ConcurrencyStamp, opts => opts.MapFrom(src => src.ConcurrencyStamp ))
                 ;
 
-            CreateMap<AppUser, VendorViewModel>()
-               .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
-               .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
-               .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
-               .ForMember(dest => dest.MiddleName, opts => opts.MapFrom(src => src.MiddleName))
-               .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
-               .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
-               .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender.Name))
-               .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/photo"))
-               .ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/documents"))
-               ;
 
             CreateMap<AppUser, UserViewModel>()
                 .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
@@ -54,6 +43,31 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.HasUploadedDocument, opts => opts.MapFrom(src => src.HasUploadedDocument))
                 ;
 
+            CreateMap<AppUser, VendorViewModel>()
+                 .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
+                 .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+                 .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+                 .ForMember(dest => dest.MiddleName, opts => opts.MapFrom(src => src.MiddleName))
+                 .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
+                 .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender.Name))
+                 .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/photo"))
+                 .ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/documents"))
+                 ;
+
+            CreateMap<VendorInputModel, AppUser>()
+                .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.Gender, opts => opts.Ignore())
+                .ForMember(dest => dest.LastName, opts => opts.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.MiddleName, opts => opts.MapFrom(src => src.MiddleName))
+                .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.ResidentialAddress, opts => opts.MapFrom(src => src.ResidentialAddress))
+                .ForMember(dest => dest.MailingAddress, opts => opts.MapFrom(src => src.MailingAddress))
+                .ForMember(dest => dest.OfficeAddress, opts => opts.MapFrom(src => src.OfficeAddress))
+                .ForMember(dest => dest.EntryName, opts => opts.MapFrom(src => src.NameOfEntry))
+                .ForMember(dest => dest.WebsiteUrl, opts => opts.MapFrom(src => src.WebSiteUrl))
+                .ForMember(dest => dest.RCNumber, opts => opts.MapFrom(src => src.RCNumber))
+                ;
             CreateMap<VendorNextOfKinInputModel, NextOfKin>()
                 .ForMember(dest => dest.Gender, opts => opts.Ignore())
                 .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))

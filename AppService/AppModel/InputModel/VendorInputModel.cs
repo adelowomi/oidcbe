@@ -6,8 +6,18 @@ using AppService.Helpers;
 
 namespace AppService.AppModel.InputModel
 {
-    public class VendorInputModel : VendorViewModel
+    public class VendorInputModel
     {
+        [Required]
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Gender { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string MiddleName { get; set; }
         [Required]
         public string ResidentialAddress { get; set; }
 
@@ -98,6 +108,17 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public int IdentificationId { get; set; }
+
+        public string WebSiteUrl { get; set; }
+
+        public string OfficeAddress { get; set; }
+
+        public string RCNumber { get; set; }
+
+        public string NameOfEntry { get; set; }
+
+        public VendorNextOfKinInputModel NextOfKin { get; set; }
+
     }
 
     public class VendorNextOfKinInputModel

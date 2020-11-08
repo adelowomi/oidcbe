@@ -277,6 +277,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_STATE = "06";
         public static readonly string INVALID_NEXT_OF_KIN_GENDER = "07";
         public static readonly string INVALID_CONFIRMATION_CODE = "08";
+        
 
         //OTHERS
         public static readonly string EXPIRED_CONFIRMATION_CODE = "09";
@@ -284,7 +285,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string UNABLE_TO_RESET_PASSWORD = "11";
         public static readonly string CHANGE_PASSWORD_FAILED = "12";
         public static readonly string EMAIL_NOT_CONFIRMED = "13";
-
+        public static readonly string INVALID_EMAIL_ADDRESS = "14";
 
         //FAILURES
         public static readonly string FAIL = "91";
