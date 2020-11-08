@@ -29,7 +29,7 @@ namespace Infrastructure.DataAccess.Repository
             var otp = CreateAndReturn(new OTP {
                 AppUserId = userId,
                 Code = token,
-                PlatformId = platform.ToLower() == "Web" ? 1 : 2,
+                PlatformId = platform.ToLower() == "web" ? 1 : 2,
                 IsExpired = false,
                 ExpiryDateTime = DateTime.Now.AddMinutes(expiryInMinutes),
                 DateCreated = DateTime.Now,
