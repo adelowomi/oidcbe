@@ -29,8 +29,48 @@ namespace AppService.AppModel.ViewModel
 
         public string DocumentUrl { get; set; }
 
-        public int ProfileProgess { get; set; }
+        public int ProfileProgess
+        {
+            get {
+                int totalProgress = 0;
+                if (!string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName))
+                {
+                    totalProgress += 10;
+                }
 
+                if (!string.IsNullOrEmpty(Gender))
+                {
+                    totalProgress += 10;
+                }
+
+                if (!string.IsNullOrEmpty(PhoneNumber))
+                {
+                    totalProgress += 10;
+                }
+
+                if (HasConfirmedEmail)
+                {
+                    totalProgress += 10;
+                }
+
+                if (HasUploadedProfilePhoto)
+                {
+                    totalProgress += 10;
+                }
+
+                if (HasUploadedDocument)
+                {
+                    totalProgress += 10;
+                }
+
+                if (!string.IsNullOrEmpty(Gender))
+                {
+                    totalProgress += 10;
+                }
+
+                return totalProgress;
+            }
+        }
         public string WebSiteUrl { get; set; }
 
         public string OfficeAddress { get; set; }
