@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
@@ -34,6 +35,11 @@ namespace Infrastructure.DataAccess.Repository
         public OrganizationType GetOrganizationType(int type)
         {
             return _context.OrganizationTypes.FirstOrDefault(x => x.Id == type);
+        }
+
+        public ICollection<PaymentProvider> GetPaymentProviders()
+        {
+            return (ICollection<PaymentProvider>)_context.PaymentMethods;
         }
     }
 }

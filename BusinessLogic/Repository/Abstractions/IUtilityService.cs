@@ -9,5 +9,7 @@ namespace BusinessLogic.Repository.Abstractions
         Gender GetGender(int id);
 
         Gender GetGender(string name);
+
+        IEnumerable<PaymentProvider> GetPaymentProviders();
     }
 }
