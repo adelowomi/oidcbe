@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
@@ -15,12 +16,12 @@ namespace Infrastructure.DataAccess.Repository
 
         public Plot GetPlotById(int id)
         {
-            throw new NotImplementedException();
+            return GetAll().FirstOrDefault();
         }
 
         public IEnumerable<Plot> GetPlots()
         {
-            throw new NotImplementedException();
+            return GetAll();
         }
     }
 }

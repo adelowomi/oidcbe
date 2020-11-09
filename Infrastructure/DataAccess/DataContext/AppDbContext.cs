@@ -43,5 +43,16 @@ namespace Infrastructure.DataAccess.DataContext
         public DbSet<NextOfKin> NextOfKins { get; set; }
 
         public DbSet<State> States { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<AppUser>().HasData(
+            //    new AppUser
+            //    {
+
+            //    }
+            //);
+        }
     }
 }

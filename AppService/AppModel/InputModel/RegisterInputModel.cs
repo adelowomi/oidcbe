@@ -30,7 +30,6 @@ namespace AppService.AppModel.InputModel
         [Range(1, 2, ErrorMessage = "Invalid Organization Type")]
         public OrganizationEnumType OrganizationType { get; set; }
 
-        [Required]
         public string Platform { get; set; }
     }
 
