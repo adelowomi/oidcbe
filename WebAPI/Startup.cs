@@ -100,7 +100,11 @@ namespace WebAPI
             services.AddTransient<IOTPRepository, OTPRepository>();
             services.AddTransient<IOTPService, OTPService>();
             services.AddTransient<IOTPAppService, OTPAppService>();
-           // services.AddTransient<ISendGridClient, SendGridClient>();
+
+            services.AddTransient<IPlotRepository, PlotRepository>();
+            services.AddTransient<IPlotService, PlotService>();
+            services.AddTransient<IPlotAppService, PlotAppService>();
+            
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

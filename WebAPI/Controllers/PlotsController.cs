@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Authorize(Policy = "PlotPolicy")]
+    [Authorize]
     public class PlotsController : Controller
     {
         private IPlotAppService _plotService;
@@ -20,20 +21,20 @@ namespace WebAPI.Controllers
             _plotService = plotService;
         }
 
-        [HttpGet]
-        [Route("api/plot/{id}")]
-        public IActionResult GetByPlotId(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+        //[HttpGet]
+        //[Route("api/plot/{id}")]
+        //public IActionResult GetByPlotId(int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return Ok(_plotService.GetPlotById(id));
-        }
+        //    return Ok(_plotService.GetPlotById(id));
+        //}
 
         [HttpGet]
-        [Route("api/plot/{vendorId}")]
+        [Route("api/plot)]
         public IActionResult GetByVendorId(int vendorId)
         {
             if (!ModelState.IsValid)
@@ -41,7 +42,19 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_plotService.GetByVendorId(vendorId));
+            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(vendorId)));
+        }
+
+        [HttpGet]
+        [Route("api/plot/subscriber)]
+        public IActionResult GetBySubcriberId(int subscriberId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(subscriberId)));
         }
 
         [HttpGet]
