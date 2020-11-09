@@ -43,6 +43,7 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.HasConfirmedEmail, opts => opts.MapFrom(src => src.EmailConfirmed))
                 .ForMember(dest => dest.HasUploadedProfilePhoto, opts => opts.MapFrom(src => src.HasUploadedProfilePhoto))
                 .ForMember(dest => dest.HasUploadedDocument, opts => opts.MapFrom(src => src.HasUploadedDocument))
+                .ForMember(dest => dest.UserTypeId, opts => opts.MapFrom(src => src.OrganizationTypeId))
                 ;
 
             CreateMap<AppUser, VendorViewModel>()

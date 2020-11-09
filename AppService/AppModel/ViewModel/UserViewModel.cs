@@ -34,5 +34,7 @@ namespace AppService.AppModel.ViewModel
         public bool HasUploadedDocument { get; set; }
 
         public bool HasUploadedProfilePhoto { get; set; }
+
+        public int UserTypeId { get; set; }
     }
 }

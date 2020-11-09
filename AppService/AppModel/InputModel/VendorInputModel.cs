@@ -122,6 +122,7 @@ namespace AppService.AppModel.InputModel
 
         public VendorNextOfKinInputModel NextOfKin { get; set; }
 
+        
     }
 
     public class VendorNextOfKinInputModel
