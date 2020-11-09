@@ -282,11 +282,16 @@ namespace AppService.Repository
                     if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
                     {
                         currentUser.ProfilePhoto = model.SaveProfilePhoto(_settings);
+
+                        currentUser.HasUploadedProfilePhoto = string.IsNullOrEmpty(currentUser.ProfilePhoto);
+
                     }
 
                     if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
                     {
                         currentUser.IdentityDocument = model.SaveIdentityDocument(_settings);
+
+                        currentUser.HasUploadedDocument = string.IsNullOrEmpty(currentUser.IdentityDocument);
                     }
 
                     var gender = _utilityRepository.GetGenderByName(model.Gender);
@@ -317,12 +322,47 @@ namespace AppService.Repository
 
                         if (nextOfKinGender == null)
                         {
-                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
+                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_NEXT_OF_KIN_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
                         }
 
                         nextOfKin.GenderId = nextOfKinGender.Id;
 
                         _utilityRepository.AddNextOfKin(nextOfKin);
+                    }
+
+                    var userType = _utilityRepository.GetOrganizationType(model.UserTypeId);
+
+                    if(userType == null)
+                    {
+                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_ORGANIZATION_TYPE, ResponseErrorCodeStatus.INVALID_ORGANIZATION_TYPE);
+                    }
+
+                    currentUser.OrganizationTypeId = model.UserTypeId;
+
+                    if(model.UserTypeId == (int) OrganizationEnumType.CORPORATE)
+                    {
+                        if(string.IsNullOrEmpty(model.RCNumber))
+                        {
+                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_RC_NUMBER, ResponseErrorCodeStatus.INVALID_RC_NUMBER);
+                        }
+
+                        currentUser.RCNumber = model.RCNumber;
+
+                        if(string.IsNullOrEmpty(model.OfficeAddress))
+                        {
+                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_OFFICE_ADDRESS, ResponseErrorCodeStatus.INVALID_OFFICE_ADDRESS);
+                        }
+
+                        currentUser.OfficeAddress = model.OfficeAddress;
+
+                        if (string.IsNullOrEmpty(model.NameOfEntry))
+                        {
+                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_NAME_NAME_OF_ENTRY, ResponseErrorCodeStatus.INVALID_NAME_NAME_OF_ENTRY);
+                        }
+
+                        currentUser.EntryName = model.NameOfEntry;
+
+                        currentUser.WebsiteUrl = model.WebSiteUrl;
                     }
 
                     await _userManager.UpdateAsync(currentUser);
@@ -391,7 +431,7 @@ namespace AppService.Repository
 
                 Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                 {
-                     { Placeholder.OTP, platform.ToLower() ==  Res.WEB_PLATFORM ? $"{_settings.WebApp.BaseUrl}{_settings.WebApp.Register}{user.OTP}" : user.OTP },
+                     { Placeholder.OTP, platform == null ? user.OTP : platform.ToLower() ==  Res.WEB_PLATFORM ? $"{_settings.WebApp.BaseUrl}{_settings.WebApp.ResetPassword}{user.OTP}" : user.OTP },
                      { Placeholder.EXPIRES, $"{_settings.OtpExpirationInMinutes} {Placeholder.MINUTES}" }
                 };
 

@@ -30,5 +30,10 @@ namespace Infrastructure.DataAccess.Repository
         {
             return GetAll().FirstOrDefault(g => g.Name == gender);
         }
+
+        public OrganizationType GetOrganizationType(int type)
+        {
+            return _context.OrganizationTypes.FirstOrDefault(x => x.Id == type);
+        }
     }
 }

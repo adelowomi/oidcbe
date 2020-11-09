@@ -59,7 +59,10 @@ namespace AppService.AppModel.InputModel
                 return profilePhotoPath;
 
             }
-            catch (Exception e) { return null; }
+            catch (Exception e) {
+                
+                return null;
+            }
         }
 
         [Required]
@@ -119,6 +122,7 @@ namespace AppService.AppModel.InputModel
 
         public VendorNextOfKinInputModel NextOfKin { get; set; }
 
+        
     }
 
     public class VendorNextOfKinInputModel

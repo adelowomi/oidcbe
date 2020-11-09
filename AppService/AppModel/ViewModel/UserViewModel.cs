@@ -27,8 +27,14 @@ namespace AppService.AppModel.ViewModel
 
         public string PhotoUrl { get; set; }
 
+        public string DocumentUrl { get; set; }
+
         public bool HasConfirmedEmail { get; set; }
 
         public bool HasUploadedDocument { get; set; }
+
+        public bool HasUploadedProfilePhoto { get; set; }
+
+        public int UserTypeId { get; set; }
     }
 }

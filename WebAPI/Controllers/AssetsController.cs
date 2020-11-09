@@ -49,13 +49,26 @@ namespace WebAPI.Controllers
         ///  This method returns the raw file of an image, thereby mimicking access over web
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/assets/photo")]
-        public async Task<IActionResult> GetProfilePictureAsync()
+        public async Task<IActionResult> GetProfilePictureAsync(int id)
         {
-            var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+            var currentUser = await _userManager.FindByIdAsync(id.ToString());
             var fullPath = Path.Combine(_settings.UploadDrive, _settings.DriveName);
             var file = Path.Combine(fullPath, currentUser.ProfilePhoto ?? "Avatar.png");
+            Byte[] bytes = System.IO.File.ReadAllBytes(file);
+            return File(bytes, "image/jpeg");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/assets/document")]
+        public async Task<IActionResult> GetProfileDocumentAsync(int id)
+        {
+            var currentUser = await _userManager.FindByIdAsync(id.ToString());
+            var fullPath = Path.Combine(_settings.UploadDrive, _settings.DriveName);
+            var file = Path.Combine(fullPath, currentUser.IdentityDocument ?? "Avatar.png");
             Byte[] bytes = System.IO.File.ReadAllBytes(file);
             return File(bytes, "image/jpeg");
         }

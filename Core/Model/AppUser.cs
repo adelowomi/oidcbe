@@ -34,6 +34,10 @@ namespace Core.Model
 
         public Identification Identification { get; set; }
 
+        public int? OrganizationTypeId { get; set; }
+
+        public OrganizationType OrganizationType { get; set; }
+
         public State State { get; set; }
 
         public IEnumerable<Plot> Plots { get; set; }
@@ -43,6 +47,8 @@ namespace Core.Model
         public IEnumerable<Subscription> Subscriptions { get; set; }
 
         public bool HasUploadedDocument { get; set; }
+
+        public bool HasUploadedProfilePhoto { get; set; }
 
         public string EntryName { get; set; }
 

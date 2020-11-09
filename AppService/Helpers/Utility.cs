@@ -54,7 +54,7 @@ namespace AppService.Helpers
 
         public static string ResetPassword(string platform)
         {
-            return platform.ToLower() == "web" ? REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE_WEB : REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE;
+            return platform == null ? REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE : platform.ToLower() == "web" ? REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE_WEB : REQUEST_RESET_PASSWORD_EMAIL_TEMPLATE;
         }
 
         public static string Welcome(string platform)
