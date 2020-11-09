@@ -34,27 +34,27 @@ namespace WebAPI.Controllers
         //}
 
         [HttpGet]
-        [Route("api/plot)]
-        public IActionResult GetByVendorId(int vendorId)
+        [Route("api/plot/vendor")]
+        public IActionResult GetByVendorId()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(vendorId)));
+            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
         }
 
         [HttpGet]
-        [Route("api/plot/subscriber)]
-        public IActionResult GetBySubcriberId(int subscriberId)
+        [Route("api/plot/subscriber")]
+        public IActionResult GetBySubcriberId()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(subscriberId)));
+            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
         }
 
         [HttpGet]
