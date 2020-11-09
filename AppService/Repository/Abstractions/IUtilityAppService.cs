@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AppService.AppModel.ViewModel;
 
 namespace AppService.Repository.Abstractions
@@ -8,5 +9,7 @@ namespace AppService.Repository.Abstractions
         GenderViewModel GenderById(int id);
 
         GenderViewModel GenderByName(string name);
+
+        IEnumerable<PaymentProviderViewModel> GetPaymentProviders();
     }
 }

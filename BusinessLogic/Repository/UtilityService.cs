@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Infrastructure.DataAccess.Repository.Abstractions;
@@ -21,6 +22,11 @@ namespace BusinessLogic.Repository
         public Gender GetGender(string name)
         {
             return _utilityRepository.GetGenderByName(name);
+        }
+
+        public IEnumerable<PaymentProvider> GetPaymentProviders()
+        {
+            return _utilityRepository.GetPaymentProviders();
         }
     }
 }

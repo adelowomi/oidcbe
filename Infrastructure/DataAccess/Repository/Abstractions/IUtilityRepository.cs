@@ -14,5 +14,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         NextOfKin AddNextOfKin(NextOfKin nextOfKin);
 
         OrganizationType GetOrganizationType(int type);
+
+        ICollection<PaymentProvider> GetPaymentProviders();
     }
 }

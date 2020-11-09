@@ -83,6 +83,11 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Address))
                 ;
 
+            CreateMap<PaymentProvider, PaymentProviderViewModel>()
+
+               .ForMember(dest => dest.PaymentProviderName, opts => opts.MapFrom(src => src.Name))
+               ;
+
 
             CreateMap<Plot, PlotViewModel>()
                 .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))
