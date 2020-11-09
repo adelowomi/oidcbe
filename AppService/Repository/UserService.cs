@@ -282,12 +282,15 @@ namespace AppService.Repository
                     if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
                     {
                         currentUser.ProfilePhoto = model.SaveProfilePhoto(_settings);
-                        
+
+                        currentUser.HasUploadedProfilePhoto = string.IsNullOrEmpty(currentUser.ProfilePhoto);
+
                     }
 
                     if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
                     {
                         currentUser.IdentityDocument = model.SaveIdentityDocument(_settings);
+
                         currentUser.HasUploadedDocument = string.IsNullOrEmpty(currentUser.IdentityDocument);
                     }
 

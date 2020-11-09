@@ -40,5 +40,13 @@ namespace AppService.AppModel.ViewModel
         public string NameOfEntry { get; set; }
 
         public VendorNextOfKinInputModel NextOfKin { get; set; }
+
+        public bool HasConfirmedEmail { get; set; }
+
+        public bool HasUploadedDocument { get; set; }
+
+        public bool HasUploadedProfilePhoto { get; set; }
+
+
     }
 }

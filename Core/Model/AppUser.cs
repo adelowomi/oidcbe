@@ -48,6 +48,8 @@ namespace Core.Model
 
         public bool HasUploadedDocument { get; set; }
 
+        public bool HasUploadedProfilePhoto { get; set; }
+
         public string EntryName { get; set; }
 
         public string RCNumber { get; set; }

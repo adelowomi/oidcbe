@@ -543,3 +543,12 @@ VALUES (N'20201109001411_AddOrganizationTypeIdToAppUser', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [HasUploadedProfilePhoto] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201109005617_HasUploadedPhoto', N'3.1.8');
+
+GO
+
