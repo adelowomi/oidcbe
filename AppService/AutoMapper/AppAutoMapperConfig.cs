@@ -51,6 +51,7 @@ namespace AppService.AutoMapper
                  .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
                  .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
                  .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender.Name))
+                 .ForMember(dest => dest.NameOfEntry, opts => opts.MapFrom(src => src.EntryName))
                  .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/photo"))
                  .ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/documents"))
                  ;

@@ -59,7 +59,10 @@ namespace AppService.AppModel.InputModel
                 return profilePhotoPath;
 
             }
-            catch (Exception e) { return null; }
+            catch (Exception e) {
+                
+                return null;
+            }
         }
 
         [Required]

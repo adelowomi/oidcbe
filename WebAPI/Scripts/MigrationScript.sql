@@ -526,3 +526,20 @@ VALUES (N'20201108174902_SomeFieldsAdded', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [OrganizationTypeId] int NULL;
+
+GO
+
+CREATE INDEX [IX_AspNetUsers_OrganizationTypeId] ON [AspNetUsers] ([OrganizationTypeId]);
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD CONSTRAINT [FK_AspNetUsers_OrganizationTypes_OrganizationTypeId] FOREIGN KEY ([OrganizationTypeId]) REFERENCES [OrganizationTypes] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201109001411_AddOrganizationTypeIdToAppUser', N'3.1.8');
+
+GO
+

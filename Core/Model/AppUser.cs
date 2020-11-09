@@ -34,6 +34,10 @@ namespace Core.Model
 
         public Identification Identification { get; set; }
 
+        public int? OrganizationTypeId { get; set; }
+
+        public OrganizationType OrganizationType { get; set; }
+
         public State State { get; set; }
 
         public IEnumerable<Plot> Plots { get; set; }

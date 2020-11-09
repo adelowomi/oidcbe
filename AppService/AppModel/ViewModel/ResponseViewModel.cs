@@ -245,6 +245,10 @@ namespace AppService.AppModel.ViewModel
         public static string CHANGE_PASSWORD_FAILED = "Change Password Failed, Please try again!";
         public static string UNABLE_TO_CREATE = "Unable to create account";
         public static string EMAIL_NOT_CONFIRMED = "Email has not been confirmed, kindly confirm.";
+        public static string INVALID_ORGANIZATION_TYPE = "Please select Organization Type and try again!";
+        public static string INVALID_RC_NUMBER = "Please Enter Organization RC Number";
+        public static string INVALID_OFFICE_ADDRESS = "Please enter Office Address";
+        public static string INVALID_NAME_NAME_OF_ENTRY = "Please ennter name of entry and try again!";
     }
 
     /// <summary>
@@ -286,6 +290,10 @@ namespace AppService.AppModel.ViewModel
         public static readonly string CHANGE_PASSWORD_FAILED = "12";
         public static readonly string EMAIL_NOT_CONFIRMED = "13";
         public static readonly string INVALID_EMAIL_ADDRESS = "14";
+        public static readonly string INVALID_ORGANIZATION_TYPE = "15";
+        public static readonly string INVALID_RC_NUMBER = "16";
+        public static readonly string INVALID_OFFICE_ADDRESS = "17";
+        public static readonly string INVALID_NAME_NAME_OF_ENTRY = "18";
 
         //FAILURES
         public static readonly string FAIL = "91";
