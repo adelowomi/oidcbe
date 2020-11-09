@@ -48,6 +48,9 @@
   <ItemGroup> 
   <Content Include="Templates\**"> 
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+  </Content>
+  <Content Include="Drive\**"> 
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
   </Content> 
 </ItemGroup>
 </Project>
