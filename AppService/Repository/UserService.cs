@@ -165,9 +165,9 @@ namespace AppService.Repository
 
                 if(result.Succeeded) {
 
-                   var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.Welcome(model.Platform));
+                   var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.Welcome(model.Platform ?? Res.WEB_PLATFORM));
 
-                    var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes, model.Platform);
+                    var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes, model.Platform ?? Res.WEB_PLATFORM);
 
                     Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                     {
