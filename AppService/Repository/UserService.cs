@@ -172,7 +172,7 @@ namespace AppService.Repository
                     Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                     {
                         { Placeholder.EMAIL, user.Email },
-                        { Placeholder.OTP, model.Platform.ToLower() ==  Res.WEB_PLATFORM ? $"{_settings.WebApp.BaseUrl}{_settings.WebApp.Register}{code}" : code },
+                        { Placeholder.OTP, (model.Platform ?? Res.WEB_PLATFORM).ToLower() ==  Res.WEB_PLATFORM ? $"{_settings.WebApp.BaseUrl}{_settings.WebApp.Register}{code}" : code },
                     };
 
                     if (contentReplacements != null)
@@ -389,9 +389,16 @@ namespace AppService.Repository
 
         public ResponseViewModel ConfirmOTP(ConfirmOTPInputModel model)
         {
-            var currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
+            var currentUser = new AppUser().Empty;
 
-            if (currentUser == null) return ResponseViewModel.Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
+            if (model.Platform == Res.MOBILE_PLATFORM) {
+
+                 currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
+
+                if (currentUser == null) return ResponseViewModel.Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
+
+            }
+            
             try
             {
                 _otpAppService.ValidateOTP(currentUser.Id, model.Code, model.Platform);

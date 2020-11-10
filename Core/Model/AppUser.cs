@@ -57,5 +57,7 @@ namespace Core.Model
         public string OfficeAddress { get; set; }
 
         public string WebsiteUrl { get; set; }
+
+        public virtual AppUser Empty => new AppUser();
     }
 }

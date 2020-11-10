@@ -38,7 +38,7 @@ namespace Infrastructure.DataAccess.Repository
         public OTP ConfirmToken(int userId, string token, string platform)
         {
 
-            if(platform.ToLower() == "web")
+            if((platform ?? "Web").ToLower() == "web")
             {
                 return ConfirmTokenSlug(token);
             }
