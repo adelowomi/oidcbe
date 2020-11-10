@@ -5,6 +5,7 @@ using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using AppService.Helpers;
 
 namespace AppService.Repository
 {
@@ -19,9 +20,9 @@ namespace AppService.Repository
             _userManager = userManager;
         }
 
-        public OTP ValidateOTP(int userId, string token)
+        public OTP ValidateOTP(int userId, string token, string platform)
         {
-            var code = _otpService.ConfirmToken(userId, token);
+            var code = _otpService.ConfirmToken(userId, token, platform);
 
             if(code == null)
             {
@@ -33,11 +34,16 @@ namespace AppService.Repository
 
             }
 
-            var user = _userManager.FindByIdAsync(userId.ToString()).Result;
+            if(platform.ToLower() == Res.MOBILE_PLATFORM)
+            {
+                var user = _userManager.FindByIdAsync(userId.ToString()).Result;
 
-            user.EmailConfirmed = true;
+                user.EmailConfirmed = true;
 
-            _ = _userManager.UpdateAsync(user).Result;
+                _ = _userManager.UpdateAsync(user).Result;
+
+                return code;
+            }
 
             return code;
         }

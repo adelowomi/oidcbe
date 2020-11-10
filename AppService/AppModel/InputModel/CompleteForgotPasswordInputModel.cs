@@ -23,5 +23,7 @@ namespace AppService.AppModel.InputModel
         public string ConfirmPassword { get; set; }
 
         public string OtpCode { get; set; }
+
+        public string Platform { get; set; }
     }
 }

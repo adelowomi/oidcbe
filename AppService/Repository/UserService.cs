@@ -167,10 +167,12 @@ namespace AppService.Repository
 
                    var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.Welcome(model.Platform));
 
+                    var code = _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes, model.Platform);
+
                     Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
                     {
                         { Placeholder.EMAIL, user.Email },
-                        { Placeholder.OTP, _otpService.GenerateCode(user.Id, _settings.OtpExpirationInMinutes, model.Platform) }
+                        { Placeholder.OTP, model.Platform.ToLower() ==  Res.WEB_PLATFORM ? $"{_settings.WebApp.BaseUrl}{_settings.WebApp.Register}{code}" : code },
                     };
 
                     if (contentReplacements != null)
@@ -392,7 +394,7 @@ namespace AppService.Repository
             if (currentUser == null) return ResponseViewModel.Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
             try
             {
-                _otpAppService.ValidateOTP(currentUser.Id, model.Code);
+                _otpAppService.ValidateOTP(currentUser.Id, model.Code, model.Platform);
             }
             catch (InvalidTokenCodeExcepton e)
             {
@@ -475,7 +477,7 @@ namespace AppService.Repository
 
                 try
                 {
-                    _otpAppService.ValidateOTP(user.Id, model.OtpCode);
+                    _otpAppService.ValidateOTP(user.Id, model.OtpCode, model.Platform);
 
                 }
                 catch (InvalidTokenCodeExcepton e) {

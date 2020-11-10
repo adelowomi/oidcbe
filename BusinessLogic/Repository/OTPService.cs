@@ -14,9 +14,9 @@ namespace BusinessLogic.Repository
             _otpRepository = otpRepository;
         }
 
-        public OTP ConfirmToken(int appUserId, string token)
+        public OTP ConfirmToken(int appUserId, string token, string platform)
         {
-            var code = _otpRepository.ConfirmToken(appUserId, token);
+            var code = _otpRepository.ConfirmToken(appUserId, token, platform);
 
             return code;
         }

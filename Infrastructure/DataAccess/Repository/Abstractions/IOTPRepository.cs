@@ -7,6 +7,6 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
     {
         OTP GenerateOTP(int userId, int expiryInMinutes, string platform);
 
-        OTP ConfirmToken(int userId, string token);
+        OTP ConfirmToken(int userId, string token, string platform);
     }
 }
