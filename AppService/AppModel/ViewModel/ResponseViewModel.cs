@@ -54,6 +54,13 @@ namespace AppService.AppModel.ViewModel
             Data = data;
         }
 
+        /// <summary>
+        /// Initialize ResponseViewModel(bool status, string message, object data, string statusCode)
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="message"></param>
+        /// <param name="data"></param>
+        /// <param name="statusCode"></param>
         private ResponseViewModel(bool status, string message, object data, string statusCode)
         {
             Status = status;
@@ -62,6 +69,10 @@ namespace AppService.AppModel.ViewModel
             StatusCode = statusCode;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static ResponseViewModel Create()
         {
             return new ResponseViewModel();
@@ -142,6 +153,7 @@ namespace AppService.AppModel.ViewModel
         {
             return new ResponseViewModel(false, message, null, statusCode);
         }
+
         /// <summary>
         ///  Ok that return this
         /// </summary>
@@ -152,7 +164,6 @@ namespace AppService.AppModel.ViewModel
             return new ResponseViewModel(true, message, null, ResponseErrorCodeStatus.OK);
         }
 
-
         /// <summary>
         ///  Ok that return this
         /// </summary>
@@ -162,7 +173,6 @@ namespace AppService.AppModel.ViewModel
         {
             return new ResponseViewModel(true, ResponseMessageViewModel.SUCCESSFUL, data, ResponseErrorCodeStatus.OK);
         }
-
 
         /// <summary>
         ///  Ok that return this
@@ -214,7 +224,6 @@ namespace AppService.AppModel.ViewModel
     /// <summary>
     /// Response message view model.
     /// </summary>
-
     public static class ResponseStatusViewModel
     {
         public readonly static bool SUCCESS = true;
@@ -272,8 +281,7 @@ namespace AppService.AppModel.ViewModel
         //OK = GOOD(LOL, LMAO)
         public static readonly string OK = "00";
         
-
-        //INVALIDS
+        //INVALID
         public static readonly string VALIDATION_ERROR = "02";
         public static readonly string ACCOUNT_ALREADY_EXIST = "03";
         public static readonly string INVALID_CREDENTIALS = "04";
@@ -282,7 +290,6 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_NEXT_OF_KIN_GENDER = "07";
         public static readonly string INVALID_CONFIRMATION_CODE = "08";
         
-
         //OTHERS
         public static readonly string EXPIRED_CONFIRMATION_CODE = "09";
         public static readonly string CONFIRMATION_CODE_SENT = "10";

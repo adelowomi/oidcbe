@@ -9,6 +9,8 @@ namespace Core.Model
 
         public string Code { get; set; }
 
+        public string CodeSlug { get; set; }
+
         public int? PlatformId { get; set; }
 
         public Platform Platform { get; set; }

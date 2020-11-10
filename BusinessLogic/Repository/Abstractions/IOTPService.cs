@@ -7,6 +7,6 @@ namespace BusinessLogic.Repository.Abstractions
     {
         string GenerateCode(int appUserId, int expirationInMunites, string platform);
 
-        OTP ConfirmToken(int appUserId, string token);
+        OTP ConfirmToken(int appUserId, string token, string platform);
     }
 }

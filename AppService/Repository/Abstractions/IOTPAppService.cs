@@ -6,6 +6,6 @@ namespace AppService.Repository.Abstractions
 {
     public interface IOTPAppService
     {
-        OTP ValidateOTP(int userId, string token);
+        OTP ValidateOTP(int userId, string token, string platform);
     }
 }
