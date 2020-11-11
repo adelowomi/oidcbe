@@ -396,7 +396,6 @@ namespace AppService.Repository
                  currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
                 if (currentUser == null) return ResponseViewModel.Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
-
             }
             
             try

@@ -4,17 +4,34 @@ using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
 
+/// <summary>
+///  LICENSE:   ALL RIGHT RESERVED TO COUSANT LIMITED (2020)
+/// </summary>
 namespace Infrastructure.DataAccess.Repository
 {
+    /// <summary>
+    /// Concrete Implementation Of IOTPRepository
+    /// </summary>
     public class OTPRepository : BaseRepository<OTP>, IOTPRepository
     {
         private static Random random = new Random();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
         public OTPRepository(AppDbContext context) : base(context)
         {
 
         }
 
+        /// <summary>
+        /// Method To Generate OTP
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="expiryInMinutes"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
         public OTP GenerateOTP(int userId, int expiryInMinutes, string platform)
         {
             var token = RandomNumber(4);
@@ -35,6 +52,13 @@ namespace Infrastructure.DataAccess.Repository
             return otp;
         }
 
+        /// <summary>
+        /// Method To Confirm OTP Code
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="token"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
         public OTP ConfirmToken(int userId, string token, string platform)
         {
 
@@ -67,6 +91,11 @@ namespace Infrastructure.DataAccess.Repository
             return code;
         }
 
+        /// <summary>
+        /// This Method Confirms Confirmation Link Sent Via Web Channel
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
         public OTP ConfirmTokenSlug(string slug)
         {
             var code = GetAll().FirstOrDefault(x => x.CodeSlug == slug && x.IsExpired == false);
@@ -91,11 +120,23 @@ namespace Infrastructure.DataAccess.Repository
             return code;
         }
 
+        /// <summary>
+        /// Confirm OTP Code Method Overload
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="token"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
         public OTP ConfirmToken(int userId, OTP token, string platform)
         {
             return ConfirmToken(userId, token.Code, platform);
         }
 
+        /// <summary>
+        /// Utility Method To Generate Random Number
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public static string RandomNumber(int length)
         {
             const string chars = "0123456789";
@@ -103,6 +144,11 @@ namespace Infrastructure.DataAccess.Repository
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        /// <summary>
+        /// Utility Method To Generate Random String For Web Confirmation Link
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public static string RandomAlphaNumeric(int length)
         {
             const string chars = "abcdefghkmnopqrstuvABCDEFGHKMNOPWRSTUV";

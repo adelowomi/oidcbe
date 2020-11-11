@@ -34,7 +34,7 @@ namespace AppService.Repository
 
             }
 
-            if((platform ?? "Web").ToLower() == Res.MOBILE_PLATFORM)
+            if((platform ?? Res.WEB_PLATFORM).ToLower() == Res.MOBILE_PLATFORM)
             {
                 var user = _userManager.FindByIdAsync(userId.ToString()).Result;
 
