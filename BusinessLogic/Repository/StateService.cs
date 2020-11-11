@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Infrastructure.DataAccess.Repository.Abstractions;
