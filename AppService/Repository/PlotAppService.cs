@@ -12,6 +12,11 @@ namespace AppService.Repository
         private readonly IPlotService _plotService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="plotService"></param>
+        /// <param name="mapper"></param>
         public PlotAppService (IPlotService plotService, IMapper mapper)
         {
             _plotService = plotService;

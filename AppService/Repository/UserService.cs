@@ -25,7 +25,10 @@ using AppService.Exceptions;
 
 namespace AppService.Repository
 {
-    
+
+    /// <summary>
+    /// Concrete Implementation IUserService
+    /// </summary>
     public class UserService : IUserService
     {
         protected readonly AppSettings _settings;
