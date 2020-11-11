@@ -3,6 +3,9 @@ using Core.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
+/// <summary>
+///  LICENSE:   ALL RIGHT RESERVED TO COUSANT LIMITED (2020)
+/// </summary>
 namespace Infrastructure.DataAccess.DataContext
 {
     public class AppDbContext : IdentityDbContext<AppUser, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
