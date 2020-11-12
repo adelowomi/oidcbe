@@ -47,5 +47,10 @@ namespace BusinessLogic.Repository
 
             return code.Code;
         }
+
+        public OTP VerifyToken(string token, string platform)
+        {
+            return _otpRepository.GetToken(token, platform);
+        }
     }
 }

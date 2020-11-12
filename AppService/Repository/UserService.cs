@@ -477,7 +477,18 @@ namespace AppService.Repository
         {
             try
             {
-                AppUser user = await _userManager.FindByEmailAsync(model.Email);
+                AppUser user = new AppUser().Empty;
+
+                if (model.Platform.ToLower() == Res.MOBILE_PLATFORM)
+                {
+                    user  = await _userManager.FindByEmailAsync(model.Email);
+
+                } else
+                {
+                    var otpCode = _otpService.VerifyToken(model.OtpCode, model.Platform);
+
+                    user = _userManager.FindByIdAsync(otpCode.AppUserId.ToString()).Result;
+                }
 
                 if (!user.EmailConfirmed)
                 {

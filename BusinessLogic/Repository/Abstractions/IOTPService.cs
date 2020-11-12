@@ -25,5 +25,13 @@ namespace BusinessLogic.Repository.Abstractions
         /// <param name="platform"></param>
         /// <returns></returns>
         OTP ConfirmToken(int appUserId, string token, string platform);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        OTP VerifyToken(string token, string platform);
     }
 }

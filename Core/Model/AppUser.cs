@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Identity;
 namespace Core.Model
 {
     public class AppUser : IdentityUser<int>
-    {
+    { 
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -58,7 +59,7 @@ namespace Core.Model
 
         public string WebsiteUrl { get; set; }
 
-        public bool IsNew { get; set; }
+        public bool IsExisting { get; set; }
 
         public virtual AppUser Empty => new AppUser();
     }

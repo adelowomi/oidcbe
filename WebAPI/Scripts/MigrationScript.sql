@@ -561,3 +561,84 @@ VALUES (N'20201110133333_CodeSlugField', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [IsNew] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [IsSubscriber] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [IsVendor] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201112031525_AddedSomeBooleanValues', N'3.1.8');
+
+GO
+
+ALTER TABLE [OTPs] DROP CONSTRAINT [FK_OTPs_Platform_PlatformId];
+
+GO
+
+ALTER TABLE [Platform] DROP CONSTRAINT [PK_Platform];
+
+GO
+
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUsers]') AND [c].[name] = N'IsSubscriber');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUsers] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [AspNetUsers] DROP COLUMN [IsSubscriber];
+
+GO
+
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUsers]') AND [c].[name] = N'IsVendor');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUsers] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [AspNetUsers] DROP COLUMN [IsVendor];
+
+GO
+
+EXEC sp_rename N'[Platform]', N'Platforms';
+
+GO
+
+ALTER TABLE [Platforms] ADD CONSTRAINT [PK_Platforms] PRIMARY KEY ([Id]);
+
+GO
+
+ALTER TABLE [OTPs] ADD CONSTRAINT [FK_OTPs_Platforms_PlatformId] FOREIGN KEY ([PlatformId]) REFERENCES [Platforms] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201112103557_IsNewProperty', N'3.1.8');
+
+GO
+
+DECLARE @var2 sysname;
+SELECT @var2 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUsers]') AND [c].[name] = N'IsNew');
+IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUsers] DROP CONSTRAINT [' + @var2 + '];');
+ALTER TABLE [AspNetUsers] DROP COLUMN [IsNew];
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [IsExisting] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201112110012_IsExistingProperty', N'3.1.8');
+
+GO
+

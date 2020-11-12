@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Model;
 
 namespace Infrastructure.DataAccess.Repository.Abstractions
@@ -8,5 +9,9 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         int GetCurrentVendors();
 
         int GetNewVendor();
+
+        ICollection<AppUser> GetAllExistingVendors();
+
+        ICollection<AppUser> GetNewVendors();
     }
 }

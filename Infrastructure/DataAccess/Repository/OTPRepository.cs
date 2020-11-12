@@ -98,7 +98,7 @@ namespace Infrastructure.DataAccess.Repository
         /// <returns></returns>
         public OTP ConfirmTokenSlug(string slug)
         {
-            var code = GetAll().FirstOrDefault(x => x.CodeSlug == slug && x.IsExpired == false);
+            var code = GetAll().FirstOrDefault(x => x.CodeSlug == slug);
 
             if (code != null)
             {
@@ -154,6 +154,16 @@ namespace Infrastructure.DataAccess.Repository
             const string chars = "abcdefghkmnopqrstuvABCDEFGHKMNOPWRSTUV";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public OTP GetToken(string code, string platform)
+        {
+            if((platform ?? "Web").ToLower() == "web")
+            {
+                return GetAll().FirstOrDefault(x => x.CodeSlug == code);
+            }
+
+            return GetAll().FirstOrDefault(x => x.Code == code); ;
         }
     }
 }

@@ -1,25 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.DataAccess.Repository
 {
-    public class VendorRepository : BaseRepository<Vendor>, IVendorRepository
+    public class VendorRepository : BaseRepository<Subscription>, IVendorRepository
     {
-        public VendorRepository(AppDbContext context) : base(context)
-        {
 
+        private readonly UserManager<AppUser> _userManager;
+
+        public VendorRepository(AppDbContext context, UserManager<AppUser> userManager) : base(context)
+        {
+            _userManager = userManager;
+        }
+
+        public ICollection<AppUser> GetAllExistingVendors()
+        {
+            var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
+
+            return users.Where(x => x.IsExisting == true).ToList();
         }
 
         public int GetCurrentVendors()
         {
-            throw new NotImplementedException();
+            return GetAllExistingVendors().Count();
         }
 
         public int GetNewVendor()
         {
-            throw new NotImplementedException();
+            return GetNewVendors().Count();
+        }
+
+        public ICollection<AppUser> GetNewVendors()
+        {
+            var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
+
+            return users.Where(x => !x.IsExisting).ToList();
         }
     }
 }

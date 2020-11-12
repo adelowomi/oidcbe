@@ -24,5 +24,13 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// <param name="platform"></param>
         /// <returns></returns>
         OTP ConfirmToken(int userId, string token, string platform);
+
+        /// <summary>
+        /// Get Token Details
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        OTP GetToken(string token, string platform);
     }
 }

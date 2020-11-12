@@ -5,7 +5,7 @@ namespace AppService.AppModel.InputModel
 {
     public class CompleteForgotPasswordInputModel
     {
-        [Required]
+        
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

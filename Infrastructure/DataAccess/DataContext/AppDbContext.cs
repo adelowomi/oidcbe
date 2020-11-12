@@ -1,5 +1,6 @@
 ﻿using System;
 using Core.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,22 +48,13 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<State> States { get; set; }
 
-        public DbSet<Subscriber> Subscribers { get; set; }
-
-        public DbSet<Vendor> Vendors { get; set; }
-
         public DbSet<Platform> Platforms { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            //modelBuilder.Entity<AppUser>().HasData(
-            //    new AppUser
-            //    {
-
-            //    }
-            //);
+            
         }
     }
 }

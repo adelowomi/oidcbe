@@ -104,7 +104,13 @@ namespace WebAPI
             services.AddTransient<IPlotRepository, PlotRepository>();
             services.AddTransient<IPlotService, PlotService>();
             services.AddTransient<IPlotAppService, PlotAppService>();
-            
+
+            services.AddTransient<ISubscriberRepository, SubscriberRepository>();
+            services.AddTransient<ISubscriberService, SubscriberService>();
+            services.AddTransient<ISubscriberAppService, SubscriberAppService>();
+            services.AddTransient<IVendorRepository, VendorRepository>();
+
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
