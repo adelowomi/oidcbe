@@ -12,7 +12,6 @@ namespace WebAPI.Controllers
     public class PaymentsController : Controller
     {
         private IPlotAppService _plotService;
-
         private IUtilityAppService _utilityAppService;
         public PaymentsController(IPlotAppService plotService, IUtilityAppService utilityAppService)
         {

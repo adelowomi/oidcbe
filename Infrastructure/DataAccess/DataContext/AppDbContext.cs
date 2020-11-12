@@ -47,9 +47,16 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<State> States { get; set; }
 
+        public DbSet<Subscriber> Subscribers { get; set; }
+
+        public DbSet<Vendor> Vendors { get; set; }
+
+        public DbSet<Platform> Platforms { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             //modelBuilder.Entity<AppUser>().HasData(
             //    new AppUser
             //    {

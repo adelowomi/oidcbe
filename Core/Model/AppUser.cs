@@ -58,6 +58,8 @@ namespace Core.Model
 
         public string WebsiteUrl { get; set; }
 
+        public bool IsNew { get; set; }
+
         public virtual AppUser Empty => new AppUser();
     }
 }

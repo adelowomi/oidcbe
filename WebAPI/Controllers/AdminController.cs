@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Authorize(Policy = "PlotPolicy")]
+   [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
