@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppService.AppModel.InputModel;
+﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;

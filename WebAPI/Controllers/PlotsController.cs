@@ -21,18 +21,6 @@ namespace WebAPI.Controllers
             _plotService = plotService;
         }
 
-        //[HttpGet]
-        //[Route("api/plot/{id}")]
-        //public IActionResult GetByPlotId(int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    return Ok(_plotService.GetPlotById(id));
-        //}
-
         [HttpGet]
         [Route("api/plot/vendor")]
         public IActionResult GetByVendorId()

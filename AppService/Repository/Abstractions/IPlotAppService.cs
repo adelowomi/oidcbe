@@ -1,5 +1,6 @@
 ﻿using System;
 using AppService.AppModel.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppService.Repository.Abstractions
 {
@@ -21,5 +22,7 @@ namespace AppService.Repository.Abstractions
         /// <param name="id"></param>
         /// <returns></returns>
         public PlotViewModel GetByVendorId(int id);
+
+        public IActionResult GetVendorByName(string name);
     }
 }
