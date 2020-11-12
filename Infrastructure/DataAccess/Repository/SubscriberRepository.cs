@@ -20,8 +20,9 @@ namespace Infrastructure.DataAccess.Repository
 
         public ICollection<AppUser> GetAllExistingSubcribers()
         {
-            var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
+            //   var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
 
+            var users = _context.Users;
             return users.ToList();
             //return users.Where(x => x.IsExisting == true).ToList();
         }
