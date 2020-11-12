@@ -5,6 +5,7 @@ namespace BusinessLogic.Repository
     {
         public VendorService()
         {
+
         }
     }
 }

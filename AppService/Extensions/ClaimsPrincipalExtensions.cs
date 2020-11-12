@@ -7,6 +7,12 @@ namespace AppService.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
+        /// <summary>
+        /// Get Logged In User Id Using Generic Method With Type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="principal"></param>
+        /// <returns></returns>
         public static T GetLoggedInUserId<T>(this ClaimsPrincipal principal)
         {
             if (principal == null)
@@ -28,6 +34,11 @@ namespace AppService.Extensions
             }
         }
 
+        /// <summary>
+        /// Get Current Logged On User Name, this username could be an email
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <returns></returns>
         public static string GetLoggedInUserName(this ClaimsPrincipal principal)
         {
             if (principal == null)
@@ -36,6 +47,11 @@ namespace AppService.Extensions
             return principal.FindFirstValue(ClaimTypes.Name);
         }
 
+        /// <summary>
+        /// This Method Returns The Current Logged On User Email
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <returns></returns>
         public static string GetLoggedInUserEmail(this ClaimsPrincipal principal)
         {
             if (principal == null)

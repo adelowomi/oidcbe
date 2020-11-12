@@ -61,6 +61,11 @@ namespace WebAPI.Controllers
             return File(bytes, "image/jpeg");
         }
 
+        /// <summary>
+        /// Get Document
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         [Route("api/assets/document")]

@@ -5,10 +5,20 @@ using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
 
+/// <summary>
+///  LICENSE:   ALL RIGHT RESERVED TO COUSANT LIMITED (2020)
+/// </summary>
 namespace Infrastructure.DataAccess.Repository
 {
+    /// <summary>
+    /// Concrete Implementation Of IUtilityRepository
+    /// </summary>
     public class UtilityRepository : BaseRepository<Gender>, IUtilityRepository
     {
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="context"></param>
         public UtilityRepository(AppDbContext context) : base(context)
         {
 

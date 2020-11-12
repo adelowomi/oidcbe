@@ -25,7 +25,10 @@ using AppService.Exceptions;
 
 namespace AppService.Repository
 {
-    
+
+    /// <summary>
+    /// Concrete Implementation IUserService
+    /// </summary>
     public class UserService : IUserService
     {
         protected readonly AppSettings _settings;
@@ -396,7 +399,6 @@ namespace AppService.Repository
                  currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
                 if (currentUser == null) return ResponseViewModel.Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
-
             }
             
             try

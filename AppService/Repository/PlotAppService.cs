@@ -4,14 +4,20 @@ using AppService.Repository.Abstractions;
 using AutoMapper;
 using BusinessLogic.Repository;
 using Core.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppService.Repository
 {
-    public class PlotAppService : IPlotAppService
+    public class PlotAppService : ControllerBase, IPlotAppService
     {
         private readonly IPlotService _plotService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="plotService"></param>
+        /// <param name="mapper"></param>
         public PlotAppService (IPlotService plotService, IMapper mapper)
         {
             _plotService = plotService;
@@ -36,6 +42,11 @@ namespace AppService.Repository
         public PlotViewModel GetPlotById(int plotId)
         {
             throw new NotImplementedException();
+        }
+
+        public IActionResult GetVendorByName(string name)
+        {
+            return Ok();
         }
     }
 }
