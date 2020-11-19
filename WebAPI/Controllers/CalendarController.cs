@@ -17,7 +17,7 @@ using Microsoft.Extensions.Options;
 namespace WebAPI.Controllers
 {
     [Authorize]
-    public class DocumentController : Controller
+    public class CalendarController : Controller
     {
 
         private readonly IUserService _userService;
@@ -26,8 +26,8 @@ namespace WebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly AppSettings _settings;
 
-       
-        public DocumentController(IUserService userService, UserManager<AppUser> userManager,
+
+        public CalendarController(IUserService userService, UserManager<AppUser> userManager,
                                 IHttpContextAccessor httpContextAccessor,
                                 IMapper mapper, IOptions<AppSettings> options)
         {
@@ -43,8 +43,8 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/documents/upload")]
-        public IActionResult UploadSurvey([FromBody] DocumentInputModel model)
+        [Route("api/calendar")]
+        public IActionResult UploadSurvey([FromBody] CalendarInputModel model)
         {
             return Ok(ResponseViewModel.Ok());
         }
