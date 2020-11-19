@@ -19,7 +19,15 @@ namespace WebAPI.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStateAppService _stateAppService;
         private readonly IEmailService _emailService;
-      
+
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="userService"></param>
+        /// <param name="userManager"></param>
+        /// <param name="httpContextAccessor"></param>
+        /// <param name="emailService"></param>
+        /// <param name="stateAppService"></param>
         public StatesController(IUserService userService,
             UserManager<AppUser> userManager,
             IHttpContextAccessor httpContextAccessor,
@@ -33,7 +41,11 @@ namespace WebAPI.Controllers
             _emailService = emailService;
         }
 
-         
+        /// <summary>
+        /// GET
+        /// Get All States
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/states")]
         public IActionResult GetAllStates()

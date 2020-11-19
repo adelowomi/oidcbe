@@ -7,6 +7,10 @@ namespace AppService.Repository.Abstractions
 {
     public interface ISubscriberAppService
     {
+        /// <summary>
+        /// Get All Existing Subscribers 
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<VendorViewModel> GetAllExisting();
     }
 }

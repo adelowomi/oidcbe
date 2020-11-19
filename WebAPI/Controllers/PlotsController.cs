@@ -16,11 +16,20 @@ namespace WebAPI.Controllers
     {
         private IPlotAppService _plotService;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="plotService"></param>
         public PlotsController (IPlotAppService plotService)
         {
             _plotService = plotService;
         }
 
+        /// <summary>
+        /// GET Request
+        /// Get Vendor By Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/plot/vendor")]
         public IActionResult GetByVendorId()
@@ -33,6 +42,12 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
         }
 
+
+        /// <summary>
+        /// GET
+        /// Get Vendor By Subscriber Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/plot/subscriber")]
         public IActionResult GetBySubcriberId()
@@ -45,6 +60,11 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
         }
 
+        /// <summary>
+        /// Get Plots
+        /// </summary>
+        /// <param name="plotId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/plots/{plotId}")]
         public IActionResult GetPlots(int plotId)

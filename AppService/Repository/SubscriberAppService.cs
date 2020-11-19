@@ -9,17 +9,29 @@ using Core.Model;
 
 namespace AppService.Repository
 {
+    /// <summary>
+    /// Concrete Implementation Of ISubscriberAppService
+    /// </summary>
     public class SubscriberAppService : ISubscriberAppService
     {
         private readonly ISubscriberService _subscriberService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="subscriberService"></param>
+        /// <param name="mapper"></param>
         public SubscriberAppService(ISubscriberService subscriberService, IMapper mapper)
         {
             _subscriberService = subscriberService;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get All Existing Vendor
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<VendorViewModel> GetAllExisting()
         {
             var result = _subscriberService.GetExistingSubscribers().Select(_mapper.Map<AppUser, VendorViewModel>);
