@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Extensions;
 using AppService.Helpers;
@@ -43,22 +44,30 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/documents/survey")]
-        public async Task<IActionResult> UploadSurvey()
+        public IActionResult UploadSurvey([FromBody] DocumentInputModel model)
         {
             return Ok(ResponseViewModel.Ok());
         }
 
+        /// <summary>
+        /// This method helps to upload contract document
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/documents/contract")]
-        public IActionResult UploadContract()
+        public IActionResult UploadContract([FromBody] DocumentInputModel model)
         {
             return Ok(ResponseViewModel.Ok());
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/documents/deed")]
-        public IActionResult UploadContract()
+        public IActionResult UploadDeed([FromBody] DocumentInputModel model)
         {
             return Ok(ResponseViewModel.Ok());
         }
