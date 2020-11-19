@@ -394,7 +394,7 @@ namespace AppService.Repository
         {
             var currentUser = new AppUser().Empty;
 
-            if (model.Platform == Res.MOBILE_PLATFORM) {
+            if (model.Platform.ToLower() == Res.MOBILE_PLATFORM) {
 
                  currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
