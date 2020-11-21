@@ -642,3 +642,48 @@ VALUES (N'20201112110012_IsExistingProperty', N'3.1.8');
 
 GO
 
+CREATE TABLE [DocumentTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [AppUserId] int NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_DocumentTypes] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_DocumentTypes_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Documents] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [DocumentTypeId] int NOT NULL,
+    [AppUserId] int NULL,
+    CONSTRAINT [PK_Documents] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Documents_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Documents_DocumentTypes_DocumentTypeId] FOREIGN KEY ([DocumentTypeId]) REFERENCES [DocumentTypes] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE INDEX [IX_Documents_AppUserId] ON [Documents] ([AppUserId]);
+
+GO
+
+CREATE INDEX [IX_Documents_DocumentTypeId] ON [Documents] ([DocumentTypeId]);
+
+GO
+
+CREATE INDEX [IX_DocumentTypes_AppUserId] ON [DocumentTypes] ([AppUserId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201121060829_DocumentModels', N'3.1.8');
+
+GO
+
