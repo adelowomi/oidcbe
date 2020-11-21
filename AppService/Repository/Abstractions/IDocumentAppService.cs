@@ -9,6 +9,8 @@ namespace AppService.Repository.Abstractions
     {
         ResponseViewModel CreateNewDocument(DocumentInputModel document);
 
-        IEnumerable<DocumentViewModel> GetDocumentsBy();
+        ResponseViewModel GetDocumentsBy();
+
+        DocumentViewModel GetDocumentByName(string name);
     }
 }

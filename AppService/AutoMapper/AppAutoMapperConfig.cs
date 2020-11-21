@@ -64,16 +64,18 @@ namespace AppService.AutoMapper
             CreateMap<Document, DocumentViewModel>()
                .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
-               .ForMember(dest => dest.DocumentName, opts => opts.MapFrom(src => src.Name))
+               .ForMember(dest => dest.DocumentName, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/documents/link?name={src.Name}"))
                .ForMember(dest => dest.DocumentType, opts => opts.MapFrom(src => src.DocumentTypeId))
                .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
                .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
+
                ;
 
             CreateMap<DocumentInputModel, Document>()
                .ForMember(dest => dest.AppUserId, opts => opts.MapFrom(src => src.UserId))
                .ForMember(dest => dest.DocumentTypeId, opts => opts.MapFrom(src => src.DocumentType))
                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Document))
+               .ForMember(dest => dest.DocumentType, opts => opts.Ignore())
                ;
 
             CreateMap<VendorInputModel, AppUser>()

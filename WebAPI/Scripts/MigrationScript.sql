@@ -712,3 +712,26 @@ VALUES (N'20201121062540_AddAppUserIdToDocument', N'3.1.8');
 
 GO
 
+ALTER TABLE [DocumentTypes] DROP CONSTRAINT [FK_DocumentTypes_AspNetUsers_AppUserId];
+
+GO
+
+DROP INDEX [IX_DocumentTypes_AppUserId] ON [DocumentTypes];
+
+GO
+
+DECLARE @var4 sysname;
+SELECT @var4 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[DocumentTypes]') AND [c].[name] = N'AppUserId');
+IF @var4 IS NOT NULL EXEC(N'ALTER TABLE [DocumentTypes] DROP CONSTRAINT [' + @var4 + '];');
+ALTER TABLE [DocumentTypes] DROP COLUMN [AppUserId];
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201121070416_RemoveDocumentTypeIdFromDocument', N'3.1.8');
+
+GO
+

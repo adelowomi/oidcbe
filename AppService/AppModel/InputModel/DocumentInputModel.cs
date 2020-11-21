@@ -39,7 +39,7 @@ namespace AppService.AppModel.InputModel
                     imageFile.Flush();
                 }
 
-                profilePhotoPath = uniqueFileName;
+                Document = uniqueFileName;
 
                 return profilePhotoPath;
 

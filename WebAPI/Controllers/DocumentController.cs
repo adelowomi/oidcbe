@@ -2,8 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
-using AppService.AppModel.ViewModel;
-using AppService.Extensions;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AutoMapper;
@@ -20,33 +18,32 @@ namespace WebAPI.Controllers
     public class DocumentController : Controller
     {
 
-        private readonly IUserService _userService;
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IMapper _mapper;
-        private readonly AppSettings _settings;
         private readonly IDocumentAppService _documentAppService;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly AppSettings _settings;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="userService"></param>
-        /// <param name="userManager"></param>
-        /// <param name="httpContextAccessor"></param>
         /// <param name="documentAppService"></param>
-        /// <param name="mapper"></param>
-        /// <param name="options"></param>
-        public DocumentController(IUserService userService, UserManager<AppUser> userManager,
-                                IHttpContextAccessor httpContextAccessor,
-                                IDocumentAppService documentAppService,
-                                IMapper mapper, IOptions<AppSettings> options)
+        public DocumentController(IDocumentAppService documentAppService,
+                                  UserManager<AppUser> userManager, IOptions<AppSettings> options)
         {
-            _userService = userService;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
-            _mapper = mapper;
-            _settings = options.Value;
             _documentAppService = documentAppService;
+            _userManager = userManager;
+            _settings = options.Value;
+        }
+
+        /// <summary>
+        /// Get All Documents For Current Logged On User
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/documents")]
+        public IActionResult GetDocuments()
+        {
+            return Ok(_documentAppService.GetDocumentsBy());
         }
 
         /// <summary>
@@ -60,16 +57,16 @@ namespace WebAPI.Controllers
             return Ok(_documentAppService.CreateNewDocument(model));
         }
 
-        /// <summary>
-        /// Get All Documents For Current Logged On User
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+       
         [HttpGet]
-        [Route("api/documents")]
-        public IActionResult GetDocuments([FromBody] DocumentInputModel model)
+        [Route("api/documents/link")]
+        public IActionResult GetDocumentByName(string name)
         {
-            return Ok(_documentAppService.GetDocumentsBy());
+            var document = _documentAppService.GetDocumentByName(name);
+            var fullPath = Path.Combine(_settings.UploadDrive, _settings.DriveName);
+            var file = Path.Combine(fullPath, document.DocumentName);
+            Byte[] bytes = System.IO.File.ReadAllBytes(file);
+            return File(bytes, "image/jpeg");
         }
     }
 }

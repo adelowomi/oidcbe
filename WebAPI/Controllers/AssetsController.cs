@@ -77,5 +77,6 @@ namespace WebAPI.Controllers
             Byte[] bytes = System.IO.File.ReadAllBytes(file);
             return File(bytes, "image/jpeg");
         }
+
     }
 }
