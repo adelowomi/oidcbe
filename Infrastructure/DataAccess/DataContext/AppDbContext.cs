@@ -50,6 +50,10 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<Platform> Platforms { get; set; }
 
+        public DbSet<Document> Documents { get; set; }
+
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

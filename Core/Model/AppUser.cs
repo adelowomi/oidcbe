@@ -47,6 +47,8 @@ namespace Core.Model
 
         public IEnumerable<Subscription> Subscriptions { get; set; }
 
+        public IEnumerable<Document> Documents { get; set; }
+
         public bool HasUploadedDocument { get; set; }
 
         public bool HasUploadedProfilePhoto { get; set; }
