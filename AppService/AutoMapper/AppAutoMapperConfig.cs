@@ -29,7 +29,6 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.ConcurrencyStamp, opts => opts.MapFrom(src => src.ConcurrencyStamp ))
                 ;
 
-
             CreateMap<AppUser, UserViewModel>()
                 .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
@@ -61,6 +60,21 @@ namespace AppService.AutoMapper
                  .ForMember(dest => dest.HasUploadedProfilePhoto, opts => opts.MapFrom(src => src.HasUploadedProfilePhoto))
                  .ForMember(dest => dest.HasUploadedDocument, opts => opts.MapFrom(src => src.HasUploadedDocument))
                  ;
+
+            CreateMap<Document, DocumentViewModel>()
+               .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
+               .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+               .ForMember(dest => dest.DocumentName, opts => opts.MapFrom(src => src.Name))
+               .ForMember(dest => dest.DocumentType, opts => opts.MapFrom(src => src.DocumentTypeId))
+               .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
+               .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
+               ;
+
+            CreateMap<DocumentInputModel, Document>()
+               .ForMember(dest => dest.AppUserId, opts => opts.MapFrom(src => src.UserId))
+               .ForMember(dest => dest.DocumentTypeId, opts => opts.MapFrom(src => src.DocumentType))
+               .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Document))
+               ;
 
             CreateMap<VendorInputModel, AppUser>()
                 .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))

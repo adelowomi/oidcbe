@@ -110,6 +110,10 @@ namespace WebAPI
             services.AddTransient<ISubscriberAppService, SubscriberAppService>();
             services.AddTransient<IVendorRepository, VendorRepository>();
 
+            services.AddTransient<IDocumentRepository, DocumentRepository>();
+            services.AddTransient<IDocumentService, DocumentService>();
+            services.AddTransient<IDocumentAppService, DocumentAppService>();
+
 
             services.AddHttpContextAccessor();
 
