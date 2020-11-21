@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
@@ -37,6 +36,17 @@ namespace AppService.Repository
             var result = _subscriberService.GetExistingSubscribers().Select(_mapper.Map<AppUser, VendorViewModel>);
 
             return result;
+        }
+
+        public CountMetricViewModel GetCountsMetric()
+        {
+            return new CountMetricViewModel()
+            {
+                ExistingSubscribers = GetAllExisting().Count(),
+                NewSubscribers = GetAllExisting().Count(),
+                ExistingVendors = GetAllExisting().Count(),
+                NewVendors = GetAllExisting().Count()
+            };
         }
     }
 }

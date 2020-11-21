@@ -12,5 +12,7 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         IEnumerable<VendorViewModel> GetAllExisting();
+
+        CountMetricViewModel GetCountsMetric();
     }
 }

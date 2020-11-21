@@ -48,5 +48,12 @@ namespace WebAPI.Controllers
         {
             return Ok(ResponseViewModel.Ok(_subscriberAppService.GetAllExisting().ToList()));
         }
+
+        [HttpGet]
+        [Route("api/metrics/counts")]
+        public IActionResult GetCounts()
+        {
+            return Ok(ResponseViewModel.Ok(_subscriberAppService.GetCountsMetric()));
+        }
     }
 }
