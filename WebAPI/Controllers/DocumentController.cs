@@ -59,6 +59,7 @@ namespace WebAPI.Controllers
 
        
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/documents/link")]
         public IActionResult GetDocumentByName(string name)
         {
