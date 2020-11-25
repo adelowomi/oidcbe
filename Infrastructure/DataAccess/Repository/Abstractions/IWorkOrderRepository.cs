@@ -9,5 +9,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         WorkOrder CreateNewWorkOrder(WorkOrder workOrder);
 
         IEnumerable<WorkOrder> GetWorkOrderBy(int subscriptionId);
+
+        IEnumerable<WorkOrderType> GetWorkOrderTypes();
     }
 }

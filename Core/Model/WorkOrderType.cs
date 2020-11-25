@@ -8,6 +8,7 @@ namespace Core.Model
 
     public enum WorkOrderTypeEnum
     {
-
+        ELECTRICITY = 1,
+        PLUMBING,
     }
 }

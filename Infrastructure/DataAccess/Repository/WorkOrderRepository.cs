@@ -23,5 +23,10 @@ namespace Infrastructure.DataAccess.Repository
         {
             return GetAll().Where(x => x.SubscriptionId == userId);
         }
+
+        public IEnumerable<WorkOrderType> GetWorkOrderTypes()
+        {
+            return _context.WorkOrderTypes.ToList();
+        }
     }
 }
