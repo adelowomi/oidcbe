@@ -964,3 +964,138 @@ VALUES (N'20201125070319_MakeDocumentPlotIdNullable', N'3.1.8');
 
 GO
 
+ALTER TABLE [Payments] DROP CONSTRAINT [FK_Payments_Offers_OfferId];
+
+GO
+
+ALTER TABLE [Subscriptions] ADD [SubscriptionStatusId] int NOT NULL DEFAULT 0;
+
+GO
+
+ALTER TABLE [Plots] ADD [IsPaymentComplete] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+ALTER TABLE [Plots] ADD [PlotStatusId] int NULL;
+
+GO
+
+DECLARE @var7 sysname;
+SELECT @var7 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Payments]') AND [c].[name] = N'OfferId');
+IF @var7 IS NOT NULL EXEC(N'ALTER TABLE [Payments] DROP CONSTRAINT [' + @var7 + '];');
+ALTER TABLE [Payments] ALTER COLUMN [OfferId] int NULL;
+
+GO
+
+ALTER TABLE [Payments] ADD [subscriptionId] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE TABLE [DocumentStatuses] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_DocumentStatuses] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [PlotStatus] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_PlotStatus] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [SubscriptionStatuses] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_SubscriptionStatuses] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_Subscriptions_SubscriptionStatusId] ON [Subscriptions] ([SubscriptionStatusId]);
+
+GO
+
+CREATE INDEX [IX_Plots_PlotStatusId] ON [Plots] ([PlotStatusId]);
+
+GO
+
+CREATE INDEX [IX_Payments_subscriptionId] ON [Payments] ([subscriptionId]);
+
+GO
+
+ALTER TABLE [Payments] ADD CONSTRAINT [FK_Payments_Offers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [Offers] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+ALTER TABLE [Payments] ADD CONSTRAINT [FK_Payments_Subscriptions_subscriptionId] FOREIGN KEY ([subscriptionId]) REFERENCES [Subscriptions] ([Id]) ON DELETE CASCADE;
+
+GO
+
+ALTER TABLE [Plots] ADD CONSTRAINT [FK_Plots_PlotStatus_PlotStatusId] FOREIGN KEY ([PlotStatusId]) REFERENCES [PlotStatus] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+ALTER TABLE [Subscriptions] ADD CONSTRAINT [FK_Subscriptions_SubscriptionStatuses_SubscriptionStatusId] FOREIGN KEY ([SubscriptionStatusId]) REFERENCES [SubscriptionStatuses] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125081115_AddedSomeProperties2', N'3.1.8');
+
+GO
+
+CREATE TABLE [WorkOrderTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_WorkOrderTypes] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [WorkOrders] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [SubscriptionId] int NOT NULL,
+    [WorkOrderTypeId] int NOT NULL,
+    CONSTRAINT [PK_WorkOrders] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_WorkOrders_Subscriptions_SubscriptionId] FOREIGN KEY ([SubscriptionId]) REFERENCES [Subscriptions] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_WorkOrders_WorkOrderTypes_WorkOrderTypeId] FOREIGN KEY ([WorkOrderTypeId]) REFERENCES [WorkOrderTypes] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE INDEX [IX_WorkOrders_SubscriptionId] ON [WorkOrders] ([SubscriptionId]);
+
+GO
+
+CREATE INDEX [IX_WorkOrders_WorkOrderTypeId] ON [WorkOrders] ([WorkOrderTypeId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125082229_WorkOrderModels', N'3.1.8');
+
+GO
+

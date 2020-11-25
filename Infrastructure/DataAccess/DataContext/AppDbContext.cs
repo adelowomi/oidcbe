@@ -57,6 +57,10 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<DocumentStatus> DocumentStatuses { get; set; }
 
+        public DbSet<WorkOrder> WorkOrders { get; set; }
+
+        public DbSet<WorkOrderType> WorkOrderTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

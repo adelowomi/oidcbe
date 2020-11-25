@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using AutoMapper;
@@ -29,9 +31,9 @@ namespace AppService.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public PlotViewModel GetByVendorId(int id)
+        public IEnumerable<PlotViewModel> GetByVendorId(int id)
         {
-            return _mapper.Map<Plot, PlotViewModel>(_plotService.GetPlotBy(id));
+           return _plotService.GetPlotBy(id).Select(_mapper.Map<Plot, PlotViewModel>);
         }
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace AppService.Repository
         /// </summary>
         /// <param name="plotId"></param>
         /// <returns></returns>
-        public PlotViewModel GetPlotById(int plotId)
+        public IEnumerable<PlotViewModel> GetPlotById(int plotId)
         {
             throw new NotImplementedException();
         }

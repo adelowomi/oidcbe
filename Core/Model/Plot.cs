@@ -33,11 +33,12 @@ namespace Core.Model
 
         public bool IsPaymentComplete { get; set; }
 
-        public IEnumerable<Document> Documents { get; set; }
-
         public int? PlotStatusId { get; set; }
 
         public PlotStatus PlotStatus { get; set; }
+
+        public IEnumerable<Document> Documents { get; set; }
+
     }
 
     public enum PlotStatusEnum
