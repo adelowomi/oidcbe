@@ -14,9 +14,9 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
-        public Payment ConfirmPayment(int paymentId)
+        public Payment ConfirmPayment(string trnxRef)
         {
-            var payment = GetById(paymentId);
+            var payment = GetAll().FirstOrDefault(x => x.TrnxRef == trnxRef);
             payment.PaymentStatusId = (int)PaymentStatusEnum.APPROVED;
             Update(payment);
             return payment;
@@ -50,6 +50,7 @@ namespace Infrastructure.DataAccess.Repository
                 PaymentProviderId = paymentProviderId,
                 Amount = amount,
                 subscriptionId = subscriptionId,
+                TrnxRef = $"OD{Helpers.Helper.RandomNumber(10)}",
                 PaymentStatusId = (int)PaymentStatusEnum.PENDING
             });
 

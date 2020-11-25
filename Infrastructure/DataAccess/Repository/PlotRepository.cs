@@ -80,6 +80,7 @@ namespace Infrastructure.DataAccess.Repository
             var plot = GetAllAvailablePlots().FirstOrDefault();
             plot.AppUserId = userId;
             plot.IsAvailable = false;
+            plot.PlotStatusId = (int)PlotStatusEnum.PENDING;
             return plot;
         }
     }

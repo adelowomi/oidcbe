@@ -115,9 +115,23 @@ namespace AppService.AutoMapper
             CreateMap<Offer, OfferViewModel>();
 
             CreateMap<Subscription, SubscriptionViewModel>()
-                .ForMember(dest => dest.OfferStatus, opts => opts.MapFrom(src => src.Offer.OfferStatus.Name))
-                .ForMember(dest => dest.PlotName, opts => opts.MapFrom(src => src.Offer.Plot.Name))
-                .ForMember(dest => dest.SubscriptionStatus, opts => opts.MapFrom(src => src.SubscriptionStatus.Name))
+                .ForMember(dest => dest.SubscriptionId, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.SubscriptionStatus.Name))
+                .ForMember(dest => dest.Amount, opts => opts.MapFrom(src => src.Offer.Plot.Price))
+                ;
+
+
+            CreateMap<Offer, OfferViewModel>()
+                .ForMember(dest => dest.OfferStatus, opts => opts.MapFrom(src => src.OfferStatus.Name))
+                .ForMember(dest => dest.IsPaymentCompleted, opts => opts.MapFrom(src => src.IsPaymentCompleted))
+                ;
+
+            CreateMap<Plot, PlotViewModel>()
+                .ForMember(dest => dest.PlotName, opts => opts.MapFrom(src => src.Name))
+                .ForMember(dest => dest.PlotType, opts => opts.MapFrom(src => src.PlotType.Name))
+                .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.PlotAddresss, opts => opts.MapFrom(src => src.Address))
+                .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))
                 ;
 
             CreateMap<Plot, PlotViewModel>()

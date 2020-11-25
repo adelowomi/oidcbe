@@ -38,7 +38,14 @@ namespace Infrastructure.DataAccess.Repository
                 SubscriptionStatusId = (int) SubscriptionStatusEnum.PENDING
             });
 
-            return result;
+            var query = _context.Subscriptions
+                .Include(x => x.Offer)
+                .Include(x => x.Offer.OfferStatus)
+                .Include(x => x.Offer.Plot)
+                .Include(x => x.Offer.Plot.PlotType)
+                .Include(x => x.SubscriptionStatus)
+                .FirstOrDefault(x => x.Id == result.Id);
+            return query;
         }
 
         public Subscription Subscribe(int userId, int organizationTypeId, int plotId)

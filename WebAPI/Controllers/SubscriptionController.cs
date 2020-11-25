@@ -29,12 +29,12 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_subscriptionAppService.MakeSubscription(model)));
+            return Ok(ResponseViewModel.Ok(_subscriptionAppService.MakeSubscription(model).Result));
         }
 
 
         [HttpGet]
-        [Route("api/susbcribe/plot/any")]
+        [Route("api/susbcribe/plot/available")]
         public IActionResult LogTransaction()
         {
             if (!ModelState.IsValid)

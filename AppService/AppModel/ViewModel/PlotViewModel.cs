@@ -7,6 +7,8 @@ namespace AppService.AppModel.ViewModel
 
         public string PlotType { get; set; }
 
+        public string PlotName { get; set; }
+
         public string PlotAddresss { get; set; }
 
         public double Acres { get; set; }

@@ -3,10 +3,14 @@ namespace AppService.AppModel.ViewModel
 {
     public class SubscriptionViewModel
     {
-        public string OfferStatus { get; set; }
+        public int SubscriptionId  { get; set; }
 
-        public string SubscriptionStatus { get; set; }
+        public string Status { get; set; }
 
-        public string PlotName { get; set; }
+        public OfferViewModel Offer { get; set; }
+
+        public PlotViewModel Plot { get; set; }
+       
+        public double Amount { get; set; }
     }
 }

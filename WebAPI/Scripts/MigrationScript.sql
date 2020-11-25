@@ -1119,3 +1119,41 @@ VALUES (N'20201125114215_RemovedAppUserIdFromPlot', N'3.1.8');
 
 GO
 
+DECLARE @var9 sysname;
+SELECT @var9 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Plots]') AND [c].[name] = N'HasAmount');
+IF @var9 IS NOT NULL EXEC(N'ALTER TABLE [Plots] DROP CONSTRAINT [' + @var9 + '];');
+ALTER TABLE [Plots] DROP COLUMN [HasAmount];
+
+GO
+
+ALTER TABLE [Payments] ADD [TrnxRef] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125160842_AddAmountToPlot', N'3.1.8');
+
+GO
+
+DECLARE @var10 sysname;
+SELECT @var10 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Plots]') AND [c].[name] = N'Amount');
+IF @var10 IS NOT NULL EXEC(N'ALTER TABLE [Plots] DROP CONSTRAINT [' + @var10 + '];');
+ALTER TABLE [Plots] DROP COLUMN [Amount];
+
+GO
+
+ALTER TABLE [Plots] ADD [Price] float NOT NULL DEFAULT 0.0E0;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125161134_AddPriceToPlot', N'3.1.8');
+
+GO
+

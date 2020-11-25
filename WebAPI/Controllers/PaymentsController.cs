@@ -1,7 +1,7 @@
 ﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
-using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -36,15 +36,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/payment/history")]
-        public IActionResult GetPaymentHistory()
+        [Route("api/payment/complete")]
+        public IActionResult GetPaymentHistory(string trnxRef)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
+            return Ok(ResponseViewModel.Ok(_paymentAppService.QueryPayment(trnxRef)));
         }
 
         [HttpGet]

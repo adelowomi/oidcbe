@@ -54,9 +54,9 @@ namespace AppService.Repository
            return mappedResult;
         }
 
-        public PaymentViewModel QueryPayment(int paymentId)
+        public PaymentViewModel QueryPayment(string trnxRef)
         {
-            var result = _paymentService.QueryPayment(paymentId);
+            var result = _paymentService.QueryPayment(trnxRef);
 
             var mappedResult = _mapper.Map<Payment, PaymentViewModel>(result);
 

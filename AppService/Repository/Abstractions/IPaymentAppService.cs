@@ -17,6 +17,6 @@ namespace AppService.Repository.Abstractions
 
         IEnumerable<PaymentProviderViewModel> GetAllPaymentProviders();
 
-        PaymentViewModel QueryPayment(int paymentId);
+        PaymentViewModel QueryPayment(string trnxRef);
     }
 }

@@ -40,9 +40,9 @@ namespace BusinessLogic.Repository
             return _paymentRepository.LogPayment(subscriptionId, paymentType, paymentMethod, paymentProviderId, amount);
         }
 
-        public Payment QueryPayment(int paymentId)
+        public Payment QueryPayment(string trnxRef)
         {
-            return _paymentRepository.ConfirmPayment(paymentId);
+            return _paymentRepository.ConfirmPayment(trnxRef);
         }
     }
 }

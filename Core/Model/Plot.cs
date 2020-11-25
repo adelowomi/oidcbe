@@ -35,10 +35,7 @@ namespace Core.Model
 
         public ICollection<Document> Documents { get; set; }
 
-        //public double? Amount { get; set; }
-
-        //public bool HasAmount { get; set; }
-
+        public double Price { get; set; }
 
     }
 
@@ -46,5 +43,6 @@ namespace Core.Model
     {
         APPROVED = 1,
         SUSPENDED,
+        PENDING
     }
 }

@@ -9,6 +9,8 @@ namespace AppService.AppModel.ViewModel
 
         public int? OfferStatusId { get; set; }
 
+        public string OfferStatus { get; set; }
+
         public string DocumentPath { get; set; }
 
         public bool IsPaymentCompleted { get; }

@@ -28,6 +28,8 @@ namespace Core.Model
         public int subscriptionId { get; set; }
 
         public Subscription Subscription { get; set; }
+
+        public string TrnxRef { get; set; }
     }
 
     public enum PaymentStatusEnum

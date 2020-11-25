@@ -16,6 +16,6 @@ namespace BusinessLogic.Repository.Abstractions
 
         Payment LogNewPayment(int subscriptionId, int paymentType, int paymentMethod, int paymentProviderId, double amount);
 
-        Payment QueryPayment(int paymentId);
+        Payment QueryPayment(string trnxRef);
     }
 }
