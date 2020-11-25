@@ -25,8 +25,16 @@ namespace Core.Model
 
         public PaymentStatus PaymentStatus { get; set; }
 
-        public int OfferId { get; set; }
+        public int subscriptionId { get; set; }
 
-        public Offer Offer { get; set; }
+        public Subscription Subscription { get; set; }
+    }
+
+    public enum PaymentStatusEnum
+    {
+        APPROVED = 1,
+        PENDING,
+        FAILED,
+        DECLINED
     }
 }

@@ -7,7 +7,7 @@ namespace Core.Model
     }
 }
 
-enum OfferStatusEnum
+public enum OfferStatusEnum
 {
     APPROVED,
     PENDING,

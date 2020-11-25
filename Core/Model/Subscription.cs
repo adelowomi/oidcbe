@@ -14,5 +14,9 @@ namespace Core.Model
         public int? OrganizationTypeId { get; set; }
 
         public OrganizationType OrganizationType { get; set; }
+
+        public int SubscriptionStatusId { get; set; }
+
+        public SubscriptionStatus SubscriptionStatus { get; set; }
     }
 }

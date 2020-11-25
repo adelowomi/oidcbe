@@ -56,8 +56,6 @@ namespace Infrastructure.DataAccess.DataContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Seed();
         }
     }
 }

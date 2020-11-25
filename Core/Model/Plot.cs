@@ -31,6 +31,8 @@ namespace Core.Model
 
         public bool HasAmount { get; set; }
 
-        public ICollection<Document> Documents { get; set; }
+        public bool IsPaymentComplete { get; set; }
+
+        public IEnumerable<Document> Documents { get; set; }
     }
 }

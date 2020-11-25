@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201124095154_Seeding")]
-    partial class Seeding
+    [Migration("20201125065414_LinkedPlotToDocument")]
+    partial class LinkedPlotToDocument
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -208,11 +208,16 @@ namespace WebAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PlotId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
                     b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("PlotId");
 
                     b.ToTable("Documents");
                 });
@@ -651,6 +656,9 @@ namespace WebAPI.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double?>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<int?>("AppUserId")
                         .HasColumnType("int");
 
@@ -659,6 +667,9 @@ namespace WebAPI.Migrations
 
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasAmount")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
@@ -688,308 +699,6 @@ namespace WebAPI.Migrations
                     b.HasIndex("PlotTypeId");
 
                     b.ToTable("Plots");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 325, DateTimeKind.Local).AddTicks(6690),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(480),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 126 - Arkansas",
-                            PlotTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1060),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1070),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 512 - Arizona",
-                            PlotTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1080),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1090),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 100C - Junea",
-                            PlotTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1090),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1090),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 610 - Anchorage",
-                            PlotTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1090),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1090),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 100B - Phonenix",
-                            PlotTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1100),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1100),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 181A - Sacramento",
-                            PlotTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1100),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1100),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 162 - Hartford)",
-                            PlotTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1100),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1100),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 812 - Dover)",
-                            PlotTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1110),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1110),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 809 - Tallahassee",
-                            PlotTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1110),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1110),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 132 - Honolulu)",
-                            PlotTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1110),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1110),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 113 - Topeka",
-                            PlotTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1110),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1120),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 103 - Des Moines",
-                            PlotTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1120),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1120),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 100A - Boston Lansing",
-                            PlotTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1120),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1120),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 201 - Louisville",
-                            PlotTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1120),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1120),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 197 - Nankling Tushe, West Bridge",
-                            PlotTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1130),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1130),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 1960 - Augusta Manopolis",
-                            PlotTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1130),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1130),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 111 - Cheyenne",
-                            PlotTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1130),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1130),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 122 - Virginia Campton",
-                            PlotTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Acres = 30.0,
-                            Address = "Block 8A Balogun Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1130),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1140),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 121B - Madison",
-                            PlotTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 61,
-                            Acres = 30.0,
-                            Address = "1289 Road, Alabama Ogundaide Street, Orange Island",
-                            DateCreated = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1140),
-                            DateModified = new DateTime(2020, 11, 24, 10, 51, 54, 330, DateTimeKind.Local).AddTicks(1140),
-                            IsAvailable = true,
-                            IsEnabled = true,
-                            KilometerSquare = 0.0,
-                            Lattitude = 33.399999999999999,
-                            Longitude = 45.899999999999999,
-                            Name = "Plot 1289, Road 6B - Alabama",
-                            PlotTypeId = 1
-                        });
                 });
 
             modelBuilder.Entity("Core.Model.PlotType", b =>
@@ -1014,32 +723,6 @@ namespace WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PlotTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsEnabled = false,
-                            Name = "BRONZE"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsEnabled = false,
-                            Name = "SILVER"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsEnabled = false,
-                            Name = "GOLD"
-                        });
                 });
 
             modelBuilder.Entity("Core.Model.Role", b =>
@@ -1264,6 +947,10 @@ namespace WebAPI.Migrations
                         .HasForeignKey("DocumentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Core.Model.Plot", "Plot")
+                        .WithMany("Documents")
+                        .HasForeignKey("PlotId");
                 });
 
             modelBuilder.Entity("Core.Model.NextOfKin", b =>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Model;
 using Infrastructure.DataAccess.Repository.Abstractions;
 
@@ -24,13 +25,52 @@ namespace BusinessLogic.Repository
         }
 
         /// <summary>
+        /// Get All Available Plots
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Plot> AllAvailablePlots()
+        {
+            return _plotRepository.GetAllAvailablePlots();
+        }
+
+        /// <summary>
+        /// Get All Plots In The System
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Plot> AllPlots()
+        {
+            return _plotRepository.GetPlots();
+        }
+
+        /// <summary>
         /// Get Plot By Subscriber Id
         /// </summary>
         /// <param name="subscriberId"></param>
         /// <returns></returns>
-        public Plot GetPlotBy(int subscriberId)
+        public IEnumerable<Plot> GetPlotBy(int subscriberId)
         {
-            return _plotRepository.GetPlotById(subscriberId);
+            return _plotRepository.GetSubscriberPlots(subscriberId);
+        }
+
+        /// <summary>
+        /// Get Plot By VendorId
+        /// </summary>
+        /// <param name="subscriberId"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        public IEnumerable<Plot> GetPlotBy(int subscriberId, int vendorId)
+        {
+            return _plotRepository.GetVendorPlots(vendorId);
+        }
+
+        /// <summary>
+        /// Purchase Plot
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Plot PurchasePlot(int id)
+        {
+            return _plotRepository.PurchasePlot(id);
         }
     }
 }

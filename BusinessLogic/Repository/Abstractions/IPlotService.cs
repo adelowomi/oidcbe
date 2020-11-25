@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Model;
 
 /// <summary>
@@ -16,6 +17,36 @@ namespace BusinessLogic.Repository
         /// </summary>
         /// <param name="subscriberId"></param>
         /// <returns></returns>
-        Plot GetPlotBy(int subscriberId);
+        IEnumerable<Plot> GetPlotBy(int subscriberId);
+
+        /// <summary>
+        /// Abstract Interface Method To Get Plot By Vendor Id
+        /// </summary>
+        /// <param name="subscriberId"></param>
+        /// <returns></returns>
+        IEnumerable<Plot> GetPlotBy(int subscriberId, int vendorId);
+
+
+        /// <summary>
+        /// Abstract Interface Method To Get Plot By Vendor Id
+        /// </summary>
+        /// <param name="subscriberId"></param>
+        /// <returns></returns>
+        Plot PurchasePlot(int id);
+
+
+        /// <summary>
+        /// Abstract Interface Method To Get Plot By Vendor Id
+        /// </summary>
+        /// <param name="subscriberId"></param>
+        /// <returns></returns>
+        IEnumerable<Plot> AllAvailablePlots();
+
+        /// <summary>
+        /// Abstract Interface Method To Get Plot By Vendor Id
+        /// </summary>
+        /// <param name="subscriberId"></param>
+        /// <returns></returns>
+        IEnumerable<Plot> AllPlots();
     }
 }

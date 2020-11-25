@@ -735,148 +735,232 @@ VALUES (N'20201121070416_RemoveDocumentTypeIdFromDocument', N'3.1.8');
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3256690+01:00', [DateModified] = '2020-11-24T10:51:54.3300480+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 2;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301060+01:00', [DateModified] = '2020-11-24T10:51:54.3301070+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 3;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301080+01:00', [DateModified] = '2020-11-24T10:51:54.3301090+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 4;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301090+01:00', [DateModified] = '2020-11-24T10:51:54.3301090+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 5;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301090+01:00', [DateModified] = '2020-11-24T10:51:54.3301090+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 6;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301100+01:00', [DateModified] = '2020-11-24T10:51:54.3301100+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 7;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301100+01:00', [DateModified] = '2020-11-24T10:51:54.3301100+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 8;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301100+01:00', [DateModified] = '2020-11-24T10:51:54.3301100+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 9;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301110+01:00', [DateModified] = '2020-11-24T10:51:54.3301110+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 10;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301110+01:00', [DateModified] = '2020-11-24T10:51:54.3301110+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 11;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301110+01:00', [DateModified] = '2020-11-24T10:51:54.3301110+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 12;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301110+01:00', [DateModified] = '2020-11-24T10:51:54.3301120+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 13;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301120+01:00', [DateModified] = '2020-11-24T10:51:54.3301120+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 14;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301120+01:00', [DateModified] = '2020-11-24T10:51:54.3301120+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 15;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301120+01:00', [DateModified] = '2020-11-24T10:51:54.3301120+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 16;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301130+01:00', [DateModified] = '2020-11-24T10:51:54.3301130+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 17;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301130+01:00', [DateModified] = '2020-11-24T10:51:54.3301130+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 18;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301130+01:00', [DateModified] = '2020-11-24T10:51:54.3301130+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 19;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301130+01:00', [DateModified] = '2020-11-24T10:51:54.3301140+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 20;
 SELECT @@ROWCOUNT;
 
 
 GO
 
-UPDATE [Plots] SET [DateCreated] = '2020-11-24T10:51:54.3301140+01:00', [DateModified] = '2020-11-24T10:51:54.3301140+01:00'
+DELETE FROM [Plots]
 WHERE [Id] = 61;
 SELECT @@ROWCOUNT;
 
 
 GO
 
+DELETE FROM [PlotTypes]
+WHERE [Id] = 1;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+DELETE FROM [PlotTypes]
+WHERE [Id] = 2;
+SELECT @@ROWCOUNT;
+
+
+GO
+
+DELETE FROM [PlotTypes]
+WHERE [Id] = 3;
+SELECT @@ROWCOUNT;
+
+
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20201124095154_Seeding', N'3.1.8');
+VALUES (N'20201125065414_LinkedPlotToDocument', N'3.1.8');
+
+GO
+
+ALTER TABLE [Documents] DROP CONSTRAINT [FK_Documents_Plots_PlotId];
+
+GO
+
+DROP INDEX [IX_Documents_PlotId] ON [Documents];
+
+GO
+
+DECLARE @var5 sysname;
+SELECT @var5 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Documents]') AND [c].[name] = N'PlotId');
+IF @var5 IS NOT NULL EXEC(N'ALTER TABLE [Documents] DROP CONSTRAINT [' + @var5 + '];');
+ALTER TABLE [Documents] DROP COLUMN [PlotId];
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125065609_RemovePlotProperties', N'3.1.8');
+
+GO
+
+ALTER TABLE [Documents] ADD [PlotId] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE INDEX [IX_Documents_PlotId] ON [Documents] ([PlotId]);
+
+GO
+
+ALTER TABLE [Documents] ADD CONSTRAINT [FK_Documents_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125065755_LinkedPlotToDocumentAgain', N'3.1.8');
+
+GO
+
+ALTER TABLE [Documents] DROP CONSTRAINT [FK_Documents_Plots_PlotId];
+
+GO
+
+DECLARE @var6 sysname;
+SELECT @var6 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Documents]') AND [c].[name] = N'PlotId');
+IF @var6 IS NOT NULL EXEC(N'ALTER TABLE [Documents] DROP CONSTRAINT [' + @var6 + '];');
+ALTER TABLE [Documents] ALTER COLUMN [PlotId] int NULL;
+
+GO
+
+ALTER TABLE [Documents] ADD CONSTRAINT [FK_Documents_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125070319_MakeDocumentPlotIdNullable', N'3.1.8');
 
 GO
 

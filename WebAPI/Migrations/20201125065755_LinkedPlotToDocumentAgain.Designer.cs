@@ -4,14 +4,16 @@ using Infrastructure.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201125065755_LinkedPlotToDocumentAgain")]
+    partial class LinkedPlotToDocumentAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,7 +208,7 @@ namespace WebAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PlotId")
+                    b.Property<int>("PlotId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -948,7 +950,9 @@ namespace WebAPI.Migrations
 
                     b.HasOne("Core.Model.Plot", "Plot")
                         .WithMany("Documents")
-                        .HasForeignKey("PlotId");
+                        .HasForeignKey("PlotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Model.NextOfKin", b =>

@@ -20,5 +20,32 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         IEnumerable<Plot> GetPlots();
+
+        /// <summary>
+        /// Abstract Interface Method To Get All Plots In IEnumerable
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Plot> GetAllAvailablePlots();
+
+        /// <summary>
+        /// Abstract Interface Method To Get All Plots In IEnumerable
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Plot> GetVendorPlots(int id);
+
+
+        /// <summary>
+        /// Abstract Interface Method To Get All Plots In IEnumerable
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Plot> GetSubscriberPlots(int id);
+
+
+        /// <summary>
+        /// Abstract Interface Method To Get All Plots In IEnumerable
+        /// </summary>
+        /// <returns></returns>
+        Plot PurchasePlot(int id);
+
     }
 }

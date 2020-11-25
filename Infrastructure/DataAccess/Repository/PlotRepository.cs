@@ -24,6 +24,11 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
+        public IEnumerable<Plot> GetAllAvailablePlots()
+        {
+           return GetAll().Where(x => x.IsAvailable);
+        }
+
         /// <summary>
         /// Get Plot By Its Id
         /// </summary>
@@ -31,7 +36,7 @@ namespace Infrastructure.DataAccess.Repository
         /// <returns></returns>
         public Plot GetPlotById(int id)
         {
-            return GetAll().FirstOrDefault();
+            return GetById(id);
         }
 
         /// <summary>
@@ -41,6 +46,41 @@ namespace Infrastructure.DataAccess.Repository
         public IEnumerable<Plot> GetPlots()
         {
             return GetAll();
+        }
+
+        public IEnumerable<Plot> GetSubscriberPlots(int id)
+        {
+            try
+            {
+                AppUser user = _context.Users.FirstOrDefault(x => x.Id == id);
+
+                return user.Plots;
+            }catch(Exception e)
+            {
+                return Enumerable.Empty<Plot>();
+            }
+        }
+
+        public IEnumerable<Plot> GetVendorPlots(int id)
+        {
+            try
+            {
+                AppUser user = _context.Users.FirstOrDefault(x => x.Id == id);
+
+                return user.Plots;
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<Plot>();
+            }
+        }
+
+        public Plot PurchasePlot(int userId)
+        {
+            var plot = GetAllAvailablePlots().FirstOrDefault();
+            plot.AppUserId = userId;
+            plot.IsAvailable = false;
+            return plot;
         }
     }
 }
