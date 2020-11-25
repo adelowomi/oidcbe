@@ -6,15 +6,16 @@ namespace AppService.AppModel.InputModel
     public class PaymentInputModel
     {
         [Required]
-        public int SubscriberId { get; set; }
+        public int SubscriptionId { get; set; }
 
         [Required]
-        public double Amount { get; set; }
+        public int PaymentTypeId { get; set; }
 
         [Required]
-        public int PlotId { get; set; }
+        public int PaymentMethodId { get; set; }
 
         [Required]
-        public string TrnxRef { get; set; }
+        public int PaymentProviderId { get; set; }
+
     }
 }
