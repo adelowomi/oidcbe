@@ -9,7 +9,7 @@ namespace Core.Model
 
 public enum OfferStatusEnum
 {
-    APPROVED,
+    APPROVED = 1,
     PENDING,
     DECLINED
 }

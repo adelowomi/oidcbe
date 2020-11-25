@@ -53,6 +53,10 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<DocumentType> DocumentTypes { get; set; }
 
+        public DbSet<SubscriptionStatus> SubscriptionStatuses { get; set; }
+
+        public DbSet<DocumentStatus> DocumentStatuses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
