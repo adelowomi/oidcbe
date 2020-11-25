@@ -1099,3 +1099,23 @@ VALUES (N'20201125082229_WorkOrderModels', N'3.1.8');
 
 GO
 
+DECLARE @var8 sysname;
+SELECT @var8 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[WorkOrders]') AND [c].[name] = N'Name');
+IF @var8 IS NOT NULL EXEC(N'ALTER TABLE [WorkOrders] DROP CONSTRAINT [' + @var8 + '];');
+ALTER TABLE [WorkOrders] DROP COLUMN [Name];
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125105600_SomeModel', N'3.1.8');
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201125114215_RemovedAppUserIdFromPlot', N'3.1.8');
+
+GO
+

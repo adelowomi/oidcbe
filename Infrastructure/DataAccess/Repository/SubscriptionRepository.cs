@@ -4,11 +4,13 @@ using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository
 {
     public class SubscriptionRepository : BaseRepository<Subscription>, ISubscriptionRepository
     {
+
         public SubscriptionRepository(AppDbContext dbContext) : base(dbContext)
         {
 
@@ -32,7 +34,8 @@ namespace Infrastructure.DataAccess.Repository
             {
                 OfferId = offer.Id,
                 AppUserId = userId,
-                OrganizationTypeId = organizationTypeId
+                OrganizationTypeId = organizationTypeId,
+                SubscriptionStatusId = (int) SubscriptionStatusEnum.PENDING
             });
 
             return result;
@@ -66,6 +69,7 @@ namespace Infrastructure.DataAccess.Repository
                 DateModified = DateTime.Now
             };
 
+            plot.IsAvailable = false;
             _context.Offers.Add(offer);
             _context.SaveChanges();
             return offer;

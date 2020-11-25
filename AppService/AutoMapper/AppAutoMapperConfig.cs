@@ -112,6 +112,13 @@ namespace AppService.AutoMapper
             CreateMap<PaymentStatus, PaymentStatusViewModel>()
               .ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
 
+            CreateMap<Offer, OfferViewModel>();
+
+            CreateMap<Subscription, SubscriptionViewModel>()
+                .ForMember(dest => dest.OfferStatus, opts => opts.MapFrom(src => src.Offer.OfferStatus.Name))
+                .ForMember(dest => dest.PlotName, opts => opts.MapFrom(src => src.Offer.Plot.Name))
+                .ForMember(dest => dest.SubscriptionStatus, opts => opts.MapFrom(src => src.SubscriptionStatus.Name))
+                ;
 
             CreateMap<Plot, PlotViewModel>()
                 .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))

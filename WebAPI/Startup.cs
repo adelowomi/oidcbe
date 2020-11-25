@@ -120,7 +120,7 @@ namespace WebAPI
 
             services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
             services.AddTransient<ISubscriptionService, SubscriptionService>();
-            //services.AddTransient<IDocumentAppService, DocumentAppService>();
+            services.AddTransient<ISubscriptionAppService, SubscriptionAppService>();
 
 
             services.AddHttpContextAccessor();

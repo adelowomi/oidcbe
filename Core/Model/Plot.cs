@@ -27,17 +27,18 @@ namespace Core.Model
 
         public bool IsAvailable { get; set; }
 
-        public double? Amount { get; set; }
-
-        public bool HasAmount { get; set; }
-
         public bool IsPaymentComplete { get; set; }
 
         public int? PlotStatusId { get; set; }
 
         public PlotStatus PlotStatus { get; set; }
 
-        public IEnumerable<Document> Documents { get; set; }
+        public ICollection<Document> Documents { get; set; }
+
+        //public double? Amount { get; set; }
+
+        //public bool HasAmount { get; set; }
+
 
     }
 

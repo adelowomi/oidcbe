@@ -20,17 +20,66 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet]
-        [Route("api/payment/log")]
-        public IActionResult LogTransaction([FromBody] PaymentInputModel payment)
+        [HttpPost]
+        [Route("api/susbcribe/plot")]
+        public IActionResult Subscribe([FromBody] SubscriptionInputModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_paymentAppService.MakePayment(payment)));
+            return Ok(ResponseViewModel.Ok(_subscriptionAppService.MakeSubscription(model)));
         }
 
+
+        [HttpGet]
+        [Route("api/susbcribe/plot/any")]
+        public IActionResult LogTransaction()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_subscriptionAppService.MakeSubscription().Result));
+        }
+
+
+        [HttpGet]
+        [Route("api/subscriptions/all")]
+        public IActionResult GetSubscriptionBy()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_subscriptionAppService.GetSubscriptions()));
+        }
+
+        [HttpGet]
+        [Route("api/subscriptions/user")]
+        public IActionResult GetSubscriptionBy(int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_subscriptionAppService.GetSubscriptions(userId)));
+        }
+
+        //[HttpGet]
+        //[Route("api/subscriptions/current")]
+        //public IActionResult GetCurrentSubscription()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    return Ok(ResponseViewModel.Ok(_subscriptionAppService.GetCurrentSubscription()));
+        //}
     }
 }
