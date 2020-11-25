@@ -13,6 +13,10 @@ namespace Core.Model
 
         public DocumentType DocumentType { get; set; }
 
+        public int? PlotId { get; set; }
+
+        public Plot Plot { get; set; }
+
     }
 
     enum DOCUMENTTYPE

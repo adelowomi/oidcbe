@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Core.Model
 {
     public class Plot : BaseEntity
@@ -24,5 +26,11 @@ namespace Core.Model
         public double Lattitude { get; set; }
 
         public bool IsAvailable { get; set; }
+
+        public double? Amount { get; set; }
+
+        public bool HasAmount { get; set; }
+
+        public ICollection<Document> Documents { get; set; }
     }
 }

@@ -1,6 +1,5 @@
-﻿using System;
-using Core.Model;
-using Microsoft.AspNetCore.Identity;
+﻿using Core.Model;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,7 +57,7 @@ namespace Infrastructure.DataAccess.DataContext
         {
             base.OnModelCreating(builder);
 
-            
+            builder.Seed();
         }
     }
 }
