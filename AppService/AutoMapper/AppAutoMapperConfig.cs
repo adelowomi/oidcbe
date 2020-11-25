@@ -101,9 +101,16 @@ namespace AppService.AutoMapper
                 ;
 
             CreateMap<PaymentProvider, PaymentProviderViewModel>()
+               .ForMember(dest => dest.PaymentProviderName, opts => opts.MapFrom(src => src.Name));
 
-               .ForMember(dest => dest.PaymentProviderName, opts => opts.MapFrom(src => src.Name))
-               ;
+            CreateMap<PaymentType, PaymentTypeViewModel>()
+              .ForMember(dest => dest.PaymentTypeName, opts => opts.MapFrom(src => src.Name));
+
+            CreateMap<PaymentMethod, PaymentMethodViewModel>()
+              .ForMember(dest => dest.PaymentMethodName, opts => opts.MapFrom(src => src.Name));
+
+            CreateMap<PaymentStatus, PaymentStatusViewModel>()
+              .ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
 
 
             CreateMap<Plot, PlotViewModel>()

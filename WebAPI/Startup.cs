@@ -116,7 +116,7 @@ namespace WebAPI
 
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IPaymentService, PaymentService>();
-            //services.AddTransient<IPaymentAppService, PaymentAppService>();
+            services.AddTransient<IPaymentAppService, PaymentAppService>();
 
             services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
             services.AddTransient<ISubscriptionService, SubscriptionService>();

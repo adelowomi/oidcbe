@@ -10,5 +10,5 @@ namespace Core.Model
 enum PaymentType
 {
     FULL,
-    PART
+    INSTALLMENT
 }

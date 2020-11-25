@@ -8,20 +8,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
+    
     public class PaymentsController : Controller
     {
         private IPlotAppService _plotService;
         private IUtilityAppService _utilityAppService;
-        public PaymentsController(IPlotAppService plotService, IUtilityAppService utilityAppService)
+        private readonly IPaymentAppService _paymentAppService;
+
+        public PaymentsController(IPlotAppService plotService, IUtilityAppService utilityAppService, IPaymentAppService paymentAppService)
         {
             _plotService = plotService;
             _utilityAppService = utilityAppService;
+            _paymentAppService = paymentAppService;
         }
 
 
         [HttpGet]
-        [Route("api/payments/log")]
+        [Route("api/payment/log")]
         public IActionResult LogTransaction([FromBody] PaymentInputModel payment)
         {
             if (!ModelState.IsValid)
@@ -29,11 +32,11 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
+            return Ok(ResponseViewModel.Ok(_paymentAppService.MakePayment(payment)));
         }
 
         [HttpGet]
-        [Route("api/payments/history")]
+        [Route("api/payment/history")]
         public IActionResult GetPaymentHistory()
         {
             if (!ModelState.IsValid)
@@ -45,7 +48,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/payments/providers")]
+        [Route("api/payment/providers")]
         public IActionResult GetPaymentProviders()
         {
             if (!ModelState.IsValid)
@@ -53,11 +56,47 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
+            return Ok(ResponseViewModel.Ok(_paymentAppService.GetAllPaymentProviders()));
         }
 
         [HttpGet]
-        [Route("api/payments")]
+        [Route("api/payment/methods")]
+        public IActionResult GetPaymentMethods()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_paymentAppService.GetAllPaymentMethods()));
+        }
+
+        [HttpGet]
+        [Route("api/payment/statuses")]
+        public IActionResult GetPaymentStatuses()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_paymentAppService.GetAllPaymentStatuses()));
+        }
+
+        [HttpGet]
+        [Route("api/payment/types")]
+        public IActionResult GetPaymentTypes()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_paymentAppService.GetAllPaymentTypes()));
+        }
+
+        [HttpGet]
+        [Route("api/payment")]
         public IActionResult GetPaymentByTrnxId(int trnxId)
         {
             if (!ModelState.IsValid)
@@ -69,7 +108,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/payments/requery")]
+        [Route("api/payment/requery")]
         public IActionResult RequeryPaymentByTrnxRef(string trnxRefs)
         {
             if (!ModelState.IsValid)

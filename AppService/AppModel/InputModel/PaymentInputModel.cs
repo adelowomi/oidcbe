@@ -17,5 +17,6 @@ namespace AppService.AppModel.InputModel
         [Required]
         public int PaymentProviderId { get; set; }
 
+        public double Amount { get; set; }
     }
 }
