@@ -114,6 +114,14 @@ namespace WebAPI
             services.AddTransient<IDocumentService, DocumentService>();
             services.AddTransient<IDocumentAppService, DocumentAppService>();
 
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IPaymentService, PaymentService>();
+            //services.AddTransient<IPaymentAppService, PaymentAppService>();
+
+            services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddTransient<ISubscriptionService, SubscriptionService>();
+            //services.AddTransient<IDocumentAppService, DocumentAppService>();
+
 
             services.AddHttpContextAccessor();
 
