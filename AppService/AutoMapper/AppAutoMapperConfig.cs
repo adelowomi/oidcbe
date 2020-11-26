@@ -133,13 +133,14 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.IsPaymentCompleted, opts => opts.MapFrom(src => src.IsPaymentCompleted))
                 ;
 
-            CreateMap<Plot, PlotViewModel>()
-                .ForMember(dest => dest.PlotName, opts => opts.MapFrom(src => src.Name))
-                .ForMember(dest => dest.PlotType, opts => opts.MapFrom(src => src.PlotType.Name))
-                .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.Id))
-                .ForMember(dest => dest.PlotAddresss, opts => opts.MapFrom(src => src.Address))
-                .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))
-                ;
+            //CreateMap<Plot, PlotViewModel>()
+            //    .ForMember(dest => dest.PlotName, opts => opts.MapFrom(src => src.Name))
+            //    .ForMember(dest => dest.PlotType, opts => opts.MapFrom(src => src.PlotType.Name))
+            //    .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.Id))
+            //    .ForMember(dest => dest.PlotAddresss, opts => opts.MapFrom(src => src.Address))
+            //    .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))
+            //    .ForMember(dest => dest.PlotType, opts => opts.MapFrom(src => src.PlotType.Name))
+            //    ;
 
             CreateMap<Plot, PlotViewModel>()
                 .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))

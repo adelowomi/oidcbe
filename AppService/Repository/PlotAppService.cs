@@ -36,7 +36,7 @@ namespace AppService.Repository
 
         public IEnumerable<PlotViewModel> GetAvailablePlots()
         {
-            throw new NotImplementedException();
+            return _plotService.AllAvailablePlots().Select(_mapper.Map<Plot, PlotViewModel>);
         }
 
         /// <summary>

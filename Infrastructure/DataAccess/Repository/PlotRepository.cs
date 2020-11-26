@@ -4,6 +4,7 @@ using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 /// <summary>
 ///  LICENSE:   ALL RIGHT RESERVED TO COUSANT LIMITED (2020)
@@ -26,7 +27,7 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<Plot> GetAllAvailablePlots()
         {
-           return GetAll().Where(x => x.IsAvailable);
+            return GetPlots().Where(x => x.IsAvailable == true);
         }
 
         /// <summary>
@@ -45,7 +46,10 @@ namespace Infrastructure.DataAccess.Repository
         /// <returns></returns>
         public IEnumerable<Plot> GetPlots()
         {
-            return GetAll();
+            return _context.Plots
+                .Include(x => x.PlotType)
+                .Include(x => x.PlotStatus)
+                .Include(x => x.Documents);
         }
 
         public IEnumerable<Plot> GetSubscriberPlots(int id)
@@ -54,7 +58,8 @@ namespace Infrastructure.DataAccess.Repository
             {
                 AppUser user = _context.Users.FirstOrDefault(x => x.Id == id);
 
-                return user.Plots;
+                return user.Plots ?? Enumerable.Empty<Plot>();
+
             }catch(Exception e)
             {
                 return Enumerable.Empty<Plot>();
@@ -67,7 +72,7 @@ namespace Infrastructure.DataAccess.Repository
             {
                 AppUser user = _context.Users.FirstOrDefault(x => x.Id == id);
 
-                return user.Plots;
+                return user.Plots ?? Enumerable.Empty<Plot>();
             }
             catch (Exception e)
             {

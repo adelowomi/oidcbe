@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/plot")]
+        [Route("api/plots/current/user")]
         public IActionResult GetByVendorId()
         {
             if (!ModelState.IsValid)
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetPlotByCurrentUserAsync()));
+            return Ok(ResponseViewModel.Ok(_plotService.GetPlotByCurrentUserAsync().Result));
         }
 
 
@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/plots")]
+        [Route("api/plots/all")]
         public IActionResult GetPlots()
         {
             if (!ModelState.IsValid)
@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
         /// <param name="plotId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/plots/{plotId}")]
+        [Route("api/plot/{plotId}")]
         public IActionResult GetPlots(int plotId)
         {
             if (!ModelState.IsValid)
