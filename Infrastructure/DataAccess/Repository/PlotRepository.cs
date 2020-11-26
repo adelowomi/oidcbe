@@ -46,10 +46,11 @@ namespace Infrastructure.DataAccess.Repository
         /// <returns></returns>
         public IEnumerable<Plot> GetPlots()
         {
-            return _context.Plots
+            var result = _context.Plots
                 .Include(x => x.PlotType)
                 .Include(x => x.PlotStatus)
                 .Include(x => x.Documents);
+            return result;
         }
 
         public IEnumerable<Plot> GetSubscriberPlots(int id)

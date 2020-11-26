@@ -19,6 +19,14 @@ namespace AppService.AppModel.ViewModel
 
         public double Lattitude { get; set; }
 
+        public double KilometerSquare { get; set; }
+
+        public double Price { get; set; }
+
+        public string Status { get; set; }
+
+        public bool IsPaymentComplete { get; set; }
+
         public DateTime DatePurchased { get; set; }
     }
 }
