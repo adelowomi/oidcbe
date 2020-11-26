@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.AppModel.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,12 @@ namespace AppService.Repository.Abstractions
         /// <param name="id"></param>
         /// <returns></returns>
         public IEnumerable<PlotViewModel> GetByVendorId(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<PlotViewModel>> GetPlotByCurrentUserAsync();
 
         /// <summary>
         /// 

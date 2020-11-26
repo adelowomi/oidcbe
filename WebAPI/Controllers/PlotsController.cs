@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppService.AppModel.ViewModel;
+﻿using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +27,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/plot/vendor")]
+        [Route("api/plot")]
         public IActionResult GetByVendorId()
         {
             if (!ModelState.IsValid)
@@ -39,25 +35,42 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
+            return Ok(ResponseViewModel.Ok(_plotService.GetPlotByCurrentUserAsync()));
         }
 
 
         /// <summary>
-        /// GET
-        /// Get Vendor By Subscriber Id
+        /// GET Request
+        /// Get Vendor By Id
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/plot/subscriber")]
-        public IActionResult GetBySubcriberId()
+        [Route("api/plots")]
+        public IActionResult GetPlots()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
+            return Ok(ResponseViewModel.Ok(_plotService.GetPlots()));
+        }
+
+        /// <summary>
+        /// GET Request
+        /// Get Vendor By Id
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/plots/available")]
+        public IActionResult GetAvailablePlots()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_plotService.GetAvailablePlots()));
         }
 
         /// <summary>

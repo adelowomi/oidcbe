@@ -58,6 +58,7 @@ namespace BusinessLogic.Repository
             return _plotRepository.GetSubscriberPlots(subscriberId);
         }
 
+
         /// <summary>
         /// Get Plot By VendorId
         /// </summary>
