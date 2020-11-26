@@ -112,14 +112,21 @@ namespace AppService.AutoMapper
             CreateMap<PaymentStatus, PaymentStatusViewModel>()
               .ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
 
-            CreateMap<Offer, OfferViewModel>();
-
             CreateMap<Subscription, SubscriptionViewModel>()
                 .ForMember(dest => dest.SubscriptionId, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.SubscriptionStatus.Name))
                 .ForMember(dest => dest.Amount, opts => opts.MapFrom(src => src.Offer.Plot.Price))
                 ;
 
+            CreateMap<Payment, PaymentViewModel>()
+                .ForMember(dest => dest.PaymentMethod, opts => opts.MapFrom(src => src.PaymentMethod.Name))
+                .ForMember(dest => dest.PaymentType, opts => opts.MapFrom(src => src.PaymentType.Name))
+                .ForMember(dest => dest.PaymentProvider, opts => opts.MapFrom(src => src.PaymentProvider.Name))
+                .ForMember(dest => dest.PaymentStatus, opts => opts.MapFrom(src => src.PaymentStatus.Name))
+                .ForMember(dest => dest.Subscription, opts => opts.MapFrom(src => src.Subscription))
+                //.ForMember(dest => dest.PaymentMethod, opts => opts.MapFrom(src => src.PaymentMethod.Name))
+                //.ForMember(dest => dest.PaymentMethod, opts => opts.MapFrom(src => src.PaymentMethod.Name))
+            ;
 
             CreateMap<Offer, OfferViewModel>()
                 .ForMember(dest => dest.OfferStatus, opts => opts.MapFrom(src => src.OfferStatus.Name))
@@ -136,6 +143,7 @@ namespace AppService.AutoMapper
 
             CreateMap<Plot, PlotViewModel>()
                 .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))
+                .ForMember(dest => dest.PlotName, opts => opts.MapFrom(src => src.Name))
                 .ForMember(dest => dest.DatePurchased, opts => opts.MapFrom(src => src.DateCreated))
                 .ForMember(dest => dest.PlotType, opts => opts.MapFrom(src => src.PlotType.Name))
                 .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.Id))

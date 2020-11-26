@@ -25,7 +25,7 @@ namespace Core.Model
 
         public PaymentStatus PaymentStatus { get; set; }
 
-        public int subscriptionId { get; set; }
+        public int SubscriptionId { get; set; }
 
         public Subscription Subscription { get; set; }
 

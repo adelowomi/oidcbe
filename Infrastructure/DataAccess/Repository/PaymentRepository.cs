@@ -4,6 +4,7 @@ using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository
 {
@@ -19,7 +20,7 @@ namespace Infrastructure.DataAccess.Repository
             var payment = GetAll().FirstOrDefault(x => x.TrnxRef == trnxRef);
             payment.PaymentStatusId = (int)PaymentStatusEnum.APPROVED;
             Update(payment);
-            return payment;
+            return GetFullQueryPayment(payment.Id);
         }
 
         public IEnumerable<PaymentMethod> GetPaymentMethods()
@@ -49,12 +50,25 @@ namespace Infrastructure.DataAccess.Repository
                 PaymentTypeId = paymentType,
                 PaymentProviderId = paymentProviderId,
                 Amount = amount,
-                subscriptionId = subscriptionId,
+                SubscriptionId = subscriptionId,
                 TrnxRef = $"OD{Helpers.Helper.RandomNumber(10)}",
                 PaymentStatusId = (int)PaymentStatusEnum.PENDING
             });
 
-            return result;
+            return GetFullQueryPayment(result.Id);
+            
+        }
+
+        public Payment GetFullQueryPayment(int paymentId)
+        {
+            return _context.Payments
+                .Include(x => x.PaymentProvider)
+                .Include(x => x.PaymentMethod)
+                .Include(x => x.PaymentType)
+                .Include(x => x.PaymentStatus)
+                .Include(x => x.Subscription)
+                .Include(x => x.Subscription.SubscriptionStatus)
+                .FirstOrDefault(x => x.Id == paymentId);
         }
     }
 }

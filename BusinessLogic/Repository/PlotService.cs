@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.Repository.Abstractions;
 
@@ -40,6 +41,11 @@ namespace BusinessLogic.Repository
         public IEnumerable<Plot> AllPlots()
         {
             return _plotRepository.GetPlots();
+        }
+
+        public Plot GetPlot(int plotId)
+        {
+            return _plotRepository.GetPlots().FirstOrDefault(x => x.Id == plotId);
         }
 
         /// <summary>

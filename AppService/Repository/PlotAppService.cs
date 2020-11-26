@@ -26,6 +26,11 @@ namespace AppService.Repository
             _mapper = mapper;
         }
 
+        public IEnumerable<PlotViewModel> GetAvailablePlots()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Get Plot By VendorId
         /// </summary>
@@ -41,9 +46,14 @@ namespace AppService.Repository
         /// </summary>
         /// <param name="plotId"></param>
         /// <returns></returns>
-        public IEnumerable<PlotViewModel> GetPlotById(int plotId)
+        public PlotViewModel GetPlotById(int plotId)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<Plot, PlotViewModel>(_plotService.GetPlot(plotId));
+        }
+
+        public IEnumerable<PlotViewModel> GetPlots()
+        {
+            return _plotService.AllPlots().Select(_mapper.Map<Plot, PlotViewModel>);
         }
 
         public IActionResult GetVendorByName(string name)

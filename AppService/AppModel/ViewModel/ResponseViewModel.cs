@@ -16,7 +16,7 @@ namespace AppService.AppModel.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ApplicationService.ViewModel.ResponseViewModel"/> class.
         /// </summary>
-        private ResponseViewModel()
+        public ResponseViewModel()
         {
 
         }
@@ -258,6 +258,10 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_RC_NUMBER = "Please Enter Organization RC Number";
         public static string INVALID_OFFICE_ADDRESS = "Please enter Office Address";
         public static string INVALID_NAME_NAME_OF_ENTRY = "Please ennter name of entry and try again!";
+        public static string INVALID_SUBSCRIPTION_ENTRY = "Invalid subscription, please try again!";
+        public static string INVALID_PAYMENT_TYPE = "Invalid payment type, please try again!";
+        public static string INVALID_PAYMENT_METHOD = "Invalid payment method";
+        public static string INVALID_PAYMENT_PROVIDER = "Invalid payment provider";
     }
 
     /// <summary>
@@ -301,6 +305,10 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_RC_NUMBER = "16";
         public static readonly string INVALID_OFFICE_ADDRESS = "17";
         public static readonly string INVALID_NAME_NAME_OF_ENTRY = "18";
+        public static readonly string INVALID_SUBSCRIPTION_ENTRY = "19";
+        public static readonly string INVALID_PAYMENT_TYPE = "20";
+        public static readonly string INVALID_PAYMENT_METHOD = "21";
+        public static readonly string INVALID_PAYMENT_PROVIDER = "22";
 
         //FAILURES
         public static readonly string FAIL = "91";

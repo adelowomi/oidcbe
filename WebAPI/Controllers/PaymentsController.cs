@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/payment/log")]
         public IActionResult LogTransaction([FromBody] PaymentInputModel payment)
         {
@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_paymentAppService.MakePayment(payment)));
+            return Ok(_paymentAppService.MakePayment(payment));
         }
 
         [HttpGet]
@@ -116,7 +116,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_plotService.GetByVendorId(1));
+            return Ok(_paymentAppService.QueryPayment(trnxRefs));
         }
     }
 }

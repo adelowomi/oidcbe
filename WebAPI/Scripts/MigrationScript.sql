@@ -1157,3 +1157,24 @@ VALUES (N'20201125161134_AddPriceToPlot', N'3.1.8');
 
 GO
 
+ALTER TABLE [Payments] DROP CONSTRAINT [FK_Payments_Subscriptions_subscriptionId];
+
+GO
+
+EXEC sp_rename N'[Payments].[subscriptionId]', N'SubscriptionId', N'COLUMN';
+
+GO
+
+EXEC sp_rename N'[Payments].[IX_Payments_subscriptionId]', N'IX_Payments_SubscriptionId', N'INDEX';
+
+GO
+
+ALTER TABLE [Payments] ADD CONSTRAINT [FK_Payments_Subscriptions_SubscriptionId] FOREIGN KEY ([SubscriptionId]) REFERENCES [Subscriptions] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201126073614_ChangesSubsciptionId', N'3.1.8');
+
+GO
+

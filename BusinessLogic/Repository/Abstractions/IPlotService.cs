@@ -20,6 +20,13 @@ namespace BusinessLogic.Repository
         IEnumerable<Plot> GetPlotBy(int subscriberId);
 
         /// <summary>
+        /// Abstract Interface Method To Get Plot By Subscriber Id
+        /// </summary>
+        /// <param name="subscriberId"></param>
+        /// <returns></returns>
+        Plot GetPlot(int plotId);
+
+        /// <summary>
         /// Abstract Interface Method To Get Plot By Vendor Id
         /// </summary>
         /// <param name="subscriberId"></param>

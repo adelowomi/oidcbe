@@ -10,15 +10,17 @@ using Core.Model;
 
 namespace AppService.Repository
 {
-    public class PaymentAppService : IPaymentAppService
+    public class PaymentAppService : ResponseViewModel, IPaymentAppService
     {
         private readonly IPaymentService _paymentService;
         private readonly IMapper _mapper;
+        private readonly ISubscriptionAppService _subscriptionAppService;
 
-        public PaymentAppService(IPaymentService paymentService, IMapper mapper)
+        public PaymentAppService(IPaymentService paymentService, ISubscriptionAppService subscriptionAppService, IMapper mapper) : base()
         {
             _paymentService = paymentService;
             _mapper = mapper;
+            _subscriptionAppService = subscriptionAppService;
         }
 
         public IEnumerable<PaymentMethodViewModel> GetAllPaymentMethods()
@@ -45,22 +47,51 @@ namespace AppService.Repository
             return result;
         }
 
-        public PaymentViewModel MakePayment(PaymentInputModel payment)
+        public ResponseViewModel MakePayment(PaymentInputModel payment)
         {
-           var result = _paymentService.LogNewPayment(payment.SubscriptionId, payment.PaymentTypeId, payment.PaymentMethodId, payment.PaymentProviderId, payment.Amount);
+           var subscription = _subscriptionAppService.GetSubscriptions().FirstOrDefault(x => x.SubscriptionId == payment.SubscriptionId);
+
+           //TODO: Please do try and catch inside Business Logic instead of the following you, SMH
+           if(subscription == null)
+           {
+                return Failed(ResponseMessageViewModel.INVALID_SUBSCRIPTION_ENTRY, ResponseErrorCodeStatus.INVALID_SUBSCRIPTION_ENTRY);
+           }
+
+           var types = _paymentService.GetAllPaymentTypes().FirstOrDefault(x => x.Id == payment.PaymentTypeId);
+
+           if(types == null)
+           {
+                return Failed(ResponseMessageViewModel.INVALID_PAYMENT_TYPE, ResponseErrorCodeStatus.INVALID_PAYMENT_TYPE);
+           }
+
+           var methods = _paymentService.GetAllPaymentMethods().FirstOrDefault(x => x.Id == payment.PaymentMethodId);
+
+           if (methods == null)
+           {
+               return Failed(ResponseMessageViewModel.INVALID_PAYMENT_METHOD, ResponseErrorCodeStatus.INVALID_PAYMENT_METHOD);
+           }
+
+           var providers = _paymentService.GetAllPaymentProviders().FirstOrDefault(x => x.Id == payment.PaymentProviderId);
+
+           if (providers == null)
+           {
+               return Failed(ResponseMessageViewModel.INVALID_PAYMENT_PROVIDER, ResponseErrorCodeStatus.INVALID_PAYMENT_PROVIDER);
+           }
+
+            var result = _paymentService.LogNewPayment(payment.SubscriptionId, payment.PaymentTypeId, payment.PaymentMethodId, payment.PaymentProviderId, 0);
 
            var mappedResult = _mapper.Map<Payment, PaymentViewModel>(result);
 
-           return mappedResult;
+           return Ok(mappedResult);
         }
 
-        public PaymentViewModel QueryPayment(string trnxRef)
+        public ResponseViewModel QueryPayment(string trnxRef)
         {
             var result = _paymentService.QueryPayment(trnxRef);
 
             var mappedResult = _mapper.Map<Payment, PaymentViewModel>(result);
 
-            return mappedResult;
+            return Ok(mappedResult);
         }
     }
 }

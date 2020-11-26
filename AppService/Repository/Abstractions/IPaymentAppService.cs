@@ -7,7 +7,7 @@ namespace AppService.Repository.Abstractions
 {
     public interface IPaymentAppService
     {
-        PaymentViewModel MakePayment(PaymentInputModel payment);
+        ResponseViewModel MakePayment(PaymentInputModel payment);
 
         IEnumerable<PaymentTypeViewModel> GetAllPaymentTypes();
 
@@ -17,6 +17,6 @@ namespace AppService.Repository.Abstractions
 
         IEnumerable<PaymentProviderViewModel> GetAllPaymentProviders();
 
-        PaymentViewModel QueryPayment(string trnxRef);
+        ResponseViewModel QueryPayment(string trnxRef);
     }
 }

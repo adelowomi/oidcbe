@@ -5,9 +5,7 @@ namespace AppService.AppModel.ViewModel
     {
         public int PlotId { get; set; }
 
-        public string PlotName { get; set; }
-
-        public int? OfferStatusId { get; set; }
+        public PlotViewModel Plot { get; set; }
 
         public string OfferStatus { get; set; }
 

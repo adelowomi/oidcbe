@@ -8,8 +8,6 @@ namespace AppService.AppModel.ViewModel
         public string Status { get; set; }
 
         public OfferViewModel Offer { get; set; }
-
-        public PlotViewModel Plot { get; set; }
        
         public double Amount { get; set; }
     }

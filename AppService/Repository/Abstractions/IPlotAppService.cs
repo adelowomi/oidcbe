@@ -15,7 +15,7 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <param name="plotId"></param>
         /// <returns></returns>
-        public IEnumerable<PlotViewModel> GetPlotById(int plotId);
+        public PlotViewModel GetPlotById(int plotId);
 
         /// <summary>
         /// Abstract Interface Method To Get Plot By Its Vendor Id
@@ -24,6 +24,26 @@ namespace AppService.Repository.Abstractions
         /// <returns></returns>
         public IEnumerable<PlotViewModel> GetByVendorId(int id);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+
         public IActionResult GetVendorByName(string name);
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<PlotViewModel> GetPlots();
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<PlotViewModel> GetAvailablePlots();
     }
 }
