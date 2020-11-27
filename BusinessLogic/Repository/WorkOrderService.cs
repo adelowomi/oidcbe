@@ -20,7 +20,7 @@ namespace BusinessLogic.Repository
             return _workOrderRepository.CreateNewWorkOrder(workOrder);
         }
 
-        public IEnumerable<WorkOrder> GetAlByUserId(int userId)
+        public IEnumerable<WorkOrder> GetAllByUserId(int userId)
         {
             return _workOrderRepository.GetAllByUserId(userId);
         }
