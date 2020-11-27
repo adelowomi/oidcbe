@@ -122,6 +122,10 @@ namespace WebAPI
             services.AddTransient<ISubscriptionService, SubscriptionService>();
             services.AddTransient<ISubscriptionAppService, SubscriptionAppService>();
 
+            services.AddTransient<IWorkOrderRepository, WorkOrderRepository>();
+            services.AddTransient<IWorkOrderService, WorkOrderService>();
+            services.AddTransient<IWorkOrderAppService, WorkOrderAppService>();
+
 
             services.AddHttpContextAccessor();
 

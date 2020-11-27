@@ -3,6 +3,8 @@ namespace Core.Model
 {
     public class WorkOrder : BaseEntity
     {
+        public string Name { get; set; }
+
         public int SubscriptionId { get; set; }
 
         public int? AppUserId { get; set; }

@@ -1,24 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
+using AppService.Extensions;
 using AppService.Repository.Abstractions;
 using AutoMapper;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace AppService.Repository
 {
     public class WorkOrderAppService : IWorkOrderAppService
     {
         private readonly IWorkOrderService _workOrderService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        protected readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public WorkOrderAppService(IWorkOrderService workOrderService, IMapper mapper)
+        public WorkOrderAppService(IWorkOrderService workOrderService,
+                                    UserManager<AppUser> userManager,
+                                    IMapper mapper,
+                                    IHttpContextAccessor httpContextAccessor)
         {
             _workOrderService = workOrderService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public WorkOrderViewModel CreateNew(WorkOrderInputModel workOrder)
@@ -28,9 +39,11 @@ namespace AppService.Repository
                    _mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder)));
         }
 
-        public IEnumerable<WorkOrderViewModel> GetAllByUserId(int userId)
+        public async Task<IEnumerable<WorkOrderViewModel>> GetAllByUserId()
         {
-            return _workOrderService.GetAllByUserId(userId).Select(_mapper.Map<WorkOrder, WorkOrderViewModel>);
+            AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+
+            return _workOrderService.GetAllByUserId(currentUser.Id).Select(_mapper.Map<WorkOrder, WorkOrderViewModel>);
         }
 
         public IEnumerable<WorkOrderViewModel> GetAll()
@@ -48,14 +61,17 @@ namespace AppService.Repository
             return _mapper.Map<WorkOrder, WorkOrderViewModel>(_workOrderService.GetById(id));
         }
 
-        public WorkOrderViewModel GetByUserId(int userId)
+        public async Task<WorkOrderViewModel> GetByUserId()
         {
-            return _mapper.Map<WorkOrder, WorkOrderViewModel>(_workOrderService.GetByUserId(userId));
+            AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+
+            return _mapper.Map<WorkOrder, WorkOrderViewModel>(_workOrderService.GetByUserId(currentUser.Id));
         }
 
         public IEnumerable<WorkOrderTypeViewModel> GetWorkOrderTypes()
         {
             return _workOrderService.GetWorkOrderTypes().Select(_mapper.Map<WorkOrderType, WorkOrderTypeViewModel>);
         }
+
     }
 }

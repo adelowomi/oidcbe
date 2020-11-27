@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 
@@ -11,11 +12,11 @@ namespace AppService.Repository.Abstractions
 
         WorkOrderViewModel GetById(int id);
 
-        WorkOrderViewModel GetByUserId(int userId);
+        Task<WorkOrderViewModel> GetByUserId();
 
         IEnumerable<WorkOrderViewModel> GetAll();
 
-        IEnumerable<WorkOrderViewModel> GetAllByUserId(int userId);
+        Task<IEnumerable<WorkOrderViewModel>> GetAllByUserId();
 
         IEnumerable<WorkOrderViewModel> GetAllBySubscriptionId(int subscriptionId);
 
