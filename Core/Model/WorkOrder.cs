@@ -5,6 +5,10 @@ namespace Core.Model
     {
         public int SubscriptionId { get; set; }
 
+        public int? AppUserId { get; set; }
+
+        public AppUser AppUser { get; set; }
+
         public Subscription Subscription { get; set; }
 
         public int WorkOrderTypeId { get; set; }

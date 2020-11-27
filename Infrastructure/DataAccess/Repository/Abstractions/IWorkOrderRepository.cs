@@ -8,7 +8,15 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
     {
         WorkOrder CreateNewWorkOrder(WorkOrder workOrder);
 
-        IEnumerable<WorkOrder> GetWorkOrderBy(int subscriptionId);
+        WorkOrder GetById(int id);
+
+        WorkOrder GetByUserId(int id);
+
+        IEnumerable<WorkOrder> GetAllWorkOrders();
+
+        IEnumerable<WorkOrder> GetAllByUserId(int userId);
+
+        IEnumerable<WorkOrder> GetAllBySubscriptionId(int subscriptionId);
 
         IEnumerable<WorkOrderType> GetWorkOrderTypes();
     }

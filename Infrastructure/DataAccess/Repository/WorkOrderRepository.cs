@@ -19,9 +19,29 @@ namespace Infrastructure.DataAccess.Repository
             return CreateAndReturn(workOrder);
         }
 
-        public IEnumerable<WorkOrder> GetWorkOrderBy(int userId)
+        public IEnumerable<WorkOrder> GetAllBySubscriptionId(int subscriptionId)
         {
-            return GetAll().Where(x => x.SubscriptionId == userId);
+            return GetAll().Where(x => x.SubscriptionId == subscriptionId);
+        }
+
+        public IEnumerable<WorkOrder> GetAllByUserId(int userId)
+        {
+            return GetAll().Where(x => x.AppUserId == userId);
+        }
+
+        public IEnumerable<WorkOrder> GetAllWorkOrders()
+        {
+            return GetAll();
+        }
+
+        public WorkOrder GetByUserId(int id)
+        {
+            return GetAll().FirstOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<WorkOrder> GetWorkOrderBy(int subscriptionId)
+        {
+            return GetAll().Where(x => x.SubscriptionId == subscriptionId);
         }
 
         public IEnumerable<WorkOrderType> GetWorkOrderTypes()
