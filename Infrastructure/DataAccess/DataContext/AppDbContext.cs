@@ -60,6 +60,8 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<WorkOrderType> WorkOrderTypes { get; set; }
 
+        public DbSet<Calendar> Calendars { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
