@@ -49,7 +49,8 @@ namespace Infrastructure.DataAccess.Repository
             var result = _context.Plots
                 .Include(x => x.PlotType)
                 .Include(x => x.PlotStatus)
-                .Include(x => x.Documents);
+                .Include(x => x.Documents)
+                .Include(x => x.Calendars);
             return result;
         }
 

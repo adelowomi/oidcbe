@@ -31,6 +31,8 @@ namespace AppService.AppModel.ViewModel
 
         public IEnumerable<DocumentViewModel> Documents { get; set; }
 
+        public IEnumerable<PlotViewModel> Calendars { get; set; }
+
         public DateTime DatePurchased { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         IEnumerable<Calendar> GetCalendarsByPlotId(int plotId);
 
+        IEnumerable<CalendarEvent> GetEvents();
+
         Calendar GetCalandarBy(int it);
     }
 }

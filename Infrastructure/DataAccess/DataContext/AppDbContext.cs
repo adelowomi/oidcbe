@@ -62,6 +62,8 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<Calendar> Calendars { get; set; }
 
+        public DbSet<CalendarEvent> CalendarEvents { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

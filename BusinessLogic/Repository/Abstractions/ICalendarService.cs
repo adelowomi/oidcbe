@@ -12,6 +12,8 @@ namespace BusinessLogic.Repository.Abstractions
 
         IEnumerable<Calendar> CalendarByPlot(int plotId);
 
+        IEnumerable<CalendarEvent> CalendarEvents();
+
         Calendar CalendarById(int it);
     }
 }

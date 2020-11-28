@@ -25,6 +25,11 @@ namespace BusinessLogic.Repository
             return _calendarRepository.GetCalendarsByPlotId(plotId);
         }
 
+        public IEnumerable<CalendarEvent> CalendarEvents()
+        {
+            return _calendarRepository.GetEvents();
+        }
+
         public IEnumerable<Calendar> Calendars()
         {
             return _calendarRepository.GetAllCalendars();

@@ -39,5 +39,10 @@ namespace Infrastructure.DataAccess.Repository
         {
             return GetAllCalendars().Where(x => x.PlotId == plotId);
         }
+
+        public IEnumerable<CalendarEvent> GetEvents()
+        {
+            return _context.CalendarEvents.ToList();
+        }
     }
 }
