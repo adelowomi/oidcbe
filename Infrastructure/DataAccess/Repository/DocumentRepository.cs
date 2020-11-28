@@ -17,8 +17,6 @@ namespace Infrastructure.DataAccess.Repository
 
         public Document CreateDocument(Document document)
         {
-            document.DateCreated = DateTime.Now;
-            document.DateModified = DateTime.Now;
             return CreateAndReturn(document);
         }
 

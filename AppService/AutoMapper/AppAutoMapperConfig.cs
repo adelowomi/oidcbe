@@ -66,7 +66,7 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                .ForMember(dest => dest.DocumentName, opts => opts.MapFrom(src => src.Name))
                .ForMember(dest => dest.Link, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/documents/link?name={src.Name}"))
-               .ForMember(dest => dest.DocumentType, opts => opts.MapFrom(src => src.DocumentTypeId))
+               .ForMember(dest => dest.DocumentType, opts => opts.MapFrom(src => src.DocumentType.Name))
                .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
                .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
 

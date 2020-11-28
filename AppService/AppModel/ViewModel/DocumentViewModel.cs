@@ -13,7 +13,7 @@ namespace AppService.AppModel.ViewModel
 
         public string Link { get; set; }
 
-        public int DocumentType { get; set; }
+        public string DocumentType { get; set; }
 
         public DateTime DateCreated { get; set; }
 
