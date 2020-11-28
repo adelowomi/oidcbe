@@ -1,9 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using AppService.AppModel.InputModel;
+﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
-using AppService.Extensions;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AutoMapper;
@@ -20,18 +16,19 @@ namespace WebAPI.Controllers
     public class CalendarController : Controller
     {
 
-        private readonly IUserService _userService;
+        private readonly ICalendarAppService _calendarAppService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
         private readonly AppSettings _settings;
 
 
-        public CalendarController(IUserService userService, UserManager<AppUser> userManager,
-                                IHttpContextAccessor httpContextAccessor,
-                                IMapper mapper, IOptions<AppSettings> options)
+        public CalendarController(ICalendarAppService calendarAppService,
+                                    UserManager<AppUser> userManager,
+                                    IHttpContextAccessor httpContextAccessor,
+                                    IMapper mapper, IOptions<AppSettings> options)
         {
-            _userService = userService;
+            _calendarAppService = calendarAppService;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
@@ -44,9 +41,38 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/calendar")]
-        public IActionResult UploadSurvey([FromBody] CalendarInputModel model)
+        public IActionResult NewCalendar([FromBody] CalendarInputModel model)
         {
-            return Ok(ResponseViewModel.Ok());
+            return Ok(ResponseViewModel.Ok(_calendarAppService.NewCalendar(model)));
+        }
+
+        [HttpGet]
+        [Route("api/calendar/plot/{id}")]
+        public IActionResult GetCalendarBy(int plotId)
+        {
+            return Ok(ResponseViewModel.Ok(_calendarAppService.CalendarByPlot(plotId))) ;
+        }
+
+        [HttpGet]
+        [Route("api/calendar/{id}")]
+        public IActionResult GetCalendar(int id)
+        {
+            return Ok(ResponseViewModel.Ok(_calendarAppService.CalendarById(id)));
+        }
+
+        [HttpGet]
+        [Route("api/calendar/alls")]
+        public IActionResult GetAllCalendar()
+        {
+            return Ok(ResponseViewModel.Ok(_calendarAppService.Calendars()));
+        }
+
+
+        [HttpGet]
+        [Route("api/calendar/events")]
+        public IActionResult CalendarEvents()
+        {
+            return Ok(ResponseViewModel.Ok(_calendarAppService.CalendarEvents()));
         }
     }
 }

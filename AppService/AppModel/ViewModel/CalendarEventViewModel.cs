@@ -5,7 +5,7 @@ namespace AppService.AppModel.ViewModel
     {
         public CalendarEventViewModel()
         {
-
+            public string Name { get; set; }
         }
     }
 }

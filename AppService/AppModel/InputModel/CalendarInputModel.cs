@@ -5,7 +5,11 @@ namespace AppService.AppModel.InputModel
     {
         public string Title { get; set; }
 
-        public int Category { get; set; }
+        public string Note { get; set; }
+
+        public int PlotId { get; set; }
+
+        public int EventTypeId { get; set; }
 
         public string Description { get; set; }
 

@@ -3,11 +3,6 @@ using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AutoMapper;
 using Core.Model;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 
 namespace AppService.AutoMapper
 {
@@ -179,6 +174,21 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
                .ForMember(dest => dest.IsActive, opts => opts.MapFrom(src => src.IsEnabled))
                ;
+
+            CreateMap<Calendar, CalendarViewModel>()
+               .ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
+               .ForMember(dest => dest.Note, opts => opts.MapFrom(src => src.Note))
+               .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
+               .ForMember(dest => dest.Event, opts => opts.MapFrom(src => src.CalendarEvent.Name))
+               .ForMember(dest => dest.IsActive, opts => opts.MapFrom(src => src.IsEnabled))
+               ;
+
+            CreateMap<CalendarInputModel, Calendar>()
+              .ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
+              .ForMember(dest => dest.Note, opts => opts.MapFrom(src => src.Note))
+              .ForMember(dest => dest.CalendarEventId, opts => opts.MapFrom(src => src.EventTypeId))
+              .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))
+              ;
         }
     }
 }

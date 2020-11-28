@@ -5,9 +5,13 @@ namespace AppService.AppModel.ViewModel
     {
         public int Id { get; set; }
 
-        //public PlotViewModel Plot { get; set; }
+        public string Title { get; set; }
+
+        public string Note { get; set; }
 
         public string Event { get; set; }
+
+        public bool IsActive { get; set; }
 
         public DateTime DateCreated { get; set; }
     }
