@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_workOrderAppService.GetByUserId()));
+            return Ok(ResponseViewModel.Ok(_workOrderAppService.GetByUserId().Result));
         }
 
         [HttpGet]
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_workOrderAppService.GetAllByUserId()));
+            return Ok(ResponseViewModel.Ok(_workOrderAppService.GetAllByUserId().Result));
         }
 
         [HttpGet]
