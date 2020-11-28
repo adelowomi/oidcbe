@@ -6,6 +6,8 @@ namespace AppService.AppModel.InputModel
 {
     public class DocumentInputModel
     {
+        public int PlotId { get; set; }
+
         public int UserId { get; set; }
 
         public int DocumentType { get; set; }

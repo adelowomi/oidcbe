@@ -4,6 +4,7 @@ using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository
 {
@@ -23,24 +24,26 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<Document> GetAllDocuments()
         {
-            return GetAll();
+            return _context.Documents
+                .Include(x => x.DocumentType)
+                .Include(x => x.Plot);
         }
 
         public Document GetDocumentBy(int documentId)
         {
-            return GetById(documentId);
+            return GetAllDocuments().FirstOrDefault(x => x.Id == documentId);
         }
 
         public IEnumerable<Document> GetDocumentsBy(int userId)
         {
-            return GetAll().Where(x => x.AppUserId == userId);
+            return GetAllDocuments().Where(x => x.AppUserId == userId);
         }
 
         public Document UpdateDocument(Document document)
         {
             Update(document);
 
-            return document;
+            return GetDocumentBy(document.Id);
         }
     }
 }

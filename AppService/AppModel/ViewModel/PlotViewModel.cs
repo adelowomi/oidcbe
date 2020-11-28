@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace AppService.AppModel.ViewModel
 {
     public class PlotViewModel
@@ -26,6 +28,8 @@ namespace AppService.AppModel.ViewModel
         public string Status { get; set; }
 
         public bool IsPaymentComplete { get; set; }
+
+        public IEnumerable<DocumentViewModel> Documents { get; set; }
 
         public DateTime DatePurchased { get; set; }
     }
