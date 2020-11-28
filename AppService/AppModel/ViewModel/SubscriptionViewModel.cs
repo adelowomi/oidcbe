@@ -8,7 +8,9 @@ namespace AppService.AppModel.ViewModel
         public string Status { get; set; }
 
         public OfferViewModel Offer { get; set; }
-       
+
+        public string OrganizationType { get; set; }
+
         public double Amount { get; set; }
     }
 }

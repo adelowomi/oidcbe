@@ -16,11 +16,6 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
-        public IEnumerable<Subscription> GetAllSubscriptions()
-        {
-            return GetAll();
-        }
-
         public IEnumerable<Subscription> GetSubscriptions(int userId)
         {
             return GetAllSubscriptions().Where(x => x.AppUserId == userId);
@@ -38,13 +33,20 @@ namespace Infrastructure.DataAccess.Repository
                 SubscriptionStatusId = (int) SubscriptionStatusEnum.PENDING
             });
 
+
+            return GetAllSubscriptions().FirstOrDefault(x => x.Id == result.Id);
+        }
+
+        public IEnumerable<Subscription> GetAllSubscriptions()
+        {
             var query = _context.Subscriptions
-                .Include(x => x.Offer)
-                .Include(x => x.Offer.OfferStatus)
-                .Include(x => x.Offer.Plot)
-                .Include(x => x.Offer.Plot.PlotType)
-                .Include(x => x.SubscriptionStatus)
-                .FirstOrDefault(x => x.Id == result.Id);
+               .Include(x => x.Offer)
+               .Include(x => x.Offer.OfferStatus)
+               .Include(x => x.Offer.Plot)
+               .Include(x => x.OrganizationType)
+               .Include(x => x.Offer.Plot.PlotType)
+               .Include(x => x.SubscriptionStatus);
+              
             return query;
         }
 
@@ -60,7 +62,7 @@ namespace Infrastructure.DataAccess.Repository
                 SubscriptionStatusId = (int) SubscriptionStatusEnum.PENDING,
             });
 
-            return result;
+            return GetAllSubscriptions().FirstOrDefault(x => x.Id == result.Id);
         }
 
         public Offer GenerateOffer()
@@ -107,5 +109,7 @@ namespace Infrastructure.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
