@@ -126,6 +126,9 @@ namespace WebAPI
             services.AddTransient<IWorkOrderService, WorkOrderService>();
             services.AddTransient<IWorkOrderAppService, WorkOrderAppService>();
 
+            services.AddTransient<ICalendarRepository, CalendarRepository>();
+            services.AddTransient<ICalendarService, CalendarService>();
+            services.AddTransient<ICalendarAppService, CalendarAppService>();
 
             services.AddHttpContextAccessor();
 

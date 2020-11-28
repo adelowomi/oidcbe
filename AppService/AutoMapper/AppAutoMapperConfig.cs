@@ -138,6 +138,7 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Lattitude, opts => opts.MapFrom(src => src.Lattitude))
                 .ForMember(dest => dest.Longitude, opts => opts.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.PlotStatus.Name))
+                //.ForMember(dest => dest.Calendars, opts => opts.MapFrom(src => src.Calendars))
                 ;
 
             CreateMap<NextOfKin, VendorNextOfKinInputModel>()

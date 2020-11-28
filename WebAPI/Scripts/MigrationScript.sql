@@ -1199,3 +1199,43 @@ VALUES (N'20201127204221_AddSomeMainModel', N'3.1.8');
 
 GO
 
+CREATE TABLE [CalendarEvents] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_CalendarEvents] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Calendars] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Title] nvarchar(max) NULL,
+    [Note] nvarchar(max) NULL,
+    [CalendarEventId] int NOT NULL,
+    [PlotId] int NOT NULL,
+    CONSTRAINT [PK_Calendars] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Calendars_CalendarEvents_CalendarEventId] FOREIGN KEY ([CalendarEventId]) REFERENCES [CalendarEvents] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Calendars_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE INDEX [IX_Calendars_CalendarEventId] ON [Calendars] ([CalendarEventId]);
+
+GO
+
+CREATE INDEX [IX_Calendars_PlotId] ON [Calendars] ([PlotId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201128105529_AddModelsToCalendar', N'3.1.8');
+
+GO
+
