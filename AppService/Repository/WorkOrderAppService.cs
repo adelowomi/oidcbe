@@ -32,11 +32,12 @@ namespace AppService.Repository
             _userManager = userManager;
         }
 
-        public WorkOrderViewModel CreateNew(WorkOrderInputModel workOrder)
+        public async Task<WorkOrderViewModel> CreateNew(WorkOrderInputModel workOrder)
         {
-           return _mapper.Map<WorkOrder, WorkOrderViewModel>(
-               _workOrderService.CreateNew(
-                   _mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder)));
+            AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+            workOrder.AppUserId = currentUser.Id;
+            var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));
+            return _mapper.Map<WorkOrder, WorkOrderViewModel>(result);
         }
 
         public async Task<IEnumerable<WorkOrderViewModel>> GetAllByUserId()

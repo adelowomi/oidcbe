@@ -8,7 +8,7 @@ namespace AppService.Repository.Abstractions
 {
     public interface IWorkOrderAppService
     {
-        WorkOrderViewModel CreateNew(WorkOrderInputModel workOrder);
+        Task<WorkOrderViewModel> CreateNew(WorkOrderInputModel workOrder);
 
         WorkOrderViewModel GetById(int id);
 

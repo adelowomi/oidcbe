@@ -4,6 +4,7 @@ using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository
 {
@@ -16,7 +17,9 @@ namespace Infrastructure.DataAccess.Repository
 
         public WorkOrder CreateNewWorkOrder(WorkOrder workOrder)
         {
-            return CreateAndReturn(workOrder);
+            var work = CreateAndReturn(workOrder);
+
+            return GetAllWorkOrders().FirstOrDefault(x => x.Id == work.Id);
         }
 
         public IEnumerable<WorkOrder> GetAllBySubscriptionId(int subscriptionId)
@@ -31,7 +34,7 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<WorkOrder> GetAllWorkOrders()
         {
-            return GetAll();
+            return _context.WorkOrders.Include(x => x.WorkOrderType);
         }
 
         public WorkOrder GetByUserId(int id)

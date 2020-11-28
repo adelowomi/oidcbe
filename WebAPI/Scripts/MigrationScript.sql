@@ -1178,3 +1178,24 @@ VALUES (N'20201126073614_ChangesSubsciptionId', N'3.1.8');
 
 GO
 
+ALTER TABLE [WorkOrders] ADD [AppUserId] int NULL;
+
+GO
+
+ALTER TABLE [WorkOrders] ADD [Name] nvarchar(max) NULL;
+
+GO
+
+CREATE INDEX [IX_WorkOrders_AppUserId] ON [WorkOrders] ([AppUserId]);
+
+GO
+
+ALTER TABLE [WorkOrders] ADD CONSTRAINT [FK_WorkOrders_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201127204221_AddSomeMainModel', N'3.1.8');
+
+GO
+

@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_workOrderAppService.CreateNew(model)));
+            return Ok(ResponseViewModel.Ok(_workOrderAppService.CreateNew(model).Result));
         }
 
 

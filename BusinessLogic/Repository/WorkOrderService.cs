@@ -17,7 +17,9 @@ namespace BusinessLogic.Repository
 
         public WorkOrder CreateNew(WorkOrder workOrder)
         {
-            return _workOrderRepository.CreateNewWorkOrder(workOrder);
+            var result = _workOrderRepository.CreateNewWorkOrder(workOrder);
+
+            return result;
         }
 
         public IEnumerable<WorkOrder> GetAllByUserId(int userId)
