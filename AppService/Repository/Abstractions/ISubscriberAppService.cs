@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using Core.Model;
 
@@ -14,5 +16,7 @@ namespace AppService.Repository.Abstractions
         IEnumerable<VendorViewModel> GetAllExisting();
 
         CountMetricViewModel GetCountsMetric();
+
+        Task<ResponseViewModel> AddNewSubscriberAsync(SubscriberInputModel subscriber);
     }
 }

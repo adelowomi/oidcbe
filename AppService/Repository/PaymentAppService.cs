@@ -16,6 +16,12 @@ namespace AppService.Repository
         private readonly IMapper _mapper;
         private readonly ISubscriptionAppService _subscriptionAppService;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="paymentService"></param>
+        /// <param name="subscriptionAppService"></param>
+        /// <param name="mapper"></param>
         public PaymentAppService(IPaymentService paymentService, ISubscriptionAppService subscriptionAppService, IMapper mapper) : base()
         {
             _paymentService = paymentService;
@@ -23,30 +29,51 @@ namespace AppService.Repository
             _subscriptionAppService = subscriptionAppService;
         }
 
+        /// <summary>
+        /// Get All Payment Methods 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<PaymentMethodViewModel> GetAllPaymentMethods()
         {
             var result =  _paymentService.GetAllPaymentMethods().Select(_mapper.Map<PaymentMethod, PaymentMethodViewModel>);
             return result;
         }
 
+        /// <summary>
+        /// Get All Payment Providers
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<PaymentProviderViewModel> GetAllPaymentProviders()
         {
             var result = _paymentService.GetAllPaymentProviders().Select(_mapper.Map<PaymentProvider, PaymentProviderViewModel>);
             return result;
         }
 
+        /// <summary>
+        /// Get All Payment Statuses
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<PaymentStatusViewModel> GetAllPaymentStatuses()
         {
             var result = _paymentService.GetAllPaymentStatuses().Select(_mapper.Map<PaymentStatus, PaymentStatusViewModel>);
             return result;
         }
 
+        /// <summary>
+        /// Get All Payment Types
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<PaymentTypeViewModel> GetAllPaymentTypes()
         {
             var result = _paymentService.GetAllPaymentTypes().Select(_mapper.Map<PaymentType, PaymentTypeViewModel>);
             return result;
         }
 
+        /// <summary>
+        /// Make Payment
+        /// </summary>
+        /// <param name="payment"></param>
+        /// <returns></returns>
         public ResponseViewModel MakePayment(PaymentInputModel payment)
         {
            var subscription = _subscriptionAppService.GetSubscriptions().FirstOrDefault(x => x.SubscriptionId == payment.SubscriptionId);
@@ -85,6 +112,11 @@ namespace AppService.Repository
            return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Query Payment
+        /// </summary>
+        /// <param name="trnxRef"></param>
+        /// <returns></returns>
         public ResponseViewModel QueryPayment(string trnxRef)
         {
             var result = _paymentService.QueryPayment(trnxRef);

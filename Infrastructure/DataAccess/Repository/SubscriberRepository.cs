@@ -18,6 +18,13 @@ namespace Infrastructure.DataAccess.Repository
             _userManager = userManager;
         }
 
+        public SubscriberIdentityResult CreateNewSubscriber(AppUser user)
+        {
+            var result = _userManager.CreateAsync(user, "Password").Result;
+
+            return new SubscriberIdentityResult { AppUser = user, IdentityResult = result };
+        }
+
         public ICollection<AppUser> GetAllExistingSubcribers()
         {
             //   var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
@@ -43,5 +50,13 @@ namespace Infrastructure.DataAccess.Repository
         {
             return GetAllNewSubscribers().Count();
         }
+    }
+
+
+    public class SubscriberIdentityResult
+    {
+        public IdentityResult IdentityResult { get; set; }
+
+        public AppUser AppUser { get; set; }
     }
 }

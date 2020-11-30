@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.DataAccess.Repository.Abstractions
 {
@@ -9,6 +10,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         int GetExistingSubscribers();
 
         int GetNewSubscribers();
+
+        SubscriberIdentityResult CreateNewSubscriber(AppUser user);
 
         ICollection<AppUser> GetAllExistingSubcribers();
 

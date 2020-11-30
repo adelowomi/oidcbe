@@ -17,12 +17,17 @@ namespace WebAPI.Controllers
         private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ISubscriberAppService _subscriberAppService;
 
-        public AdminController(IUserService userService, UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public AdminController(IUserService userService,
+                                UserManager<AppUser> userManager,
+                                ISubscriberAppService subscriberAppService,
+                                IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+            _subscriberAppService = subscriberAppService;
         }
 
         //[AllowAnonymous]
@@ -272,6 +277,25 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_userService.ConfirmOTP(request));
+        }
+
+
+        /// <summary>
+        /// Confirm OTP Code Or Confirmation Link
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/admin/subscriber")]
+        public IActionResult ConfirmOTP([FromBody] SubscriberInputModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_subscriberAppService.AddNewSubscriberAsync(request).Result);
         }
     }
 }
