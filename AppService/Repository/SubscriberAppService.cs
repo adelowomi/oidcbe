@@ -74,7 +74,6 @@ namespace AppService.Repository
                 ResidentialAddress = model.ResidentialAddress
             };
 
-
             if (model.Gender != null)
             {
                 var gender = _utilityRepository.GetGenderByName(model.Gender);
@@ -162,6 +161,14 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> AddNewSubscriberCorporate(SubscriberCorporateInputModel model)
         {
+
+            var existingUserResult = _userManager.FindByEmailAsync(model.Email).Result;
+
+            if (existingUserResult != null)
+            {
+                return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS, ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
+            }
+
             var result = _subscriberService.CreateSubcribers(new AppUser
             {
                 UserName = model.Email,

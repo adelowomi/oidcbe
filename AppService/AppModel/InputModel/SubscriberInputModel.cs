@@ -122,10 +122,8 @@ namespace AppService.AppModel.InputModel
         [Required]
         public string MailingAddress { get; set; }
 
-        [Required]
         public int StateOfOriginId { get; set; }
 
-        [Required]
         public string PhoneNumber { get; set; }
 
         public string Platform { get; set; }
