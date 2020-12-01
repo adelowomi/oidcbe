@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,5 +53,20 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         IEnumerable<PlotViewModel> GetAvailablePlots();
+
+        /// <summary>
+        /// Create New Plot
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        PlotViewModel CreatePlot(PlotInputModel plot);
+
+
+        /// <summary>
+        /// Edit Plot Information
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        PlotViewModel EditPlot(PlotInputModel plot);
     }
 }

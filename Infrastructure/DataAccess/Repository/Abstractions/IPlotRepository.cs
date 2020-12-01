@@ -47,5 +47,18 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// <returns></returns>
         Plot PurchasePlot(int id);
 
+        /// <summary>
+        /// Create New Plot
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        Plot CreatePlot(Plot plot);
+
+        /// <summary>
+        /// Edit Plot
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        Plot EditPlot(Plot plot)
     }
 }
