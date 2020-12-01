@@ -99,5 +99,10 @@ namespace BusinessLogic.Repository
         {
             return _plotRepository.EditPlot(plot);
         }
+
+        public IEnumerable<PlotType> GetAvailablePlotTypes()
+        {
+            return _plotRepository.GetPlotTypes();
+        }
     }
 }
