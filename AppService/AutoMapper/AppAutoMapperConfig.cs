@@ -141,6 +141,17 @@ namespace AppService.AutoMapper
                 //.ForMember(dest => dest.Calendars, opts => opts.MapFrom(src => src.Calendars))
                 ;
 
+            CreateMap<PlotInputModel, Plot>()
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.PlotName))
+                .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.PlotAddresss))
+                .ForMember(dest => dest.PlotTypeId, opts => opts.MapFrom(src => src.PlotTypeId))
+                .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.PlotAcres))
+                .ForMember(dest => dest.Longitude, opts => opts.MapFrom(src => src.Longitude))
+                .ForMember(dest => dest.Lattitude, opts => opts.MapFrom(src => src.Lattitude))
+                .ForMember(dest => dest.KilometerSquare, opts => opts.MapFrom(src => src.KilometerSquare))
+                .ForMember(dest => dest.Price, opts => opts.MapFrom(src => src.Amount))
+                ;
+
             CreateMap<NextOfKin, VendorNextOfKinInputModel>()
                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
                .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))

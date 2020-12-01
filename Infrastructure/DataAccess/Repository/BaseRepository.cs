@@ -127,11 +127,13 @@ namespace Infrastructure.DataAccess.Repository
         /// Update Entity Object
         /// </summary>
         /// <param name="entity"></param>
-        public void Update(T entity)
+        public T Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
 
             Save();
+
+            return entity;
         }
 
         /// <summary>

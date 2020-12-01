@@ -25,6 +25,20 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
+        public Plot CreatePlot(Plot plot)
+        {
+            var result = CreateAndReturn(plot);
+
+            return GetPlots().FirstOrDefault(x => x.Id == result.Id);
+        }
+
+        public Plot EditPlot(Plot plot)
+        {
+            var result = Update(plot);
+
+            return GetPlots().FirstOrDefault(x => x.Id == result.Id);
+        }
+
         public IEnumerable<Plot> GetAllAvailablePlots()
         {
             return GetPlots().Where(x => x.IsAvailable == true);

@@ -55,5 +55,19 @@ namespace BusinessLogic.Repository
         /// <param name="subscriberId"></param>
         /// <returns></returns>
         IEnumerable<Plot> AllPlots();
+
+        /// <summary>
+        /// Create New Plot
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        Plot CreateNew(Plot plot);
+
+        /// <summary>
+        /// Edit Plot
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        Plot EditPlot(Plot plot);
     }
 }

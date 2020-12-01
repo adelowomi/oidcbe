@@ -59,6 +59,6 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// </summary>
         /// <param name="plot"></param>
         /// <returns></returns>
-        Plot EditPlot(Plot plot)
+        Plot EditPlot(Plot plot);
     }
 }

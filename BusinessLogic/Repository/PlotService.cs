@@ -79,5 +79,25 @@ namespace BusinessLogic.Repository
         {
             return _plotRepository.PurchasePlot(id);
         }
+
+        /// <summary>
+        /// Create New Plot
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        public Plot CreateNew(Plot plot)
+        {
+            return _plotRepository.CreatePlot(plot); 
+        }
+
+        /// <summary>
+        /// Edit Plot Information
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        public Plot EditPlot(Plot plot)
+        {
+            return _plotRepository.EditPlot(plot);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Extensions;
 using AppService.Repository.Abstractions;
@@ -79,6 +80,20 @@ namespace AppService.Repository
         public IActionResult GetVendorByName(string name)
         {
             return Ok();
+        }
+
+        public PlotViewModel CreatePlot(PlotInputModel plot)
+        {
+            var mappedResult = _mapper.Map<PlotInputModel, Plot>(plot);
+
+            var savedResult = _mapper.Map<Plot, PlotViewModel>(_plotService.CreateNew(mappedResult));
+
+            return savedResult;
+        }
+
+        public PlotViewModel EditPlot(PlotInputModel plot)
+        {
+            throw new NotImplementedException();
         }
     }
 }
