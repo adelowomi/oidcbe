@@ -98,7 +98,9 @@ namespace AppService.Repository
 
         public IEnumerable<PlotTypeViewModel> GetPlotTypes()
         {
-            
+            var mappedResult = _plotService.GetAvailablePlotTypes().Select(_mapper.Map<PlotType, PlotTypeViewModel>);
+
+            return mappedResult;
         }
     }
 }

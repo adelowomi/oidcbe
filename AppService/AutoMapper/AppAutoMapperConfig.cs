@@ -207,6 +207,13 @@ namespace AppService.AutoMapper
               .ForMember(dest => dest.CalendarEventId, opts => opts.MapFrom(src => src.EventTypeId))
               .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))
               ;
+
+            CreateMap<PlotType, PlotTypeViewModel>()
+             .ForMember(dest => dest.PlotTypeId, opts => opts.MapFrom(src => src.Id))
+             .ForMember(dest => dest.PlotTypeName, opts => opts.MapFrom(src => src.Name))
+             .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
+             .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
+             ;
         }
     }
 }

@@ -3,8 +3,12 @@ namespace AppService.AppModel.ViewModel
 {
     public class PlotTypeViewModel
     {
-        public int Id { get; set; }
+        public int PlotTypeId { get; set; }
 
-        public string Name { get; set; }
+        public string PlotTypeName { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateModified { get; set; }
     }
 }
