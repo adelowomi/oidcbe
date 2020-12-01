@@ -287,15 +287,28 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        [Route("api/admin/subscriber")]
-        public IActionResult ConfirmOTP([FromBody] SubscriberInputModel request)
+        [Route("api/admin/subscriber/individual")]
+        public IActionResult CreateIndividual([FromBody] SubcriberIndividualInputModel request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_subscriberAppService.AddNewSubscriberAsync(request).Result);
+            return Ok(_subscriberAppService.AddNewSubscriberIndividual(request).Result);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/admin/subscriber/corporate")]
+        public IActionResult CreateCorporate([FromBody] SubscriberCorporateInputModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_subscriberAppService.AddNewSubscriberCorporate(request).Result);
         }
     }
 }

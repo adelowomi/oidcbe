@@ -17,6 +17,8 @@ namespace AppService.Repository.Abstractions
 
         CountMetricViewModel GetCountsMetric();
 
-        Task<ResponseViewModel> AddNewSubscriberAsync(SubscriberInputModel subscriber);
+        Task<ResponseViewModel> AddNewSubscriberIndividual(SubcriberIndividualInputModel subscriber);
+
+        Task<ResponseViewModel> AddNewSubscriberCorporate(SubscriberCorporateInputModel subscriber);
     }
 }

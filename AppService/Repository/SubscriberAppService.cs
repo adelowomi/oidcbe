@@ -54,14 +54,14 @@ namespace AppService.Repository
             _utilityRepository = utilityRepository;
         }
 
-        public async Task<ResponseViewModel> AddNewSubscriberAsync(SubscriberInputModel model)
+        public async Task<ResponseViewModel> AddNewSubscriberIndividual(SubcriberIndividualInputModel model)
         {
 
             var gender = _utilityRepository.GetGenderByName(model.Gender);
 
             if (gender == null)
             {
-                return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
+                return Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
             }
 
             var result = _subscriberService.CreateSubcribers(new AppUser
@@ -71,8 +71,31 @@ namespace AppService.Repository
                 LastName = model.LastName,
                 Email = model.Email,
                 GenderId = gender.Id,
-                PhoneNumber = model.PhoneNumber
+                PhoneNumber = model.PhoneNumber,
+                ResidentialAddress = model.ResidentialAddress
             });
+
+            if (model.NextOfKin != null)
+            {
+                var nextOfKin = _mapper.Map<VendorNextOfKinInputModel, NextOfKin>(model.NextOfKin);
+
+                nextOfKin.AppUserId = result.AppUser.Id;
+
+                var nextOfKinGender = _utilityRepository.GetGenderByName(model.NextOfKin.Gender);
+
+                if (nextOfKinGender == null)
+                {
+                    return Failed(ResponseMessageViewModel.INVALID_NEXT_OF_KIN_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
+                }
+
+                nextOfKin.GenderId = nextOfKinGender.Id;
+
+                _utilityRepository.AddNextOfKin(nextOfKin);
+            }
+
+            model.SaveIdentityDocument(_settings);
+
+            model.SaveProfilePhoto(_settings);
 
             var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.Welcome(model.Platform ?? Res.WEB_PLATFORM));
 
@@ -94,7 +117,7 @@ namespace AppService.Repository
 
             _ = _emailService.SendEmail(model.Email, Res.ACCOUNT_SETUP, emailHtmlTemplate);
 
-            _ = await _userManager.AddToRoleAsync(result.AppUser, model.UserType == UserTypeEnum.VENDOR ? UserType.VENDOR : UserType.VENDOR);
+            _ = await _userManager.AddToRoleAsync(result.AppUser, UserType.SUBSCRIBER);
 
             var mappedResult = _mapper.Map<AppUser,VendorViewModel>(result.AppUser);
 
@@ -125,6 +148,51 @@ namespace AppService.Repository
                 ExistingVendors = GetAllExisting().Count(),
                 NewVendors = GetAllExisting().Count()
             };
+        }
+
+        public async Task<ResponseViewModel> AddNewSubscriberCorporate(SubscriberCorporateInputModel model)
+        {
+            var result = _subscriberService.CreateSubcribers(new AppUser
+            {
+                UserName = model.Email,
+                FirstName = model.NameOfEntry,
+                LastName = model.NameOfEntry,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                RCNumber = model.RCNumber,
+                MailingAddress = model.MailingAddress,
+                OfficeAddress = model.OfficeAddress,
+                WebsiteUrl = model.WebSiteUrl
+            });
+
+       
+            model.SaveProfilePhoto(_settings);
+
+            var emailHtmlTemplate = _emailService.GetEmailTemplate(_env, EmailTemplate.Welcome(model.Platform ?? Res.WEB_PLATFORM));
+
+            var code = _otpService.GenerateCode(result.AppUser.Id, _settings.OtpExpirationInMinutes, model.Platform ?? Res.WEB_PLATFORM);
+
+            Dictionary<string, string> contentReplacements = new Dictionary<string, string>()
+                {
+                    { Placeholder.EMAIL, result.AppUser.Email },
+                    { Placeholder.OTP, (model.Platform ?? Res.WEB_PLATFORM).ToLower() ==  Res.WEB_PLATFORM ? $"{_settings.WebApp.BaseUrl}{_settings.WebApp.Register}{code}" : code },
+                };
+
+            if (contentReplacements != null)
+            {
+                foreach (KeyValuePair<string, string> pair in contentReplacements)
+                {
+                    emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
+                }
+            }
+
+            _ = _emailService.SendEmail(model.Email, Res.ACCOUNT_SETUP, emailHtmlTemplate);
+
+            _ = await _userManager.AddToRoleAsync(result.AppUser, UserType.SUBSCRIBER);
+
+            var mappedResult = _mapper.Map<AppUser, VendorViewModel>(result.AppUser);
+
+            return Ok(mappedResult);
         }
     }
 }
