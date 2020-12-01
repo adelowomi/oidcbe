@@ -56,25 +56,33 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> AddNewSubscriberIndividual(SubcriberIndividualInputModel model)
         {
+            var existingUserResult = _userManager.FindByEmailAsync(model.Email).Result;
 
-            var gender = _utilityRepository.GetGenderByName(model.Gender);
-
-            if (gender == null)
+            if (existingUserResult != null)
             {
-                return Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
+                return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS, ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
             }
 
-            var result = _subscriberService.CreateSubcribers(new AppUser
+            var newUser = new AppUser
             {
                 UserName = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                GenderId = gender.Id,
                 PhoneNumber = model.PhoneNumber,
                 MailingAddress = model.MailingAddress,
                 ResidentialAddress = model.ResidentialAddress
-            });
+            };
+
+
+            if (model.Gender != null)
+            {
+                var gender = _utilityRepository.GetGenderByName(model.Gender);
+
+                newUser.GenderId = gender.Id;
+            }
+
+            var result = _subscriberService.CreateSubcribers(newUser);
 
             if (model.NextOfKin != null)
             {

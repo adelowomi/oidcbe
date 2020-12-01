@@ -262,6 +262,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_PAYMENT_TYPE = "Invalid payment type, please try again!";
         public static string INVALID_PAYMENT_METHOD = "Invalid payment method";
         public static string INVALID_PAYMENT_PROVIDER = "Invalid payment provider";
+        public static string NEXT_OF_KIN_ALREAD_EXITS = "Next of kin already exits";
     }
 
     /// <summary>
@@ -309,6 +310,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_PAYMENT_TYPE = "20";
         public static readonly string INVALID_PAYMENT_METHOD = "21";
         public static readonly string INVALID_PAYMENT_PROVIDER = "22";
+        public static readonly string NEXT_OF_KIN_ALREAD_EXITS = "23";
 
         //FAILURES
         public static readonly string FAIL = "91";

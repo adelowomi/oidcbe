@@ -16,13 +16,10 @@ namespace AppService.AppModel.InputModel
         [Required]
         public string LastName { get; set; }
 
-        [Required]
         public string Gender { get; set; }
 
-        [Required]
         public int StateOfOriginId { get; set; }
 
-        [Required]
         public string IdentityDocument { get; set; }
 
         public string MailingAddress { get; set; }
