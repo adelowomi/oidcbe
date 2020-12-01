@@ -94,6 +94,7 @@ namespace AppService.Repository
                 _utilityRepository.AddNextOfKin(nextOfKin);
             }
 
+
             model.SaveIdentityDocument(_settings);
 
             model.SaveProfilePhoto(_settings);
