@@ -25,6 +25,8 @@ namespace AppService.AppModel.InputModel
         [Required]
         public string IdentityDocument { get; set; }
 
+        public string MailingAddress { get; set; }
+
         public string ResidentialAddress { get; set; }
 
         public string Platform { get; set; }

@@ -72,6 +72,7 @@ namespace AppService.Repository
                 Email = model.Email,
                 GenderId = gender.Id,
                 PhoneNumber = model.PhoneNumber,
+                MailingAddress = model.MailingAddress,
                 ResidentialAddress = model.ResidentialAddress
             });
 
