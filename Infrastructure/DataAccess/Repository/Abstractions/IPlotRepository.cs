@@ -60,5 +60,11 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// <param name="plot"></param>
         /// <returns></returns>
         Plot EditPlot(Plot plot);
+
+        /// <summary>
+        /// Get Plot Types
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<PlotType> GetPlotTypes();
     }
 }

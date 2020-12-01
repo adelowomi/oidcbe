@@ -68,6 +68,11 @@ namespace Infrastructure.DataAccess.Repository
             return result;
         }
 
+        public IEnumerable<PlotType> GetPlotTypes()
+        {
+            return _context.PlotTypes.ToList();
+        }
+
         public IEnumerable<Plot> GetSubscriberPlots(int id)
         {
             try

@@ -69,5 +69,12 @@ namespace BusinessLogic.Repository
         /// <param name="plot"></param>
         /// <returns></returns>
         Plot EditPlot(Plot plot);
+
+        /// <summary>
+        /// Get available plot types
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        IEnumerable<PlotType> GetAvailablePlotTypes();
     }
 }

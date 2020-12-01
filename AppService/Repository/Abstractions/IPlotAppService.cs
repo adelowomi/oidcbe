@@ -68,5 +68,11 @@ namespace AppService.Repository.Abstractions
         /// <param name="plot"></param>
         /// <returns></returns>
         PlotViewModel EditPlot(PlotInputModel plot);
+
+        /// <summary>
+        /// Get Plot Types
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<PlotTypeViewModel> GetPlotTypes();
     }
 }

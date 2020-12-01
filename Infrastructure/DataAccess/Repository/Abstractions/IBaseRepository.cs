@@ -53,7 +53,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// Update Entity Type 'T'
         /// </summary>
         /// <param name="entity"></param>
-        void Update(T entity);
+        T Update(T entity);
 
         /// <summary>
         /// Delete Entity Type 'T'

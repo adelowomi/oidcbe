@@ -1,4 +1,5 @@
-﻿using AppService.AppModel.ViewModel;
+﻿using AppService.AppModel.InputModel;
+using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
+    
     public class PlotsController : Controller
     {
         private IPlotAppService _plotService;
@@ -88,6 +89,41 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_plotService.GetByVendorId(plotId));
+        }
+
+
+        /// <summary>
+        /// Create New Plot Information
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/plot")]
+        public IActionResult CreateNewPlot([FromBody] PlotInputModel plot)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_plotService.CreatePlot(plot));
+        }
+
+        /// <summary>
+        /// Create New Plot Information
+        /// </summary>
+        /// <param name="plot"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/plot/types")]
+        public IActionResult GetPlotTypes()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_plotService.GetPlotTypes());
         }
     }
 }

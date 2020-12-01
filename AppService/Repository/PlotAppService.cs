@@ -95,5 +95,10 @@ namespace AppService.Repository
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<PlotTypeViewModel> GetPlotTypes()
+        {
+            
+        }
     }
 }
