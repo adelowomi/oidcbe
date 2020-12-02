@@ -64,6 +64,12 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<CalendarEvent> CalendarEvents { get; set; }
 
+        public DbSet<Mobilization> Mobilizations { get; set; }
+
+        public DbSet<Permit> Permits { get; set; }
+
+        public DbSet<PermitType> PermitTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

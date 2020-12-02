@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Core.Model
 {
-    public class DocumentStatus : NameBaseEntity
+    public class DocumentStatus : BaseNameEntity
     {
       
     }
