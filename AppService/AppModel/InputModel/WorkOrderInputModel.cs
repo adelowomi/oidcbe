@@ -3,7 +3,7 @@ namespace AppService.AppModel.InputModel
 {
     public class WorkOrderInputModel
     {
-        public int SubscriptionId { get; set; }
+        public int PlotId { get; set; }
 
         public int? AppUserId { get; set; }
 

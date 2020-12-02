@@ -16,7 +16,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         IEnumerable<WorkOrder> GetAllByUserId(int userId);
 
-        IEnumerable<WorkOrder> GetAllBySubscriptionId(int subscriptionId);
+        IEnumerable<WorkOrder> GetAllByPlotId(int plotId);
 
         IEnumerable<WorkOrderType> GetWorkOrderTypes();
     }

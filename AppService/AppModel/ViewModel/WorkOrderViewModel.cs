@@ -5,7 +5,7 @@ namespace AppService.AppModel.ViewModel
     {
         public string Name { get; set; }
 
-        public int SubscriptionId { get; set; }
+        public int PlotId { get; set; }
 
         public string WorkOrderType { get; set; }
 

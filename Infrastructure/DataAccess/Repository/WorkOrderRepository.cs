@@ -22,9 +22,9 @@ namespace Infrastructure.DataAccess.Repository
             return GetAllWorkOrders().FirstOrDefault(x => x.Id == work.Id);
         }
 
-        public IEnumerable<WorkOrder> GetAllBySubscriptionId(int subscriptionId)
+        public IEnumerable<WorkOrder> GetAllByPlotId(int plotId)
         {
-            return GetAll().Where(x => x.SubscriptionId == subscriptionId);
+            return GetAll().Where(x => x.PlotId == plotId);
         }
 
         public IEnumerable<WorkOrder> GetAllByUserId(int userId)
@@ -42,9 +42,9 @@ namespace Infrastructure.DataAccess.Repository
             return GetAll().FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<WorkOrder> GetWorkOrderBy(int subscriptionId)
+        public IEnumerable<WorkOrder> GetWorkOrderBy(int plotId)
         {
-            return GetAll().Where(x => x.SubscriptionId == subscriptionId);
+            return GetAll().Where(x => x.PlotId == plotId);
         }
 
         public IEnumerable<WorkOrderType> GetWorkOrderTypes()
