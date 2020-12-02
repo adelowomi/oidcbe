@@ -1239,3 +1239,152 @@ VALUES (N'20201128105529_AddModelsToCalendar', N'3.1.8');
 
 GO
 
+ALTER TABLE [WorkOrders] DROP CONSTRAINT [FK_WorkOrders_Subscriptions_SubscriptionId];
+
+GO
+
+DROP INDEX [IX_WorkOrders_SubscriptionId] ON [WorkOrders];
+
+GO
+
+DECLARE @var11 sysname;
+SELECT @var11 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[WorkOrders]') AND [c].[name] = N'SubscriptionId');
+IF @var11 IS NOT NULL EXEC(N'ALTER TABLE [WorkOrders] DROP CONSTRAINT [' + @var11 + '];');
+ALTER TABLE [WorkOrders] DROP COLUMN [SubscriptionId];
+
+GO
+
+ALTER TABLE [WorkOrders] ADD [PlotId] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE TABLE [Mobilizations] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [PlotId] int NOT NULL,
+    [LeadName] nvarchar(max) NULL,
+    [LeadPhoneNumber] nvarchar(max) NULL,
+    [NumberOfWorkers] int NOT NULL,
+    [IdentityPath] nvarchar(max) NULL,
+    CONSTRAINT [PK_Mobilizations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Mobilizations_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [PermitTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_PermitTypes] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [VehicleTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_VehicleTypes] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Visitors] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Address] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [EmailAddress] nvarchar(max) NULL,
+    [CheckInDateTime] datetime2 NOT NULL,
+    [CheckOutDateTime] datetime2 NOT NULL,
+    CONSTRAINT [PK_Visitors] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Vehicles] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Make] nvarchar(max) NULL,
+    [PlateNumber] nvarchar(max) NULL,
+    [CheckInDateTime] datetime2 NOT NULL,
+    [CheckOutDateTime] datetime2 NOT NULL,
+    [VehicleTypeId] int NOT NULL,
+    CONSTRAINT [PK_Vehicles] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Vehicles_VehicleTypes_VehicleTypeId] FOREIGN KEY ([VehicleTypeId]) REFERENCES [VehicleTypes] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Permits] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [AppUserId] int NOT NULL,
+    [VisitorId] int NULL,
+    [VehicleId] int NULL,
+    [PermitTypeId] int NOT NULL,
+    CONSTRAINT [PK_Permits] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Permits_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Permits_PermitTypes_PermitTypeId] FOREIGN KEY ([PermitTypeId]) REFERENCES [PermitTypes] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Permits_Vehicles_VehicleId] FOREIGN KEY ([VehicleId]) REFERENCES [Vehicles] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Permits_Visitors_VisitorId] FOREIGN KEY ([VisitorId]) REFERENCES [Visitors] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE INDEX [IX_WorkOrders_PlotId] ON [WorkOrders] ([PlotId]);
+
+GO
+
+CREATE INDEX [IX_Mobilizations_PlotId] ON [Mobilizations] ([PlotId]);
+
+GO
+
+CREATE INDEX [IX_Permits_AppUserId] ON [Permits] ([AppUserId]);
+
+GO
+
+CREATE INDEX [IX_Permits_PermitTypeId] ON [Permits] ([PermitTypeId]);
+
+GO
+
+CREATE INDEX [IX_Permits_VehicleId] ON [Permits] ([VehicleId]);
+
+GO
+
+CREATE INDEX [IX_Permits_VisitorId] ON [Permits] ([VisitorId]);
+
+GO
+
+CREATE INDEX [IX_Vehicles_VehicleTypeId] ON [Vehicles] ([VehicleTypeId]);
+
+GO
+
+ALTER TABLE [WorkOrders] ADD CONSTRAINT [FK_WorkOrders_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201202233418_PermitAndMobilizationMigration', N'3.1.8');
+
+GO
+

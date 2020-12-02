@@ -70,6 +70,12 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<PermitType> PermitTypes { get; set; }
 
+        public DbSet<Visitor> Visitors { get; set; }
+
+        public DbSet<Vehicle> Vehicles { get; set; }
+
+        public DbSet<VehicleType> VehicleTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
