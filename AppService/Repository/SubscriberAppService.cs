@@ -74,11 +74,14 @@ namespace AppService.Repository
                 ResidentialAddress = model.ResidentialAddress
             };
 
-            if (model.Gender != null)
+            if (!string.IsNullOrEmpty(model.Gender))
             {
                 var gender = _utilityRepository.GetGenderByName(model.Gender);
 
-                newUser.GenderId = gender.Id;
+                if (gender != null)
+                {
+                    newUser.GenderId = gender.Id;
+                }
             }
 
             var result = _subscriberService.CreateSubcribers(newUser);
@@ -89,14 +92,14 @@ namespace AppService.Repository
 
                 nextOfKin.AppUserId = result.AppUser.Id;
 
-                var nextOfKinGender = _utilityRepository.GetGenderByName(model.NextOfKin.Gender);
+                //var nextOfKinGender = _utilityRepository.GetGenderByName(model.NextOfKin.Gender);
 
-                if (nextOfKinGender == null)
-                {
-                    return Failed(ResponseMessageViewModel.INVALID_NEXT_OF_KIN_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
-                }
+                //if (string.IsNullOrEmpty(nextOfKinGender))
+                //{
+                //    return Failed(ResponseMessageViewModel.INVALID_NEXT_OF_KIN_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
+                //}
 
-                nextOfKin.GenderId = nextOfKinGender.Id;
+                //nextOfKin.GenderId = nextOfKinGender.Id;
 
                 _utilityRepository.AddNextOfKin(nextOfKin);
             }
