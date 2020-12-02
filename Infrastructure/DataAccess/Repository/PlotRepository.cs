@@ -77,11 +77,9 @@ namespace Infrastructure.DataAccess.Repository
         {
             try
             {
-                AppUser user = _context.Users.FirstOrDefault(x => x.Id == id);
-
-                return user.Plots ?? Enumerable.Empty<Plot>();
-
-            }catch(Exception e)
+                return GetPlots().Where(x => x.AppUserId == id);
+            }
+            catch(Exception e)
             {
                 return Enumerable.Empty<Plot>();
             }

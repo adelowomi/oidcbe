@@ -20,12 +20,26 @@ namespace Infrastructure.DataAccess.Repository
             var payment = GetAll().FirstOrDefault(x => x.TrnxRef == trnxRef);
             payment.PaymentStatusId = (int)PaymentStatusEnum.APPROVED;
             Update(payment);
+            AllocatePlot(payment.SubscriptionId);
             return GetFullQueryPayment(payment.Id);
         }
 
         public IEnumerable<PaymentMethod> GetPaymentMethods()
         {
             return _context.PaymentMethods.ToList();
+        }
+
+        public void AllocatePlot(int subscriptionId)
+        {
+            Subscription subscription = _context.Subscriptions
+                                        .Include(x => x.AppUser)
+                                        .Include(x => x.Offer)
+                                        .Include(x => x.Offer.Plot)
+                                        .FirstOrDefault(x => x.Id == subscriptionId);
+
+            subscription.Offer.Plot.AppUserId = subscription.AppUserId;
+
+            Save();
         }
 
         public IEnumerable<PaymentProvider> GetPaymentProviders()
