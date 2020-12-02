@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AppService.AppModel.InputModel;
+﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -59,15 +55,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/work/subscription/{id}")]
-        public IActionResult GetWorkOrderBySubscriptionId(int id)
+        [Route("api/work/plot/{id}")]
+        public IActionResult GetWorkOrderByPlotId(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_workOrderAppService.GetAllBySubscriptionId(id)));
+            return Ok(ResponseViewModel.Ok(_workOrderAppService.GetWorkOrderByPlot(id)));
         }
 
         [HttpPost]

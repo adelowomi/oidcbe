@@ -18,7 +18,7 @@ namespace AppService.Repository.Abstractions
 
         Task<IEnumerable<WorkOrderViewModel>> GetAllByUserId();
 
-        IEnumerable<WorkOrderViewModel> GetAllBySubscriptionId(int subscriptionId);
+        IEnumerable<WorkOrderViewModel> GetWorkOrderByPlot(int subscriptionId);
 
         IEnumerable<WorkOrderTypeViewModel> GetWorkOrderTypes();
     }

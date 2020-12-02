@@ -32,9 +32,9 @@ namespace BusinessLogic.Repository
             return _workOrderRepository.GetAllWorkOrders();
         }
 
-        public IEnumerable<WorkOrder> GetAllBySubscriptionId(int subscriptionId)
+        public IEnumerable<WorkOrder> GetAllByPlot(int plotId)
         {
-            return _workOrderRepository.GetAllBySubscriptionId(subscriptionId);
+            return _workOrderRepository.GetAllByPlotId(plotId);
         }
 
         public WorkOrder GetById(int id)

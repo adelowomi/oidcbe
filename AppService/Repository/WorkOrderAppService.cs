@@ -52,9 +52,9 @@ namespace AppService.Repository
             return _workOrderService.GetAll().Select(_mapper.Map<WorkOrder, WorkOrderViewModel>);
         }
 
-        public IEnumerable<WorkOrderViewModel> GetAllBySubscriptionId(int subscriptionId)
+        public IEnumerable<WorkOrderViewModel> GetWorkOrderByPlot(int plotId)
         {
-            return _workOrderService.GetAllBySubscriptionId(subscriptionId).Select(_mapper.Map<WorkOrder, WorkOrderViewModel>);
+            return _workOrderService.GetAllByPlot(plotId).Select(_mapper.Map<WorkOrder, WorkOrderViewModel>);
         }
 
         public WorkOrderViewModel GetById(int id)

@@ -167,14 +167,14 @@ namespace AppService.AutoMapper
 
             CreateMap<WorkOrder, WorkOrderViewModel>()
                 .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
-                .ForMember(dest => dest.SubscriptionId, opts => opts.MapFrom(src => src.SubscriptionId))
+                .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))
                 .ForMember(dest => dest.WorkOrderType, opts => opts.MapFrom(src => src.WorkOrderType.Name))
                 .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
                 .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
                 ;
 
             CreateMap<WorkOrderInputModel, WorkOrder>()
-                .ForMember(dest => dest.SubscriptionId, opts => opts.MapFrom(src => src.SubscriptionId))
+                .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))
                 .ForMember(dest => dest.AppUserId, opts => opts.MapFrom(src => src.AppUserId))
                 .ForMember(dest => dest.WorkOrderTypeId, opts => opts.MapFrom(src => src.WorkOrderTypeId))
                 ;

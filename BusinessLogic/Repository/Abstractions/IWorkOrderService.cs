@@ -16,7 +16,7 @@ namespace BusinessLogic.Repository.Abstractions
 
         IEnumerable<WorkOrder> GetAllByUserId(int userId);
 
-        IEnumerable<WorkOrder> GetAllBySubscriptionId(int subscriptionId);
+        IEnumerable<WorkOrder> GetAllByPlot(int subscriptionId);
 
         IEnumerable<WorkOrderType> GetWorkOrderTypes();
     }
