@@ -5,13 +5,13 @@ namespace Core.Model
     {
         public string Name { get; set; }
 
-        public int SubscriptionId { get; set; }
-
         public int? AppUserId { get; set; }
 
         public AppUser AppUser { get; set; }
 
-        public Subscription Subscription { get; set; }
+        public int PlotId { get; set; }
+
+        public Plot Plot { get; set; }
 
         public int WorkOrderTypeId { get; set; }
 
