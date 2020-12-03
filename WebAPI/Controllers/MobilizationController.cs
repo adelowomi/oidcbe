@@ -59,15 +59,15 @@ namespace WebAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("api/mobilization")]
-        public IActionResult UpdateMobilizatoin([FromBody] MobilizationInputModel model)
+        [Route("api/mobilization/{id}")]
+        public IActionResult UpdateMobilizatoin(int id, [FromBody] MobilizationInputModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_mobilizationAppService.Update(model));
+            return Ok(_mobilizationAppService.Update(id, model));
         }
 
 
