@@ -174,6 +174,10 @@ namespace AppService.AppModel.ViewModel
             return new ResponseViewModel(true, ResponseMessageViewModel.SUCCESSFUL, data, ResponseErrorCodeStatus.OK);
         }
 
+        public static ResponseViewModel NotFound(string message, string status)
+        {
+            return new ResponseViewModel(false, message, status);
+        }
         /// <summary>
         ///  Ok that return this
         /// </summary>
@@ -263,6 +267,8 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_PAYMENT_METHOD = "Invalid payment method";
         public static string INVALID_PAYMENT_PROVIDER = "Invalid payment provider";
         public static string NEXT_OF_KIN_ALREAD_EXITS = "Next of kin already exits";
+        public static string INVALID_PLOT = "Invalid plot, please try again!";
+        public static string INVALID_MOBILIZATION = "Invalid mobilization, try again";
     }
 
     /// <summary>
@@ -311,6 +317,8 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_PAYMENT_METHOD = "21";
         public static readonly string INVALID_PAYMENT_PROVIDER = "22";
         public static readonly string NEXT_OF_KIN_ALREAD_EXITS = "23";
+        public static readonly string INVALID_PLOT = "24";
+        public static readonly string INVALID_MOBILIZATION = "25";
 
         //FAILURES
         public static readonly string FAIL = "91";

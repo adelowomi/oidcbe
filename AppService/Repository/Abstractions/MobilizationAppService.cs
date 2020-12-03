@@ -5,23 +5,30 @@ using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Extensions;
+using AppService.Helpers;
 using AutoMapper;
+using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace AppService.Repository.Abstractions
 {
     public class MobilizationAppService :  ResponseViewModel, IMobilizationAppService
     {
         protected readonly IMobilizationService _mobilizationService;
+        protected readonly IPlotService _plotService;
         protected readonly IMapper _mapper;
         protected readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AppSettings _setting;
 
         public MobilizationAppService(IMobilizationService mobilizationService,
                                       IMapper mapper,
+                                      IPlotService plotService,
+                                      IOptions<AppSettings> options,
                                       UserManager<AppUser> userManager,
                                       IHttpContextAccessor httpContextAccessor)
         {
@@ -29,13 +36,24 @@ namespace AppService.Repository.Abstractions
             _mapper = mapper;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+            _setting = options.Value;
+            _plotService = plotService;
         }
 
         public async Task<ResponseViewModel> CreateNew(MobilizationInputModel model)
         {
             var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
+            var query = _plotService.AllPlots().FirstOrDefault(x => x.Id == model.PlotId);
+
+            if (query == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
+
             model.AppUserId = user.Id;
+
+            model.SaveDocument(_setting); 
 
             var mappedResult = _mobilizationService.CreateNew(_mapper.Map<MobilizationInputModel, Mobilization>(model));
 
@@ -71,9 +89,25 @@ namespace AppService.Repository.Abstractions
             return Ok(result);
         }
 
-        public ResponseViewModel Update(MobilizationInputModel model)
+        public ResponseViewModel Update(int id, MobilizationInputModel model)
         {
-            var result = _mobilizationService.Update(_mapper.Map<MobilizationInputModel, Mobilization>(model));
+            var query = _plotService.AllPlots().FirstOrDefault(x => x.Id == model.PlotId);
+
+            if (query == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
+
+            var data = _mobilizationService.GetAllMobilization().FirstOrDefault(x => x.Id == id);
+
+            if (data == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_MOBILIZATION, ResponseErrorCodeStatus.INVALID_MOBILIZATION);
+            }
+
+            var entityMapped = _mapper.Map<MobilizationInputModel, Mobilization>(model); entityMapped.Id = data.Id;
+
+            var result = _mobilizationService.Update(entityMapped);
 
             var mappedResult = _mapper.Map<Mobilization, MobilizationViewModel>(result);
 

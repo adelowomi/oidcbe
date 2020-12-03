@@ -16,6 +16,6 @@ namespace AppService.Repository.Abstractions
 
         Task<ResponseViewModel> CreateNew(MobilizationInputModel model);
 
-        ResponseViewModel Update(MobilizationInputModel model);
+        ResponseViewModel Update(int id, MobilizationInputModel model);
     }
 }
