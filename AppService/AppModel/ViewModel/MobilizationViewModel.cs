@@ -1,15 +1,9 @@
 ﻿using System;
-namespace Core.Model
+namespace AppService.AppModel.ViewModel
 {
-    public class Mobilization : BaseNameEntity
+    public class MobilizationViewModel
     {
         public int PlotId { get; set; }
-
-        public Plot Plot { get; set; }
-
-        public int? AppUserId { get; set; }
-
-        public AppUser AppUser { get; set; }
 
         public string LeadName { get; set; }
 

@@ -1,15 +1,11 @@
 ﻿using System;
-namespace Core.Model
+namespace AppService.AppModel.InputModel
 {
-    public class Mobilization : BaseNameEntity
+    public class MobilizationInputModel
     {
         public int PlotId { get; set; }
 
-        public Plot Plot { get; set; }
-
         public int? AppUserId { get; set; }
-
-        public AppUser AppUser { get; set; }
 
         public string LeadName { get; set; }
 
