@@ -24,8 +24,8 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<Calendar> GetAllCalendars()
         {
-            var result = _context
-                .Calendars
+            var result = _context.Calendars
+                .Include(x => x.CalendarEvent)
                 .Include(x => x.Plot);
             return result;
         }
