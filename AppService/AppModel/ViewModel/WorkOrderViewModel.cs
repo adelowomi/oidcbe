@@ -3,8 +3,6 @@ namespace AppService.AppModel.ViewModel
 {
     public class WorkOrderViewModel
     {
-        public string Name { get; set; }
-
         public int PlotId { get; set; }
 
         public string WorkOrderType { get; set; }
