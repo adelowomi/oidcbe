@@ -102,7 +102,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_mobilizationAppService.GetByUserAsync());
+            return Ok(_mobilizationAppService.GetByUserAsync().Result);
         }
     }
 }
