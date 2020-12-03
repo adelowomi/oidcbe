@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 
@@ -7,14 +8,14 @@ namespace AppService.Repository.Abstractions
 {
     public interface IMobilizationAppService
     {
-        IEnumerable<MobilizationViewModel> GetAll();
+        ResponseViewModel GetAll();
 
-        IEnumerable<MobilizationViewModel> GetByPlot(int id);
+        ResponseViewModel GetByPlot(int id);
 
-        IEnumerable<MobilizationViewModel> GetByUser(int id);
+        Task<ResponseViewModel> GetByUserAsync();
 
-        MobilizationViewModel CreateNew(MobilizationInputModel model);
+        Task<ResponseViewModel> CreateNew(MobilizationInputModel model);
 
-        MobilizationViewModel Update(MobilizationInputModel model);
+        ResponseViewModel Update(MobilizationInputModel model);
     }
 }

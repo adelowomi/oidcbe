@@ -1388,3 +1388,34 @@ VALUES (N'20201202233418_PermitAndMobilizationMigration', N'3.1.8');
 
 GO
 
+ALTER TABLE [Mobilizations] ADD [AppUserId] int NULL;
+
+GO
+
+CREATE INDEX [IX_Mobilizations_AppUserId] ON [Mobilizations] ([AppUserId]);
+
+GO
+
+ALTER TABLE [Mobilizations] ADD CONSTRAINT [FK_Mobilizations_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201203003919_AppUserIdToMobilization', N'3.1.8');
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201203004720_AnonymousMigrationId', N'3.1.8');
+
+GO
+
+ALTER TABLE [WorkOrders] ADD [Document] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201203063709_DocumentToWorkOrder', N'3.1.8');
+
+GO
+

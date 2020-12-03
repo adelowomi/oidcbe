@@ -16,5 +16,7 @@ namespace Core.Model
         public int WorkOrderTypeId { get; set; }
 
         public WorkOrderType WorkOrderType { get; set; }
+
+        public string Document { get; set; }
     }
 }

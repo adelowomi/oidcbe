@@ -95,18 +95,7 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Address, opts => opts.MapFrom(src => src.Address))
                 ;
 
-            CreateMap<PaymentProvider, PaymentProviderViewModel>()
-               .ForMember(dest => dest.PaymentProviderName, opts => opts.MapFrom(src => src.Name));
-
-            CreateMap<PaymentType, PaymentTypeViewModel>()
-              .ForMember(dest => dest.PaymentTypeName, opts => opts.MapFrom(src => src.Name));
-
-            CreateMap<PaymentMethod, PaymentMethodViewModel>()
-              .ForMember(dest => dest.PaymentMethodName, opts => opts.MapFrom(src => src.Name));
-
-            CreateMap<PaymentStatus, PaymentStatusViewModel>()
-              .ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
-
+            
             CreateMap<Subscription, SubscriptionViewModel>()
                 .ForMember(dest => dest.SubscriptionId, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.SubscriptionStatus.Name))
@@ -195,13 +184,12 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.IsActive, opts => opts.MapFrom(src => src.IsEnabled))
                ;
 
-
-            CreateMap<CalendarEvent, CalendarEventViewModel>()
-              .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
-              ;
-
+            CreateMap<PaymentProvider, PaymentProviderViewModel>().ForMember(dest => dest.PaymentProviderName, opts => opts.MapFrom(src => src.Name));
+            CreateMap<PaymentType, PaymentTypeViewModel>().ForMember(dest => dest.PaymentTypeName, opts => opts.MapFrom(src => src.Name));
+            CreateMap<PaymentMethod, PaymentMethodViewModel>().ForMember(dest => dest.PaymentMethodName, opts => opts.MapFrom(src => src.Name));
+            CreateMap<PaymentStatus, PaymentStatusViewModel>().ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
+            CreateMap<CalendarEvent, CalendarEventViewModel>().ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
             CreateMap<MobilizationInputModel, Mobilization>();
-
             CreateMap<Mobilization, MobilizationViewModel>();
 
             CreateMap<CalendarInputModel, Calendar>()

@@ -130,6 +130,10 @@ namespace WebAPI
             services.AddTransient<ICalendarService, CalendarService>();
             services.AddTransient<ICalendarAppService, CalendarAppService>();
 
+            services.AddTransient<IMobilizationRepository, MobilizationRepository>();
+            services.AddTransient<IMobilizationService, MobilizationService>();
+            services.AddTransient<IMobilizationAppService, MobilizationAppService>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

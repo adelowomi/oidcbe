@@ -33,11 +33,11 @@ namespace AppService.Repository
     {
         protected readonly AppSettings _settings;
         protected readonly UserManager<AppUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         protected readonly SignInManager<AppUser> _signInManager;
         protected readonly RoleManager<Role> _roleManager;
         protected readonly IMapper _mapper;
         protected readonly IUtilityRepository _utilityRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailService _emailService;
         private readonly AppDbContext _context;
         private readonly IStateService _stateService;

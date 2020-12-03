@@ -3,6 +3,8 @@ namespace AppService.AppModel.ViewModel
 {
     public class MobilizationViewModel
     {
+        public int Id { get; set; }
+
         public int PlotId { get; set; }
 
         public string LeadName { get; set; }

@@ -5,7 +5,7 @@ namespace AppService.AppModel.InputModel
     {
         public int PlotId { get; set; }
 
-        public int? AppUserId { get; set; }
+        public virtual int? AppUserId { get; set; }
 
         public string LeadName { get; set; }
 
