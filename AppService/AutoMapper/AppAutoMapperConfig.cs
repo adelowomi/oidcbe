@@ -155,7 +155,7 @@ namespace AppService.AutoMapper
                 ;
 
             CreateMap<WorkOrder, WorkOrderViewModel>()
-                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+               
                 .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))
                 .ForMember(dest => dest.WorkOrderType, opts => opts.MapFrom(src => src.WorkOrderType.Name))
                 .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
@@ -194,6 +194,7 @@ namespace AppService.AutoMapper
 
             CreateMap<CalendarInputModel, Calendar>()
               .ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
+              .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.Date))
               .ForMember(dest => dest.Note, opts => opts.MapFrom(src => src.Note))
               .ForMember(dest => dest.CalendarEventId, opts => opts.MapFrom(src => src.EventTypeId))
               .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))

@@ -55,7 +55,6 @@ namespace Infrastructure.DataAccess.Repository
         /// <param name="entity"></param>
         public void Create(T entity)
         {
-            entity.DateCreated = DateTime.Now;
             entity.DateModified = DateTime.Now;
             entity.IsEnabled = true;
             _context.Add(entity);
