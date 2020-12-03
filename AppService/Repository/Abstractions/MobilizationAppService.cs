@@ -105,6 +105,7 @@ namespace AppService.Repository.Abstractions
                 return NotFound(ResponseMessageViewModel.INVALID_MOBILIZATION, ResponseErrorCodeStatus.INVALID_MOBILIZATION);
             }
 
+            //TODO: Check the owner of the mobilization, to prevent other user from updating the record
             var entityMapped = _mapper.Map<MobilizationInputModel, Mobilization>(model); entityMapped.Id = data.Id;
 
             var result = _mobilizationService.Update(entityMapped);
