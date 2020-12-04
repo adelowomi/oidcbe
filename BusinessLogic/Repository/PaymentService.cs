@@ -35,6 +35,11 @@ namespace BusinessLogic.Repository
             return _paymentRepository.GetPaymentTypes();
         }
 
+        public IEnumerable<Payment> GetPayments()
+        {
+            return _paymentRepository.GetAllPayments();
+        }
+
         public Payment LogNewPayment(int subscriptionId, int paymentType, int paymentMethod, int paymentProviderId, double amount)
         {
             return _paymentRepository.LogPayment(subscriptionId, paymentType, paymentMethod, paymentProviderId, amount);

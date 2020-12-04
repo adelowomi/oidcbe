@@ -14,6 +14,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         IEnumerable<PaymentProvider> GetPaymentProviders();
 
+        IEnumerable<Payment> GetAllPayments();
+
         Payment LogPayment(int subscriptionId, int paymentType, int paymentMethod, int paymentProviderId, double amount);
 
         Payment ConfirmPayment(string trnxRef);

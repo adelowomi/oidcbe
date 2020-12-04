@@ -69,6 +69,14 @@ namespace AppService.Repository
             return result;
         }
 
+        public ResponseViewModel GetPaymentHistory()
+        {
+            var result = _paymentService.GetPayments().Select(_mapper.Map<Payment, PaymentViewModel>);
+
+            return Ok(result);
+            
+        }
+
         /// <summary>
         /// Make Payment
         /// </summary>

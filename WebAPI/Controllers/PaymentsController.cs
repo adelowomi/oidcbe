@@ -118,5 +118,17 @@ namespace WebAPI.Controllers
 
             return Ok(_paymentAppService.QueryPayment(trnxRefs));
         }
+
+        [HttpGet]
+        [Route("api/payment/history")]
+        public IActionResult PaymentHistory()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_paymentAppService.GetPaymentHistory());
+        }
     }
 }

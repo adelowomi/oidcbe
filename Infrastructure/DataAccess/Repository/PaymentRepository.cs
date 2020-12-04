@@ -68,12 +68,15 @@ namespace Infrastructure.DataAccess.Repository
                 TrnxRef = $"OD{Helpers.Helper.RandomNumber(10)}",
                 PaymentStatusId = (int)PaymentStatusEnum.PENDING
             });
-
             return GetFullQueryPayment(result.Id);
-            
         }
 
         public Payment GetFullQueryPayment(int paymentId)
+        {
+            return GetAllPayments().FirstOrDefault(x => x.Id == paymentId);
+        }
+
+        public IEnumerable<Payment> GetAllPayments()
         {
             return _context.Payments
                 .Include(x => x.PaymentProvider)
@@ -81,8 +84,7 @@ namespace Infrastructure.DataAccess.Repository
                 .Include(x => x.PaymentType)
                 .Include(x => x.PaymentStatus)
                 .Include(x => x.Subscription)
-                .Include(x => x.Subscription.SubscriptionStatus)
-                .FirstOrDefault(x => x.Id == paymentId);
+                .Include(x => x.Subscription.SubscriptionStatus);   
         }
     }
 }
