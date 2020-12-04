@@ -34,7 +34,9 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<WorkOrder> GetAllWorkOrders()
         {
-            return _context.WorkOrders.Include(x => x.WorkOrderType);
+            return _context.WorkOrders
+                    .Include(x => x.WorkOrderStatus)
+                    .Include(x => x.WorkOrderType);
         }
 
         public WorkOrder GetByUserId(int id)

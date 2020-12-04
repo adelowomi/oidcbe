@@ -7,6 +7,10 @@ namespace AppService.AppModel.ViewModel
 
         public string WorkOrderType { get; set; }
 
+        public string Description { get; set; }
+
+        public string Status { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public DateTime DateModified { get; set; }

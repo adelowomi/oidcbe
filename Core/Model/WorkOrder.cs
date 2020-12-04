@@ -25,4 +25,10 @@ namespace Core.Model
 
         public WorkOrderStatus WorkOrderStatus { get; set; }
     }
+
+    public enum WorkOrderStatusEnum
+    {
+        APPROVED = 1,
+        
+    }
 }

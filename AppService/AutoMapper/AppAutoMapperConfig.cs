@@ -155,8 +155,8 @@ namespace AppService.AutoMapper
                 ;
 
             CreateMap<WorkOrder, WorkOrderViewModel>()
-               
                 .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))
+                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.WorkOrderStatus.Name))
                 .ForMember(dest => dest.WorkOrderType, opts => opts.MapFrom(src => src.WorkOrderType.Name))
                 .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
                 .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
