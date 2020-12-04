@@ -1419,3 +1419,35 @@ VALUES (N'20201203063709_DocumentToWorkOrder', N'3.1.8');
 
 GO
 
+ALTER TABLE [WorkOrders] ADD [Description] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [WorkOrders] ADD [WorkOrderStatusId] int NULL;
+
+GO
+
+CREATE TABLE [WorkOrderStatus] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_WorkOrderStatus] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_WorkOrders_WorkOrderStatusId] ON [WorkOrders] ([WorkOrderStatusId]);
+
+GO
+
+ALTER TABLE [WorkOrders] ADD CONSTRAINT [FK_WorkOrders_WorkOrderStatus_WorkOrderStatusId] FOREIGN KEY ([WorkOrderStatusId]) REFERENCES [WorkOrderStatus] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201204084100_WorkOrderStatusId', N'3.1.8');
+
+GO
+

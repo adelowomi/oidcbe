@@ -12,6 +12,10 @@ namespace AppService.AppModel.InputModel
 
         public string Document { get; set; }
 
+        public string Description { get; set; }
+
+        public int WorkOrderStatusId { get; set; }
+
         public string SaveDocument(AppSettings _settings)
         {
             try
@@ -46,5 +50,13 @@ namespace AppService.AppModel.InputModel
         }
 
         public int WorkOrderTypeId { get; set; }
+    }
+
+    public enum WorkOrderStatusEnum
+    {
+        APPROVED = 1,
+        PENDING,
+        SUSPENDED,
+        DECLINED
     }
 }
