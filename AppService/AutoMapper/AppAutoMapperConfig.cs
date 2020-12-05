@@ -68,7 +68,6 @@ namespace AppService.AutoMapper
                ;
 
             CreateMap<DocumentInputModel, Document>()
-               .ForMember(dest => dest.AppUserId, opts => opts.MapFrom(src => src.UserId))
                .ForMember(dest => dest.DocumentTypeId, opts => opts.MapFrom(src => src.DocumentType))
                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Document))
                .ForMember(dest => dest.DocumentType, opts => opts.Ignore())

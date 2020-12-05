@@ -64,13 +64,13 @@ namespace AppService.Repository
             var uploadResult = await
                BaseContentServer
                .Build(ContentServerTypeEnum.FIREBASE, _settings)
-               .UploadDocumentAsync(FileDocument.Create(document.Document, $"WorkOrder", $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+               .UploadDocumentAsync(FileDocument.Create(document.Document, document.GetDocumentType(), $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
 
-            document.UserId = user.Id;
+            var mappedResult = _mapper.Map<DocumentInputModel, Document>(document);
 
-            return ResponseViewModel.Ok( _mapper.Map<Document, DocumentViewModel>(
-                _documentService.CreateDocument(
-                    _mapper.Map<DocumentInputModel, Document>(document))));
+            mappedResult.AppUserId = user.Id;
+
+            return Ok( _mapper.Map<Document, DocumentViewModel>(_documentService.CreateDocument(mappedResult)));
         }
 
         public ResponseViewModel GetDocumentsBy()

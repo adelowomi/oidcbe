@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 
@@ -7,7 +8,7 @@ namespace AppService.Repository.Abstractions
 {
     public interface IDocumentAppService
     {
-        ResponseViewModel CreateNewDocument(DocumentInputModel document);
+        Task<ResponseViewModel> CreateNewDocument(DocumentInputModel document);
 
         ResponseViewModel GetDocumentsBy();
 
