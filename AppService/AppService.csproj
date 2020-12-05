@@ -24,6 +24,10 @@
     <Folder Include="Services\Response\" />
     <Folder Include="Services\Settings\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Services\ContentServer\" />
+    <Folder Include="Services\ContentServer\Firebase\" />
+    <Folder Include="Services\ContentServer\DropBox\" />
+    <Folder Include="Services\ContentServer\Model\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />

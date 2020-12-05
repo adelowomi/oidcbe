@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using AppService.Helpers;
 using Firebase.Storage;
+using Microsoft.AspNetCore.Http;
 
 namespace AppService.AppModel.InputModel
 {
@@ -11,6 +13,8 @@ namespace AppService.AppModel.InputModel
         public int PlotId { get; set; }
 
         public int? AppUserId { get; set; }
+
+        public IFormFile Documents { get; set; }
 
         public string Document { get; set; }
 
@@ -22,6 +26,10 @@ namespace AppService.AppModel.InputModel
         {
             try
             {
+                // CancellationTokenSource provides the token and have authority to cancel the token
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                CancellationToken token = cancellationTokenSource.Token;
+
                 var profilePhotoPath = string.Empty;
 
                 var bytes = Convert.FromBase64String(Document);
@@ -40,13 +48,16 @@ namespace AppService.AppModel.InputModel
                 using (var imageFile = new FileStream(profilePhotoPath, FileMode.Create))
                 {
                     imageFile.Write(bytes, 0, bytes.Length);
+                    imageFile.Flush();
 
-                    // Constructr FirebaseStorage, path to where you want to upload the file and Put it there
+                    var stream = new FileStream(profilePhotoPath, FileMode.Open);
+                    
                     var task = new FirebaseStorage("oidc-1606928364813.appspot.com")
-                        .Child("data")
-                        .Child("random")
-                        .Child("file.jpg")
-                        .PutAsync(imageFile);
+                        .Child("oidc")
+                        .Child("user")
+                        .Child("s843984934934893")
+                        .Child("work-order.jpg")
+                        .PutAsync(stream, token, "image/jpeg");
 
                     // Track progress of the upload
                     task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
@@ -54,7 +65,7 @@ namespace AppService.AppModel.InputModel
                     // await the task to wait until upload completes and get the download url
                     var downloadUrl = await task;
 
-                    imageFile.Flush();
+                   
                 }
                 
 
