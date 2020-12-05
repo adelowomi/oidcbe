@@ -14,6 +14,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         IEnumerable<Document> GetDocumentsBy(int userId);
 
+        IEnumerable<DocumentType> GetDocumentTypes();
+
         Document CreateDocument(Document document);
 
         Document GetDocumentBy(int documentId);

@@ -27,6 +27,11 @@ namespace Infrastructure.DataAccess.Repository
                 .Include(x => x.Plot);
         }
 
+        public IEnumerable<DocumentType> GetDocumentTypes ()
+        {
+            return _context.DocumentTypes.ToList();
+        }
+
         public Document GetDocumentBy(int documentId)
         {
             return GetAllDocuments().FirstOrDefault(x => x.Id == documentId);

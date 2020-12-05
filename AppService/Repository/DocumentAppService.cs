@@ -54,7 +54,7 @@ namespace AppService.Repository
                 return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
             }
 
-            var documentType = _documentService.GetAllDocuments().FirstOrDefault(x => x.Id == document.DocumentType);
+            var documentType = _documentService.GetDocumentTypes().FirstOrDefault(x => x.Id == document.DocumentType);
 
             if (documentType == null)
             {

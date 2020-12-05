@@ -35,6 +35,11 @@ namespace BusinessLogic.Repository
             return _documentRepository.GetDocumentsBy(userId);
         }
 
+        public IEnumerable<DocumentType> GetDocumentTypes()
+        {
+            return _documentRepository.GetDocumentTypes();
+        }
+
         public Document UpdateDocument(Document document)
         {
             return _documentRepository.UpdateDocument(document);
