@@ -47,7 +47,6 @@ namespace AppService.Repository
                 .Build(ContentServerTypeEnum.FIREBASE, _settings)
                 .UploadDocumentAsync(FileDocument.Create(workOrder.Document, "WorkOrder3", "oidc", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
 
-
             workOrder.AppUserId = currentUser.Id;
             var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));
             return _mapper.Map<WorkOrder, WorkOrderViewModel>(result);
