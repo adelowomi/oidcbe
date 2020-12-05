@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using AppService.Helpers;
-using Firebase.Storage;
-using Microsoft.AspNetCore.Http;
-
+﻿
 namespace AppService.AppModel.InputModel
 {
     public class WorkOrderInputModel

@@ -10,6 +10,7 @@ using AppService.Repository.Abstractions;
 using AppService.Services.ContentServer;
 using AppService.Services.ContentServer.Model;
 using AutoMapper;
+using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Http;
@@ -18,10 +19,11 @@ using Microsoft.Extensions.Options;
 
 namespace AppService.Repository
 {
-    public class WorkOrderAppService : IWorkOrderAppService
+    public class WorkOrderAppService : ResponseViewModel, IWorkOrderAppService
     {
         private readonly IWorkOrderService _workOrderService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPlotService _plotService;
         protected readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly AppSettings _settings;
@@ -30,6 +32,7 @@ namespace AppService.Repository
                                     UserManager<AppUser> userManager,
                                     IMapper mapper,
                                     IOptions<AppSettings> options,
+                                    IPlotService plotService,
                                     IHttpContextAccessor httpContextAccessor)
         {
             _workOrderService = workOrderService;
@@ -37,19 +40,31 @@ namespace AppService.Repository
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
             _settings = options.Value;
+            _plotService = plotService;
         }
 
-        public async Task<WorkOrderViewModel> CreateNew(WorkOrderInputModel workOrder)
+        public async Task<ResponseViewModel> CreateNew(WorkOrderInputModel workOrder)
         {
             AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
-            var uploadResult = await BaseContentServer
+            var uploadResult = await
+                BaseContentServer
                 .Build(ContentServerTypeEnum.FIREBASE, _settings)
                 .UploadDocumentAsync(FileDocument.Create(workOrder.Document, "WorkOrder3", "oidc", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
 
+            var plotResult = _plotService.AllPlots().FirstOrDefault(x => x.Id == workOrder.PlotId);
+
+            if(plotResult == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
+
             workOrder.AppUserId = currentUser.Id;
+            workOrder.Document = uploadResult.Path;
+
             var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));
-            return _mapper.Map<WorkOrder, WorkOrderViewModel>(result);
+
+            return Ok(_mapper.Map<WorkOrder, WorkOrderViewModel>(result));
         }
 
         public async Task<IEnumerable<WorkOrderViewModel>> GetAllByUserId()

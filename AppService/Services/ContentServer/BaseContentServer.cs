@@ -11,14 +11,12 @@ namespace AppService.Services.ContentServer
             switch(type)
             {
                 case ContentServerTypeEnum.FIREBASE:
-
                     return new FirebaseUpload(setting);
 
                 default:
                     return new DropBoxUpload();
             }
         }
-
     }
 
     public enum ContentServerTypeEnum

@@ -5,6 +5,7 @@ namespace Core.Model
 {
     public class AppUser : IdentityUser<int>
     { 
+        public string GUID { get; set; }
 
         public string FirstName { get; set; }
 

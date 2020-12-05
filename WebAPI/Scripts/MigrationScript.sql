@@ -1451,3 +1451,31 @@ VALUES (N'20201204084100_WorkOrderStatusId', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [GUI] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201205125142_AddedAspNetGUI', N'3.1.8');
+
+GO
+
+DECLARE @var12 sysname;
+SELECT @var12 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[AspNetUsers]') AND [c].[name] = N'GUI');
+IF @var12 IS NOT NULL EXEC(N'ALTER TABLE [AspNetUsers] DROP CONSTRAINT [' + @var12 + '];');
+ALTER TABLE [AspNetUsers] DROP COLUMN [GUI];
+
+GO
+
+ALTER TABLE [AspNetUsers] ADD [GUID] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201205130728_ChangeGUIToGUID', N'3.1.8');
+
+GO
+

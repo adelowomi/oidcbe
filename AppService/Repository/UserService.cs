@@ -91,7 +91,12 @@ namespace AppService.Repository
 
                 //Find User by Email Address after successful Authentication
                 user = await _userManager.FindByEmailAsync(model.Email);
-
+                if(string.IsNullOrEmpty(user.GUID))
+                {
+                    user.GUID = new Guid().ToString();
+                    await _userManager.UpdateAsync(user);
+                }
+                
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_settings.Secret);
@@ -162,7 +167,8 @@ namespace AppService.Repository
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                };
+                    GUID = new Guid().ToString(),
+            };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
