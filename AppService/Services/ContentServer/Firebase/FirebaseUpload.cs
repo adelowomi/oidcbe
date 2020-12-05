@@ -23,7 +23,7 @@ namespace AppService.Services.ContentServer.Firebase
 
         public Document UploadDocument(Document document)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
