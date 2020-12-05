@@ -6,10 +6,10 @@ namespace AppService.Services.ContentServer
 {
     public interface IBaseContentServer
     {
-        Task<Document> UploadDocumentAsync(Document document);
+        Task<FileDocument> UploadDocumentAsync(FileDocument document);
 
-        Document DownloadDocument(string path);
+        FileDocument DownloadDocument(string path);
 
-        IEnumerable<Document> GetAllDocuments();
+        IEnumerable<FileDocument> GetAllDocuments();
     }
 }

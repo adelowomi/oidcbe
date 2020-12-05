@@ -22,6 +22,8 @@ namespace AppService.Helpers
         public string SendGridSenderName { get; set; }
 
         public WebApp WebApp { get; set; }
+
+        public string FireBaseBucket { get; set; }
           
     }
 

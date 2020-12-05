@@ -7,6 +7,8 @@ using AppService.AppModel.ViewModel;
 using AppService.Extensions;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
+using AppService.Services.ContentServer;
+using AppService.Services.ContentServer.Model;
 using AutoMapper;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
@@ -40,7 +42,11 @@ namespace AppService.Repository
         public async Task<WorkOrderViewModel> CreateNew(WorkOrderInputModel workOrder)
         {
             AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
-            await workOrder.SaveDocumentAsync(_settings);
+
+            await BaseContentServer
+                .Build(ContentServerTypeEnum.FIREBASE, _settings)
+                .UploadDocumentAsync(FileDocument.Create(workOrder.Document, "WorkOrder", "oidc", new FileDocumentType { Extension = ".jpg", MimeType = "image/jpeg" })) ;
+
             workOrder.AppUserId = currentUser.Id;
             var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));
             return _mapper.Map<WorkOrder, WorkOrderViewModel>(result);

@@ -1,10 +1,10 @@
 ﻿using System;
 namespace AppService.Services.ContentServer
 {
-    public class DocumentType
+    public class FileDocumentType
     {
         public string Extension { get; set; }
 
-        public string Type { get; set; }
+        public string MimeType { get; set; }
     }
 }

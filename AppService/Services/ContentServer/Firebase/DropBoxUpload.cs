@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.Services.ContentServer.Model;
 
 namespace AppService.Services.ContentServer.Firebase
@@ -10,17 +11,17 @@ namespace AppService.Services.ContentServer.Firebase
         {
         }
 
-        public Document DownloadDocument(string path)
+        public FileDocument DownloadDocument(string path)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Document> GetAllDocuments()
+        public IEnumerable<FileDocument> GetAllDocuments()
         {
             throw new NotImplementedException();
         }
 
-        public Document UploadDocument(Document document)
+        public Task<FileDocument> UploadDocumentAsync(FileDocument document)
         {
             throw new NotImplementedException();
         }

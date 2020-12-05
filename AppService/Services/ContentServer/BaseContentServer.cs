@@ -4,20 +4,15 @@ namespace AppService.Services.ContentServer
 {
     public class BaseContentServer
     {
-        protected AppSettings _setting;
+        private BaseContentServer() { }
 
-        private BaseContentServer (AppSettings setting)
-        {
-            _setting = setting;
-        }
-
-        public static IBaseContentServer Build (ContentServerTypeEnum type)
+        public static IBaseContentServer Build (ContentServerTypeEnum type, AppSettings setting)
         {
             switch(type)
             {
                 case ContentServerTypeEnum.FIREBASE:
 
-                    return new FirebaseUpload();
+                    return new FirebaseUpload(setting);
 
                 default:
                     return new DropBoxUpload();
