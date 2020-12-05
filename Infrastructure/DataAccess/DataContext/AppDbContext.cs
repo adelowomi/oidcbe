@@ -76,6 +76,10 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<VehicleType> VehicleTypes { get; set; }
 
+        public DbSet<Request> Requests { get; set; }
+
+        public DbSet<RequestType> RequestTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

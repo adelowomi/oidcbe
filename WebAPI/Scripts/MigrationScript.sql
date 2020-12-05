@@ -1479,3 +1479,42 @@ VALUES (N'20201205130728_ChangeGUIToGUID', N'3.1.8');
 
 GO
 
+CREATE TABLE [RequestTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_RequestTypes] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Requests] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [AppUserId] int NOT NULL,
+    [RequestId] int NOT NULL,
+    [RequestTypeId] int NULL,
+    CONSTRAINT [PK_Requests] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Requests_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Requests_RequestTypes_RequestTypeId] FOREIGN KEY ([RequestTypeId]) REFERENCES [RequestTypes] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE INDEX [IX_Requests_AppUserId] ON [Requests] ([AppUserId]);
+
+GO
+
+CREATE INDEX [IX_Requests_RequestTypeId] ON [Requests] ([RequestTypeId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201205150135_RequestTypeMigration', N'3.1.8');
+
+GO
+
