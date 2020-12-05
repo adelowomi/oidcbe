@@ -17,6 +17,7 @@ namespace Infrastructure.DataAccess.Repository
 
         public WorkOrder CreateNewWorkOrder(WorkOrder workOrder)
         {
+            workOrder.WorkOrderStatusId = 2;
             var work = CreateAndReturn(workOrder);
 
             return GetAllWorkOrders().FirstOrDefault(x => x.Id == work.Id);

@@ -7,6 +7,7 @@ using AppService.Extensions;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AutoMapper;
+using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Http;
@@ -15,9 +16,10 @@ using Microsoft.Extensions.Options;
 
 namespace AppService.Repository
 {
-    public class DocumentAppService : IDocumentAppService
+    public class DocumentAppService : ResponseViewModel, IDocumentAppService
     {
         private readonly IDocumentService _documentService;
+        private readonly IPlotService _plotService;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         protected readonly UserManager<AppUser> _userManager;
@@ -25,6 +27,7 @@ namespace AppService.Repository
 
         public DocumentAppService(IDocumentService documentService,
                                   IMapper mapper,
+                                  IPlotService plotService,
                                   IOptions<AppSettings> options,
                                   IHttpContextAccessor httpContextAccessor,
                                   UserManager<AppUser> userManager)
@@ -34,10 +37,25 @@ namespace AppService.Repository
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
             _settings = options.Value;
+            _plotService = plotService;
         }
 
         public ResponseViewModel CreateNewDocument(DocumentInputModel document)
         {
+            var query = _plotService.AllPlots().FirstOrDefault(x => x.Id == document.PlotId);
+
+            if (query == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
+
+            var documentType = _documentService.GetAllDocuments();
+
+            if (documentType == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
+
             document.SaveDocument(_settings);
 
             var user = _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString()).Result;
@@ -53,7 +71,7 @@ namespace AppService.Repository
         {
             var user = _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString()).Result;
 
-            return ResponseViewModel.Ok(_documentService.GetDocumentsBy(user.Id).Select(_mapper.Map<Document, DocumentViewModel>));
+            return Ok(_documentService.GetDocumentsBy(user.Id).Select(_mapper.Map<Document, DocumentViewModel>));
         }
 
         public DocumentViewModel GetDocumentByName(string name)

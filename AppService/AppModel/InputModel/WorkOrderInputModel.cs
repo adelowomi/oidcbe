@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using AppService.Helpers;
+using Firebase.Storage;
 
 namespace AppService.AppModel.InputModel
 {
@@ -16,7 +18,7 @@ namespace AppService.AppModel.InputModel
 
         public int WorkOrderStatusId { get; set; }
 
-        public string SaveDocument(AppSettings _settings)
+        public async Task<string> SaveDocumentAsync(AppSettings _settings)
         {
             try
             {
@@ -38,8 +40,23 @@ namespace AppService.AppModel.InputModel
                 using (var imageFile = new FileStream(profilePhotoPath, FileMode.Create))
                 {
                     imageFile.Write(bytes, 0, bytes.Length);
+
+                    // Constructr FirebaseStorage, path to where you want to upload the file and Put it there
+                    var task = new FirebaseStorage("oidc-1606928364813.appspot.com")
+                        .Child("data")
+                        .Child("random")
+                        .Child("file.jpg")
+                        .PutAsync(imageFile);
+
+                    // Track progress of the upload
+                    task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
+
+                    // await the task to wait until upload completes and get the download url
+                    var downloadUrl = await task;
+
                     imageFile.Flush();
                 }
+                
 
                 Document = uniqueFileName;
 
@@ -48,15 +65,5 @@ namespace AppService.AppModel.InputModel
             }
             catch (Exception e) { return null; }
         }
-
-        public int WorkOrderTypeId { get; set; }
-    }
-
-    public enum WorkOrderStatusEnum
-    {
-        APPROVED = 1,
-        PENDING,
-        SUSPENDED,
-        DECLINED
     }
 }

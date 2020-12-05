@@ -165,7 +165,7 @@ namespace AppService.AutoMapper
             CreateMap<WorkOrderInputModel, WorkOrder>()
                 .ForMember(dest => dest.PlotId, opts => opts.MapFrom(src => src.PlotId))
                 .ForMember(dest => dest.AppUserId, opts => opts.MapFrom(src => src.AppUserId))
-                .ForMember(dest => dest.WorkOrderTypeId, opts => opts.MapFrom(src => src.WorkOrderTypeId))
+               // .ForMember(dest => dest.WorkOrderTypeId, opts => opts.MapFrom(src => src.WorkOrderTypeId))
                 ;
 
 

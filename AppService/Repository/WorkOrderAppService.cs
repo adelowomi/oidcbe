@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Extensions;
+using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AutoMapper;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace AppService.Repository
 {
@@ -20,21 +22,25 @@ namespace AppService.Repository
         private readonly IHttpContextAccessor _httpContextAccessor;
         protected readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly AppSettings _settings;
 
         public WorkOrderAppService(IWorkOrderService workOrderService,
                                     UserManager<AppUser> userManager,
                                     IMapper mapper,
+                                    IOptions<AppSettings> options,
                                     IHttpContextAccessor httpContextAccessor)
         {
             _workOrderService = workOrderService;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
+            _settings = options.Value;
         }
 
         public async Task<WorkOrderViewModel> CreateNew(WorkOrderInputModel workOrder)
         {
             AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+            await workOrder.SaveDocumentAsync(_settings);
             workOrder.AppUserId = currentUser.Id;
             var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));
             return _mapper.Map<WorkOrder, WorkOrderViewModel>(result);

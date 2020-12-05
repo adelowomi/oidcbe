@@ -29,6 +29,8 @@ namespace Core.Model
     public enum WorkOrderStatusEnum
     {
         APPROVED = 1,
-        
+        PENDING,
+        SUSPENDED,
+        DECLINED
     }
 }
