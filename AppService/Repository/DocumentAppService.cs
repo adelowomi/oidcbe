@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Extensions;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
+using AppService.Services.ContentServer;
+using AppService.Services.ContentServer.Model;
 using AutoMapper;
 using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
@@ -40,8 +43,10 @@ namespace AppService.Repository
             _plotService = plotService;
         }
 
-        public ResponseViewModel CreateNewDocument(DocumentInputModel document)
+        public async Task<ResponseViewModel> CreateNewDocument(DocumentInputModel document)
         {
+            var user = _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString()).Result;
+
             var query = _plotService.AllPlots().FirstOrDefault(x => x.Id == document.PlotId);
 
             if (query == null)
@@ -56,9 +61,10 @@ namespace AppService.Repository
                 return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
             }
 
-            document.SaveDocument(_settings);
-
-            var user = _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString()).Result;
+            var uploadResult = await
+               BaseContentServer
+               .Build(ContentServerTypeEnum.FIREBASE, _settings)
+               .UploadDocumentAsync(FileDocument.Create(document.Document, $"WorkOrder", $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
 
             document.UserId = user.Id;
 

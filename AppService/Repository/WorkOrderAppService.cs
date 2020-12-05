@@ -67,6 +67,7 @@ namespace AppService.Repository
             }
 
             workOrder.AppUserId = currentUser.Id;
+
             workOrder.Document = uploadResult.Path;
 
             var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));
