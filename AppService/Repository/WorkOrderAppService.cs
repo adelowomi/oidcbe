@@ -43,9 +43,10 @@ namespace AppService.Repository
         {
             AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
-            await BaseContentServer
+            var uploadResult = await BaseContentServer
                 .Build(ContentServerTypeEnum.FIREBASE, _settings)
-                .UploadDocumentAsync(FileDocument.Create(workOrder.Document, "WorkOrder", "oidc", new FileDocumentType { Extension = ".jpg", MimeType = "image/jpeg" })) ;
+                .UploadDocumentAsync(FileDocument.Create(workOrder.Document, "WorkOrder3", "oidc", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+
 
             workOrder.AppUserId = currentUser.Id;
             var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));

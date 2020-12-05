@@ -14,8 +14,6 @@ namespace AppService.AppModel.InputModel
 
         public int? AppUserId { get; set; }
 
-        public IFormFile Documents { get; set; }
-
         public string Document { get; set; }
 
         public string Description { get; set; }
