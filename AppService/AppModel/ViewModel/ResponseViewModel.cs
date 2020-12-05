@@ -269,6 +269,7 @@ namespace AppService.AppModel.ViewModel
         public static string NEXT_OF_KIN_ALREAD_EXITS = "Next of kin already exits";
         public static string INVALID_PLOT = "Invalid plot, please try again!";
         public static string INVALID_MOBILIZATION = "Invalid mobilization, try again";
+        public static string INVALID_WORK_ORDER_TYPE = "Invalid work order, please try again!";
     }
 
     /// <summary>
@@ -319,6 +320,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string NEXT_OF_KIN_ALREAD_EXITS = "23";
         public static readonly string INVALID_PLOT = "24";
         public static readonly string INVALID_MOBILIZATION = "25";
+        public static readonly string INVALID_WORK_ORDER_TYPE = "26";
 
         //FAILURES
         public static readonly string FAIL = "91";

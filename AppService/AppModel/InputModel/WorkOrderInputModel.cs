@@ -11,6 +11,6 @@ namespace AppService.AppModel.InputModel
 
         public string Description { get; set; }
 
-        public int WorkOrderStatusId { get; set; }
+        public int WorkOrderTypeId { get; set; }
     }
 }

@@ -11,6 +11,8 @@ namespace AppService.AppModel.ViewModel
 
         public string Status { get; set; }
 
+        public string Document { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public DateTime DateModified { get; set; }

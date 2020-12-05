@@ -50,13 +50,20 @@ namespace AppService.Repository
             var uploadResult = await
                 BaseContentServer
                 .Build(ContentServerTypeEnum.FIREBASE, _settings)
-                .UploadDocumentAsync(FileDocument.Create(workOrder.Document, "WorkOrder3", "oidc", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+                .UploadDocumentAsync(FileDocument.Create(workOrder.Document, $"WorkOrder", $"{currentUser.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
 
             var plotResult = _plotService.AllPlots().FirstOrDefault(x => x.Id == workOrder.PlotId);
 
             if(plotResult == null)
             {
                 return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
+
+            var workOrderType = _workOrderService.GetWorkOrderTypes().FirstOrDefault(x => x.Id == workOrder.WorkOrderTypeId);
+
+            if(workOrderType == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_WORK_ORDER_TYPE, ResponseErrorCodeStatus.INVALID_WORK_ORDER_TYPE);
             }
 
             workOrder.AppUserId = currentUser.Id;

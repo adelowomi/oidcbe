@@ -93,7 +93,7 @@ namespace AppService.Repository
                 user = await _userManager.FindByEmailAsync(model.Email);
                 if(string.IsNullOrEmpty(user.GUID))
                 {
-                    user.GUID = new Guid().ToString();
+                    user.GUID = Guid.NewGuid().ToString();
                     await _userManager.UpdateAsync(user);
                 }
                 

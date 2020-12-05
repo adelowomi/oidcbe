@@ -58,6 +58,7 @@ namespace AppService.Services.ContentServer.Firebase
                 var stream = new FileStream(profilePhotoPath, FileMode.Open);
 
                 var task = new FirebaseStorage(_setting.FireBaseBucket)
+                    .Child("oidc")
                     .Child(document.Path)
                     .Child(document.FileNameWithExtension)
                     .PutAsync(stream, token, document.DocumentType.MimeType);
