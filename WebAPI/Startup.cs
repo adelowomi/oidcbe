@@ -134,6 +134,9 @@ namespace WebAPI
             services.AddTransient<IMobilizationService, MobilizationService>();
             services.AddTransient<IMobilizationAppService, MobilizationAppService>();
 
+            services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IRequestAppService, RequestAppService>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

@@ -8,6 +8,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
     {
         Request GetById(int id);
 
+        Request CreateAndReturn(Request request);
+
         IEnumerable<Request> GetAll();
 
         Request Update(Request request);

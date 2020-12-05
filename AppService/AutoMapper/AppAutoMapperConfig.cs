@@ -205,6 +205,17 @@ namespace AppService.AutoMapper
              .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
              .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
              ;
+
+            CreateMap<Request, RequestViewModel>()
+                .ForMember(dest => dest.RequestName, opts => opts.MapFrom(src => src.Name))
+                .ForMember(dest => dest.RequestType, opts => opts.MapFrom(src => src.RequestType.Name))
+                ;
+
+            CreateMap<RequestInputModel, Request>()
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.RequestName))
+                .ForMember(dest => dest.RequestTypeId, opts => opts.MapFrom(src => src.RequestTypeId))
+                ;
+            CreateMap<RequestType, RequestTypeViewModel>();
         }
     }
 }
