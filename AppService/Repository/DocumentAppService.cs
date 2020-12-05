@@ -54,18 +54,23 @@ namespace AppService.Repository
                 return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
             }
 
-            var documentType = _documentService.GetAllDocuments();
+            var documentType = _documentService.GetAllDocuments().FirstOrDefault(x => x.Id == document.DocumentType);
 
             if (documentType == null)
             {
                 return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
             }
 
-            var uploadResult = await
-               BaseContentServer
-               .Build(ContentServerTypeEnum.FIREBASE, _settings)
-               .UploadDocumentAsync(FileDocument.Create(document.Document, document.GetDocumentType(), $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
-
+            try
+            {
+                var uploadResult = await
+                   BaseContentServer
+                   .Build(ContentServerTypeEnum.FIREBASE, _settings)
+                   .UploadDocumentAsync(FileDocument.Create(document.Document, document.GetDocumentType(), $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+            } catch (Exception e)
+            {
+                return Failed(ResponseMessageViewModel.ERROR_UPLOADING_FILE, ResponseErrorCodeStatus.ERROR_UPLOADING_FILE);
+            }
             var mappedResult = _mapper.Map<DocumentInputModel, Document>(document);
 
             mappedResult.AppUserId = user.Id;

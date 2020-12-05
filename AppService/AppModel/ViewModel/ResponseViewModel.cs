@@ -270,6 +270,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_PLOT = "Invalid plot, please try again!";
         public static string INVALID_MOBILIZATION = "Invalid mobilization, try again";
         public static string INVALID_WORK_ORDER_TYPE = "Invalid work order, please try again!";
+        public static string ERROR_UPLOADING_FILE = "Error uploading file, please try again!";
     }
 
     /// <summary>
@@ -321,6 +322,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_PLOT = "24";
         public static readonly string INVALID_MOBILIZATION = "25";
         public static readonly string INVALID_WORK_ORDER_TYPE = "26";
+        public static readonly string ERROR_UPLOADING_FILE = "27";
 
         //FAILURES
         public static readonly string FAIL = "91";
