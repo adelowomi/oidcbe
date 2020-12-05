@@ -3,6 +3,12 @@ namespace AppService.Services.ContentServer.Model
 {
     public class Document
     {
+        private string _Path { get; set; }
+
+        private string _File { get; set; }
+
+        public DocumentType _DocumentType { get; set; }
+
         private Document ()
         {
 
@@ -12,20 +18,21 @@ namespace AppService.Services.ContentServer.Model
 
         private Document(string File, string Path) { this._File = File; this._Path = Path; }
 
+        private Document(string File, string Path, DocumentType type) { this._File = File; this._Path = Path; }
+
         public static Document Create() => new Document();
 
         public static Document Create(string File) => new Document(File);
 
         public static Document Create(string File, string Path) => new Document(File, Path);
 
-        private string _Path { get; set; }
+        public static Document Create(string File, string Path, DocumentType type) => new Document(File, Path);
 
-        private string _File { get; set; }
+        public string Path => _Path;
 
-        public string GetPath => _Path;
+        public string File => _File;
 
-        public string GetFile => _File;
+        public DocumentType DocumentType => _DocumentType;
 
-        public DocumentType DocumentType { get; set; }
     }
 }
