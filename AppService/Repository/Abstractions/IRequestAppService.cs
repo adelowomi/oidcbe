@@ -8,9 +8,9 @@ namespace AppService.Repository.Abstractions
     {
         ResponseViewModel GetAllRequests();
 
-        ResponseViewModel GetRequestBy(int userId);
+        Task<ResponseViewModel> GetRequestBy();
 
-        ResponseViewModel GetRequestBy(int userId, int requestId);
+        ResponseViewModel GetRequestBy(int requestId);
 
         Task<ResponseViewModel> CreateRequest(RequestInputModel request);
 

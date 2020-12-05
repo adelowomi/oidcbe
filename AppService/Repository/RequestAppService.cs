@@ -33,6 +33,13 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> CreateRequest(RequestInputModel request)
         {
+            var query = _requestRepository.GetRequestTypes().FirstOrDefault(x => x.Id == request.RequestTypeId);
+
+            if(query == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_REQUEST_TYPE, ResponseErrorCodeStatus.INVALID_REQUEST_TYPE);
+            }
+
             var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
             var mappedResult = _mapper.Map<RequestInputModel, Request>(request);
@@ -52,12 +59,14 @@ namespace AppService.Repository
             return Ok(result);
         }
 
-        public ResponseViewModel GetRequestBy(int userId)
+        public async Task<ResponseViewModel> GetRequestBy()
         {
-            return Ok(_mapper.Map<Request, RequestViewModel>(_requestRepository.GetAll().FirstOrDefault(x => x.AppUserId == userId)));
+            var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+
+            return Ok(_mapper.Map<Request, RequestViewModel>(_requestRepository.GetAll().FirstOrDefault(x => x.AppUserId == currentUser.Id)));
         }
 
-        public ResponseViewModel GetRequestBy(int userId, int requestId)
+        public ResponseViewModel GetRequestBy(int requestId)
         {
             return Ok(_mapper.Map<Request, RequestViewModel>(_requestRepository.GetById(requestId)));
         }

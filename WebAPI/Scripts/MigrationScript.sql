@@ -1518,3 +1518,42 @@ VALUES (N'20201205150135_RequestTypeMigration', N'3.1.8');
 
 GO
 
+ALTER TABLE [Requests] DROP CONSTRAINT [FK_Requests_RequestTypes_RequestTypeId];
+
+GO
+
+DECLARE @var13 sysname;
+SELECT @var13 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Requests]') AND [c].[name] = N'RequestId');
+IF @var13 IS NOT NULL EXEC(N'ALTER TABLE [Requests] DROP CONSTRAINT [' + @var13 + '];');
+ALTER TABLE [Requests] DROP COLUMN [RequestId];
+
+GO
+
+DROP INDEX [IX_Requests_RequestTypeId] ON [Requests];
+DECLARE @var14 sysname;
+SELECT @var14 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Requests]') AND [c].[name] = N'RequestTypeId');
+IF @var14 IS NOT NULL EXEC(N'ALTER TABLE [Requests] DROP CONSTRAINT [' + @var14 + '];');
+ALTER TABLE [Requests] ALTER COLUMN [RequestTypeId] int NOT NULL;
+CREATE INDEX [IX_Requests_RequestTypeId] ON [Requests] ([RequestTypeId]);
+
+GO
+
+ALTER TABLE [Requests] ADD [Name] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [Requests] ADD CONSTRAINT [FK_Requests_RequestTypes_RequestTypeId] FOREIGN KEY ([RequestTypeId]) REFERENCES [RequestTypes] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201205172858_SomeMoreEntityModelInIt', N'3.1.8');
+
+GO
+
