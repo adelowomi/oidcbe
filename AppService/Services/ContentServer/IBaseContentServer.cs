@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.Services.ContentServer.Model;
 
 namespace AppService.Services.ContentServer
 {
     public interface IBaseContentServer
     {
-        Document UploadDocument(Document document);
+        Task<Document> UploadDocumentAsync(Document document);
 
         Document DownloadDocument(string path);
 
