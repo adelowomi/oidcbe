@@ -2,6 +2,7 @@
 using AppService.Repository.Abstractions;
 using AppService.Services.Abstractions;
 using Core.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
