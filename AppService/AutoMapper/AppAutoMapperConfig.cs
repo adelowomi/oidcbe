@@ -188,8 +188,9 @@ namespace AppService.AutoMapper
                 CreateMap<PaymentMethod, PaymentMethodViewModel>().ForMember(dest => dest.PaymentMethodName, opts => opts.MapFrom(src => src.Name));
                 CreateMap<PaymentStatus, PaymentStatusViewModel>().ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
                 CreateMap<CalendarEvent, CalendarEventViewModel>().ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
-                CreateMap<MobilizationInputModel, Mobilization>();
-                CreateMap<Mobilization, MobilizationViewModel>();
+                CreateMap<MobilizationInputModel, Mobilization>()
+                    .ForMember(dest => dest.IdentityPath, opts => opts.MapFrom(src => src.Document));
+            CreateMap<Mobilization, MobilizationViewModel>();
 
             CreateMap<CalendarInputModel, Calendar>()
               .ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
