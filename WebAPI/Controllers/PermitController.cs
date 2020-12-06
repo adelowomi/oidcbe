@@ -47,5 +47,48 @@ namespace WebAPI.Controllers
 
             return Ok(_permitAppService.CreatePermit(model).Result);
         }
+
+
+        [HttpGet]
+        [Route("api/permit/types")]
+        [ProducesResponseType(typeof(PermitTypeResponse), 200)]
+        [ProducesResponseType(typeof(PermitTypeResponse), 400)]
+        public IActionResult GetPermitType()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.GetPermitTypes());
+        }
+
+        [HttpGet]
+        [Route("api/permit/current/user")]
+        [ProducesResponseType(typeof(PermitsResponse), 200)]
+        [ProducesResponseType(typeof(PermitsResponse), 400)]
+        public IActionResult GetCurrentUserPermit()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.GetPermitsBy());
+        }
+
+        [HttpGet]
+        [Route("api/vehicle/types")]
+        [ProducesResponseType(typeof(VehicleTypeResponse), 200)]
+        [ProducesResponseType(typeof(VehicleTypeResponse), 400)]
+        public IActionResult GetVehicleTypes()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.GetVehicleTypes());
+        }
     }
 }

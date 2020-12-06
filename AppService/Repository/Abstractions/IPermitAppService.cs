@@ -16,6 +16,6 @@ namespace AppService.Repository.Abstractions
 
         Task<ResponseViewModel> GetPermitsBy();
 
-        Task<ResponseViewModel> GetPermitTypes();
+        ResponseViewModel GetPermitTypes();
     }
 }

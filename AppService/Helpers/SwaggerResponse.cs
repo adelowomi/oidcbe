@@ -28,5 +28,9 @@ namespace AppService.Helpers
 
     public class PermitsResponse : SwaggerResponse<IEnumerable<PermitViewModel>> { }
 
-    public class PermitResponse : SwaggerResponse<IEnumerable<PermitViewModel>> { }
+    public class PermitResponse : SwaggerResponse<PermitViewModel> { }
+
+    public class PermitTypeResponse : SwaggerResponse<IEnumerable<PermitTypeVieModel>> { }
+
+    public class VehicleTypeResponse : SwaggerResponse<IEnumerable<VehicleTypeViewModel>> { }
 }

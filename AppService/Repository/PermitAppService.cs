@@ -88,17 +88,25 @@ namespace AppService.Repository
 
         public ResponseViewModel GetVehicleTypes()
         {
-            throw new NotImplementedException();
+            var result = _vehicleRepository.GetVehicleTypes().Select(_mapper.Map<VehicleType, VehicleTypeViewModel>);
+
+            return Ok(result);
         }
 
-        public Task<ResponseViewModel> GetPermitsBy()
+        public async Task<ResponseViewModel> GetPermitsBy()
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+
+            var result = _permitService.GetPermitsBy(user.Id).Select(_mapper.Map<Permit, PermitViewModel>);
+
+            return Ok(result);
         }
 
-        public Task<ResponseViewModel> GetPermitTypes()
+        public ResponseViewModel GetPermitTypes()
         {
-            throw new NotImplementedException();
+            var result = _permitService.GetPermitTypes().Select(_mapper.Map<PermitType, PermitTypeVieModel>);
+
+            return Ok(result);
         }
     }
 }
