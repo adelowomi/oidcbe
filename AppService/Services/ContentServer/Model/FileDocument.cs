@@ -17,7 +17,7 @@ namespace AppService.Services.ContentServer.Model
 
         public string Name => _Name;
 
-        public string FileNameWithExtension => _Name + _Type.Extension;
+        public string FileNameWithExtension => $"{_Name}{_Type.Extension}";
 
         public FileDocumentType DocumentType => _Type;
 

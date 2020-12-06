@@ -1566,3 +1566,8 @@ VALUES (N'20201205182504_AddDescriptionToCalendar', N'3.1.8');
 
 GO
 
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201206050432_RemoveDescription', N'3.1.8');
+
+GO
+
