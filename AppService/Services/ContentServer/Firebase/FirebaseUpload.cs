@@ -30,45 +30,49 @@ namespace AppService.Services.ContentServer.Firebase
 
         public async Task<FileDocument> UploadDocumentAsync(FileDocument document)
         {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-            CancellationToken token = cancellationTokenSource.Token;
-
-            var profilePhotoPath = string.Empty;
-
-            var bytes = Convert.FromBase64String(document.File);
-
-            var uniqueFileName = Utility.GetUniqueFileName(document.FileNameWithExtension);
-
-            var parentFolder = Path.Combine(_setting.UploadDrive, _setting.DriveName);
-
-            if (!Directory.Exists(parentFolder))
+            try
             {
-                Directory.CreateDirectory(parentFolder);
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+                CancellationToken token = cancellationTokenSource.Token;
+
+                var profilePhotoPath = string.Empty;
+
+                var bytes = Convert.FromBase64String(document.File);
+
+                var uniqueFileName = Utility.GetUniqueFileName(document.FileNameWithExtension);
+
+                var parentFolder = Path.Combine(_setting.UploadDrive, _setting.DriveName);
+
+                if (!Directory.Exists(parentFolder))
+                {
+                    Directory.CreateDirectory(parentFolder);
+                }
+
+                profilePhotoPath = Path.Combine(parentFolder, uniqueFileName);
+
+                using (var imageFile = new FileStream(profilePhotoPath, FileMode.Create))
+                {
+                    imageFile.Write(bytes, 0, bytes.Length);
+
+                    imageFile.Flush();
+
+                    var stream = new FileStream(profilePhotoPath, FileMode.Open);
+
+                    var task = new FirebaseStorage(_setting.FireBaseBucket)
+                        .Child("oidc")
+                        .Child(document.Path)
+                        .Child(document.FileNameWithExtension)
+                        .PutAsync(stream, token, document.DocumentType.MimeType);
+
+                    task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
+
+                    var result = await task;
+
+                    return FileDocument.Create(null, document.Name, result, document.DocumentType);
+                }
             }
-
-            profilePhotoPath = Path.Combine(parentFolder, uniqueFileName);
-
-            using (var imageFile = new FileStream(profilePhotoPath, FileMode.Create))
-            {
-                imageFile.Write(bytes, 0, bytes.Length);
-                
-                imageFile.Flush();
-
-                var stream = new FileStream(profilePhotoPath, FileMode.Open);
-
-                var task = new FirebaseStorage(_setting.FireBaseBucket)
-                    .Child("oidc")
-                    .Child(document.Path)
-                    .Child(document.FileNameWithExtension)
-                    .PutAsync(stream, token, document.DocumentType.MimeType);
-
-                task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
-
-                var result = await task;
-
-                return FileDocument.Create(null, document.Name, result, document.DocumentType);
-            }
+            catch (Exception e) { return null; }
         }
     }
 }
