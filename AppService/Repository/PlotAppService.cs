@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppService.Repository
 {
-    public class PlotAppService : ControllerBase, IPlotAppService
+    public class PlotAppService : ResponseViewModel, IPlotAppService
     {
         private readonly IPlotService _plotService;
         private readonly IMapper _mapper;
@@ -77,18 +77,25 @@ namespace AppService.Repository
             return _plotService.AllPlots().Select(_mapper.Map<Plot, PlotViewModel>);
         }
 
-        public IActionResult GetVendorByName(string name)
+        public ResponseViewModel GetVendorByName(string name)
         {
             return Ok();
         }
 
-        public PlotViewModel CreatePlot(PlotInputModel plot)
+        public ResponseViewModel CreatePlot(PlotInputModel plot)
         {
+            var plotType = _plotService.GetAvailablePlotTypes().FirstOrDefault(x => x.Id == plot.PlotTypeId);
+
+            if(plotType == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT_TYPE, ResponseErrorCodeStatus.INVALID_PLOT_TYPE);
+            }
+
             var mappedResult = _mapper.Map<PlotInputModel, Plot>(plot);
 
             var savedResult = _mapper.Map<Plot, PlotViewModel>(_plotService.CreateNew(mappedResult));
 
-            return savedResult;
+            return Ok(savedResult);
         }
 
         public PlotViewModel EditPlot(PlotInputModel plot)
@@ -96,11 +103,11 @@ namespace AppService.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<PlotTypeViewModel> GetPlotTypes()
+        public ResponseViewModel GetPlotTypes()
         {
             var mappedResult = _plotService.GetAvailablePlotTypes().Select(_mapper.Map<PlotType, PlotTypeViewModel>);
 
-            return mappedResult;
+            return Ok((mappedResult));
         }
     }
 }

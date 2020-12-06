@@ -38,7 +38,7 @@ namespace AppService.Repository.Abstractions
         /// <param name="name"></param>
         /// <returns></returns>
 
-        public IActionResult GetVendorByName(string name);
+        public ResponseViewModel GetVendorByName(string name);
 
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <param name="plot"></param>
         /// <returns></returns>
-        PlotViewModel CreatePlot(PlotInputModel plot);
+        ResponseViewModel CreatePlot(PlotInputModel plot);
 
 
         /// <summary>
@@ -73,6 +73,6 @@ namespace AppService.Repository.Abstractions
         /// Get Plot Types
         /// </summary>
         /// <returns></returns>
-        IEnumerable<PlotTypeViewModel> GetPlotTypes();
+        ResponseViewModel GetPlotTypes();
     }
 }

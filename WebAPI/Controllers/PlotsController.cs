@@ -1,5 +1,6 @@
 ﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
+using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,8 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/plots/all")]
+        [ProducesResponseType(typeof(PlotsResponse), 200)]
+        [ProducesResponseType(typeof(PlotsResponse), 400)]
         public IActionResult GetPlots()
         {
             if (!ModelState.IsValid)
@@ -99,6 +102,8 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/plot")]
+        [ProducesResponseType(typeof(PlotResponse), 200)]
+        [ProducesResponseType(typeof(PlotResponse), 400)]
         public IActionResult CreateNewPlot([FromBody] PlotInputModel plot)
         {
             if (!ModelState.IsValid)
@@ -116,6 +121,8 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/plot/types")]
+        [ProducesResponseType(typeof(PlotTypeResponse), 200)]
+        [ProducesResponseType(typeof(PlotTypeResponse), 400)]
         public IActionResult GetPlotTypes()
         {
             if (!ModelState.IsValid)

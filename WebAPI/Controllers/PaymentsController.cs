@@ -1,5 +1,6 @@
 ﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
+using AppService.Helpers;
 using AppService.Repository.Abstractions;
 
 using Microsoft.AspNetCore.Mvc;
@@ -25,8 +26,8 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("api/payment/log")]
-        [ProducesResponseType(typeof(ResponseViewModel), 200)]
-        [ProducesResponseType(typeof(ResponseViewModel), 400)]
+        [ProducesResponseType(typeof(PaymentResponse), 200)]
+        [ProducesResponseType(typeof(PaymentResponse), 400)]
         public IActionResult LogTransaction([FromBody] PaymentInputModel payment)
         {
             if (!ModelState.IsValid)
