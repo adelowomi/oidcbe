@@ -7,7 +7,7 @@ namespace AppService.Repository.Abstractions
 {
     public interface ICalendarAppService
     {
-        CalendarViewModel NewCalendar(CalendarInputModel calendar);
+        ResponseViewModel NewCalendar(CalendarInputModel calendar);
 
         IEnumerable<CalendarViewModel> Calendars();
 

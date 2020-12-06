@@ -7,6 +7,8 @@ namespace Core.Model
 
         public string Note { get; set; }
 
+        public string Description { get; set; }
+
         public int CalendarEventId { get; set; }
 
         public CalendarEvent CalendarEvent { get; set; }

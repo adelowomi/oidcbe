@@ -1,4 +1,8 @@
-﻿using Core.Model;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Core.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,6 +87,36 @@ namespace Infrastructure.DataAccess.DataContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            //ProcessChanges();
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ProcessChanges ()
+        {
+            var currentTime = DateTime.Now;
+
+            foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added && e.Entity is BaseEntity))
+            {
+                var entity = item.Entity as BaseEntity;
+                entity.DateCreated = currentTime;
+                entity.DateModified = currentTime;
+                entity.CreatedBy = "";
+                entity.ModifiedBy = "";
+            }
+
+            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is BaseEntity))
+            {
+                var entity = item.Entity as BaseEntity;
+                entity.DateModified = currentTime;
+                entity.ModifiedBy = "";
+                item.Property(nameof(entity.DateCreated)).IsModified = false;
+                item.Property(nameof(entity.CreatedBy)).IsModified = false;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace AppService.Repository.Abstractions
     {
         Task<SubscriptionViewModel> MakeSubscription();
 
-        Task<SubscriptionViewModel> MakeSubscription(SubscriptionInputModel model);
+        Task<ResponseViewModel> MakeSubscription(SubscriptionInputModel model);
 
         Task<SubscriptionViewModel> GetCurrentSubscription();
 

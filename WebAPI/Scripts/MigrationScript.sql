@@ -1557,3 +1557,12 @@ VALUES (N'20201205172858_SomeMoreEntityModelInIt', N'3.1.8');
 
 GO
 
+ALTER TABLE [Calendars] ADD [Description] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201205182504_AddDescriptionToCalendar', N'3.1.8');
+
+GO
+

@@ -7,6 +7,7 @@ using AppService.AppModel.ViewModel;
 using AppService.Extensions;
 using AppService.Repository.Abstractions;
 using AutoMapper;
+using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AppService.Repository
 {
-    public class SubscriptionAppService : ISubscriptionAppService
+    public class SubscriptionAppService : ResponseViewModel, ISubscriptionAppService
     {
 
         public readonly IMapper _mapper;
+        private readonly IPlotService _plotService;
         public readonly IHttpContextAccessor _httpContextAccessor;
         public readonly UserManager<AppUser> _userManager;
         private readonly ISubscriptionService _subscriptionService;
@@ -26,6 +28,7 @@ namespace AppService.Repository
         public SubscriptionAppService(ISubscriptionService subscriptionService,
                                       IMapper mapper,
                                       IOTPService otpService,
+                                      IPlotService plotService,
                                       IHttpContextAccessor httpContextAccessor,
                                       UserManager<AppUser> userManager)
         {
@@ -34,6 +37,7 @@ namespace AppService.Repository
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
             _otpService = otpService;
+            _plotService = plotService;
         }
 
         /// <summary>
@@ -90,11 +94,18 @@ namespace AppService.Repository
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<SubscriptionViewModel> MakeSubscription(SubscriptionInputModel model)
+        public async Task<ResponseViewModel> MakeSubscription(SubscriptionInputModel model)
         {
+            var plot = _plotService.AllPlots().FirstOrDefault(x => x.Id == model.PlotId);
+
+            if (plot == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
+
             var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
-            return _mapper.Map<Subscription, SubscriptionViewModel>(_subscriptionService.Subscribe(currentUser.Id, currentUser.OrganizationTypeId ?? 1, model.PlotId));
+            return Ok(_mapper.Map<Subscription, SubscriptionViewModel>(_subscriptionService.Subscribe(currentUser.Id, currentUser.OrganizationTypeId ?? 1, model.PlotId)));
         }
 
         /// <summary>
