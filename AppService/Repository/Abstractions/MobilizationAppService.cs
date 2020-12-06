@@ -6,6 +6,8 @@ using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Extensions;
 using AppService.Helpers;
+using AppService.Services.ContentServer;
+using AppService.Services.ContentServer.Model;
 using AutoMapper;
 using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
@@ -53,7 +55,12 @@ namespace AppService.Repository.Abstractions
 
             model.AppUserId = user.Id;
 
-            model.SaveDocument(_setting); 
+            var uploadResult = await
+                BaseContentServer
+                .Build(ContentServerTypeEnum.FIREBASE, _setting)
+                .UploadDocumentAsync(FileDocument.Create(model.Document, $"Mobilization", $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+
+            model.Document = uploadResult.Path;
 
             var mappedResult = _mobilizationService.CreateNew(_mapper.Map<MobilizationInputModel, Mobilization>(model));
 
