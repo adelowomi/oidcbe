@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class StatesController : ControllerBase
     {
 

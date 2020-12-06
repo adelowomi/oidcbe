@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    
+    [Authorize]
     public class PlotsController : Controller
     {
         private IPlotAppService _plotService;
