@@ -25,6 +25,8 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("api/payment/log")]
+        [ProducesResponseType(typeof(ResponseViewModel), 200)]
+        [ProducesResponseType(typeof(ResponseViewModel), 400)]
         public IActionResult LogTransaction([FromBody] PaymentInputModel payment)
         {
             if (!ModelState.IsValid)
