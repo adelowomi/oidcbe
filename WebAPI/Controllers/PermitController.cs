@@ -76,7 +76,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_permitAppService.GetPermitsBy());
+            return Ok(_permitAppService.GetPermitsBy().Result);
         }
 
         [HttpGet]
