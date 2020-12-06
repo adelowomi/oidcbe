@@ -25,4 +25,8 @@ namespace AppService.Helpers
     public class PlotsResponse : SwaggerResponse<IEnumerable<PlotViewModel>> { }
 
     public class PlotTypeResponse : SwaggerResponse<IEnumerable<PlotTypeViewModel>> { }
+
+    public class PermitsResponse : SwaggerResponse<IEnumerable<PermitViewModel>> { }
+
+    public class PermitResponse : SwaggerResponse<IEnumerable<PermitViewModel>> { }
 }

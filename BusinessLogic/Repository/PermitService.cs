@@ -10,19 +10,37 @@ namespace BusinessLogic.Repository
     {
         protected readonly IPermitRepository _permitRepository;
         protected readonly IVisitorRepository _visitorRepository;
-
+        protected readonly IVehicleRepository _vehicleRepository;
+       
         public PermitService(IPermitRepository permitRepository,
+                             IVehicleRepository vehicleRepository,
                              IVisitorRepository visitorRepository)
         {
             _permitRepository = permitRepository;
             _visitorRepository = visitorRepository;
+            _vehicleRepository = vehicleRepository;
         }
 
         public Permit Create(Permit permit)
         {
-            var result = _permitRepository.CreateAndReturn(permit);
+            if(permit.PermitTypeId == (int) PermitTypeEnum.VISIT)
+            {
+                var visitor = _visitorRepository.CreateAndReturn(permit.Visitor);
+                permit.VisitorId = visitor.Id;
+                permit.VehicleId = null;
+                permit.Vehicle = null;
+                var result = _permitRepository.CreateAndReturn(permit);
+                result.PermitType = GetPermitTypes().FirstOrDefault(x => x.Id == result.PermitTypeId);
+                return result;
+            }
 
-            return result;
+            var vehicle = _vehicleRepository.CreateAndReturn(permit.Vehicle);
+            permit.VehicleId = vehicle.Id;
+            permit.VisitorId = null;
+            permit.Visitor = null;
+            var query = _permitRepository.CreateAndReturn(permit);
+            query.PermitType = GetPermitTypes().FirstOrDefault(x => x.Id == query.PermitTypeId);
+            return query;
         }
 
         public PermitType CreateNewPermitType(PermitType permitType)

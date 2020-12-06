@@ -1,12 +1,8 @@
 ﻿using System;
-namespace Core.Model
+namespace AppService.AppModel.InputModel
 {
-    public class Visitor : BaseNameEntity
+    public class VisitorInputModel
     {
-        public int AppUserId { get; set; }
-
-        public AppUser AppUser { get; set; }
-
         public string Address { get; set; }
 
         public string PhoneNumber { get; set; }

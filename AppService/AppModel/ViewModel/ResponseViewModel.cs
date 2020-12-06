@@ -274,6 +274,9 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_REQUEST_TYPE = "Invalid Request Type";
         public static string INVALID_CALENDAR_EVENT = "Invalid, Calendar Event";
         public static string INVALID_PLOT_TYPE = "Invalid Plot Type";
+        public static string INVALID_PERMIT_TYPE = "Invalid Permit Type";
+        public static string INVALID_VEHICLE_TYPE = "Invalid Vehicle Type";
+        public static string INVALID_VEHICLE_DETAILS = "Invalid Vehicle Details";
     }
 
     /// <summary>
@@ -329,6 +332,9 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_REQUEST_TYPE = "28";
         public static readonly string INVALID_CALENDAR_EVENT = "29";
         public static readonly string INVALID_PLOT_TYPE = "30";
+        public static readonly string INVALID_PERMIT_TYPE = "31";
+        public static readonly string INVALID_VEHICLE_TYPE = "32";
+        public static readonly string INVALID_VEHICLE_DETAILS = "33";
 
         //FAILURES
         public static readonly string FAIL = "91";

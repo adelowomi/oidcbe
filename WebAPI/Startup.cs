@@ -137,6 +137,14 @@ namespace WebAPI
             services.AddTransient<IRequestRepository, RequestRepository>();
             services.AddTransient<IRequestAppService, RequestAppService>();
 
+            services.AddTransient<IVisitorRepository, VisitorRepository>();
+            services.AddTransient<IPermitRepository, PermitRepository>();
+            services.AddTransient<IPermitService, PermitService>();
+            services.AddTransient<IPermitAppService, PermitAppService>();
+
+            services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IVisitorRepository, VisitorRepository>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

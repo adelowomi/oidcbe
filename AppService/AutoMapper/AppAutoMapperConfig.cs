@@ -183,13 +183,13 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.IsActive, opts => opts.MapFrom(src => src.IsEnabled))
                ;
 
-            CreateMap<PaymentProvider, PaymentProviderViewModel>().ForMember(dest => dest.PaymentProviderName, opts => opts.MapFrom(src => src.Name));
-            CreateMap<PaymentType, PaymentTypeViewModel>().ForMember(dest => dest.PaymentTypeName, opts => opts.MapFrom(src => src.Name));
-            CreateMap<PaymentMethod, PaymentMethodViewModel>().ForMember(dest => dest.PaymentMethodName, opts => opts.MapFrom(src => src.Name));
-            CreateMap<PaymentStatus, PaymentStatusViewModel>().ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
-            CreateMap<CalendarEvent, CalendarEventViewModel>().ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
-            CreateMap<MobilizationInputModel, Mobilization>();
-            CreateMap<Mobilization, MobilizationViewModel>();
+                CreateMap<PaymentProvider, PaymentProviderViewModel>().ForMember(dest => dest.PaymentProviderName, opts => opts.MapFrom(src => src.Name));
+                CreateMap<PaymentType, PaymentTypeViewModel>().ForMember(dest => dest.PaymentTypeName, opts => opts.MapFrom(src => src.Name));
+                CreateMap<PaymentMethod, PaymentMethodViewModel>().ForMember(dest => dest.PaymentMethodName, opts => opts.MapFrom(src => src.Name));
+                CreateMap<PaymentStatus, PaymentStatusViewModel>().ForMember(dest => dest.PaymentStatusName, opts => opts.MapFrom(src => src.Name));
+                CreateMap<CalendarEvent, CalendarEventViewModel>().ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
+                CreateMap<MobilizationInputModel, Mobilization>();
+                CreateMap<Mobilization, MobilizationViewModel>();
 
             CreateMap<CalendarInputModel, Calendar>()
               .ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
@@ -216,6 +216,31 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.RequestTypeId, opts => opts.MapFrom(src => src.RequestTypeId))
                 ;
             CreateMap<RequestType, RequestTypeViewModel>();
+
+            CreateMap<Permit, PermitViewModel>()
+               .ForMember(dest => dest.PermitTypeId, opts => opts.MapFrom(src => src.PermitTypeId))
+               .ForMember(dest => dest.VisitorId, opts => opts.MapFrom(src => src.VisitorId))
+               .ForMember(dest => dest.Visitor, opts => opts.MapFrom(src => src.Visitor))
+               .ForMember(dest => dest.VehicleId, opts => opts.MapFrom(src => src.VehicleId))
+               .ForMember(dest => dest.PermitType, opts => opts.MapFrom(src => src.PermitType))
+                ;
+
+
+            CreateMap<Visitor, VisitorViewModel>();
+            CreateMap<VisitorInputModel, Visitor>();
+
+            CreateMap<VehicleInputModel, Vehicle>();
+            CreateMap<Vehicle, VehicleViewModel>();
+
+            CreateMap<VehicleType, VehicleTypeViewModel>();
+
+            CreateMap<PermitType, PermitTypeVieModel>();
+
+            CreateMap<PermitInputModel, Permit>()
+               .ForMember(dest => dest.Vehicle, opts => opts.MapFrom(src => src.Vehicle))
+               .ForMember(dest => dest.Visitor, opts => opts.MapFrom(src => src.Visitor))
+               .ForMember(dest => dest.PermitTypeId, opts => opts.MapFrom(src => src.PermitTypeId))
+               ;
         }
     }
 }

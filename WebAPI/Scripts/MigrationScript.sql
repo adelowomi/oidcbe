@@ -1571,3 +1571,32 @@ VALUES (N'20201206050432_RemoveDescription', N'3.1.8');
 
 GO
 
+ALTER TABLE [Visitors] ADD [AppUserId] int NOT NULL DEFAULT 0;
+
+GO
+
+ALTER TABLE [Vehicles] ADD [AppUserId] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE INDEX [IX_Visitors_AppUserId] ON [Visitors] ([AppUserId]);
+
+GO
+
+CREATE INDEX [IX_Vehicles_AppUserId] ON [Vehicles] ([AppUserId]);
+
+GO
+
+ALTER TABLE [Vehicles] ADD CONSTRAINT [FK_Vehicles_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE;
+
+GO
+
+ALTER TABLE [Visitors] ADD CONSTRAINT [FK_Visitors_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201206140330_AddedAppUserId', N'3.1.8');
+
+GO
+

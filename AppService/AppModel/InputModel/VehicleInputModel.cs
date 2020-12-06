@@ -1,12 +1,8 @@
 ﻿using System;
-namespace Core.Model
+namespace AppService.AppModel.InputModel
 {
-    public class Vehicle : BaseNameEntity
+    public class VehicleInputModel
     {
-        public int AppUserId { get; set; }
-
-        public AppUser AppUser { get; set; }
-
         public string Make { get; set; }
 
         public string PlateNumber { get; set; }
@@ -16,7 +12,5 @@ namespace Core.Model
         public DateTime CheckOutDateTime { get; set; }
 
         public int VehicleTypeId { get; set; }
-
-        public VehicleType VehicleType { get; set; }
     }
 }

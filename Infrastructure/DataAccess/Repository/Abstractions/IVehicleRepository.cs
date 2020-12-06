@@ -13,5 +13,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         Vehicle GetById(int id);
 
         Vehicle Update(Vehicle entity);
+
+        IEnumerable<VehicleType> GetVehicleTypes();
     }
 }
