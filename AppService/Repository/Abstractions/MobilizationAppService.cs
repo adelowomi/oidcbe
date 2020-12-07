@@ -55,17 +55,21 @@ namespace AppService.Repository.Abstractions
 
             model.AppUserId = user.Id;
 
-            var uploadResult = await
-                BaseContentServer
-                .Build(ContentServerTypeEnum.FIREBASE, _setting)
-                .UploadDocumentAsync(FileDocument.Create(model.Document, "Mobilization", $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
-
-            if(uploadResult == null)
+            if (!string.IsNullOrEmpty(model.Document))
             {
-                return Failed(ResponseMessageViewModel.ERROR_UPLOADING_FILE, ResponseErrorCodeStatus.ERROR_UPLOADING_FILE);
-            }
+               var uploadResult = await
 
-            model.Document = uploadResult.Path;
+                BaseContentServer
+               .Build(ContentServerTypeEnum.FIREBASE, _setting)
+               .UploadDocumentAsync(FileDocument.Create(model.Document, "Mobilization", $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+
+                if (uploadResult == null)
+                {
+                    return Failed(ResponseMessageViewModel.ERROR_UPLOADING_FILE, ResponseErrorCodeStatus.ERROR_UPLOADING_FILE);
+                }
+
+                model.Document = uploadResult.Path;
+            }
 
             var mappedResult = _mobilizationService.CreateNew(_mapper.Map<MobilizationInputModel, Mobilization>(model));
 

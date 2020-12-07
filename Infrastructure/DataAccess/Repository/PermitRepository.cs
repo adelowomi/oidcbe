@@ -21,7 +21,6 @@ namespace Infrastructure.DataAccess.Repository
                 .Include(x => x.PermitType)
                 .Include(x => x.Vehicle)
                 .Include(x => x.Visitor);
-
             return result;
         }
 
