@@ -18,5 +18,9 @@ namespace Core.Model
         public int NumberOfWorkers { get; set; }
 
         public string IdentityPath { get; set; }
+
+        public int? MobilizationStatusId { get; set; }
+
+        public MobilizationStatus MobilizationStatus { get; set; }
     }
 }

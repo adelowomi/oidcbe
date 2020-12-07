@@ -14,5 +14,7 @@ namespace AppService.AppModel.ViewModel
         public int NumberOfWorkers { get; set; }
 
         public string IdentityPath { get; set; }
+
+        public string Status { get; set; }
     }
 }

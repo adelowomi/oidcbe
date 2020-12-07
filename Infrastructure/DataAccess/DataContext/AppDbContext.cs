@@ -70,6 +70,8 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<Mobilization> Mobilizations { get; set; }
 
+        public DbSet<MobilizationStatus> MobilizationStatuses { get; set; }
+
         public DbSet<Permit> Permits { get; set; }
 
         public DbSet<PermitType> PermitTypes { get; set; }

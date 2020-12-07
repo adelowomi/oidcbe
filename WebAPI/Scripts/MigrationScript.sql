@@ -1600,3 +1600,31 @@ VALUES (N'20201206140330_AddedAppUserId', N'3.1.8');
 
 GO
 
+ALTER TABLE [Mobilizations] ADD [MobilizationStatusId] int NULL;
+
+GO
+
+CREATE TABLE [MobilizationStatuses] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_MobilizationStatuses] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_Mobilizations_MobilizationStatusId] ON [Mobilizations] ([MobilizationStatusId]);
+
+GO
+
+ALTER TABLE [Mobilizations] ADD CONSTRAINT [FK_Mobilizations_MobilizationStatuses_MobilizationStatusId] FOREIGN KEY ([MobilizationStatusId]) REFERENCES [MobilizationStatuses] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201207092057_MobilizationStatus', N'3.1.8');
+
+GO
+

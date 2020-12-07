@@ -190,7 +190,9 @@ namespace AppService.AutoMapper
                 CreateMap<CalendarEvent, CalendarEventViewModel>().ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
                 CreateMap<MobilizationInputModel, Mobilization>()
                     .ForMember(dest => dest.IdentityPath, opts => opts.MapFrom(src => src.Document));
-            CreateMap<Mobilization, MobilizationViewModel>();
+
+            CreateMap<Mobilization, MobilizationViewModel>()
+                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.MobilizationStatus.Name));
 
             CreateMap<CalendarInputModel, Calendar>()
               .ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
@@ -216,7 +218,9 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.RequestName))
                 .ForMember(dest => dest.RequestTypeId, opts => opts.MapFrom(src => src.RequestTypeId))
                 ;
-            CreateMap<RequestType, RequestTypeViewModel>();
+            CreateMap<RequestType, RequestTypeViewModel>()
+                
+                ;
 
             CreateMap<Permit, PermitViewModel>()
                .ForMember(dest => dest.PermitTypeId, opts => opts.MapFrom(src => src.PermitTypeId))

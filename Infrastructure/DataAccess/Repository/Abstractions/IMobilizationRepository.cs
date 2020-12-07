@@ -10,6 +10,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         IEnumerable<Mobilization> GetAll();
 
+        IEnumerable<Mobilization> All();
+
         Mobilization GetById(int id);
 
         Mobilization Update(Mobilization mobilization);

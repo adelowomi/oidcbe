@@ -18,12 +18,13 @@ namespace BusinessLogic.Repository
 
         public Mobilization CreateNew(Mobilization mobilization)
         {
+            mobilization.MobilizationStatusId = (int) MobilizationStatusEnum.PENDING;
             return _mobilizationRepository.CreateAndReturn(mobilization);
         }
 
         public IEnumerable<Mobilization> GetAllMobilization()
         {
-            return _mobilizationRepository.GetAll();
+            return _mobilizationRepository.All();
         }
 
         public Mobilization GetMobilizationBy(int id)
@@ -33,12 +34,12 @@ namespace BusinessLogic.Repository
 
         public IEnumerable<Mobilization> GetMobilizationByPlot(int id)
         {
-            return _mobilizationRepository.GetAll().Where(x => x.PlotId == id);
+            return _mobilizationRepository.All().Where(x => x.PlotId == id);
         }
 
         public IEnumerable<Mobilization> GetMobilizationByUser(int id)
         {
-            return _mobilizationRepository.GetAll().Where(x => x.AppUserId == id);
+            return _mobilizationRepository.All().Where(x => x.AppUserId == id);
         }
 
         public Mobilization Update(Mobilization mobilization)

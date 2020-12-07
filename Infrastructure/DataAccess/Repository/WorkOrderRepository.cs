@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
@@ -17,7 +16,7 @@ namespace Infrastructure.DataAccess.Repository
 
         public WorkOrder CreateNewWorkOrder(WorkOrder workOrder)
         {
-            workOrder.WorkOrderStatusId = 2;
+            workOrder.WorkOrderStatusId = (int) WorkOrderStatusEnum.PENDING;
             var work = CreateAndReturn(workOrder);
 
             return GetAllWorkOrders().FirstOrDefault(x => x.Id == work.Id);
@@ -25,29 +24,32 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<WorkOrder> GetAllByPlotId(int plotId)
         {
-            return GetAll().Where(x => x.PlotId == plotId);
+            return GetAllWorkOrders().Where(x => x.PlotId == plotId);
         }
 
         public IEnumerable<WorkOrder> GetAllByUserId(int userId)
         {
-            return GetAll().Where(x => x.AppUserId == userId);
+            return GetAllWorkOrders().Where(x => x.AppUserId == userId);
         }
 
         public IEnumerable<WorkOrder> GetAllWorkOrders()
         {
-            return _context.WorkOrders
+            var result = _context.WorkOrders
                     .Include(x => x.WorkOrderStatus)
-                    .Include(x => x.WorkOrderType);
+                    .Include(x => x.WorkOrderType)
+                    .ToList();
+
+            return result;
         }
 
         public WorkOrder GetByUserId(int id)
         {
-            return GetAll().FirstOrDefault(x => x.Id == id);
+            return GetAllWorkOrders().FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<WorkOrder> GetWorkOrderBy(int plotId)
         {
-            return GetAll().Where(x => x.PlotId == plotId);
+            return GetAllWorkOrders().Where(x => x.PlotId == plotId);
         }
 
         public IEnumerable<WorkOrderType> GetWorkOrderTypes()
