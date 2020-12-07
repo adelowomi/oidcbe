@@ -17,10 +17,12 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<Permit> All()
         {
-            return _context.Permits
+            var result = _context.Permits
                 .Include(x => x.PermitType)
                 .Include(x => x.Vehicle)
                 .Include(x => x.Visitor);
+
+            return result;
         }
 
         public PermitType CreatePermitType(PermitType permitType)
