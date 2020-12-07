@@ -8,7 +8,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
     {
         Permit CreateAndReturn(Permit permit);
 
-        IEnumerable<Permit> GetAll();
+        IEnumerable<Permit> All();
 
         Permit GetById(int id);
 

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository
 {
@@ -11,5 +13,7 @@ namespace Infrastructure.DataAccess.Repository
         {
 
         }
+
+      
     }
 }

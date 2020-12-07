@@ -4,6 +4,7 @@ using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository
 {
@@ -12,6 +13,14 @@ namespace Infrastructure.DataAccess.Repository
         public PermitRepository(AppDbContext context) : base(context)
         {
 
+        }
+
+        public IEnumerable<Permit> All()
+        {
+            return _context.Permits
+                .Include(x => x.PermitType)
+                .Include(x => x.Vehicle)
+                .Include(x => x.Visitor);
         }
 
         public PermitType CreatePermitType(PermitType permitType)

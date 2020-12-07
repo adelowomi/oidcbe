@@ -57,12 +57,12 @@ namespace BusinessLogic.Repository
 
         public IEnumerable<Permit> GetPermits()
         {
-            return _permitRepository.GetAll();
+            return _permitRepository.All();
         }
 
         public IEnumerable<Permit> GetPermitsBy(int userId)
         {
-            return _permitRepository.GetAll().Where(x => x.AppUserId == userId);
+            return _permitRepository.All().Where(x => x.AppUserId == userId);
         }
 
         public IEnumerable<PermitType> GetPermitTypes()
