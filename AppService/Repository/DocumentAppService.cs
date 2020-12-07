@@ -61,9 +61,11 @@ namespace AppService.Repository
                 return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
             }
 
+            FileDocument uploadResult = FileDocument.Create();
+
             try
             {
-                var uploadResult = await
+                uploadResult  = await
                    BaseContentServer
                    .Build(ContentServerTypeEnum.FIREBASE, _settings)
                    .UploadDocumentAsync(FileDocument.Create(document.Document, document.GetDocumentType(), $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
@@ -74,6 +76,7 @@ namespace AppService.Repository
             var mappedResult = _mapper.Map<DocumentInputModel, Document>(document);
 
             mappedResult.AppUserId = user.Id;
+            mappedResult.Name = uploadResult.Path;
 
             return Ok( _mapper.Map<Document, DocumentViewModel>(_documentService.CreateDocument(mappedResult)));
         }
