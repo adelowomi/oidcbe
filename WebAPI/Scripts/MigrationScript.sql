@@ -1628,3 +1628,12 @@ VALUES (N'20201207092057_MobilizationStatus', N'3.1.8');
 
 GO
 
+ALTER TABLE [Requests] ADD [Description] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201208073641_Description', N'3.1.8');
+
+GO
+

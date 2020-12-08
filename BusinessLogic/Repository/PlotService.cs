@@ -104,5 +104,10 @@ namespace BusinessLogic.Repository
         {
             return _plotRepository.GetPlotTypes();
         }
+
+        public Plot GetByPlotId (int id)
+        {
+            return _plotRepository.GetPlotById(id);
+        }
     }
 }

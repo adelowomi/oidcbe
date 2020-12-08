@@ -9,6 +9,8 @@ namespace Core.Model
 
         public int RequestTypeId { get; set; }
 
+        public string Description { get; set; }
+
         public RequestType RequestType { get; set; }
     }
 }

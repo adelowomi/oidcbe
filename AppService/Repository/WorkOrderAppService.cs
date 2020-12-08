@@ -47,10 +47,10 @@ namespace AppService.Repository
         {
             AppUser currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
-            var uploadResult = await
-                BaseContentServer
-                .Build(ContentServerTypeEnum.FIREBASE, _settings)
-                .UploadDocumentAsync(FileDocument.Create(workOrder.Document, $"WorkOrder", $"{currentUser.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+            //var uploadResult = await
+            //    BaseContentServer
+            //    .Build(ContentServerTypeEnum.FIREBASE, _settings)
+            //    .UploadDocumentAsync(FileDocument.Create(workOrder.Document, $"WorkOrder", $"{currentUser.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
 
             var plotResult = _plotService.AllPlots().FirstOrDefault(x => x.Id == workOrder.PlotId);
 
@@ -68,7 +68,7 @@ namespace AppService.Repository
 
             workOrder.AppUserId = currentUser.Id;
 
-            workOrder.Document = uploadResult.Path;
+           // workOrder.Document = uploadResult.Path;
 
             var result = _workOrderService.CreateNew(_mapper.Map<WorkOrderInputModel, WorkOrder>(workOrder));
 

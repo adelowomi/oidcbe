@@ -73,9 +73,11 @@ namespace AppService.Repository
             {
                 return Failed(ResponseMessageViewModel.ERROR_UPLOADING_FILE, ResponseErrorCodeStatus.ERROR_UPLOADING_FILE);
             }
+
             var mappedResult = _mapper.Map<DocumentInputModel, Document>(document);
 
             mappedResult.AppUserId = user.Id;
+
             mappedResult.Name = uploadResult.Path;
 
             return Ok( _mapper.Map<Document, DocumentViewModel>(_documentService.CreateDocument(mappedResult)));

@@ -50,4 +50,9 @@
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="TembooSDK">
+      <HintPath>..\ThirdParty\TembooSDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
