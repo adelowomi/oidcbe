@@ -83,6 +83,6 @@ namespace BusinessLogic.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Plot GetByPlotId(int id;
+        Plot GetByPlotId(int id);
     }
 }
