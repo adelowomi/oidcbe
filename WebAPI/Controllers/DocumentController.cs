@@ -54,6 +54,11 @@ namespace WebAPI.Controllers
         [Route("api/documents/upload")]
         public IActionResult UploadSurvey([FromBody] DocumentInputModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             return Ok(_documentAppService.CreateNewDocument(model).Result);
         }
 
