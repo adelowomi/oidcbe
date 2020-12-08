@@ -277,6 +277,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_PERMIT_TYPE = "Invalid Permit Type";
         public static string INVALID_VEHICLE_TYPE = "Invalid Vehicle Type";
         public static string INVALID_VEHICLE_DETAILS = "Invalid Vehicle Details";
+        public static string INVALID_DOCUMENT_TYPE = "Invalid Document Type";
     }
 
     /// <summary>
@@ -335,6 +336,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_PERMIT_TYPE = "31";
         public static readonly string INVALID_VEHICLE_TYPE = "32";
         public static readonly string INVALID_VEHICLE_DETAILS = "33";
+        public static readonly string INVALID_DOCUMENT_TYPE = "34";
 
         //FAILURES
         public static readonly string FAIL = "91";

@@ -47,18 +47,18 @@ namespace AppService.Repository
         {
             var user = _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString()).Result;
 
-            //var query = _plotService.GetByPlotId(document.PlotId);
+            var query = _plotService.GetByPlotId(document.PlotId);
 
-            //if (query == null)
-            //{
-            //    return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
-            //}
+            if (query == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            }
 
             var documentType = _documentService.GetDocumentTypes().FirstOrDefault(x => x.Id == document.DocumentType);
 
             if (documentType == null)
             {
-                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+                return NotFound(ResponseMessageViewModel.INVALID_DOCUMENT_TYPE, ResponseErrorCodeStatus.INVALID_DOCUMENT_TYPE);
             }
 
             FileDocument uploadResult = FileDocument.Create();
