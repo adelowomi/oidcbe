@@ -47,12 +47,12 @@ namespace AppService.Repository
         {
             var user = _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString()).Result;
 
-            var query = _plotService.AllPlots().FirstOrDefault(x => x.Id == document.PlotId);
+            //var query = _plotService.GetByPlotId(document.PlotId);
 
-            if (query == null)
-            {
-                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
-            }
+            //if (query == null)
+            //{
+            //    return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
+            //}
 
             var documentType = _documentService.GetDocumentTypes().FirstOrDefault(x => x.Id == document.DocumentType);
 
@@ -79,6 +79,8 @@ namespace AppService.Repository
             mappedResult.AppUserId = user.Id;
 
             mappedResult.Name = uploadResult.Path;
+
+            mappedResult.PlotId = 1010;
 
             return Ok( _mapper.Map<Document, DocumentViewModel>(_documentService.CreateDocument(mappedResult)));
         }
