@@ -1637,3 +1637,56 @@ VALUES (N'20201208073641_Description', N'3.1.8');
 
 GO
 
+ALTER TABLE [Requests] ADD [RequestStatusId] int NULL;
+
+GO
+
+CREATE TABLE [requestStatuses] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_requestStatuses] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_Requests_RequestStatusId] ON [Requests] ([RequestStatusId]);
+
+GO
+
+ALTER TABLE [Requests] ADD CONSTRAINT [FK_Requests_requestStatuses_RequestStatusId] FOREIGN KEY ([RequestStatusId]) REFERENCES [requestStatuses] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201209091150_RequestStatusId', N'3.1.8');
+
+GO
+
+ALTER TABLE [Requests] DROP CONSTRAINT [FK_Requests_requestStatuses_RequestStatusId];
+
+GO
+
+ALTER TABLE [requestStatuses] DROP CONSTRAINT [PK_requestStatuses];
+
+GO
+
+EXEC sp_rename N'[requestStatuses]', N'RequestStatuses';
+
+GO
+
+ALTER TABLE [RequestStatuses] ADD CONSTRAINT [PK_RequestStatuses] PRIMARY KEY ([Id]);
+
+GO
+
+ALTER TABLE [Requests] ADD CONSTRAINT [FK_Requests_RequestStatuses_RequestStatusId] FOREIGN KEY ([RequestStatusId]) REFERENCES [RequestStatuses] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201209092339_RenameRequestStatusTable', N'3.1.8');
+
+GO
+

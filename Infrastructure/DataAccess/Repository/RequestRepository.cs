@@ -41,12 +41,14 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<RequestStatus> GetRequestStatuses()
         {
-            return _context.requestStatuses.ToList();
+            return _context.RequestStatuses.ToList();
         }
 
         public Request GetRequestById(int id)
         {
-            return GetAllRequests().FirstOrDefault(x => x.Id == id);
+            var result = GetAllRequests().FirstOrDefault(x => x.Id == id);
+
+            return result;
         }
     }
 }

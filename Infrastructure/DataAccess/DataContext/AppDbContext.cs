@@ -86,7 +86,7 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<RequestType> RequestTypes { get; set; }
 
-        public DbSet<RequestStatus> requestStatuses { get; set; }
+        public DbSet<RequestStatus> RequestStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
