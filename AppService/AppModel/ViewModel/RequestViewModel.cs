@@ -7,6 +7,8 @@ namespace AppService.AppModel.ViewModel
 
         public DateTime DateCreated { get; set; }
 
+        public string RequestStatus { get; set; }
+
         public string Description { get; set; }
 
         public string RequestType { get; set; }

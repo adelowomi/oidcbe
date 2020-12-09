@@ -126,7 +126,6 @@ namespace AppService.Repository
                     emailHtmlTemplate = emailHtmlTemplate.Replace(pair.Key, pair.Value);
                 }
             }
-
             _ = _emailService.SendEmail(model.Email, Res.ACCOUNT_SETUP, emailHtmlTemplate);
 
             _ = await _userManager.AddToRoleAsync(result.AppUser, UserType.SUBSCRIBER);

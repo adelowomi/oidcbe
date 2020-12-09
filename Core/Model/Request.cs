@@ -12,5 +12,9 @@ namespace Core.Model
         public string Description { get; set; }
 
         public RequestType RequestType { get; set; }
+
+        public int? RequestStatusId { get; set; }
+
+        public RequestStatus RequestStatus { get; set; }
     }
 }

@@ -6,14 +6,18 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 {
     public interface IRequestRepository
     {
-        Request GetById(int id);
+        Request GetRequestById(int id);
+
+        IEnumerable<Request> GetAllRequests();
 
         Request CreateAndReturn(Request request);
-
-        IEnumerable<Request> GetAll();
 
         Request Update(Request request);
 
         IEnumerable<RequestType> GetRequestTypes();
+
+        Request MakeAction(int requestId, int statusId);
+
+        IEnumerable<RequestStatus> GetRequestStatuses();
     }
 }

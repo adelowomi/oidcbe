@@ -31,6 +31,20 @@ namespace AppService.Repository
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public ResponseViewModel Approve(int requestId)
+        {
+            var request = _requestRepository.GetAllRequests().FirstOrDefault(x => x.Id == requestId);
+
+            if(request == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_REQUEST, ResponseErrorCodeStatus.INVALID_REQUEST);
+            }
+
+            var result = _requestRepository.MakeAction(requestId, (int)RequestStatusEnum.APPROVED);
+
+            return Ok(_mapper.Map<Request, RequestViewModel>(result));
+        }
+
         public async Task<ResponseViewModel> CreateRequest(RequestInputModel request)
         {
             var query = _requestRepository.GetRequestTypes().FirstOrDefault(x => x.Id == request.RequestTypeId);
@@ -52,9 +66,23 @@ namespace AppService.Repository
             return Ok(_mapper.Map<Request, RequestViewModel>(result));
         }
 
+        public ResponseViewModel Decline(int requestId)
+        {
+            var request = _requestRepository.GetAllRequests().FirstOrDefault(x => x.Id == requestId);
+
+            if (request == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_REQUEST, ResponseErrorCodeStatus.INVALID_REQUEST);
+            }
+
+            var result = _requestRepository.MakeAction(requestId, (int)RequestStatusEnum.REJECTED);
+
+            return Ok(_mapper.Map<Request, RequestViewModel>(result));
+        }
+
         public ResponseViewModel GetAllRequests()
         {
-            var result = _requestRepository.GetAll().Select(_mapper.Map<Request, RequestViewModel>);
+            var result = _requestRepository.GetAllRequests().Select(_mapper.Map<Request, RequestViewModel>);
 
             return Ok(result);
         }
@@ -63,17 +91,38 @@ namespace AppService.Repository
         {
             var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
 
-            return Ok(_mapper.Map<Request, RequestViewModel>(_requestRepository.GetAll().FirstOrDefault(x => x.AppUserId == currentUser.Id)));
+            return Ok(_mapper.Map<Request, RequestViewModel>(_requestRepository.GetAllRequests().FirstOrDefault(x => x.AppUserId == currentUser.Id)));
         }
 
         public ResponseViewModel GetRequestBy(int requestId)
         {
-            return Ok(_mapper.Map<Request, RequestViewModel>(_requestRepository.GetById(requestId)));
+            return Ok(_mapper.Map<Request, RequestViewModel>(_requestRepository.GetRequestById(requestId)));
+        }
+
+        public ResponseViewModel GetRequestStatus()
+        {
+            var status = _requestRepository.GetRequestStatuses().Select(_mapper.Map<RequestStatus, RequestStatusViewModel>);
+
+            return Ok(status);
         }
 
         public ResponseViewModel GetRequestTypes()
         {
             return Ok(_requestRepository.GetRequestTypes().Select(_mapper.Map<RequestType, RequestTypeViewModel>));
+        }
+
+        public ResponseViewModel Suspended(int requestId)
+        {
+            var request = _requestRepository.GetAllRequests().FirstOrDefault(x => x.Id == requestId);
+
+            if (request == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_REQUEST, ResponseErrorCodeStatus.INVALID_REQUEST);
+            }
+
+            var result = _requestRepository.MakeAction(requestId, (int)RequestStatusEnum.SUSPENDED);
+
+            return Ok(_mapper.Map<Request, RequestViewModel>(result));
         }
 
         public ResponseViewModel UpdateRequest(RequestInputModel request)

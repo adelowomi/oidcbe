@@ -17,5 +17,13 @@ namespace AppService.Repository.Abstractions
         ResponseViewModel UpdateRequest(RequestInputModel request);
 
         ResponseViewModel GetRequestTypes();
+
+        ResponseViewModel Approve(int requestId);
+
+        ResponseViewModel Decline(int requestId);
+
+        ResponseViewModel Suspended(int requestId);
+
+        ResponseViewModel GetRequestStatus();
     }
 }
