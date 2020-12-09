@@ -221,7 +221,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
         [Route("api/admin/subscriber/{id}")]
         public IActionResult GetSubscriberById(int id)
