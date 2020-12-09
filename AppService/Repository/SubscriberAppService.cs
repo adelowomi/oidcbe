@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Infrastructure.DataAccess.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppService.Repository
 {
@@ -232,7 +233,7 @@ namespace AppService.Repository
 
         public ResponseViewModel GetSubscribers()
         {
-            var result = _userManager.Users.Select(_mapper.Map<AppUser, VendorViewModel>);
+            var result = _userManager.Users.Include(x => x.Plots).Select(_mapper.Map<AppUser, VendorViewModel>);
 
             return Ok(result);
         }

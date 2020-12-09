@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AppService.AppModel.InputModel;
 
 namespace AppService.AppModel.ViewModel
@@ -28,6 +29,8 @@ namespace AppService.AppModel.ViewModel
         public string PhotoUrl { get; set; }
 
         public string DocumentUrl { get; set; }
+
+        public int PaymentPercentage { get; set; }
 
         public int ProfileProgess
         {
@@ -87,6 +90,6 @@ namespace AppService.AppModel.ViewModel
 
         public bool HasUploadedProfilePhoto { get; set; }
 
-
+        public IEnumerable<PlotViewModel> Plots { get; set; }
     }
 }
