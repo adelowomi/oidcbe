@@ -219,5 +219,19 @@ namespace WebAPI.Controllers
 
             return Ok(_subscriberAppService.AddNewSubscriberCorporate(request).Result);
         }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/admin/subscriber/{id}")]
+        public IActionResult GetSubscriberById(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_subscriberAppService.GetSubscriberById(id).Result);
+        }
     }
 }

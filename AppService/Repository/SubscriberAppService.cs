@@ -213,5 +213,21 @@ namespace AppService.Repository
 
             return Ok(mappedResult);
         }
+
+        public async Task<ResponseViewModel> GetSubscriberById(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            //Check is In Role
+
+            //_userManager.IsInRoleAsync()
+            if(user == null)
+            {
+                return NotFound(ResponseMessageViewModel.SUBSCRIBER_NOT_EXITS, ResponseErrorCodeStatus.SUBSCRIBER_NOT_EXITS);
+            }
+
+            var result = _mapper.Map<AppUser, VendorViewModel>(user);
+
+            return Ok(result);
+        }
     }
 }

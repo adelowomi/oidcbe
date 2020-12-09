@@ -20,5 +20,7 @@ namespace AppService.Repository.Abstractions
         Task<ResponseViewModel> AddNewSubscriberIndividual(SubcriberIndividualInputModel subscriber);
 
         Task<ResponseViewModel> AddNewSubscriberCorporate(SubscriberCorporateInputModel subscriber);
+
+        Task<ResponseViewModel> GetSubscriberById(int id);
     }
 }

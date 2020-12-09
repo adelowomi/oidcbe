@@ -279,6 +279,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_VEHICLE_DETAILS = "Invalid Vehicle Details";
         public static string INVALID_DOCUMENT_TYPE = "Invalid Document Type";
         public static string INVALID_REQUEST = "Invalid Request Details, please try again";
+        public static string SUBSCRIBER_NOT_EXITS = "Subscriber not exits";
     }
 
     /// <summary>
@@ -339,6 +340,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_VEHICLE_DETAILS = "33";
         public static readonly string INVALID_DOCUMENT_TYPE = "34";
         public static readonly string INVALID_REQUEST = "35";
+        public static readonly string SUBSCRIBER_NOT_EXITS = "36";
 
         //FAILURES
         public static readonly string FAIL = "91";
