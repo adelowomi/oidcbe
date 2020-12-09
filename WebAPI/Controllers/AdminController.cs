@@ -233,5 +233,18 @@ namespace WebAPI.Controllers
 
             return Ok(_subscriberAppService.GetSubscriberById(id).Result);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/admin/subscribers")]
+        public IActionResult GetSubscribers()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_subscriberAppService.GetSubscribers());
+        }
     }
 }

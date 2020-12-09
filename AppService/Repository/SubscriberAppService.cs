@@ -229,5 +229,12 @@ namespace AppService.Repository
 
             return Ok(result);
         }
+
+        public ResponseViewModel GetSubscribers()
+        {
+            var result = _userManager.Users.Select(_mapper.Map<AppUser, VendorViewModel>);
+
+            return Ok(result);
+        }
     }
 }
