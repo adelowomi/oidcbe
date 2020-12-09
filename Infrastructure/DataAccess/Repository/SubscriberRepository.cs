@@ -5,6 +5,7 @@ using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repository
 {
@@ -29,7 +30,7 @@ namespace Infrastructure.DataAccess.Repository
         {
             //   var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
 
-            var users = _context.Users;
+            var users = _context.Users.Include(x => x.Plots);
             return users.ToList();
             //return users.Where(x => x.IsExisting == true).ToList();
         }
