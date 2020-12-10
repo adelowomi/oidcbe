@@ -63,6 +63,8 @@ namespace Core.Model
 
         public bool IsExisting { get; set; }
 
+        public NextOfKin NextOfKin { get; set; }
+
         public virtual AppUser Empty => new AppUser();
     }
 }

@@ -1770,3 +1770,16 @@ VALUES (N'20201210125319_ForumAndPermitStatus', N'3.1.8');
 
 GO
 
+DROP INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins];
+
+GO
+
+CREATE UNIQUE INDEX [IX_NextOfKins_AppUserId] ON [NextOfKins] ([AppUserId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201210170643_AddingNextOfKinBack', N'3.1.8');
+
+GO
+

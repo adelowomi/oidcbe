@@ -30,7 +30,8 @@ namespace Infrastructure.DataAccess.Repository
         {
             //   var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
 
-            var users = _context.Users.Include(x => x.Plots);
+            var users = _context.Users.Include(x => x.Plots).Include(x => x.NextOfKin);
+
             return users.ToList();
             //return users.Where(x => x.IsExisting == true).ToList();
         }
