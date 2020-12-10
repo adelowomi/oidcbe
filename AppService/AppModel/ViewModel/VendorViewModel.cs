@@ -74,6 +74,7 @@ namespace AppService.AppModel.ViewModel
                 return totalProgress;
             }
         }
+
         public string WebSiteUrl { get; set; }
 
         public string OfficeAddress { get; set; }
@@ -91,5 +92,7 @@ namespace AppService.AppModel.ViewModel
         public bool HasUploadedProfilePhoto { get; set; }
 
         public IEnumerable<PlotViewModel> Plots { get; set; }
+
+        public IEnumerable<PaymentViewModel> Payments { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace AppService.Repository
         protected readonly AppSettings _settings;
         protected readonly UserManager<AppUser> _userManager;
         protected readonly IUtilityRepository _utilityRepository;
-
+        protected readonly IPaymentService _paymentService;
 
         /// <summary>
         /// Constructor
@@ -43,6 +43,7 @@ namespace AppService.Repository
                                     IUtilityRepository utilityRepository,
                                     UserManager<AppUser> userManager,
                                     IOptions<AppSettings> appSettings,
+                                    IPaymentService paymentService,
                                     IEmailService emailService)
         {
             _subscriberService = subscriberService;
@@ -53,6 +54,7 @@ namespace AppService.Repository
             _settings = appSettings.Value;
             _userManager = userManager;
             _utilityRepository = utilityRepository;
+            _paymentService = paymentService;
         }
 
         public async Task<ResponseViewModel> AddNewSubscriberIndividual(SubcriberIndividualInputModel model)
@@ -142,9 +144,17 @@ namespace AppService.Repository
         /// <returns></returns>
         public IEnumerable<VendorViewModel> GetAllExisting()
         {
-            var result = _subscriberService.GetExistingSubscribers().Select(_mapper.Map<AppUser, VendorViewModel>);
+            var subscribers = _subscriberService.GetExistingSubscribers().Select(_mapper.Map<AppUser, VendorViewModel>);
 
-            return result;
+            foreach (var subscriber in subscribers)
+            {
+                subscriber.Payments = _paymentService
+                    .GetPayments()
+                    .Where(x => x.Subscription.AppUserId == subscriber.UserId)
+                    .Select(_mapper.Map<Payment, PaymentViewModel>);
+            }
+
+            return subscribers;
         }
 
         /// <summary>
@@ -218,24 +228,37 @@ namespace AppService.Repository
         public async Task<ResponseViewModel> GetSubscriberById(int id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
-            //Check is In Role
 
-            //_userManager.IsInRoleAsync()
+            //Check is In Role _userManager.IsInRoleAsync()
+
             if(user == null)
             {
                 return NotFound(ResponseMessageViewModel.SUBSCRIBER_NOT_EXITS, ResponseErrorCodeStatus.SUBSCRIBER_NOT_EXITS);
             }
 
-            var result = _mapper.Map<AppUser, VendorViewModel>(user);
+            var subscriber = _mapper.Map<AppUser, VendorViewModel>(user);
 
-            return Ok(result);
+            subscriber.Payments = _paymentService
+                    .GetPayments()
+                    .Where(x => x.Subscription.AppUserId == subscriber.UserId)
+                    .Select(_mapper.Map<Payment, PaymentViewModel>);
+           
+            return Ok(subscriber);
         }
 
         public ResponseViewModel GetSubscribers()
         {
-            var result = _userManager.Users.Include(x => x.Plots).Select(_mapper.Map<AppUser, VendorViewModel>);
+            var subscribers = _userManager.Users.Include(x => x.Plots).Select(_mapper.Map<AppUser, VendorViewModel>);
 
-            return Ok(result);
+            foreach (var subscriber in subscribers)
+            {
+                subscriber.Payments = _paymentService
+                    .GetPayments()
+                    .Where(x => x.Subscription.AppUserId == subscriber.UserId)
+                    .Select(_mapper.Map<Payment, PaymentViewModel>);
+            }
+
+            return Ok(subscribers);
         }
     }
 }

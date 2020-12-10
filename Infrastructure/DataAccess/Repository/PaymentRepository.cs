@@ -78,13 +78,14 @@ namespace Infrastructure.DataAccess.Repository
 
         public IEnumerable<Payment> GetAllPayments()
         {
-            return _context.Payments
+            var result = _context.Payments
                 .Include(x => x.PaymentProvider)
                 .Include(x => x.PaymentMethod)
                 .Include(x => x.PaymentType)
                 .Include(x => x.PaymentStatus)
                 .Include(x => x.Subscription)
-                .Include(x => x.Subscription.SubscriptionStatus);   
+                .Include(x => x.Subscription.SubscriptionStatus);
+            return result;
         }
     }
 }

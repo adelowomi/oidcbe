@@ -88,6 +88,12 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<RequestStatus> RequestStatuses { get; set; }
 
+        public DbSet<Forum> Forums { get; set; }
+
+        public DbSet<ForumSubscription> ForumSubscriptions { get; set; }
+
+        public DbSet<ForumMessage> ForumMessages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
