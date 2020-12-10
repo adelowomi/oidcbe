@@ -7,6 +7,8 @@ namespace AppService.AppModel.InputModel
 
         public string PhoneNumber { get; set; }
 
+        public string VisitorName { get; set; }
+
         public string EmailAddress { get; set; }
 
         public DateTime CheckInDateTime { get; set; }
