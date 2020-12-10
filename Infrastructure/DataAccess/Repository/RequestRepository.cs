@@ -33,8 +33,9 @@ namespace Infrastructure.DataAccess.Repository
         {
             var result = _context
                 .Requests
-                .Include(x => x.RequestType)
-                .Include(x => x.RequestStatus);
+                    .Include(x => x.RequestType)
+                    .Include(x => x.RequestStatus)
+                    .OrderByDescending(x => x.Id);
 
             return result;
         }
