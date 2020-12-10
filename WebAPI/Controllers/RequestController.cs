@@ -97,5 +97,14 @@ namespace WebAPI.Controllers
         {
             return Ok(_requestAppService.GetRequestStatus());
         }
+
+        [HttpGet]
+        [Route("api/request/{id}")]
+        [ProducesResponseType(typeof(RequestResponse), 200)]
+        [ProducesResponseType(typeof(RequestResponse), 400)]
+        public IActionResult GetRequestById(int id)
+        {
+            return Ok(_requestAppService.GetRequestBy(id));
+        }
     }
 }
