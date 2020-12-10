@@ -61,6 +61,8 @@ namespace AppService.Repository
             mappedResult.AppUserId = currentUser.Id;
 
             mappedResult.RequestStatusId = (int) RequestStatusEnum.PENDING;
+
+            mappedResult.DateCreated = DateTime.Now;
             
             var result = _requestRepository.CreateAndReturn(mappedResult);
 
