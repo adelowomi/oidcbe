@@ -20,7 +20,8 @@ namespace Infrastructure.DataAccess.Repository
             var result = _context.Permits
                 .Include(x => x.PermitType)
                 .Include(x => x.Vehicle)
-                .Include(x => x.Visitor);
+                .Include(x => x.Visitor)
+                .Include(x => x.PermitStatus);
             return result;
         }
 
@@ -34,6 +35,11 @@ namespace Infrastructure.DataAccess.Repository
         public IEnumerable<PermitType> GetPermitTypes()
         {
             return _context.PermitTypes.ToList();
+        }
+
+        public IEnumerable<PermitStatus> GetPermitStatuses ()
+        {
+            return _context.PermitStatuses.ToList();
         }
     }
 }

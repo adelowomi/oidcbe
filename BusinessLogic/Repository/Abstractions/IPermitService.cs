@@ -19,5 +19,7 @@ namespace BusinessLogic.Repository.Abstractions
         IEnumerable<PermitType> GetPermitTypes();
 
         PermitType CreateNewPermitType(PermitType permitType);
+
+        IEnumerable<PermitStatus> GetPermitStatuses();
     }
 }

@@ -72,6 +72,8 @@ namespace AppService.Repository
                 result.AppUserId = user.Id;
             }
 
+            result.PermitStatusId = (int)PermitStatusEnum.PENDING;
+
             var savedResult =_permitService.Create(result);
 
             var mappedResult = _mapper.Map<Permit, PermitViewModel>(savedResult);
@@ -105,6 +107,13 @@ namespace AppService.Repository
         public ResponseViewModel GetPermitTypes()
         {
             var result = _permitService.GetPermitTypes().Select(_mapper.Map<PermitType, PermitTypeVieModel>);
+
+            return Ok(result);
+        }
+
+        public ResponseViewModel GetPermitStatuses()
+        {
+            var result = _permitService.GetPermitStatuses().Select(_mapper.Map<PermitStatus, PermitStatusViewModel>);
 
             return Ok(result);
         }

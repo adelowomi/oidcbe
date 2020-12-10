@@ -18,11 +18,23 @@ namespace Core.Model
         public int PermitTypeId { get; set; }
 
         public PermitType PermitType { get; set; }
+
+        public int PermitStatusId { get; set; }
+
+        public PermitStatus PermitStatus { get; set; }
     }
 
     public enum PermitTypeEnum
     {
         VISIT = 1,
         PARKING
+    }
+
+    public enum PermitStatusEnum
+    {
+        APPROVED = 1,
+        PENDING,
+        SUSPENDED,
+        DECLINED
     }
 }

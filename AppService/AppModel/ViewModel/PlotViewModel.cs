@@ -34,5 +34,6 @@ namespace AppService.AppModel.ViewModel
         public IEnumerable<CalendarViewModel> Calendars { get; set; }
 
         public DateTime DatePurchased { get; set; }
+
     }
 }

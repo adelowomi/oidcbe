@@ -88,5 +88,20 @@ namespace WebAPI.Controllers
 
             return Ok(_permitAppService.GetVehicleTypes());
         }
+
+
+        [HttpGet]
+        [Route("api/permit/statuses")]
+        [ProducesResponseType(typeof(PermitStatusesResponse), 200)]
+        [ProducesResponseType(typeof(PermitStatusesResponse), 400)]
+        public IActionResult GetPermitStatuses()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.GetPermitStatuses());
+        }
     }
 }

@@ -74,5 +74,10 @@ namespace BusinessLogic.Repository
         {
             return _permitRepository.Update(permit);
         }
+
+        public IEnumerable<PermitStatus> GetPermitStatuses()
+        {
+            return _permitRepository.GetPermitStatuses();
+        }
     }
 }

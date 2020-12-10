@@ -17,5 +17,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         PermitType CreatePermitType(PermitType permitType);
 
         IEnumerable<PermitType> GetPermitTypes();
+
+        IEnumerable<PermitStatus> GetPermitStatuses();
     }
 }

@@ -16,5 +16,7 @@ namespace AppService.AppModel.ViewModel
         public int PermitTypeId { get; set; }
 
         public PermitTypeVieModel PermitType { get; set; }
+
+        public string Status { get; set; }
     }
 }

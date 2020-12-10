@@ -1690,3 +1690,83 @@ VALUES (N'20201209092339_RenameRequestStatusTable', N'3.1.8');
 
 GO
 
+ALTER TABLE [Permits] ADD [PermitStatusId] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE TABLE [Forums] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_Forums] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [PermitStatuses] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_PermitStatuses] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [ForumMessages] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Title] nvarchar(max) NULL,
+    [Message] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [ForumId] int NOT NULL,
+    CONSTRAINT [PK_ForumMessages] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ForumMessages_Forums_ForumId] FOREIGN KEY ([ForumId]) REFERENCES [Forums] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [ForumSubscriptions] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [ForumId] int NOT NULL,
+    [AppUserId] int NOT NULL,
+    CONSTRAINT [PK_ForumSubscriptions] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ForumSubscriptions_AspNetUsers_AppUserId] FOREIGN KEY ([AppUserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ForumSubscriptions_Forums_ForumId] FOREIGN KEY ([ForumId]) REFERENCES [Forums] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE INDEX [IX_Permits_PermitStatusId] ON [Permits] ([PermitStatusId]);
+
+GO
+
+CREATE INDEX [IX_ForumMessages_ForumId] ON [ForumMessages] ([ForumId]);
+
+GO
+
+CREATE INDEX [IX_ForumSubscriptions_AppUserId] ON [ForumSubscriptions] ([AppUserId]);
+
+GO
+
+CREATE INDEX [IX_ForumSubscriptions_ForumId] ON [ForumSubscriptions] ([ForumId]);
+
+GO
+
+ALTER TABLE [Permits] ADD CONSTRAINT [FK_Permits_PermitStatuses_PermitStatusId] FOREIGN KEY ([PermitStatusId]) REFERENCES [PermitStatuses] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201210125319_ForumAndPermitStatus', N'3.1.8');
+
+GO
+
