@@ -60,8 +60,11 @@ namespace AppService.Repository
 
             mappedResult.AppUserId = currentUser.Id;
 
+            mappedResult.RequestStatusId = (int) RequestStatusEnum.PENDING;
+            
             var result = _requestRepository.CreateAndReturn(mappedResult);
 
+            result = _requestRepository.GetAllRequests().FirstOrDefault(x => x.Id == result.Id);
             
             return Ok(_mapper.Map<Request, RequestViewModel>(result));
         }
