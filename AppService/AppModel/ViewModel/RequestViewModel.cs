@@ -3,6 +3,8 @@ namespace AppService.AppModel.ViewModel
 {
     public class RequestViewModel
     {
+        public int RequestId { get; set;
+        }
         public string RequestName { get; set; }
 
         public DateTime DateCreated { get; set; }
