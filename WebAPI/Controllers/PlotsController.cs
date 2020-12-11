@@ -100,7 +100,7 @@ namespace WebAPI.Controllers
         /// <param name="plotId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/plot/{userId}")]
+        [Route("api/plot/user/{userId}")]
         public IActionResult GetPlotsById(int userId)
         {
             if (!ModelState.IsValid)
