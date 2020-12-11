@@ -61,6 +61,7 @@ namespace Infrastructure.DataAccess.Repository
         public IEnumerable<Plot> GetPlots()
         {
             var result = _context.Plots
+                .Include(x => x.AppUser)
                 .Include(x => x.PlotType)
                 .Include(x => x.PlotStatus)
                 .Include(x => x.Documents)
