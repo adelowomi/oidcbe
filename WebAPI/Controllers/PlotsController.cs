@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_plotService.GetByVendorId(plotId));
+            return Ok(_plotService.GetPlotById(plotId));
         }
 
         /// <summary>
