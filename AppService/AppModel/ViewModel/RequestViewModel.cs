@@ -5,6 +5,8 @@ namespace AppService.AppModel.ViewModel
     {
         public int RequestId { get; set;  }
 
+        public string RequestName { get; set; }
+
         public VendorViewModel AppUser { get; set; }
 
         public DateTime DateCreated { get; set; }
