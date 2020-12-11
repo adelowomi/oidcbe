@@ -86,6 +86,7 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.WebsiteUrl, opts => opts.MapFrom(src => src.WebSiteUrl))
                 .ForMember(dest => dest.RCNumber, opts => opts.MapFrom(src => src.RCNumber))
                 ;
+
             CreateMap<VendorNextOfKinInputModel, NextOfKin>()
                 .ForMember(dest => dest.Gender, opts => opts.Ignore())
                 .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
@@ -107,9 +108,7 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.PaymentType, opts => opts.MapFrom(src => src.PaymentType.Name))
                 .ForMember(dest => dest.PaymentProvider, opts => opts.MapFrom(src => src.PaymentProvider.Name))
                 .ForMember(dest => dest.PaymentStatus, opts => opts.MapFrom(src => src.PaymentStatus.Name))
-                .ForMember(dest => dest.Subscription, opts => opts.MapFrom(src => src.Subscription))
-            
-            ;
+                .ForMember(dest => dest.Subscription, opts => opts.MapFrom(src => src.Subscription));
 
             CreateMap<Offer, OfferViewModel>()
                 .ForMember(dest => dest.OfferStatus, opts => opts.MapFrom(src => src.OfferStatus.Name))
@@ -209,7 +208,7 @@ namespace AppService.AutoMapper
 
             CreateMap<Request, RequestViewModel>()
                 .ForMember(dest => dest.RequestId, opts => opts.MapFrom(src => src.Id))
-                .ForMember(dest => dest.RequestName, opts => opts.MapFrom(src => src.Name))
+                
                 .ForMember(dest => dest.RequestStatus, opts => opts.MapFrom(src => src.RequestStatus.Name))
                 .ForMember(dest => dest.RequestType, opts => opts.MapFrom(src => src.RequestType.Name));
 

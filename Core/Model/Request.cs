@@ -11,6 +11,11 @@ namespace Core.Model
 
         public string Description { get; set; }
 
+
+        public int? PlotId { get; set; }
+
+        public Plot Plot { get; set; }
+
         public RequestType RequestType { get; set; }
 
         public int? RequestStatusId { get; set; }
