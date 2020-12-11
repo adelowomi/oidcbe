@@ -108,7 +108,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_plotService.GetByVendorId(userId));
+            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(userId)));
         }
 
 
@@ -128,7 +128,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_plotService.CreatePlot(plot));
+            return Ok(ResponseViewModel.Ok(_plotService.CreatePlot(plot)));
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_plotService.GetPlotTypes());
+            return Ok(ResponseViewModel.Ok(_plotService.GetPlotTypes()));
         }
     }
 }
