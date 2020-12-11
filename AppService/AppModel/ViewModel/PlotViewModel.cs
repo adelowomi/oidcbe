@@ -29,6 +29,10 @@ namespace AppService.AppModel.ViewModel
 
         public bool IsPaymentComplete { get; set; }
 
+        public VendorViewModel AppUser { get; set; }
+
+        public bool IsOccupied => AppUser == null;
+
         public IEnumerable<DocumentViewModel> Documents { get; set; }
 
         public IEnumerable<CalendarViewModel> Calendars { get; set; }
