@@ -208,7 +208,7 @@ namespace AppService.AutoMapper
 
             CreateMap<Request, RequestViewModel>()
                 .ForMember(dest => dest.RequestId, opts => opts.MapFrom(src => src.Id))
-                
+                .ForMember(dest => dest.RequestName, opts => opts.MapFrom(src => src.Name))
                 .ForMember(dest => dest.RequestStatus, opts => opts.MapFrom(src => src.RequestStatus.Name))
                 .ForMember(dest => dest.RequestType, opts => opts.MapFrom(src => src.RequestType.Name));
 
