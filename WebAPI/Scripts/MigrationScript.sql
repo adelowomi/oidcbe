@@ -1783,3 +1783,30 @@ VALUES (N'20201210170643_AddingNextOfKinBack', N'3.1.8');
 
 GO
 
+ALTER TABLE [Requests] ADD [PlotId] int NULL;
+
+GO
+
+CREATE INDEX [IX_Requests_PlotId] ON [Requests] ([PlotId]);
+
+GO
+
+ALTER TABLE [Requests] ADD CONSTRAINT [FK_Requests_Plots_PlotId] FOREIGN KEY ([PlotId]) REFERENCES [Plots] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201211154618_AddedPlotIdToRequest', N'3.1.8');
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201211155106_PlotAddRequest', N'3.1.8');
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201211155849_UpdatesPlotRequest', N'3.1.8');
+
+GO
+
