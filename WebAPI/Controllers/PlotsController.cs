@@ -94,6 +94,23 @@ namespace WebAPI.Controllers
             return Ok(_plotService.GetByVendorId(plotId));
         }
 
+        /// <summary>
+        /// Get Plots
+        /// </summary>
+        /// <param name="plotId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/plot/{userId}")]
+        public IActionResult GetPlotsById(int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_plotService.GetByVendorId(userId));
+        }
+
 
         /// <summary>
         /// Create New Plot Information

@@ -228,7 +228,7 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.PermitType, opts => opts.MapFrom(src => src.PermitType))
                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.PermitStatus.Name));
 
-            CreateMap<Visitor, VisitorViewModel>();
+            CreateMap<Visitor, VisitorViewModel>().ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
             CreateMap<PermitStatus, PermitStatusViewModel>();
             CreateMap<VisitorInputModel, Visitor>().ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.VisitorName));
             CreateMap<VehicleInputModel, Vehicle>();
