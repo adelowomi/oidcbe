@@ -31,7 +31,7 @@ namespace AppService.AppModel.ViewModel
 
         public VendorViewModel AppUser { get; set; }
 
-        public bool IsOccupied => AppUser == null;
+        public bool IsOccupied => AppUser != null;
 
         public IEnumerable<DocumentViewModel> Documents { get; set; }
 
