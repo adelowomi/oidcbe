@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
+using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AutoMapper;
@@ -73,6 +75,16 @@ namespace WebAPI.Controllers
             var file = Path.Combine(fullPath, document.DocumentName);
             Byte[] bytes = System.IO.File.ReadAllBytes(file);
             return File(bytes, "image/jpeg");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/documents/types")]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<DocumentTypeViewModel>>), 200)]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<DocumentTypeViewModel>>), 400)]
+        public IActionResult GetDocumentTypse()
+        {
+            return Ok(_documentAppService.GetDocumentTypes());
         }
     }
 }

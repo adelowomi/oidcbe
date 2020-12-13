@@ -13,5 +13,7 @@ namespace AppService.Repository.Abstractions
         ResponseViewModel GetDocumentsBy();
 
         DocumentViewModel GetDocumentByName(string name);
+
+        ResponseViewModel GetDocumentTypes();
     }
 }

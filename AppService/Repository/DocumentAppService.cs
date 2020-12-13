@@ -96,5 +96,12 @@ namespace AppService.Repository
         {
             return _mapper.Map<Document, DocumentViewModel>(_documentService.GetAllDocuments().First(x => x.Name == name));
         }
+
+        public ResponseViewModel GetDocumentTypes()
+        {
+            var results = _documentService.GetDocumentTypes().Select(_mapper.Map<DocumentType, DocumentTypeViewModel>);
+
+            return Ok(results);
+        }
     }
 }

@@ -43,4 +43,6 @@ namespace AppService.Helpers
     public class RequestTypesResponse : SwaggerResponse<IEnumerable<RequestTypeViewModel>> { }
 
     public class RequestStatusesResponse : SwaggerResponse<IEnumerable<RequestStatusViewModel>> { }
+
+    public class DocumentTypesResponse : SwaggerResponse<IEnumerable<DocumentTypeViewModel>> { }
 }

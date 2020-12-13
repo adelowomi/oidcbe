@@ -73,6 +73,8 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.DocumentType, opts => opts.Ignore())
                ;
 
+            CreateMap<DocumentType, DocumentTypeViewModel>();
+               
             CreateMap<VendorInputModel, AppUser>()
                 .ForMember(dest => dest.FirstName, opts => opts.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.Gender, opts => opts.Ignore())
