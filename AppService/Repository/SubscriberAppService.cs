@@ -227,7 +227,9 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> GetSubscriberById(int id)
         {
-            var user = await _userManager.FindByIdAsync(id.ToString());
+            //var user = await _userManager.FindByIdAsync(id.ToString());
+
+            var user = _subscriberService.GetExistingSubscribers().FirstOrDefault(x => x.Id == id);
 
             //Check is In Role _userManager.IsInRoleAsync()
 
