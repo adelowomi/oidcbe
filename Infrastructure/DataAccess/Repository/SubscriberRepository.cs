@@ -30,7 +30,24 @@ namespace Infrastructure.DataAccess.Repository
         {
             //   var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
 
-            var users = _context.Users.Include(x => x.Plots).Include(x => x.NextOfKin);
+            var users = _context.Users
+                .Include(x => x.Plots)   
+                .Include(x => x.NextOfKin);
+
+            foreach (var user in users)
+            {
+                var subscriptions =
+                _context
+                .Subscriptions
+                .Include(x => x.Offer)
+                .Include(x => x.Offer.Plot)
+                .Include(x => x.Offer.OfferStatus)
+                .Include(x => x.OrganizationType)
+                .Include(x => x.SubscriptionStatus)
+                .Where(x => x.AppUserId == user.Id);
+
+                user.Subscriptions = subscriptions;
+            }
 
             return users.ToList();
             //return users.Where(x => x.IsExisting == true).ToList();
