@@ -259,6 +259,11 @@ namespace AppService.AutoMapper
             CreateMap<ForumSubscription, ForumSubscriptionViewModel>()
                 .ForMember(dest => dest.Forum, opts => opts.MapFrom(src => src.Forum.Name))
                 ;
+
+            CreateMap<Contact, ContactViewModel>()
+                .ForMember(dest => dest.Telephone, opts => opts.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.Type, opts => opts.MapFrom(src => src.ContactType.Name))
+                ;
         }
     }
 }

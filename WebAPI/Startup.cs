@@ -148,6 +148,9 @@ namespace WebAPI
             services.AddTransient<IForumRepository, ForumRepository>();
             services.AddTransient<IForumAppService, ForumAppService>();
 
+            services.AddTransient<IContactRepository, ContactRepository>();
+            services.AddTransient<IContactAppService, ContactAppService>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

@@ -1890,3 +1890,39 @@ VALUES (N'20201214110210_AddedMailingAddress', N'3.1.8');
 
 GO
 
+CREATE TABLE [ContactTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_ContactTypes] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Contacts] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [ContactId] int NOT NULL,
+    [ContactTypeId] int NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [EmailAddress] nvarchar(max) NULL,
+    CONSTRAINT [PK_Contacts] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Contacts_ContactTypes_ContactTypeId] FOREIGN KEY ([ContactTypeId]) REFERENCES [ContactTypes] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE INDEX [IX_Contacts_ContactTypeId] ON [Contacts] ([ContactTypeId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201214135026_ContactEntity', N'3.1.8');
+
+GO
+

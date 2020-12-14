@@ -98,6 +98,10 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<ForumMessageType> ForumMessageTypes { get; set; }
 
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<ContactType> ContactTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
