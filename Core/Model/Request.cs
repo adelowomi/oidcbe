@@ -11,7 +11,6 @@ namespace Core.Model
 
         public string Description { get; set; }
 
-
         public int? PlotId { get; set; }
 
         public Plot Plot { get; set; }

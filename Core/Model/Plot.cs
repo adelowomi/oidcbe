@@ -37,6 +37,8 @@ namespace Core.Model
 
         public ICollection<Calendar> Calendars { get; set; }
 
+        public ICollection<Request> Requests { get; set; }
+
         public double Price { get; set; }
 
     }
