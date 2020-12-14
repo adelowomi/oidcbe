@@ -140,6 +140,6 @@ namespace AppService.AppModel.InputModel
 
     public class VendorNextOfKinViewModel : VendorNextOfKinInputModel
     {
-        
+        public string MailingAddress { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace Core.Model
         public int? GenderId { get; set; }
 
         public Gender Gender { get; set; }
+
+        public string MailingAddress { get; set; }
     }
 }

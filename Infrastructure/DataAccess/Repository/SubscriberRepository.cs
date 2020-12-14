@@ -13,10 +13,12 @@ namespace Infrastructure.DataAccess.Repository
     {
 
         private readonly UserManager<AppUser> _userManager;
+        private readonly IPlotRepository _plotRepository;
 
-        public SubscriberRepository(AppDbContext context, UserManager<AppUser> userManager) : base(context)
+        public SubscriberRepository(AppDbContext context, UserManager<AppUser> userManager, IPlotRepository plotRepository) : base(context)
         {
             _userManager = userManager;
+            _plotRepository = plotRepository;
         }
 
         public SubscriberIdentityResult CreateNewSubscriber(AppUser user)
@@ -30,10 +32,10 @@ namespace Infrastructure.DataAccess.Repository
         {
             //   var users = _userManager.GetUsersInRoleAsync("VENDOR").Result;
 
-            var users = _context.Users
-                .Include(x => x.Plots)   
+            var users = _context.Users 
                 .Include(x => x.NextOfKin);
 
+           
             foreach (var user in users)
             {
                 var subscriptions =
@@ -47,6 +49,8 @@ namespace Infrastructure.DataAccess.Repository
                     .Where(x => x.AppUserId == user.Id).ToList();
 
                 user.Subscriptions = subscriptions;
+                user.Plots = _plotRepository.GetPlots().Where(x => x.AppUserId == user.Id).ToList();
+
             }
 
             return users.ToList();
