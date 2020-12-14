@@ -21,7 +21,9 @@ namespace AppService.AppModel.ViewModel
 
         public string TrnxRef { get; set; }
 
-        public int SubscriberId { get; set; }
+        public int AppUserId { get; set; }
+
+        public int PlotId { get; set; }
 
         public DateTime PaymentDate { get; set; }
     }
