@@ -129,7 +129,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/forum/subscriptions")]
-        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<SubscriptionViewModel>>), 200)]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<ForumSubscriptionViewModel>>), 200)]
         public IActionResult GetAllSubscriptions()
         {
             return Ok(_forumAppService.GetForumSubscriptions());
@@ -143,7 +143,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/forum/subscriptions/{id}")]
-        [ProducesResponseType(typeof(SwaggerResponse<SubscriptionViewModel>), 200)]
+        [ProducesResponseType(typeof(SwaggerResponse<ForumSubscriptionViewModel>), 200)]
         public IActionResult GetAllSubscriptions(int id)
         {
             return Ok(_forumAppService.GetForumSubscriptions(id));
@@ -158,7 +158,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/forum/subscriptions/user/{id}")]
-        [ProducesResponseType(typeof(SwaggerResponse<SubscriptionViewModel>), 200)]
+        [ProducesResponseType(typeof(SwaggerResponse<ForumSubscriptionViewModel>), 200)]
         public IActionResult GetUserSubscriptions(int userId)
         {
             if (!ModelState.IsValid)
@@ -177,7 +177,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/forum/subscribe/{id}")]
-        [ProducesResponseType(typeof(SwaggerResponse<SubscriptionViewModel>), 200)]
+        [ProducesResponseType(typeof(SwaggerResponse<ForumSubscriptionViewModel>), 200)]
         public IActionResult SuscribeToForum(int forumId)
         {
             if (!ModelState.IsValid)
