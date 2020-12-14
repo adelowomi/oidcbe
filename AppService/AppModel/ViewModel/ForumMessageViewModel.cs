@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AppService.AppModel.ViewModel
 {
-    public class ForumMessageViewModel
+    public class ForumMessageViewModel : BaseViewModel
     {
         public string Title { get; set; }
 

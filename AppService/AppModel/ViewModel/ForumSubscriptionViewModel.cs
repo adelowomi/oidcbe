@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AppService.AppModel.ViewModel
 {
-    public class ForumSubscriptionViewModel
+    public class ForumSubscriptionViewModel : BaseViewModel
     {
         public int ForumId { get; set; }
 
