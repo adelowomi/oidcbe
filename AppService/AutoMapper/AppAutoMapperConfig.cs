@@ -112,7 +112,7 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.PaymentStatus, opts => opts.MapFrom(src => src.PaymentStatus.Name))
                 .ForMember(dest => dest.Subscription, opts => opts.MapFrom(src => src.Subscription))
                 .ForMember(dest => dest.SubscriberId, opts => opts.MapFrom(src => src.Subscription.AppUserId))
-
+                .ForMember(dest => dest.PaymentDate, opts => opts.MapFrom(src => src.DateCreated))
                 ;
 
             CreateMap<Offer, OfferViewModel>()
