@@ -21,7 +21,7 @@ namespace AppService.Repository
 
         public ResponseViewModel GetContacts()
         {
-            return Ok(_contactRepository.GetAll().Select(_mapper.Map<Contact, ContactViewModel>))
+            return Ok(_contactRepository.GetAll().Select(_mapper.Map<Contact, ContactViewModel>));
         }
     }
 }

@@ -256,9 +256,7 @@ namespace AppService.AutoMapper
             CreateMap<ForumMessageInputModel, ForumMessage>();
             CreateMap<Forum, ForumViewModel>();
             CreateMap<ForumMessageType, ForumMessageTypeViewModel>();
-            CreateMap<ForumSubscription, ForumSubscriptionViewModel>()
-                .ForMember(dest => dest.Forum, opts => opts.MapFrom(src => src.Forum.Name))
-                ;
+            CreateMap<ForumSubscription, ForumSubscriptionViewModel>().ForMember(dest => dest.Forum, opts => opts.MapFrom(src => src.Forum.Name));
 
             CreateMap<Contact, ContactViewModel>()
                 .ForMember(dest => dest.Telephone, opts => opts.MapFrom(src => src.PhoneNumber))
