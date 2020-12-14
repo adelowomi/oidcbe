@@ -70,7 +70,9 @@ namespace AppService.Repository
 
         public ResponseViewModel GetForumMessageTypes()
         {
-            throw new NotImplementedException();
+            var results = _forumRepository.GetForumMessageTypes().Select(_mapper.Map<ForumMessageType, ForumMessageTypeViewModel>);
+
+            return Ok(results);
         }
 
         public ResponseViewModel GetForums()
