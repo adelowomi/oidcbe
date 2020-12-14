@@ -44,7 +44,7 @@ namespace Infrastructure.DataAccess.Repository
                     .Include(x => x.Offer.OfferStatus)
                     .Include(x => x.OrganizationType)
                     .Include(x => x.SubscriptionStatus)
-                    .Where(x => x.AppUserId == user.Id);
+                    .Where(x => x.AppUserId == user.Id).ToList();
 
                 user.Subscriptions = subscriptions;
             }
