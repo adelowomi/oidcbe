@@ -110,7 +110,10 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.PaymentType, opts => opts.MapFrom(src => src.PaymentType.Name))
                 .ForMember(dest => dest.PaymentProvider, opts => opts.MapFrom(src => src.PaymentProvider.Name))
                 .ForMember(dest => dest.PaymentStatus, opts => opts.MapFrom(src => src.PaymentStatus.Name))
-                .ForMember(dest => dest.Subscription, opts => opts.MapFrom(src => src.Subscription));
+                .ForMember(dest => dest.Subscription, opts => opts.MapFrom(src => src.Subscription))
+                .ForMember(dest => dest.SubscriberId, opts => opts.MapFrom(src => src.Subscription.AppUserId))
+
+                ;
 
             CreateMap<Offer, OfferViewModel>()
                 .ForMember(dest => dest.OfferStatus, opts => opts.MapFrom(src => src.OfferStatus.Name))

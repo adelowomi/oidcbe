@@ -65,12 +65,17 @@ namespace Infrastructure.DataAccess.Repository
                 .Include(x => x.AppUser)
                 .Include(x => x.PlotType)
                 .Include(x => x.PlotStatus)
-               
-                .Include(x => x.Calendars).ToList();
+                .Include(x => x.Calendars)
+                .ToList();
 
             foreach(var plot in result)
             {
-                var documents = _context.Documents.Include(x => x.DocumentType).Include(x => x.Plot).Where(x => x.PlotId == plot.Id).ToList();
+                var documents = _context.Documents
+                    .Include(x => x.DocumentType)
+                    .Include(x => x.Plot)
+                    .Where(x => x.PlotId == plot.Id)
+                    .ToList();
+
                 plot.Documents = documents;
             }
             return result;

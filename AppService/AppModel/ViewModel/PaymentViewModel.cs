@@ -20,5 +20,7 @@ namespace AppService.AppModel.ViewModel
         public SubscriptionViewModel Subscription { get; set; }
 
         public string TrnxRef { get; set; }
+
+        public int SubscriberId { get; set; }
     }
 }
