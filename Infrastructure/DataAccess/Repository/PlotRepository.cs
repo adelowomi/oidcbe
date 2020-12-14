@@ -16,13 +16,14 @@ namespace Infrastructure.DataAccess.Repository
     /// </summary>
     public class PlotRepository : BaseRepository<Plot>, IPlotRepository
     {
+        protected readonly IDocumentRepository _documentRepository;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public PlotRepository(AppDbContext context) : base(context)
+        public PlotRepository(AppDbContext context, IDocumentRepository documentRepository) : base(context)
         {
-
+            _documentRepository = documentRepository;
         }
 
         public Plot CreatePlot(Plot plot)
@@ -64,8 +65,14 @@ namespace Infrastructure.DataAccess.Repository
                 .Include(x => x.AppUser)
                 .Include(x => x.PlotType)
                 .Include(x => x.PlotStatus)
-                .Include(x => x.Documents)
-                .Include(x => x.Calendars);
+               
+                .Include(x => x.Calendars).ToList();
+
+            foreach(var plot in result)
+            {
+                var documents = _context.Documents.Include(x => x.DocumentType).Include(x => x.Plot).Where(x => x.PlotId == plot.Id).ToList();
+                plot.Documents = documents;
+            }
             return result;
         }
 

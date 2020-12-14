@@ -1881,3 +1881,12 @@ VALUES (N'20201214054218_AdjustmentInForumEntityAgain', N'3.1.8');
 
 GO
 
+ALTER TABLE [NextOfKins] ADD [MailingAddress] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201214110210_AddedMailingAddress', N'3.1.8');
+
+GO
+
