@@ -176,7 +176,7 @@ namespace WebAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/forum/subscribe/{id}")]
+        [Route("api/forum/subscribe")]
         [ProducesResponseType(typeof(SwaggerResponse<ForumSubscriptionViewModel>), 200)]
         public IActionResult SuscribeToForum(int forumId)
         {
