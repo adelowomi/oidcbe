@@ -31,6 +31,7 @@ namespace AppService.Repository
         protected readonly UserManager<AppUser> _userManager;
         protected readonly IUtilityRepository _utilityRepository;
         protected readonly IPaymentService _paymentService;
+        protected readonly IRequestRepository _requestRepository;
 
         /// <summary>
         /// Constructor
@@ -44,6 +45,7 @@ namespace AppService.Repository
                                     UserManager<AppUser> userManager,
                                     IOptions<AppSettings> appSettings,
                                     IPaymentService paymentService,
+                                    IRequestRepository requestRepository,
                                     IEmailService emailService)
         {
             _subscriberService = subscriberService;
@@ -55,6 +57,7 @@ namespace AppService.Repository
             _userManager = userManager;
             _utilityRepository = utilityRepository;
             _paymentService = paymentService;
+            _requestRepository = requestRepository;
         }
 
         public async Task<ResponseViewModel> AddNewSubscriberIndividual(SubcriberIndividualInputModel model)
@@ -258,6 +261,11 @@ namespace AppService.Repository
                     .GetPayments()
                     .Where(x => x.Subscription.AppUserId == subscriber.UserId)
                     .Select(_mapper.Map<Payment, PaymentViewModel>);
+
+                subscriber.Requests = _requestRepository.GetAllRequests()
+                            .Where(x => x.AppUserId == subscriber.UserId)
+                            .ToList()
+                            .Select(_mapper.Map<Request, RequestViewModel>);
             }
 
             return Ok(subscribers);

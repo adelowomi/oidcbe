@@ -94,5 +94,7 @@ namespace AppService.AppModel.ViewModel
         public IEnumerable<PlotViewModel> Plots { get; set; }
 
         public IEnumerable<PaymentViewModel> Payments { get; set; }
+
+        public IEnumerable<RequestViewModel> Requests { get; set; }
     }
 }
