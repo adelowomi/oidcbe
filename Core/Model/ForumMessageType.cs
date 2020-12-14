@@ -8,9 +8,9 @@ namespace Core.Model
 
     public enum ForumMessageTypeEnum
     {
-        ANNOUNCEMENT = 1,
+        GENERAL = 1,
+        ANNOUNCEMENT,
         NOTIFICATION,
-        GROUP,
         BULLETIN,
     }
 }
