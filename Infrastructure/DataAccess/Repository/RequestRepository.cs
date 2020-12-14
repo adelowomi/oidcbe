@@ -37,6 +37,7 @@ namespace Infrastructure.DataAccess.Repository
                     .Include(x => x.RequestStatus)
                     .Include(x => x.AppUser)
                     .Include(x => x.Plot)
+                    .ToList()
                     .OrderByDescending(x => x.Id);
 
             return result;

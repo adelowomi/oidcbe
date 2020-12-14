@@ -264,8 +264,9 @@ namespace AppService.Repository
 
                 subscriber.Requests = _requestRepository.GetAllRequests()
                             .Where(x => x.AppUserId == subscriber.UserId)
-                            .ToList()
-                            .Select(_mapper.Map<Request, RequestViewModel>);
+                            
+                            .Select(_mapper.Map<Request, RequestViewModel>)
+                            .ToList();
             }
 
             return Ok(subscribers);
