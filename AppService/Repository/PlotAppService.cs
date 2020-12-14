@@ -8,6 +8,7 @@ using AppService.Extensions;
 using AppService.Repository.Abstractions;
 using AutoMapper;
 using BusinessLogic.Repository;
+using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -21,18 +22,23 @@ namespace AppService.Repository
         private readonly IMapper _mapper;
         protected readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        protected readonly IPaymentService _paymentService;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="plotService"></param>
         /// <param name="mapper"></param>
-        public PlotAppService (IPlotService plotService, IHttpContextAccessor httpContextAccessor, IMapper mapper, UserManager<AppUser> userManager)
+        public PlotAppService (IPlotService plotService,
+                               IHttpContextAccessor httpContextAccessor,
+                               IMapper mapper, UserManager<AppUser> userManager,
+                               IPaymentService paymentService)
         {
             _plotService = plotService;
             _mapper = mapper;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+            _paymentService = paymentService;
         }
 
         public IEnumerable<PlotViewModel> GetAvailablePlots()
@@ -69,7 +75,13 @@ namespace AppService.Repository
         /// <returns></returns>
         public PlotViewModel GetPlotById(int plotId)
         {
-            return _mapper.Map<Plot, PlotViewModel>(_plotService.GetPlot(plotId));
+            var result = _mapper.Map<Plot, PlotViewModel>(_plotService.GetPlot(plotId));
+
+            result.Payments = _paymentService
+                    .GetPayments()
+                        .Where(x => x.Subscription.Offer.PlotId == result.PlotId)
+                            .ToList().Select(_mapper.Map<Payment, PaymentViewModel>);
+            return result;
         }
 
         public IEnumerable<PlotViewModel> GetPlots()

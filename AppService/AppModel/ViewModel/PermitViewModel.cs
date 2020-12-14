@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AppService.AppModel.ViewModel
 {
-    public class PermitViewModel
+    public class PermitViewModel : BaseViewModel
     {
         public int AppUserId { get; set; }
 
