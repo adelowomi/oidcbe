@@ -19,7 +19,7 @@ namespace Infrastructure.DataAccess.Repository
         {
             var result = CreateAndReturn(message);
 
-            return GetItById(message.Id);
+            return GetItById(result.Id);
         }
 
         public IEnumerable<ForumMessage> GetAllForumMessages()
@@ -74,6 +74,19 @@ namespace Infrastructure.DataAccess.Repository
             var result = GetAllForumMessages().FirstOrDefault(x => x.Id == messageId);
 
             return result;
+        }
+
+        public ForumSubscription SubscribeToForum(int id, int userId)
+        {
+            var result =_context.ForumSubscriptions.Add(new ForumSubscription
+            {
+                AppUserId = userId,
+                ForumId = id
+            });
+
+            Save();
+
+            return GetForumSubscriptions(result.Entity.Id);
         }
     }
 }

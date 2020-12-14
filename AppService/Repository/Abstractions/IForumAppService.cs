@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 
@@ -7,26 +8,26 @@ namespace AppService.Repository.Abstractions
 {
     public interface IForumAppService
     {
-        IEnumerable<ForumMessageViewModel> GetAllForumMessages();
+        ResponseViewModel GetAllForumMessages();
 
-        ForumMessageViewModel CreateNewForum(ForumMessageInputModel message);
+        ResponseViewModel CreateNewForum(ForumMessageInputModel message);
 
-        ForumMessageViewModel GetById(int id);
+        ResponseViewModel GetById(int id);
 
-        ForumMessageViewModel GetItById(int messageId);
+        ResponseViewModel GetItById(int messageId);
 
-        IEnumerable<ForumMessageViewModel> GetItById(int id, int forumId);
+        ResponseViewModel GetItById(int id, int forumId);
 
-        IEnumerable<ForumViewModel> GetForums();
+        ResponseViewModel GetForums();
 
-        IEnumerable<ForumMessageTypeViewModel> GetForumMessageTypes();
+        ResponseViewModel GetForumMessageTypes();
 
-        IEnumerable<ForumSubscriptionViewModel> GetForumSubscriptions();
+        ResponseViewModel GetForumSubscriptions();
 
-        ForumSubscriptionViewModel GetForumSubscriptions(int id);
+        ResponseViewModel GetForumSubscriptions(int id);
 
-        IEnumerable<ForumSubscriptionViewModel> GetForumSubscriptions(int id, int userId);
+        ResponseViewModel GetForumSubscriptions(int id, int userId);
 
-        ForumSubscriptionViewModel SubscribeToForum(int forumId);
+        Task<ResponseViewModel> SubscribeToForumAsync(int forumId);
     }
 }

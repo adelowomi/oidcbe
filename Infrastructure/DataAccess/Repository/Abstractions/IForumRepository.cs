@@ -24,6 +24,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         ForumSubscription GetForumSubscriptions(int id);
 
+        ForumSubscription SubscribeToForum(int id, int userId);
+
         IEnumerable<ForumSubscription> GetForumSubscriptions(int id, int userId);
     }
 }

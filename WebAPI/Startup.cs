@@ -145,6 +145,9 @@ namespace WebAPI
             services.AddTransient<IVehicleRepository, VehicleRepository>();
             services.AddTransient<IVisitorRepository, VisitorRepository>();
 
+            services.AddTransient<IForumRepository, ForumRepository>();
+            services.AddTransient<IForumAppService, ForumAppService>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
