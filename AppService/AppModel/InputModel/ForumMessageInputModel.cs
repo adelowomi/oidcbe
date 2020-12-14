@@ -1,7 +1,7 @@
 ﻿using System;
-namespace Core.Model
+namespace AppService.AppModel.InputModel
 {
-    public class ForumMessage : BaseEntity
+    public class ForumMessageInputModel
     {
         public string Title { get; set; }
 
@@ -11,10 +11,6 @@ namespace Core.Model
 
         public int? ForumId { get; set; }
 
-        public Forum Forum { get; set; }
-
         public int ForumMessageTypeId { get; set; }
-
-        public ForumMessageType ForumMessageType { get; set; }
     }
 }

@@ -5,4 +5,12 @@ namespace Core.Model
     {
 
     }
+
+    public enum ForumMessageTypeEnum
+    {
+        ANNOUNCEMENT = 1,
+        NOTIFICATION,
+        GROUP,
+        BULLETIN,
+    }
 }

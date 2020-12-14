@@ -45,9 +45,6 @@
     <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\" />
-  </ItemGroup>
   <ItemGroup> 
   <Content Include="Templates\**"> 
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
-using AutoMapper;
 using Core.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

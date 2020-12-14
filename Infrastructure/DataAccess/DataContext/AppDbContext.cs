@@ -96,6 +96,8 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<PermitStatus> PermitStatuses { get; set; }
 
+        public DbSet<ForumMessageType> ForumMessageTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

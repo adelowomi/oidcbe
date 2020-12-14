@@ -66,5 +66,7 @@ namespace Core.Model
         public NextOfKin NextOfKin { get; set; }
 
         public virtual AppUser Empty => new AppUser();
+
+        public IEnumerable<ForumSubscription> ForumSubscriptions { get; set; }
     }
 }

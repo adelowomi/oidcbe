@@ -243,6 +243,18 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.Visitor, opts => opts.MapFrom(src => src.Visitor))
                .ForMember(dest => dest.PermitTypeId, opts => opts.MapFrom(src => src.PermitTypeId))
                ;
+
+            CreateMap<ForumMessage, ForumMessageViewModel>()
+                .ForMember(dest => dest.Forum, opts => opts.MapFrom(src => src.Forum.Name))
+                .ForMember(dest => dest.ForumMessageType, opts => opts.MapFrom(src => src.ForumMessageType.Name))
+                ;
+
+            CreateMap<ForumMessageInputModel, ForumMessage>();
+            CreateMap<Forum, ForumViewModel>();
+            CreateMap<ForumMessageType, ForumMessageTypeViewModel>();
+            CreateMap<ForumSubscription, ForumSubscriptionViewModel>()
+                .ForMember(dest => dest.Forum, opts => opts.MapFrom(src => src.Forum.Name))
+                ;
         }
     }
 }

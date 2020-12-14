@@ -1810,3 +1810,74 @@ VALUES (N'20201211155849_UpdatesPlotRequest', N'3.1.8');
 
 GO
 
+ALTER TABLE [ForumMessages] DROP CONSTRAINT [FK_ForumMessages_Forums_ForumId];
+
+GO
+
+DECLARE @var15 sysname;
+SELECT @var15 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[ForumMessages]') AND [c].[name] = N'ForumId');
+IF @var15 IS NOT NULL EXEC(N'ALTER TABLE [ForumMessages] DROP CONSTRAINT [' + @var15 + '];');
+ALTER TABLE [ForumMessages] ALTER COLUMN [ForumId] int NULL;
+
+GO
+
+ALTER TABLE [ForumMessages] ADD [ForumMessageTypeId] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE TABLE [ForumMessageType] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_ForumMessageType] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_ForumMessages_ForumMessageTypeId] ON [ForumMessages] ([ForumMessageTypeId]);
+
+GO
+
+ALTER TABLE [ForumMessages] ADD CONSTRAINT [FK_ForumMessages_Forums_ForumId] FOREIGN KEY ([ForumId]) REFERENCES [Forums] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+ALTER TABLE [ForumMessages] ADD CONSTRAINT [FK_ForumMessages_ForumMessageType_ForumMessageTypeId] FOREIGN KEY ([ForumMessageTypeId]) REFERENCES [ForumMessageType] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201214053814_AdjustmentInForumEntity', N'3.1.8');
+
+GO
+
+ALTER TABLE [ForumMessages] DROP CONSTRAINT [FK_ForumMessages_ForumMessageType_ForumMessageTypeId];
+
+GO
+
+ALTER TABLE [ForumMessageType] DROP CONSTRAINT [PK_ForumMessageType];
+
+GO
+
+EXEC sp_rename N'[ForumMessageType]', N'ForumMessageTypes';
+
+GO
+
+ALTER TABLE [ForumMessageTypes] ADD CONSTRAINT [PK_ForumMessageTypes] PRIMARY KEY ([Id]);
+
+GO
+
+ALTER TABLE [ForumMessages] ADD CONSTRAINT [FK_ForumMessages_ForumMessageTypes_ForumMessageTypeId] FOREIGN KEY ([ForumMessageTypeId]) REFERENCES [ForumMessageTypes] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201214054218_AdjustmentInForumEntityAgain', N'3.1.8');
+
+GO
+
