@@ -85,6 +85,7 @@ namespace Infrastructure.DataAccess.Repository
                 .Include(x => x.PaymentStatus)
                 .Include(x => x.Subscription)
                 .Include(x => x.Subscription.Offer)
+                .Include(x => x.Subscription.Offer.Plot)
                 .Include(x => x.Subscription.SubscriptionStatus);
             return result;
         }
