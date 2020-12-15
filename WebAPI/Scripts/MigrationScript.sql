@@ -1947,3 +1947,38 @@ VALUES (N'20201215030421_AddedSomeCalendarFields', N'3.1.8');
 
 GO
 
+ALTER TABLE [Contacts] DROP CONSTRAINT [FK_Contacts_ContactTypes_ContactTypeId];
+
+GO
+
+DECLARE @var16 sysname;
+SELECT @var16 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Contacts]') AND [c].[name] = N'ContactId');
+IF @var16 IS NOT NULL EXEC(N'ALTER TABLE [Contacts] DROP CONSTRAINT [' + @var16 + '];');
+ALTER TABLE [Contacts] DROP COLUMN [ContactId];
+
+GO
+
+DROP INDEX [IX_Contacts_ContactTypeId] ON [Contacts];
+DECLARE @var17 sysname;
+SELECT @var17 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Contacts]') AND [c].[name] = N'ContactTypeId');
+IF @var17 IS NOT NULL EXEC(N'ALTER TABLE [Contacts] DROP CONSTRAINT [' + @var17 + '];');
+ALTER TABLE [Contacts] ALTER COLUMN [ContactTypeId] int NOT NULL;
+CREATE INDEX [IX_Contacts_ContactTypeId] ON [Contacts] ([ContactTypeId]);
+
+GO
+
+ALTER TABLE [Contacts] ADD CONSTRAINT [FK_Contacts_ContactTypes_ContactTypeId] FOREIGN KEY ([ContactTypeId]) REFERENCES [ContactTypes] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201215031555_RemovedContactIdFromContactEntity', N'3.1.8');
+
+GO
+

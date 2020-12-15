@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace AppService.AppModel.InputModel
 {
     public class CalendarInputModel
@@ -7,8 +9,10 @@ namespace AppService.AppModel.InputModel
 
         public string Note { get; set; }
 
+        [Required]
         public int PlotId { get; set; }
 
+        [Required]
         public int EventTypeId { get; set; }
 
         public string Location { get; set; }

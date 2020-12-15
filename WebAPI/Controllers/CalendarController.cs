@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
         [Route("api/calendar")]
         public IActionResult NewCalendar([FromBody] CalendarInputModel model)
         {
-            return Ok(ResponseViewModel.Ok(_calendarAppService.NewCalendar(model)));
+            return Ok(_calendarAppService.NewCalendar(model));
         }
 
         [HttpGet]

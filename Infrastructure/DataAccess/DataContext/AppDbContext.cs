@@ -109,32 +109,7 @@ namespace Infrastructure.DataAccess.DataContext
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            //ProcessChanges();
-
             return base.SaveChangesAsync(cancellationToken);
         }
-
-        //private void ProcessChanges ()
-        //{
-        //    var currentTime = DateTime.Now;
-
-        //    foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added && e.Entity is BaseEntity))
-        //    {
-        //        var entity = item.Entity as BaseEntity;
-        //        entity.DateCreated = currentTime;
-        //        entity.DateModified = currentTime;
-        //        entity.CreatedBy = "";
-        //        entity.ModifiedBy = "";
-        //    }
-
-        //    foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is BaseEntity))
-        //    {
-        //        var entity = item.Entity as BaseEntity;
-        //        entity.DateModified = currentTime;
-        //        entity.ModifiedBy = "";
-        //        item.Property(nameof(entity.DateCreated)).IsModified = false;
-        //        item.Property(nameof(entity.CreatedBy)).IsModified = false;
-        //    }
-        //}
     }
 }

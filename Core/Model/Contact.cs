@@ -3,7 +3,7 @@ namespace Core.Model
 {
     public class Contact : BaseNameEntity
     {
-        public int ContactId { get; set; }
+        public int ContactTypeId { get; set; }
 
         public ContactType ContactType { get; set; }
 
