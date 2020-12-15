@@ -183,7 +183,7 @@ namespace AppService.AutoMapper
             CreateMap<Calendar, CalendarViewModel>()
                .ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
                .ForMember(dest => dest.Note, opts => opts.MapFrom(src => src.Note))
-               .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
+               .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.DateCreated))
                .ForMember(dest => dest.Event, opts => opts.MapFrom(src => src.CalendarEvent.Name))
                .ForMember(dest => dest.IsActive, opts => opts.MapFrom(src => src.IsEnabled))
                ;
