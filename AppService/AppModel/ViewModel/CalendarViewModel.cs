@@ -1,7 +1,7 @@
 ﻿using System;
 namespace AppService.AppModel.ViewModel
 {
-    public class CalendarViewModel
+    public class CalendarViewModel : BaseViewModel
     {
         public int Id { get; set; }
 
