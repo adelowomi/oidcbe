@@ -1926,3 +1926,24 @@ VALUES (N'20201214135026_ContactEntity', N'3.1.8');
 
 GO
 
+ALTER TABLE [Calendars] ADD [EndDate] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';
+
+GO
+
+ALTER TABLE [Calendars] ADD [Location] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [Calendars] ADD [Name] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [Calendars] ADD [StartDate] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201215030421_AddedSomeCalendarFields', N'3.1.8');
+
+GO
+
