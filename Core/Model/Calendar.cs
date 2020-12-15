@@ -16,5 +16,13 @@ namespace Core.Model
         public int PlotId { get; set; }
 
         public Plot Plot { get; set; }
+
+        public string Location { get; set; }
+
+        public string Name { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
     }
 }
