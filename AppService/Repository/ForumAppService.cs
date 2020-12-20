@@ -70,7 +70,7 @@ namespace AppService.Repository
 
         public ResponseViewModel GetById(int id)
         {
-            throw new NotImplementedException();
+            return GetAllForumMessages();
         }
 
         public ResponseViewModel GetForumMessageTypes()

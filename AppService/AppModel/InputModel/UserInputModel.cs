@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AppService.AppModel.InputModel
 {
-    public class UserInputModel
+    public class UserInputModel : FireBaseTokenInputModel
     {
         [Required]
         public string FirstName { get; set; }

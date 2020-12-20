@@ -10,7 +10,7 @@ namespace AppService.Repository.Abstractions
     {
         ResponseViewModel GetAllForumMessages();
 
-        ResponseViewModel CreateNewForum(ForumMessageInputModel message);
+        ResponseViewModel CreateNewMessageForum(ForumMessageInputModel message);
 
         ResponseViewModel GetById(int id);
 

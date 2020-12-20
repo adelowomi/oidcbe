@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppService.AppModel.InputModel
 {
-    public class LoginInputModel
+    public class LoginInputModel : FireBaseTokenInputModel
     {
         [Required]
         [EmailAddress]
@@ -12,7 +12,5 @@ namespace AppService.AppModel.InputModel
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        public bool RememberMe { get; set; }
     }
 }
