@@ -36,7 +36,7 @@ namespace AppService.Repository
         {
             var forum = _forumRepository.GetForums().FirstOrDefault(x => x.Id == message.ForumId);
 
-            if(forum == null)
+            if(forum == null && message.ForumMessageTypeId != (int) ForumMessageTypeEnum.NOTIFICATION)
             {
                 return Failed(ResponseMessageViewModel.INVALID_FORUM, ResponseErrorCodeStatus.INVALID_FORUM);
             }
@@ -49,6 +49,11 @@ namespace AppService.Repository
             }
 
             var result = _mapper.Map<ForumMessageInputModel, ForumMessage>(message);
+
+            if (message.ForumMessageTypeId == (int)ForumMessageTypeEnum.NOTIFICATION)
+            {
+                result.ForumId = null;
+            }
 
             var query = _forumRepository.CreateNewForum(result);
 

@@ -1982,3 +1982,12 @@ VALUES (N'20201215031555_RemovedContactIdFromContactEntity', N'3.1.8');
 
 GO
 
+ALTER TABLE [AspNetUsers] ADD [FireBaseToken] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201220011343_FirebaseTokenMigration', N'3.1.8');
+
+GO
+
