@@ -25,6 +25,13 @@ namespace Infrastructure.DataAccess.Repository
             return result;
         }
 
+        public Permit CreatePermit(Permit permit)
+        {
+            var result = CreateAndReturn(permit);
+
+            return All().FirstOrDefault(x => x.Id == result.Id);
+        }
+
         public PermitType CreatePermitType(PermitType permitType)
         {
             var result = _context.PermitTypes.Add(permitType);

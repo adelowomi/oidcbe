@@ -38,9 +38,10 @@ namespace BusinessLogic.Repository
             permit.VehicleId = vehicle.Id;
             permit.VisitorId = null;
             permit.Visitor = null;
-            var query = _permitRepository.CreateAndReturn(permit);
+            var query = _permitRepository.CreatePermit(permit);
             query.PermitType = GetPermitTypes().FirstOrDefault(x => x.Id == query.PermitTypeId);
             query.PermitStatus = GetPermitStatuses().FirstOrDefault(x => x.Id == query.PermitStatusId);
+
             return query;
         }
 
