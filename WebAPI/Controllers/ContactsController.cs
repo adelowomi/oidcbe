@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
@@ -32,6 +33,14 @@ namespace WebAPI.Controllers
         public IActionResult GetContacts()
         {
             return Ok(_contactAppService.GetContacts());
+        }
+
+        [HttpPost]
+        [Route("api/contact")]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<ContactViewModel>>), 200)]
+        public IActionResult CreateNewContact([FromBody] ContactInputModel contact)
+        {
+            return Ok(_contactAppService.CreateContact(contact));
         }
     }
 }

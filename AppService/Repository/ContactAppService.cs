@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using AutoMapper;
@@ -17,6 +18,11 @@ namespace AppService.Repository
         {
             _contactRepository = contactRepository;
             _mapper = mapper;
+        }
+
+        public ResponseViewModel CreateContact(ContactInputModel contact)
+        {
+            return Ok(_mapper.Map<Contact, ContactViewModel>(_contactRepository.CreateAndReturn(_mapper.Map<ContactInputModel, Contact>(contact))));
         }
 
         public ResponseViewModel GetContacts()

@@ -262,6 +262,12 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Telephone, opts => opts.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Type, opts => opts.MapFrom(src => src.ContactType.Name))
                 ;
+
+            CreateMap<ContactInputModel, Contact>()
+              .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.Telephone))
+              .ForMember(dest => dest.ContactTypeId, opts => opts.MapFrom(src => src.ContactTypeId))
+              .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.ContactName))
+              ;
         }
     }
 }
