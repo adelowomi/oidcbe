@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace AppService.AppModel.InputModel
 {
     public class ForumMessageInputModel
@@ -12,5 +14,7 @@ namespace AppService.AppModel.InputModel
         public int? ForumId { get; set; }
 
         public int ForumMessageTypeId { get; set; }
+
+        public List<string> Receivers { get; set; }
     }
 }

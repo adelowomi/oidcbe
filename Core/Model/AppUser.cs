@@ -68,5 +68,7 @@ namespace Core.Model
         public virtual AppUser Empty => new AppUser();
 
         public IEnumerable<ForumSubscription> ForumSubscriptions { get; set; }
+
+        public string FireBaseToken { get; set; }
     }
 }

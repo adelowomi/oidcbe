@@ -150,6 +150,7 @@ namespace WebAPI
 
             services.AddTransient<IContactRepository, ContactRepository>();
             services.AddTransient<IContactAppService, ContactAppService>();
+            services.AddTransient<INotificationAppService, NotificationAppService>();
 
             services.AddHttpContextAccessor();
 

@@ -25,7 +25,7 @@ namespace AppService.Helpers
 
         public string FireBaseBucket { get; set; }
 
-        public string FirebaseSenderKey { get; set; }
+        public string FireBaseSenderKey { get; set; }
           
     }
 

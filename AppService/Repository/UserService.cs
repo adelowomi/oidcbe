@@ -613,5 +613,11 @@ namespace AppService.Repository
 
             }
         }
+
+        public async Task<AppUser> GetCurrentLoggedOnUserAsync()
+        {
+            var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
+            return currentUser;
+        }
     }
 }

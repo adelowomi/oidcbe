@@ -1,5 +1,6 @@
 ﻿using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
+using Core.Model;
 using System.Threading.Tasks;
 
 namespace AppService.Repository.Abstractions
@@ -83,5 +84,17 @@ namespace AppService.Repository.Abstractions
         /// <param name="model"></param>
         /// <returns></returns>
         ResponseViewModel ConfirmOTP(ConfirmOTPInputModel model);
+
+        /// <summary>
+        /// Get Current Logged On User Object
+        /// </summary>
+        /// <returns></returns>
+        Task<AppUser> GetCurrentLoggedOnUserAsync();
+
+        /// <summary>
+        /// Update Current User
+        /// </summary>
+        /// <returns></returns>
+        Task<AppUser> UpdateCurrentUserAsync();
     }
 }

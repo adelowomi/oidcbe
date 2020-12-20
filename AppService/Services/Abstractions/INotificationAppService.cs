@@ -8,5 +8,9 @@ namespace AppService.Services.Abstractions
     public interface INotificationAppService
     {
         Task<ResponseViewModel> SendNotification(NotificationInputModel notification);
+
+        ResponseViewModel NewNotification(ForumMessageInputModel notification);
+
+        ResponseViewModel RegisterToken(string token);
     }
 }
