@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/notification")]
+        [Route("api/notifications")]
         public IActionResult GetNotification()
         {
             if (!ModelState.IsValid)
@@ -30,24 +30,42 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_mobilizationAppService.GetAll());
+            return Ok(_notificationAppService.GetNotifications());
         }
 
         /// <summary>
-        /// Insert New Mobilization
+        /// Register FireBase Token
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/mobilization")]
-        public IActionResult CreateNewMobilization([FromBody] MobilizationInputModel model)
+        [Route("api/notifications/token")]
+        public IActionResult CreateNewMobilization([FromBody] NotificationTokenInputModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_mobilizationAppService.CreateNew(model).Result);
+            return Ok(_notificationAppService.RegisterToken(model.Token));
+        }
+
+
+        /// <summary>
+        /// Register FireBase Token
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/notifications/send")]
+        public IActionResult SendNotification([FromBody] ForumMessageInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_notificationAppService.NewNotification(model));
         }
     }
 }

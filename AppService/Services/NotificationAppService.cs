@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AppService.Services.Abstractions;
+using AutoMapper;
 using Core.Model;
 using FCM.Net;
+using Infrastructure.DataAccess.Repository.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace AppService.Services
@@ -15,15 +18,32 @@ namespace AppService.Services
     {
         private readonly AppSettings _setting;
         private readonly IForumAppService _forumAppService;
+        private readonly IForumRepository _forumRepository;
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
         public NotificationAppService(IOptions<AppSettings> option,
                                       IUserService userService,
+                                      IMapper mapper,
+                                      IForumRepository forumRepository,
                                       IForumAppService forumAppService)
         {
             _setting = option.Value;
             _forumAppService = forumAppService;
             _userService = userService;
+            _forumRepository = forumRepository;
+            _mapper = mapper;
+        }
+
+        public ResponseViewModel GetNotifications()
+        {
+          var results =  _forumRepository
+                .GetAllForumMessages()
+                .Where(x => x.ForumMessageTypeId == (int)ForumMessageTypeEnum.NOTIFICATION)
+                .ToList()
+                .Select(_mapper.Map<ForumMessage, ForumMessageViewModel>);
+
+            return Ok(results);
         }
 
         public ResponseViewModel NewNotification(ForumMessageInputModel notification)
@@ -39,7 +59,9 @@ namespace AppService.Services
                     Title = notification.Title,
                     Body = notification.Message,
                 },
+
                 RegistrationIds = notification.Receivers
+
             }).Result;
 
             return response;

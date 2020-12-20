@@ -12,5 +12,7 @@ namespace AppService.Services.Abstractions
         ResponseViewModel NewNotification(ForumMessageInputModel notification);
 
         ResponseViewModel RegisterToken(string token);
+
+        ResponseViewModel GetNotifications();
     }
 }
