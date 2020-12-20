@@ -11,6 +11,8 @@ namespace AppService.AppModel.InputModel
 
         public int ContactTypeId { get; set; }
 
+        public string EmailAddress { get; set; }
+
         [JsonIgnore]
         public DateTime DateCreated => DateTime.Now;
     }
