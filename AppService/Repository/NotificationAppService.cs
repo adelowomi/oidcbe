@@ -73,7 +73,7 @@ namespace AppService.Services
 
             user.FireBaseToken = token;
 
-            _userService.UpdateCurrentUserAsync(user);
+            _ = _userService.UpdateCurrentUserAsync(user).Result;
 
             return Ok();
         }
