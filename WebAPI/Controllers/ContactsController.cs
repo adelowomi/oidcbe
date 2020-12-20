@@ -35,6 +35,11 @@ namespace WebAPI.Controllers
             return Ok(_contactAppService.GetContacts());
         }
 
+        /// <summary>
+        /// Create New Contact
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/contact")]
         [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<ContactViewModel>>), 200)]
