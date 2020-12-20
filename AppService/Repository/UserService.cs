@@ -622,6 +622,7 @@ namespace AppService.Repository
 
         public async Task<AppUser> UpdateCurrentUserAsync(AppUser appUser)
         {
+
             var result = await _userManager.UpdateAsync(appUser);
 
             return appUser;
