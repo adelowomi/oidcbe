@@ -128,6 +128,7 @@ namespace Infrastructure.DataAccess.Repository
         /// <param name="entity"></param>
         public T Update(T entity)
         {
+            entity.DateModified = DateTime.Now;
             _context.Entry(entity).State = EntityState.Modified;
 
             Save();
@@ -143,7 +144,7 @@ namespace Infrastructure.DataAccess.Repository
         public List<T> CreateMultiple(List<T> entity)
         {
             _context.Set<T>().AddRange(entity);
-            _context.SaveChanges();
+            Save();
             return entity;
         }
     }
