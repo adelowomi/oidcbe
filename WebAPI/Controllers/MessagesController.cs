@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using AppService.AppModel.InputModel;
+﻿using AppService.AppModel.InputModel;
 using AppService.Repository.Abstractions;
-using AppService.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +10,19 @@ namespace WebAPI.Controllers
     [Authorize]
     public class MessagesController : Controller
     {
+        /// <summary>
+        /// Property IForumAppService
+        /// </summary>
         private IForumAppService _forumAppService;
 
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="forumAppService"></param>
         public MessagesController(IForumAppService forumAppService)
         {
             _forumAppService = forumAppService;
         }
-
 
         /// <summary>
         /// Get All Available Mobilization

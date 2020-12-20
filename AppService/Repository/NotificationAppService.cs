@@ -50,7 +50,7 @@ namespace AppService.Services
         {
             notification.ForumMessageTypeId = (int) ForumMessageTypeEnum.NOTIFICATION;
 
-            var response = _forumAppService.CreateNewForum(notification);
+            var response = _forumAppService.CreateNewMessageForum(notification);
 
             _ = SendNotification(new NotificationInputModel
             {

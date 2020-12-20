@@ -54,7 +54,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_forumAppService.CreateNewForum(model));
+            return Ok(_forumAppService.CreateNewMessageForum(model));
         }
 
 
