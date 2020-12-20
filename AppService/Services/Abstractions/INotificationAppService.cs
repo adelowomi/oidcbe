@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 
@@ -6,6 +7,6 @@ namespace AppService.Services.Abstractions
 {
     public interface INotificationAppService
     {
-        ResponseViewModel SendNotification(NotificationTypeInputModel notificationType);
+        Task<ResponseViewModel> SendNotification(NotificationInputModel notification);
     }
 }
