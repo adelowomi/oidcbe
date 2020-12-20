@@ -95,6 +95,6 @@ namespace AppService.Repository.Abstractions
         /// Update Current User
         /// </summary>
         /// <returns></returns>
-        Task<AppUser> UpdateCurrentUserAsync();
+        Task<AppUser> UpdateCurrentUserAsync(AppUser appUser);
     }
 }

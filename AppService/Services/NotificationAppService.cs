@@ -5,12 +5,13 @@ using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AppService.Services.Abstractions;
+using Core.Model;
 using FCM.Net;
 using Microsoft.Extensions.Options;
 
 namespace AppService.Services
 {
-    public class NotificationAppService : INotificationAppService
+    public class NotificationAppService : ResponseViewModel, INotificationAppService
     {
         private readonly AppSettings _setting;
         private readonly IForumAppService _forumAppService;
@@ -27,13 +28,15 @@ namespace AppService.Services
 
         public ResponseViewModel NewNotification(ForumMessageInputModel notification)
         {
+            notification.ForumMessageTypeId = (int) ForumMessageTypeEnum.NOTIFICATION;
+
             var response = _forumAppService.CreateNewForum(notification);
 
             _ = SendNotification(new NotificationInputModel
             {
                 Notification = new Notification
                 {
-                    Title = "Notification",
+                    Title = notification.Title,
                     Body = notification.Message,
                 },
                 RegistrationIds = notification.Receivers
@@ -46,7 +49,11 @@ namespace AppService.Services
         {
             var user = _userService.GetCurrentLoggedOnUserAsync().Result;
 
-            throw new NotImplementedException();
+            user.FireBaseToken = token;
+
+            _userService.UpdateCurrentUserAsync(user);
+
+            return Ok();
         }
 
         public async Task<ResponseViewModel> SendNotification(NotificationInputModel notification)

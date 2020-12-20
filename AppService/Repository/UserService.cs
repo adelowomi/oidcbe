@@ -619,5 +619,12 @@ namespace AppService.Repository
             var currentUser = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
             return currentUser;
         }
+
+        public async Task<AppUser> UpdateCurrentUserAsync(AppUser appUser)
+        {
+            var result = await _userManager.UpdateAsync(appUser);
+
+            return appUser;
+        }
     }
 }
