@@ -17,6 +17,8 @@ namespace Infrastructure.DataAccess.Repository
 
         public ForumMessage CreateNewForum(ForumMessage message)
         {
+            message.DateCreated = DateTime.Now;
+
             var result = CreateAndReturn(message);
 
             return GetItById(result.Id);

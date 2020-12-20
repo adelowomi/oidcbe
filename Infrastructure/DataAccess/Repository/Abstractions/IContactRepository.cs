@@ -8,7 +8,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
     {
         Contact CreateAndReturn(Contact contact);
 
-        IEnumerable<Contact> GetAll();
+        IEnumerable<Contact> GetAllContacts();
 
         Contact GetById(int id);
     }
