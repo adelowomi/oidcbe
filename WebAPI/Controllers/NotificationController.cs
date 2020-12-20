@@ -50,9 +50,8 @@ namespace WebAPI.Controllers
             return Ok(_notificationAppService.RegisterToken(model.Token));
         }
 
-
         /// <summary>
-        /// Register FireBase Token
+        /// Send Push Notification
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
