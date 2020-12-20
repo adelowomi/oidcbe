@@ -67,7 +67,6 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_calendarAppService.Calendars()));
         }
 
-
         [HttpGet]
         [Route("api/calendar/events")]
         public IActionResult CalendarEvents()
