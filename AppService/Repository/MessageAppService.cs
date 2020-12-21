@@ -26,7 +26,9 @@ namespace AppService.Repository
 
         public ResponseViewModel GetConversation()
         {
-            return Ok(_messageRepository.GetAllMessages().Select(_mapper.Map<Message, MessageViewModel>));
+            var user = _userService.GetCurrentLoggedOnUserAsync().Result;
+
+            return Ok(_messageRepository.GetAllMessages().Where(x => x.SenderId == user.Id || x.ReceiverId == user.Id).Select(_mapper.Map<Message, MessageViewModel>));
         }
 
         public ResponseViewModel GetConversation(int userId)

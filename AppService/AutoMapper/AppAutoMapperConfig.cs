@@ -1,4 +1,5 @@
-﻿using AppService.AppModel.InputModel;
+﻿using System;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AutoMapper;
@@ -273,8 +274,14 @@ namespace AppService.AutoMapper
             CreateMap<MessageStatus, MessageStatusViewModel>();
             CreateMap<MessageType, MessageTypeViewModel>();
             CreateMap<MessageIndicator, MessageIndicatorViewModel>();
-            CreateMap<Message, MessageViewModel>();
-            CreateMap<MessageInputModel, Message>();
+            CreateMap<Message, MessageViewModel>()
+                 .ForMember(dest => dest.MessageType, opts => opts.MapFrom(src => src.MessageType.Name))
+                 .ForMember(dest => dest.MessageStatus, opts => opts.MapFrom(src => src.MessageStatus.Name))
+                 //.ForMember(dest => dest.MessageIndicator, opts => opts.MapFrom(src => src.MessageIndicator.Name))
+                 ;
+            CreateMap<MessageInputModel, Message>()
+               
+                ;
         }
     }
 }

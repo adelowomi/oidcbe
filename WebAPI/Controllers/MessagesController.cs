@@ -1,4 +1,7 @@
-﻿using AppService.AppModel.InputModel;
+﻿using System.Collections.Generic;
+using AppService.AppModel.InputModel;
+using AppService.AppModel.ViewModel;
+using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +33,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/messages")]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<MessageViewModel>>), 200)]
         public IActionResult GetMessages()
         {
             if (!ModelState.IsValid)
@@ -47,6 +51,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/messages/{staffId}")]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<MessageViewModel>>), 200)]
         public IActionResult GetMessages(int staffId)
         {
             if (!ModelState.IsValid)
@@ -64,6 +69,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/message")]
+        [ProducesResponseType(typeof(SwaggerResponse<MessageViewModel>), 200)]
         public IActionResult CreateNewMessage([FromBody] MessageInputModel model)
         {
             if (!ModelState.IsValid)
