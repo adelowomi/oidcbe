@@ -152,6 +152,9 @@ namespace WebAPI
             services.AddTransient<IContactAppService, ContactAppService>();
             services.AddTransient<INotificationAppService, NotificationAppService>();
 
+            services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IMessageAppService, MessageAppService>(); 
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
