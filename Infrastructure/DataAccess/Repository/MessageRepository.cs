@@ -1,0 +1,83 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Model;
+using Infrastructure.DataAccess.DataContext;
+using Infrastructure.DataAccess.Repository.Abstractions;
+using Infrastructure.Helpers;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infrastructure.DataAccess.Repository
+{
+    public class MessageRepository : BaseRepository<Message>, IMessageRepository
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
+        public MessageRepository(AppDbContext context) : base(context)
+        {
+          
+        }
+
+        public Message CreateMessage(Message message)
+        {
+            var indicator = CreateMessageIndicator();
+
+            message.MessageIndicatorId = indicator.Id;
+
+            message.MessageStatusId = (int)MessageStatusEnum.PENDING;
+
+            if(message.MessageTypeId == 0)
+            {
+                message.MessageTypeId = (int)MessageTypeEnum.CHAT;
+            }
+
+            var result = CreateAndReturn(message);
+
+            return GetAllMessages().FirstOrDefault(x => x.Id == result.Id);
+        }
+
+        public MessageIndicator CreateMessageIndicator ()
+        {
+            var indicator = new MessageIndicator
+            {
+                Reference = $"ID-REX-{Helper.RandomNumber(12)}",
+                IsEnded = false,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+            };
+
+            return indicator;
+        }
+
+        public IEnumerable<Message> GetAllMessages()
+        {
+            var results = _context.Messages
+                .Include(x => x.Receiver)
+                .Include(x => x.MessageType)
+                .Include(x => x.Sender)
+                .Include(x => x.MessageStatus)
+                .Include(x => x.MessageIndicator)
+                ;
+            return results;
+        }
+
+        public IEnumerable<MessageStatus> GetMessageStatuses()
+        {
+            return _context.MessageStatuses.ToList();
+        }
+
+        public IEnumerable<MessageType> GetMessageTypes()
+        {
+            return _context.MessageTypes.ToList();
+        }
+
+        public Message UpdateMessage(Message message)
+        {
+            var result = Update(message);
+
+            return GetAllMessages().FirstOrDefault<Message>(x => x.Id == result.Id);
+        }
+    }
+}

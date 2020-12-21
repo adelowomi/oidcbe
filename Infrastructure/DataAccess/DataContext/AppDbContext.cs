@@ -102,6 +102,14 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<ContactType> ContactTypes { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
+        public DbSet<MessageType> MessageTypes { get; set; }
+
+        public DbSet<MessageIndicator> MessageIndicators { get; set; }
+
+        public DbSet<MessageStatus> MessageStatuses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

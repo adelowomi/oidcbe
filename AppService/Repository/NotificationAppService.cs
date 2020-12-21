@@ -16,12 +16,23 @@ namespace AppService.Services
 {
     public class NotificationAppService : ResponseViewModel, INotificationAppService
     {
+        /// <summary>
+        /// Properties
+        /// </summary>
         private readonly AppSettings _setting;
         private readonly IForumAppService _forumAppService;
         private readonly IForumRepository _forumRepository;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="option"></param>
+        /// <param name="userService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="forumRepository"></param>
+        /// <param name="forumAppService"></param>
         public NotificationAppService(IOptions<AppSettings> option,
                                       IUserService userService,
                                       IMapper mapper,
@@ -35,6 +46,10 @@ namespace AppService.Services
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get Notification 
+        /// </summary>
+        /// <returns></returns>
         public ResponseViewModel GetNotifications()
         {
           var results =  _forumRepository
@@ -46,6 +61,11 @@ namespace AppService.Services
             return Ok(results);
         }
 
+        /// <summary>
+        /// New Notification
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
         public ResponseViewModel NewNotification(ForumMessageInputModel notification)
         {
             notification.ForumMessageTypeId = (int) ForumMessageTypeEnum.NOTIFICATION;
@@ -67,6 +87,11 @@ namespace AppService.Services
             return response;
         }
 
+        /// <summary>
+        /// Register Firebase Token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public ResponseViewModel RegisterToken(string token)
         {
             var user = _userService.GetCurrentLoggedOnUserAsync().Result;
@@ -82,7 +107,7 @@ namespace AppService.Services
         {
             using (var sender = new Sender(_setting.FireBaseSenderKey))
             {
-                var message = new Message
+                var message = new FCM.Net.Message
                 {
                     RegistrationIds = notification.RegistrationIds,
 

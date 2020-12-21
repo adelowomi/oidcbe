@@ -1991,3 +1991,90 @@ VALUES (N'20201220011343_FirebaseTokenMigration', N'3.1.8');
 
 GO
 
+CREATE TABLE [MessageIndicators] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Reference] nvarchar(max) NULL,
+    [IsEnded] bit NOT NULL,
+    CONSTRAINT [PK_MessageIndicators] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [MessageStatuses] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_MessageStatuses] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [MessageTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_MessageTypes] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Messages] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Text] nvarchar(max) NULL,
+    [MessageIndicatorId] int NULL,
+    [SenderId] int NOT NULL,
+    [ReceiverId] int NULL,
+    [MessageTypeId] int NOT NULL,
+    [MessageStatusId] int NOT NULL,
+    [MessageQuoteId] int NULL,
+    CONSTRAINT [PK_Messages] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Messages_MessageIndicators_MessageIndicatorId] FOREIGN KEY ([MessageIndicatorId]) REFERENCES [MessageIndicators] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Messages_Messages_MessageQuoteId] FOREIGN KEY ([MessageQuoteId]) REFERENCES [Messages] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Messages_MessageStatuses_MessageStatusId] FOREIGN KEY ([MessageStatusId]) REFERENCES [MessageStatuses] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Messages_MessageTypes_MessageTypeId] FOREIGN KEY ([MessageTypeId]) REFERENCES [MessageTypes] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Messages_AspNetUsers_ReceiverId] FOREIGN KEY ([ReceiverId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Messages_AspNetUsers_SenderId] FOREIGN KEY ([SenderId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE INDEX [IX_Messages_MessageIndicatorId] ON [Messages] ([MessageIndicatorId]);
+
+GO
+
+CREATE INDEX [IX_Messages_MessageQuoteId] ON [Messages] ([MessageQuoteId]);
+
+GO
+
+CREATE INDEX [IX_Messages_MessageStatusId] ON [Messages] ([MessageStatusId]);
+
+GO
+
+CREATE INDEX [IX_Messages_MessageTypeId] ON [Messages] ([MessageTypeId]);
+
+GO
+
+CREATE INDEX [IX_Messages_ReceiverId] ON [Messages] ([ReceiverId]);
+
+GO
+
+CREATE INDEX [IX_Messages_SenderId] ON [Messages] ([SenderId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201221051833_MessageEntityMigrations', N'3.1.8');
+
+GO
+

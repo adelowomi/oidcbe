@@ -9,4 +9,10 @@ namespace AppService.AppModel.ViewModel
 
         public DateTime DateModified { get; set; }
     }
+
+    public class BaseNameViewModel : BaseViewModel
+    {
+        public string Name { get; set; }
+    }
 }
+

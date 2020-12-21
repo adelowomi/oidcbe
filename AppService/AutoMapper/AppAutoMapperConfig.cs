@@ -268,6 +268,13 @@ namespace AppService.AutoMapper
               .ForMember(dest => dest.ContactTypeId, opts => opts.MapFrom(src => src.ContactTypeId))
               .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.ContactName))
               ;
+
+            //Message AutoMapper;
+            CreateMap<MessageStatus, MessageStatusViewModel>();
+            CreateMap<MessageType, MessageTypeViewModel>();
+            CreateMap<MessageIndicator, MessageIndicatorViewModel>();
+            CreateMap<Message, MessageViewModel>();
+            CreateMap<MessageInputModel, Message>();
         }
     }
 }

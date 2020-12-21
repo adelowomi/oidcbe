@@ -13,15 +13,15 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Property IForumAppService
         /// </summary>
-        private IForumAppService _forumAppService;
+        private IMessageAppService _messageAppService;
 
         /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="forumAppService"></param>
-        public MessagesController(IForumAppService forumAppService)
+        public MessagesController(IMessageAppService messageAppService)
         {
-            _forumAppService = forumAppService;
+            _messageAppService = messageAppService;
         }
 
         /// <summary>
@@ -37,7 +37,24 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_forumAppService.GetAllForumMessages());
+            return Ok(_messageAppService.GetConversation());
+        }
+
+
+        /// <summary>
+        /// Get All Available Mobilization
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/messages/{staffId}")]
+        public IActionResult GetMessages(int staffId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_messageAppService.GetConversation(staffId));
         }
 
         /// <summary>
@@ -47,31 +64,14 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/message")]
-        public IActionResult CreateNewMessage([FromBody] ForumMessageInputModel model)
+        public IActionResult CreateNewMessage([FromBody] MessageInputModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_forumAppService.CreateNewMessageForum(model));
-        }
-
-        /// <summary>
-        /// Send Push Notification
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/message/{id}")]
-        public IActionResult GetMessageByUserId(int userId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            return Ok(_forumAppService.GetById(userId));
+            return Ok(_messageAppService.SendMessage(model));
         }
     }
 }
