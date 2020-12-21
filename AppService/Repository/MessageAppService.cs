@@ -26,7 +26,7 @@ namespace AppService.Repository
 
         public ResponseViewModel GetConversation()
         {
-            return Ok(_messageRepository.GetMessageTypes().Select(_mapper.Map<MessageType, MessageTypeViewModel>));
+            return Ok(_messageRepository.GetAllMessages().Select(_mapper.Map<Message, MessageViewModel>));
         }
 
         public ResponseViewModel GetConversation(int userId)

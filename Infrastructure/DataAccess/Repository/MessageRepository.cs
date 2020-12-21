@@ -33,6 +33,16 @@ namespace Infrastructure.DataAccess.Repository
                 message.MessageTypeId = (int)MessageTypeEnum.CHAT;
             }
 
+            if(message.MessageQuoteId == 0)
+            {
+                message.MessageQuoteId = null;
+            }
+
+            if (message.ReceiverId == 0)
+            {
+                message.ReceiverId = null;
+            }
+
             var result = CreateAndReturn(message);
 
             return GetAllMessages().FirstOrDefault(x => x.Id == result.Id);
@@ -48,6 +58,8 @@ namespace Infrastructure.DataAccess.Repository
                 DateModified = DateTime.Now,
             };
 
+            _context.MessageIndicators.Add(indicator);
+            Save();
             return indicator;
         }
 

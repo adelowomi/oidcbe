@@ -4,6 +4,7 @@ using System.Linq;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
+using AppService.Services.Abstractions;
 using AutoMapper;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
@@ -15,18 +16,22 @@ namespace AppService.Repository
         private readonly IPaymentService _paymentService;
         private readonly IMapper _mapper;
         private readonly ISubscriptionAppService _subscriptionAppService;
-
+        private readonly INotificationAppService _notificationAppService;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="paymentService"></param>
         /// <param name="subscriptionAppService"></param>
         /// <param name="mapper"></param>
-        public PaymentAppService(IPaymentService paymentService, ISubscriptionAppService subscriptionAppService, IMapper mapper) : base()
+        public PaymentAppService(IPaymentService paymentService,
+                                 ISubscriptionAppService subscriptionAppService,
+                                 INotificationAppService notificationAppService,
+                                 IMapper mapper) : base()
         {
             _paymentService = paymentService;
             _mapper = mapper;
             _subscriptionAppService = subscriptionAppService;
+            _notificationAppService = notificationAppService;
         }
 
         /// <summary>
