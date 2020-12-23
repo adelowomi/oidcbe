@@ -279,8 +279,7 @@ namespace AppService.AutoMapper
                  .ForMember(dest => dest.MessageStatus, opts => opts.MapFrom(src => src.MessageStatus.Name))
                  //.ForMember(dest => dest.MessageIndicator, opts => opts.MapFrom(src => src.MessageIndicator.Name))
                  ;
-            CreateMap<MessageInputModel, Message>()
-               
+            CreateMap<MessageInputModel, Message>()            
                 ;
         }
     }

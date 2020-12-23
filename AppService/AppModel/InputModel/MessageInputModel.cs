@@ -21,6 +21,9 @@ namespace AppService.AppModel.InputModel
         public int? MessageQuoteId { get; set; }
 
         [Required]
-        public string MessageIndicator { get; set; }
+        public string Indicator { get; set; }
+
+        [Required]
+        public int MessageActionId { get; set; }
     }
 }

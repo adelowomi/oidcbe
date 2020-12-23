@@ -22,9 +22,30 @@ namespace Infrastructure.DataAccess.Repository
 
         public Message CreateMessage(Message message)
         {
-            var indicator = CreateMessageIndicator();
+            if (message.MessageActionId == (int)MessageActionEnum.NEW)
+            {
+                var last = GetAllMessages().LastOrDefault();
 
-            message.MessageIndicatorId = indicator.Id;
+                if (last == null)
+                {
+                    message.MessageIndicatorId = CreateMessageIndicator().Id;
+
+                }
+                else
+                {
+                    message.MessageIndicatorId = last.MessageIndicatorId;
+                }
+            }
+            //} else if(message.MessageIndicatorId == (int)MessageActionEnum.REPLY) {
+
+            //    FindMessageIndicator(message.Indicator).Id;
+            //}
+            else
+            {
+                var indicator = string.IsNullOrEmpty(message.Indicator) ? CreateMessageIndicator() : FindMessageIndicator(message.Indicator);
+
+                message.MessageIndicatorId = indicator.Id;
+            }
 
             message.MessageStatusId = (int)MessageStatusEnum.PENDING;
 
@@ -46,6 +67,13 @@ namespace Infrastructure.DataAccess.Repository
             var result = CreateAndReturn(message);
 
             return GetAllMessages().FirstOrDefault(x => x.Id == result.Id);
+        }
+
+        public MessageIndicator FindMessageIndicator (string indicator)
+        {
+            var result = _context.MessageIndicators.FirstOrDefault(x => x.Name == indicator);
+
+            return result;
         }
 
         public MessageIndicator CreateMessageIndicator ()

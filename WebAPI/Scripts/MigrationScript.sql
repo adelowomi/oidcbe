@@ -2078,3 +2078,35 @@ VALUES (N'20201221051833_MessageEntityMigrations', N'3.1.8');
 
 GO
 
+ALTER TABLE [Messages] ADD [Indicator] nvarchar(max) NULL;
+
+GO
+
+ALTER TABLE [Messages] ADD [MessageActionId] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE TABLE [MessageAction] (
+    [Id] int NOT NULL IDENTITY,
+    [DateCreated] datetime2 NOT NULL,
+    [DateModified] datetime2 NOT NULL,
+    [IsEnabled] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    CONSTRAINT [PK_MessageAction] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE INDEX [IX_Messages_MessageActionId] ON [Messages] ([MessageActionId]);
+
+GO
+
+ALTER TABLE [Messages] ADD CONSTRAINT [FK_Messages_MessageAction_MessageActionId] FOREIGN KEY ([MessageActionId]) REFERENCES [MessageAction] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201221070624_MessageActionId', N'3.1.8');
+
+GO
+

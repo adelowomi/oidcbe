@@ -28,5 +28,18 @@ namespace Core.Model
         public int? MessageQuoteId { get; set; }
 
         public Message MessageQuote { get; set; }
+
+        public string Indicator { get; set; }
+
+        public int MessageActionId { get; set; }
+
+        public MessageAction MessageAction { get; set; }
+    }
+
+
+    public enum MessageActionEnum
+    {
+        NEW = 1,
+        REPLY
     }
 }
