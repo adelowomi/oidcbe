@@ -1,11 +1,11 @@
-version: '3.4'
+﻿version: '3.4'
 
 services:
   elastickibanaloggingverify:
     image: ${DOCKER_REGISTRY-}elastickibanaloggingverify
     build:
       context: .
-      dockerfile: ElasticKibanaLoggingVerify/Dockerfile
+      dockerfile: Dockerfile
 
   elasticsearch:
    container_name: elasticsearch

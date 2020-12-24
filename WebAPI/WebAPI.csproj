@@ -59,4 +59,7 @@
     <None Include="**/*" />
     <None Include="**/*" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="docker\" />
+  </ItemGroup>
 </Project>
