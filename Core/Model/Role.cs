@@ -7,4 +7,12 @@ namespace Core.Model
     {
         
     }
+
+    public enum RoleEnum
+    {
+        SUPER_ADMIN = 1,
+        ADMIN = 2,
+        VENDOR = 3,
+        SUBSCRIBER
+    }
 }

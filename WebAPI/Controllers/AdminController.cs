@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace WebAPI.Controllers
 {
-   [Authorize]
+    [Authorize(Roles = "SUPER ADMIN")]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -251,6 +251,19 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_subscriberAppService.GetSubscribers());
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/admin/vendors")]
+        public IActionResult GetVendors()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_subscriberAppService.GetVendors());
         }
     }
 }

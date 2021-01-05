@@ -271,5 +271,28 @@ namespace AppService.Repository
 
             return Ok(subscribers);
         }
+
+
+        public ResponseViewModel GetVendors()
+        {
+            var subscribers = _userManager.GetUsersInRoleAsync(((int)RoleEnum.VENDOR).ToString()).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
+
+            
+            foreach (var subscriber in subscribers)
+            {
+                subscriber.Payments = _paymentService
+                    .GetPayments()
+                    .Where(x => x.Subscription.AppUserId == subscriber.UserId)
+                    .Select(_mapper.Map<Payment, PaymentViewModel>);
+
+                subscriber.Requests = _requestRepository.GetAllRequests()
+                            .Where(x => x.AppUserId == subscriber.UserId)
+
+                            .Select(_mapper.Map<Request, RequestViewModel>)
+                            .ToList();
+            }
+
+            return Ok(subscribers);
+        }
     }
 }

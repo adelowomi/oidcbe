@@ -24,5 +24,7 @@ namespace AppService.Repository.Abstractions
         Task<ResponseViewModel> GetSubscriberById(int id);
 
         ResponseViewModel GetSubscribers();
+
+        ResponseViewModel GetVendors();
     }
 }
