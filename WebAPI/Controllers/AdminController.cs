@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace WebAPI.Controllers
 {
@@ -18,16 +19,19 @@ namespace WebAPI.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ISubscriberAppService _subscriberAppService;
-
+        private readonly ILogger<AdminController> _logger;
+            
         public AdminController(IUserService userService,
                                 UserManager<AppUser> userManager,
                                 ISubscriberAppService subscriberAppService,
-                                IHttpContextAccessor httpContextAccessor)
+                                IHttpContextAccessor httpContextAccessor,
+                                ILogger<AdminController> logger)
         {
             _userService = userService;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _subscriberAppService = subscriberAppService;
+            _logger = logger;
         }
 
         //}
@@ -41,6 +45,8 @@ namespace WebAPI.Controllers
         [Route("api/admin/token")]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginInputModel model)
         {
+            _logger.LogInformation("Trying To Login");
+
             if (!ModelState.IsValid)
             {
                 return BadRequest();
