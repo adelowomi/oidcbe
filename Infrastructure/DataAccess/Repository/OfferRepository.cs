@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Model;
 using Infrastructure.DataAccess.DataContext;
 using Infrastructure.DataAccess.Repository.Abstractions;
@@ -18,8 +19,7 @@ namespace Infrastructure.DataAccess.Repository
         {
             var result = CreateAndReturn(offer);
 
-
-
+            return GetOffers().FirstOrDefault(x => x.Id == offer.Id);
         }
 
         public IEnumerable<Offer> GetOffers()

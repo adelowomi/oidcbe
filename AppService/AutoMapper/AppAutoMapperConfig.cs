@@ -122,6 +122,8 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.IsPaymentCompleted, opts => opts.MapFrom(src => src.IsPaymentCompleted))
                 ;
 
+            CreateMap<OfferInputModel, Offer>();
+
             CreateMap<Plot, PlotViewModel>()
                 .ForMember(dest => dest.Acres, opts => opts.MapFrom(src => src.Acres))
                 .ForMember(dest => dest.PlotName, opts => opts.MapFrom(src => src.Name))
@@ -279,8 +281,9 @@ namespace AppService.AutoMapper
                  .ForMember(dest => dest.MessageStatus, opts => opts.MapFrom(src => src.MessageStatus.Name))
                  //.ForMember(dest => dest.MessageIndicator, opts => opts.MapFrom(src => src.MessageIndicator.Name))
                  ;
-            CreateMap<MessageInputModel, Message>()            
-                ;
+            CreateMap<MessageInputModel, Message>();
+          
+           
         }
     }
 }

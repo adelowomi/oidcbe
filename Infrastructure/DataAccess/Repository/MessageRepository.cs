@@ -36,10 +36,7 @@ namespace Infrastructure.DataAccess.Repository
                     message.MessageIndicatorId = last.MessageIndicatorId;
                 }
             }
-            //} else if(message.MessageIndicatorId == (int)MessageActionEnum.REPLY) {
-
-            //    FindMessageIndicator(message.Indicator).Id;
-            //}
+           
             else
             {
                 var indicator = string.IsNullOrEmpty(message.Indicator) ? CreateMessageIndicator() : FindMessageIndicator(message.Indicator);
@@ -66,7 +63,9 @@ namespace Infrastructure.DataAccess.Repository
 
             var result = CreateAndReturn(message);
 
-            return GetAllMessages().FirstOrDefault(x => x.Id == result.Id);
+            var messages = GetAllMessages().FirstOrDefault(x => x.Id == result.Id);
+
+            return messages;
         }
 
         public MessageIndicator FindMessageIndicator (string indicator)

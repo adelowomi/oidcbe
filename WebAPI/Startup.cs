@@ -153,7 +153,11 @@ namespace WebAPI
             services.AddTransient<INotificationAppService, NotificationAppService>();
 
             services.AddTransient<IMessageRepository, MessageRepository>();
-            services.AddTransient<IMessageAppService, MessageAppService>(); 
+            services.AddTransient<IMessageAppService, MessageAppService>();
+
+            services.AddTransient<IOfferRepository, OfferRepository>();
+            services.AddTransient<IOfferService, OfferService>();
+            services.AddTransient<IOfferAppService, OfferAppService>();
 
             services.AddHttpContextAccessor();
 

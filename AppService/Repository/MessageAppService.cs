@@ -57,9 +57,10 @@ namespace AppService.Repository
         {
             message.SenderId = _userService.GetCurrentLoggedOnUserAsync().Result.Id;
 
-            return Ok(_mapper.Map<Message, MessageViewModel>(
-                        _messageRepository
-                            .CreateMessage(_mapper.Map<MessageInputModel, Message>(message))));
+            var results = _messageRepository
+                            .CreateMessage(_mapper.Map<MessageInputModel, Message>(message));
+
+            return Ok(_mapper.Map<Message, MessageViewModel>(results));
         }
     }
 }
