@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="offer"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         [Route("api/offer")]
         public IActionResult GenerateOffer([FromBody] OfferInputModel offer)
         {
