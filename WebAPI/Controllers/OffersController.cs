@@ -55,5 +55,29 @@ namespace WebAPI.Controllers
         {
             return Ok(_offerAppService.GetAllOffers());
         }
+
+        /// <summary>
+        /// Get Offer By OfferId
+        /// </summary>
+        /// <param name="offerId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/offer/{offerId}")]
+        public IActionResult GetOfferBy(int offerId)
+        {
+            return Ok(_offerAppService.GetOfferBy(offerId));
+        }
+
+        /// <summary>
+        /// Get Offer By OfferId
+        /// </summary>
+        /// <param name="offerId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/offer/plot/{plotId}")]
+        public IActionResult GetOfferByPlot(int plotId)
+        {
+            return Ok(_offerAppService.GetOfferBy(0, plotId));
+        }
     }
 }
