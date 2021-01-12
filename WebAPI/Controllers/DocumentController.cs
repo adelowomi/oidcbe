@@ -61,7 +61,12 @@ namespace WebAPI.Controllers
             return Ok(_documentAppService.CreateNewDocument(model).Result);
         }
 
-       
+
+        /// <summary>
+        /// Get Document Link
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [Route("api/documents/link")]
@@ -74,6 +79,11 @@ namespace WebAPI.Controllers
             return File(bytes, "image/jpeg");
         }
 
+
+        /// <summary>
+        /// Get Document Types
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [Route("api/documents/types")]

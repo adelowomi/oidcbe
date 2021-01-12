@@ -265,5 +265,18 @@ namespace WebAPI.Controllers
 
             return Ok(_subscriberAppService.GetVendors());
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/admin/vendor/{id}")]
+        public IActionResult GetVendors(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_subscriberAppService.GetVendors(id));
+        }
     }
 }

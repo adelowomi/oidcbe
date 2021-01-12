@@ -275,24 +275,32 @@ namespace AppService.Repository
 
         public ResponseViewModel GetVendors()
         {
-            var subscribers = _userManager.GetUsersInRoleAsync(((int)RoleEnum.VENDOR).ToString()).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
+            var vendors = _userManager.GetUsersInRoleAsync(((int)RoleEnum.VENDOR).ToString()).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
 
             
-            foreach (var subscriber in subscribers)
+            foreach (var vendor in vendors)
             {
-                subscriber.Payments = _paymentService
+                vendor.Payments = _paymentService
                     .GetPayments()
-                    .Where(x => x.Subscription.AppUserId == subscriber.UserId)
+                    .Where(x => x.Subscription.AppUserId == vendor.UserId)
                     .Select(_mapper.Map<Payment, PaymentViewModel>);
 
-                subscriber.Requests = _requestRepository.GetAllRequests()
-                            .Where(x => x.AppUserId == subscriber.UserId)
+                vendor.Requests = _requestRepository.GetAllRequests()
+                            .Where(x => x.AppUserId == vendor.UserId)
 
                             .Select(_mapper.Map<Request, RequestViewModel>)
                             .ToList();
             }
 
-            return Ok(subscribers);
+            return Ok(vendors);
+        }
+
+
+        public ResponseViewModel GetVendors(int id)
+        {
+            var vendor = _mapper.Map<AppUser, VendorViewModel>(_userManager.GetUsersInRoleAsync(((int)RoleEnum.VENDOR).ToString()).Result.FirstOrDefault(x => x.Id == id));
+
+            return Ok(vendor);
         }
     }
 }

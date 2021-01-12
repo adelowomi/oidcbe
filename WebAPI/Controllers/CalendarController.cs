@@ -46,6 +46,11 @@ namespace WebAPI.Controllers
             return Ok(_calendarAppService.NewCalendar(model));
         }
 
+        /// <summary>
+        /// Get Calendar By Plot Id
+        /// </summary>
+        /// <param name="plotId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/calendar/plot/{id}")]
         public IActionResult GetCalendarBy(int plotId)
@@ -53,6 +58,11 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_calendarAppService.CalendarByPlot(plotId))) ;
         }
 
+        /// <summary>
+        /// Get Calendar By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/calendar/{id}")]
         public IActionResult GetCalendar(int id)
@@ -60,6 +70,11 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_calendarAppService.CalendarById(id)));
         }
 
+
+        /// <summary>
+        /// Get All Calendars
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/calendar/alls")]
         public IActionResult GetAllCalendar()
@@ -67,6 +82,10 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_calendarAppService.Calendars()));
         }
 
+        /// <summary>
+        /// Get Calendar Events
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/calendar/events")]
         public IActionResult CalendarEvents()
