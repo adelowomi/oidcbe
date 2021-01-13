@@ -7,6 +7,9 @@ namespace AppService.AppModel.InputModel
     public class JobInputModel
     {
         [Required]
+        public string Name { get; set; }
+
+        [Required]
         public int JobTypeId { get; set; }
 
         [JsonIgnore]

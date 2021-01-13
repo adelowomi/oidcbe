@@ -1,10 +1,1 @@
-﻿using System;
-namespace WebAPI
-{
-	public class Config
-	{
-		public Config()
-		{
-		}
-	}
-}
+﻿git pull && docker build -t orange . && docker stop oidc-be && docker run --rm -d -p 5000:80 -p 5001:443 -e ASPNETCORE_HTTPS_URL=https://+5001 -e ASPNETCORE_PORT=http://+5000 --name oidc-be orange && clear
