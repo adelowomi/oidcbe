@@ -14,5 +14,8 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         IEnumerable<Proposal> GetProposals();
 
+        IEnumerable<ProposalStatus> GetProposalStatuses();
+
+        Proposal ApproveDisApprove(int statusId, int proposalId);
     }
 }

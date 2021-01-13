@@ -2,6 +2,7 @@
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
+using Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,15 +14,21 @@ namespace WebAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly ISubscriberAppService _subscriberAppService;
+        private readonly IJobAppService _jobAppService;
+        private readonly IProposalAppService _proposalAppService;
         private readonly ILogger<AdminController> _logger;
             
         public AdminController(IUserService userService,
                                 ISubscriberAppService subscriberAppService,
+                                IJobAppService jobAppService,
+                                IProposalAppService proposalAppService,
                                 ILogger<AdminController> logger)
         {
             _userService = userService;
             _subscriberAppService = subscriberAppService;
             _logger = logger;
+            _jobAppService = jobAppService;
+            _proposalAppService = proposalAppService;
         }
 
         //}
@@ -267,6 +274,61 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_subscriberAppService.GetVendors(id));
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/admin/job")]
+        public IActionResult CreateJob([FromBody] JobInputModel job)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_jobAppService.CreateNewJob(job));
+        }
+
+
+        [HttpPut]
+        [AllowAnonymous]
+        [Route("api/admin/job")]
+        public IActionResult UpdateJob([FromBody] JobInputModel job)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_jobAppService.UpdateJob(job));
+        }
+
+
+        [HttpPut]
+        [AllowAnonymous]
+        [Route("api/admin/proposal/approve")]
+        public IActionResult Approve(int proposalId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            
+            return Ok(_proposalAppService.ApproveOrDisapprove(2, proposalId));
+        }
+
+
+        [HttpPut]
+        [AllowAnonymous]
+        [Route("api/admin/proposal/decline")]
+        public IActionResult Decline(int proposalId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_proposalAppService.ApproveOrDisapprove(3, proposalId));
         }
     }
 }

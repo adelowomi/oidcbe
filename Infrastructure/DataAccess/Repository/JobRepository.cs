@@ -42,6 +42,16 @@ namespace Infrastructure.DataAccess.Repository
             return result;
         }
 
+        public IEnumerable<JobStatus> GetJobStatuses()
+        {
+            return _context.JobStatuses.ToList();
+        }
+
+        public IEnumerable<JobType> GetJobTypes()
+        {
+            return _context.JobTypes.ToList();
+        }
+
         public Job UpdateJob(Job job)
         {
             var result = Update(job);

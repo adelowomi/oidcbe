@@ -279,11 +279,20 @@ namespace AppService.AutoMapper
             CreateMap<Message, MessageViewModel>()
                  .ForMember(dest => dest.MessageType, opts => opts.MapFrom(src => src.MessageType.Name))
                  .ForMember(dest => dest.MessageStatus, opts => opts.MapFrom(src => src.MessageStatus.Name))
-                 //.ForMember(dest => dest.MessageIndicator, opts => opts.MapFrom(src => src.MessageIndicator.Name))
+                 
                  ;
             CreateMap<MessageInputModel, Message>();
-          
-           
+
+            CreateMap<Proposal, ProposalViewModel>()
+                 .ForMember(dest => dest.ProposalStatus, opts => opts.MapFrom(src => src.ProposalStatus.Name));
+
+            CreateMap<Job, JobViewModel>()
+               .ForMember(dest => dest.JobType, opts => opts.MapFrom(src => src.JobType.Name))
+               .ForMember(dest => dest.JobStatus, opts => opts.MapFrom(src => src.JobStatus.Name));
+
+            CreateMap<JobType, JobTypeViewModel>();
+            CreateMap<JobStatus, JobStatusViewModel>();
+            CreateMap<ProposalStatus, ProposalStatusViewModel>();
         }
     }
 }

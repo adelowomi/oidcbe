@@ -282,6 +282,8 @@ namespace AppService.AppModel.ViewModel
         public static string SUBSCRIBER_NOT_EXITS = "Subscriber not exits";
         public static string INVALID_FORUM = "Invalid Forum, please try again!";
         public static string INVALID_FORUM_TYPE = "Invalid Forum, please try again!";
+        public static string INVALID_STATUS = "Invalid Status";
+        public static string INVALID_PROPOSAL = "Invalid Proposal";
     }
 
     /// <summary>
@@ -345,6 +347,8 @@ namespace AppService.AppModel.ViewModel
         public static readonly string SUBSCRIBER_NOT_EXITS = "36";
         public static readonly string INVALID_FORUM = "37";
         public static readonly string INVALID_FORUM_TYPE = "38";
+        public static readonly string INVALID_STATUS = "39";
+        public static readonly string INVALID_PROPOSAL = "40";
 
         //FAILURES
         public static readonly string FAIL = "91";

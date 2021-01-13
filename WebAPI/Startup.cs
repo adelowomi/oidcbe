@@ -160,7 +160,10 @@ namespace WebAPI
             services.AddTransient<IOfferAppService, OfferAppService>();
 
             services.AddTransient<IJobRepository, JobRepository>();
+            services.AddTransient<IJobAppService, JobAppService>();
+
             services.AddTransient<IProposalRepository, ProposalRepository>();
+            services.AddTransient<IProposalAppService, ProposalAppService>();
 
             services.AddHttpContextAccessor();
 

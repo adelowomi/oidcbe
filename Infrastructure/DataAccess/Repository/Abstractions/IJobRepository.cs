@@ -13,5 +13,9 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         Job GetJobBy(int id);
 
         IEnumerable<Job> GetJobs();
+
+        IEnumerable<JobType> GetJobTypes();
+
+        IEnumerable<JobStatus> GetJobStatuses();
     }
 }

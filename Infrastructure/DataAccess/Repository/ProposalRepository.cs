@@ -17,6 +17,18 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
+        public Proposal ApproveDisApprove(int statusId, int proposalId)
+        {
+            var proposal = GetProposalBy(proposalId);
+
+            proposal.ProposalStatusId = statusId;
+
+            Save();
+
+            return proposal;
+
+        }
+
         public Proposal CreateProposal(Proposal proposal)
         {
             var result = CreateAndReturn(proposal);
@@ -39,6 +51,11 @@ namespace Infrastructure.DataAccess.Repository
                 ;
 
             return results;
+        }
+
+        public IEnumerable<ProposalStatus> GetProposalStatuses()
+        {
+            return _context.ProposalStatuses.ToList();
         }
 
         public Proposal UpdateProposal(Proposal proposal)
