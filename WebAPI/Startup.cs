@@ -159,6 +159,9 @@ namespace WebAPI
             services.AddTransient<IOfferService, OfferService>();
             services.AddTransient<IOfferAppService, OfferAppService>();
 
+            services.AddTransient<IJobRepository, JobRepository>();
+            services.AddTransient<IProposalRepository, ProposalRepository>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>

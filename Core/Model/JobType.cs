@@ -5,4 +5,10 @@ namespace Core.Model
     {
        
     }
+
+    public enum JobTypeEnum
+    {
+        TEMPORARY = 1,
+        PERMANENT
+    }
 }

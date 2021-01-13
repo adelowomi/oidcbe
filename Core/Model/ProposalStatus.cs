@@ -1,5 +1,4 @@
-﻿using System;
-namespace Core.Model
+﻿namespace Core.Model
 {
     public class ProposalStatus : BaseNameEntity
     {

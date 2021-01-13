@@ -61,10 +61,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="docker\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="obj\Debug\netcoreapp3.1\WebAPI.csprojAssemblyReference.cache" />
     <None Remove="obj\Debug\netcoreapp3.1\WebAPI.csprojAssemblyReference.cache" />
+    <None Remove="Migrations\AppDbContextModelSnapshot.cs" />
+    <None Remove="Migrations\AppDbContextModelSnapshot.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\AppDbContextModelSnapshot.cs" />
   </ItemGroup>
 </Project>
