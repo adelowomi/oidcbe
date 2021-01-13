@@ -1,12 +1,8 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
-using Core.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,20 +12,14 @@ namespace WebAPI.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly UserManager<AppUser> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ISubscriberAppService _subscriberAppService;
         private readonly ILogger<AdminController> _logger;
             
         public AdminController(IUserService userService,
-                                UserManager<AppUser> userManager,
                                 ISubscriberAppService subscriberAppService,
-                                IHttpContextAccessor httpContextAccessor,
                                 ILogger<AdminController> logger)
         {
             _userService = userService;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
             _subscriberAppService = subscriberAppService;
             _logger = logger;
         }

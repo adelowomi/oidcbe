@@ -2110,3 +2110,8 @@ VALUES (N'20201221070624_MessageActionId', N'3.1.8');
 
 GO
 
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210112100104_SomeEntitiesForJob', N'3.1.8');
+
+GO
+
