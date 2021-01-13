@@ -291,6 +291,7 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.JobStatus, opts => opts.MapFrom(src => src.JobStatus.Name));
 
             CreateMap<JobType, JobTypeViewModel>();
+            CreateMap<JobInputModel, Job>();
             CreateMap<JobStatus, JobStatusViewModel>();
             CreateMap<ProposalStatus, ProposalStatusViewModel>();
         }
