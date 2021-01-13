@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/proposal/{id}")]
+        [Route("api/proposal")]
         [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<ProposalViewModel>>), 200)]
         public IActionResult MakeProposal([FromBody] ProposalInputModel model)
         {
