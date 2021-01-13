@@ -110,15 +110,16 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<MessageStatus> MessageStatuses { get; set; }
 
+        public DbSet<Proposal> Proposals { get; set; }
+
+        public DbSet<ProposalStatus> ProposalStatuses { get; set; }
+
         public DbSet<Job> Jobs { get; set; }
 
         public DbSet<JobType> JobTypes { get; set; }
 
         public DbSet<JobStatus> JobStatuses { get; set; }
 
-        public DbSet<Proposal> Proposals { get; set; }
-
-        public DbSet<ProposalStatus> ProposalStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

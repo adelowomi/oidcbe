@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="docker\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="obj\Debug\netcoreapp3.1\WebAPI.csprojAssemblyReference.cache" />
