@@ -24,11 +24,6 @@ namespace AppService.Repository
         {
             var mappedResult = _mapper.Map<JobInputModel, Job>(job);
 
-            if(job.AppUserId == 0)
-            {
-                job.AppUserId = null;
-            }
-
             var result = _mapper.Map<Job, JobViewModel>(_jobRepository.CreateJob(mappedResult));
 
             return Ok(result);

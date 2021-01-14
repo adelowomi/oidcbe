@@ -20,9 +20,15 @@ namespace Infrastructure.DataAccess.Repository
         public Job CreateJob(Job job)
         {
             job.JobStatusId = (int)JobStatusEnum.AVAILABLE;
+
+            if (job.AppUserId == 0)
+            {
+                job.AppUserId = null;
+            }
+
             var result = CreateAndReturn(job);
 
-            return GetById(result.Id);
+            return GetJobBy(result.Id);
         }
 
         public Job GetJobBy(int id)
@@ -57,7 +63,7 @@ namespace Infrastructure.DataAccess.Repository
         {
             var result = Update(job);
 
-            return GetById(result.Id);
+            return GetJobBy(result.Id);
         }
     }
 }
