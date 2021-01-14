@@ -15,12 +15,14 @@ namespace AppService.Repository
         protected readonly IProposalRepository _proposalRepository;
         protected readonly IMapper _mapper;
         protected readonly IUserService _userService;
+        protected readonly IJobRepository _jobRepository;
 
-        public ProposalAppService(IProposalRepository proposalRepository, IMapper mapper, IUserService userService)
+        public ProposalAppService(IProposalRepository proposalRepository, IMapper mapper, IUserService userService, IJobRepository jobRepository)
         {
             _proposalRepository = proposalRepository;
             _mapper = mapper;
             _userService = userService;
+            _jobRepository = jobRepository;
         }
 
         public ResponseViewModel ApproveOrDisapprove(int statusId, int proposalId)
@@ -46,18 +48,24 @@ namespace AppService.Repository
 
         public ResponseViewModel CreateProposalJob(ProposalInputModel proposal)
         {
+            var job = _jobRepository.GetJobBy(proposal.JobId);
+
+            if(job == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_JOB, ResponseErrorCodeStatus.INVALID_JOB);
+            }
+
             var user = _userService.GetCurrentLoggedOnUserAsync().Result;
 
-            proposal.AppUserId = user.Id;
-
-            proposal.ProposalStatusId = (int)ProposalStatusEnum.PENDING;
-
             var mappedResult = _mapper.Map<ProposalInputModel, Proposal>(proposal);
+
+            mappedResult.ProposalStatusId = (int)ProposalStatusEnum.PENDING;
+
+            mappedResult.AppUserId = user.Id;
 
             var result = _mapper.Map<Proposal, ProposalViewModel>(_proposalRepository.CreateProposal(mappedResult));
 
             return Ok(result);
-
         }
 
         public ResponseViewModel GetAllProposals()
