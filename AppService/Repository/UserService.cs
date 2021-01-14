@@ -29,7 +29,7 @@ namespace AppService.Repository
     /// <summary>
     /// Concrete Implementation IUserService
     /// </summary>
-    public class UserService : IUserService
+    public class UserService : ResponseViewModel, IUserService
     {
         protected readonly AppSettings _settings;
         protected readonly UserManager<AppUser> _userManager;
@@ -395,16 +395,25 @@ namespace AppService.Repository
             }
         }
 
-
+        /// <summary>
+        /// Confirmation OTP Code 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public ResponseViewModel ConfirmOTP(ConfirmOTPInputModel model)
         {
             var currentUser = new AppUser().Empty;
+
+            if(string.IsNullOrEmpty(model.Platform))
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLATFORM, ResponseErrorCodeStatus.INVALID_PLATFORM);
+            }
 
             if ((model.Platform ?? Res.MOBILE_PLATFORM).ToLower() == Res.MOBILE_PLATFORM) {
 
                  currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
-                if (currentUser == null) return ResponseViewModel.Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
+                if (currentUser == null) return Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
             }
             
             try
@@ -413,14 +422,14 @@ namespace AppService.Repository
             }
             catch (InvalidTokenCodeExcepton e)
             {
-                return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
+                return Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
             }
             catch (ExpiredTokenCodeException e)
             {
-                return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
+                return Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
             }
 
-            return ResponseViewModel.Ok();
+            return Failed();
         }
         /// <summary>
         /// Asynchronous Method, To Reset Password

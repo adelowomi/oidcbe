@@ -5,13 +5,12 @@ namespace AppService.AppModel.InputModel
 {
     public class ConfirmOTPInputModel
     {
-        
         public string EmailAddress { get; set; }
 
         [Required]
-       
         public string Code { get; set; }
 
+        [Required]
         public string Platform { get; set; }
     }
 }

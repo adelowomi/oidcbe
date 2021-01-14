@@ -284,6 +284,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_FORUM_TYPE = "Invalid Forum, please try again!";
         public static string INVALID_STATUS = "Invalid Status";
         public static string INVALID_PROPOSAL = "Invalid Proposal";
+        public static string INVALID_PLATFORM = "Invalid platform entered! Please try again!";
     }
 
     /// <summary>
@@ -349,6 +350,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_FORUM_TYPE = "38";
         public static readonly string INVALID_STATUS = "39";
         public static readonly string INVALID_PROPOSAL = "40";
+        public static readonly string INVALID_PLATFORM = "41";
 
         //FAILURES
         public static readonly string FAIL = "91";
