@@ -409,6 +409,13 @@ namespace AppService.Repository
                 return NotFound(ResponseMessageViewModel.INVALID_PLATFORM, ResponseErrorCodeStatus.INVALID_PLATFORM);
             }
 
+            var platform = _otpService.GetPlatformByIts(Res.ZERO, model.Platform);
+
+            if(platform == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLATFORM, ResponseErrorCodeStatus.INVALID_PLATFORM);
+            }
+
             if ((model.Platform ?? Res.MOBILE_PLATFORM).ToLower() == Res.MOBILE_PLATFORM) {
 
                  currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;

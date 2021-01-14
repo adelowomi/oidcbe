@@ -33,5 +33,20 @@ namespace BusinessLogic.Repository.Abstractions
         /// <param name="platform"></param>
         /// <returns></returns>
         OTP VerifyToken(string token, string platform);
+
+        /// <summary>
+        /// Get Platform By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Platform GetPlatformByIts(int id);
+
+        /// <summary>
+        /// Get Platform By Name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="platformName"></param>
+        /// <returns></returns>
+        Platform GetPlatformByIts(int id, string platformName);
     }
 }

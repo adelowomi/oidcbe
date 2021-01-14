@@ -32,5 +32,22 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// <param name="platform"></param>
         /// <returns></returns>
         OTP GetToken(string token, string platform);
+
+        /// <summary>
+        /// Get Platform By Id
+        /// Method Overloads +1
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Platform GetPlatformBy(int id);
+
+        /// <summary>
+        /// Get Platform By Id, Name
+        /// Method Overloads +2
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="platformName"></param>
+        /// <returns></returns>
+        Platform GetPlatformBy(int id, string platformName);
     }
 }

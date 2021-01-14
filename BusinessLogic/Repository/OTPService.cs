@@ -48,6 +48,16 @@ namespace BusinessLogic.Repository
             return code.Code;
         }
 
+        public Platform GetPlatformByIts(int id)
+        {
+            return _otpRepository.GetPlatformBy(id);
+        }
+
+        public Platform GetPlatformByIts(int id, string platformName)
+        {
+            return _otpRepository.GetPlatformBy(id, platformName);
+        }
+
         public OTP VerifyToken(string token, string platform)
         {
             return _otpRepository.GetToken(token, platform);

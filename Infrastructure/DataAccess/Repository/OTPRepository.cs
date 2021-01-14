@@ -165,5 +165,28 @@ namespace Infrastructure.DataAccess.Repository
 
             return GetAll().FirstOrDefault(x => x.Code == code); ;
         }
+
+        /// <summary>
+        /// Get Platform By Id
+        /// Method Overloads +1
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Platform GetPlatformBy(int id)
+        {
+            return _context.Platforms.FirstOrDefault(x => x.Id == id);
+        }
+
+        /// <summary>
+        /// Get Platform By Id, Name
+        /// Method Overloads +2
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="platformName"></param>
+        /// <returns></returns>
+        public Platform GetPlatformBy(int id, string platformName)
+        {
+            return _context.Platforms.FirstOrDefault(x => x.Name == platformName);
+        }
     }
 }

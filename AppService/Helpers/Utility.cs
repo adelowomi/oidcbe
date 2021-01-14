@@ -74,6 +74,7 @@ namespace AppService.Helpers
         public static readonly string ACCOUNT_SETUP = "Account Setup";
         public static readonly string WEB_PLATFORM = "web";
         public static readonly string MOBILE_PLATFORM = "mobile";
+        public static readonly int ZERO = 0;
     }
 
 
