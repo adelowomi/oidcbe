@@ -24,8 +24,6 @@ namespace AppService.Repository
         {
             var mappedResult = _mapper.Map<JobInputModel, Job>(job);
 
-            job.JobStatusId = (int)JobStatusEnum.AVAILABLE;
-
             if(job.AppUserId == 0)
             {
                 job.AppUserId = null;

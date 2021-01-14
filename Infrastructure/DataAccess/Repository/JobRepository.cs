@@ -19,6 +19,7 @@ namespace Infrastructure.DataAccess.Repository
 
         public Job CreateJob(Job job)
         {
+            job.JobStatusId = (int)JobStatusEnum.AVAILABLE;
             var result = CreateAndReturn(job);
 
             return GetById(result.Id);
