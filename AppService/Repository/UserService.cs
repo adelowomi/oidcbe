@@ -436,7 +436,7 @@ namespace AppService.Repository
                 return Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
             }
 
-            return Failed(ResponseMessageViewModel.UNKOWN_ERROR);
+            return Ok();
         }
         /// <summary>
         /// Asynchronous Method, To Reset Password
