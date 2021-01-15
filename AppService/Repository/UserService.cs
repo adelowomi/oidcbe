@@ -420,7 +420,7 @@ namespace AppService.Repository
 
                  currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
-                if (currentUser == null) return Failed().AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
+                if (currentUser == null) return Failed(ResponseMessageViewModel.INVALID_EMAIL_ADDRESS).AddStatusCode(ResponseErrorCodeStatus.INVALID_EMAIL_ADDRESS);
             }
             
             try
@@ -436,7 +436,7 @@ namespace AppService.Repository
                 return Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
             }
 
-            return Failed();
+            return Failed(ResponseMessageViewModel.UNKOWN_ERROR);
         }
         /// <summary>
         /// Asynchronous Method, To Reset Password

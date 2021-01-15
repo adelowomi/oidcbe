@@ -203,6 +203,16 @@ namespace AppService.AppModel.ViewModel
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
+        public static ResponseViewModel Failed(string message)
+        {
+            return new ResponseViewModel(false, message);
+        }
+
+        /// <summary>
+        ///  Failed that return this
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public static ResponseViewModel Failed(string message, string statusCode)
         {
             return new ResponseViewModel(false, message, null, statusCode);
@@ -286,6 +296,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_PROPOSAL = "Invalid Proposal";
         public static string INVALID_PLATFORM = "Invalid platform entered! Please try again!";
         public static string INVALID_JOB = "Invalid job detail";
+        public static string INVALID_EMAIL_ADDRESS = "Invalid Email Address";
     }
 
     /// <summary>
