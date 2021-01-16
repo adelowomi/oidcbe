@@ -32,3 +32,9 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+
+
+#mkdir azagent;cd azagent;curl -fkSL -o vstsagent.tar.gz https://vstsagentpackage.azureedge.net/agent/2.179.0/vsts-agent-linux-x64-2.179.0.tar.gz;tar -zxvf vstsagent.tar.gz; if [ -x "$(command -v systemctl)" ]; then ./config.sh --deploymentgroup --deploymentgroupname "OIDC - Testing" --acceptteeeula --agent $HOSTNAME --url https://cousant.visualstudio.com/ --work _work --projectname 'OIDC' --runasservice; ./svc.sh install; ./svc.sh start; else ./config.sh --deploymentgroup --deploymentgroupname "OIDC - Testing" --acceptteeeula --agent $HOSTNAME --url https://cousant.visualstudio.com/ --work _work --projectname 'OIDC'; ./run.sh; fi
+
+#scp -i /users/mac/.ssh/oidc/id_rsa -r vsts-agent-linux-arm64-2.181.0.tar.gz root@159.89.22.14:/vsts-agent-linux-arm64-2.181.0.tar.gz
