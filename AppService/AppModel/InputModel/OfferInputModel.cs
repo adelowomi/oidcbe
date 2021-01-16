@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AppService.AppModel.InputModel
 {
@@ -13,5 +13,13 @@ namespace AppService.AppModel.InputModel
         public string DocumentPath { get; set; }
 
         public bool IsPaymentCompleted { get; }
+
+        public int UserId { get; set; }
+
+        public double InitialAmount { get; set; }
+
+        public double SellingPrice { get; set; }
+
+        public int DurationInMonths { get; set; }
     }
 }
