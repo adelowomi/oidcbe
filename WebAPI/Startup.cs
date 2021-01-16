@@ -26,6 +26,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SendGrid.Extensions.DependencyInjection;
+using WebAPI.SignalR.Hub;
 
 namespace WebAPI
 {
@@ -253,6 +254,7 @@ namespace WebAPI
                 
             });
 
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -272,6 +274,7 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
             app.UseSwagger();
             app.UseSwaggerUI(options =>
