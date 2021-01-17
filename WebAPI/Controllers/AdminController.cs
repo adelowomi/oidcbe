@@ -2,15 +2,13 @@
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
-using Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace WebAPI.Controllers
 {
-    //[Authorize(Roles = "SuperAdmin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin")]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;

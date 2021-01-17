@@ -16,7 +16,6 @@ namespace AppService.AppModel.InputModel
         [Required]
         public string LastName { get; set; }
 
-        
         public string Gender { get; set; }
 
         [Required]
