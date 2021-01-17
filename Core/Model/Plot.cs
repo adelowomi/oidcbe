@@ -41,7 +41,7 @@ namespace Core.Model
 
         public double Price { get; set; }
 
-        public string NewField { get; set; }
+        //public string NewField { get; set; }
 
     }
 
