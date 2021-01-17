@@ -327,14 +327,14 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("api/admin/vendor/create")]
-        public IActionResult CreateVendor([FromBody] VendorCreateInputModel vendor)
+        public async Task<IActionResult> CreateVendor([FromBody] VendorCreateInputModel vendor)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_userService.CreateVendor(vendor));
+            return Ok(await _userService.CreateVendor(vendor));
         }
     }
 }
