@@ -180,7 +180,7 @@ namespace AppService.Repository
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    GUID = new Guid().ToString(),
+                    GUID = new Guid().ToString()
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -207,7 +207,7 @@ namespace AppService.Repository
 
                     _ = _emailService.SendEmail(model.Email, Res.ACCOUNT_SETUP, emailHtmlTemplate);
 
-                    _ = await _userManager.AddToRoleAsync(user, model.UserType == UserTypeEnum.VENDOR ? UserType.VENDOR : UserType.VENDOR);
+                    _ = await _userManager.AddToRoleAsync(user, model.UserType == UserTypeEnum.VENDOR ? UserType.VENDOR : UserType.SUBSCRIBER);
                       
                     var mappedUser = _mapper.Map<AppUser, RegisterViewModel>(user);
 
