@@ -96,5 +96,7 @@ namespace AppService.AppModel.ViewModel
         public IEnumerable<PaymentViewModel> Payments { get; set; }
 
         public IEnumerable<RequestViewModel> Requests { get; set; }
+
+        public int UserTypeId { get; set; }
     }
 }

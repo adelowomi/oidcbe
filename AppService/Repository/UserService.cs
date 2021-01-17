@@ -91,6 +91,7 @@ namespace AppService.Repository
 
                 //Find User by Email Address after successful Authentication
                 user = await _userManager.FindByEmailAsync(model.Email);
+
                 if(string.IsNullOrEmpty(user.GUID))
                 {
                     user.GUID = Guid.NewGuid().ToString();
@@ -118,11 +119,23 @@ namespace AppService.Repository
                 };
 
                 var roles = await _userManager.GetRolesAsync(user);
+
                 AddRolesToClaims(claims, roles);
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 user.Token = tokenHandler.WriteToken(token);
                 var mappedUser = _mapper.Map<AppUser, UserViewModel>(user);
+
+
+                if (await _userManager.IsInRoleAsync(user, Res.VENDOR.ToUpper()))
+                {
+                    mappedUser.UserTypeId = (int)UserTypeEnum.VENDOR;
+                }
+
+                if (await _userManager.IsInRoleAsync(user, Res.SUBSCRIBER.ToUpper()))
+                {
+                    mappedUser.UserTypeId = (int)UserTypeEnum.SUBSCRIBER;
+                }
 
                 //mappedUser.Gender = _utilityRepository.GetGenderById(user.GenderId)?.Name;
 
@@ -135,7 +148,7 @@ namespace AppService.Repository
             catch (Exception e)
             {
                 //Added Comment
-                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
+                return Create(false, ResponseMessageViewModel.UNSUCCESSFUL).AddStatusCode(ResponseErrorCodeStatus.FAIL).AddData(e);
             }
         }
 
@@ -168,7 +181,7 @@ namespace AppService.Repository
                     UserName = model.Email,
                     Email = model.Email,
                     GUID = new Guid().ToString(),
-            };
+                };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
