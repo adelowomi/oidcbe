@@ -243,7 +243,7 @@ namespace WebAPI
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("PlotPolicy", policy => policy.RequireRole("Super Admin", "Admin", "Vendor"));
+                options.AddPolicy("PlotPolicy", policy => policy.RequireRole("SuperAdmin", "Admin", "Vendor", "Subscriber"));
                 //options.AddPolicy("Admin", policy => policy.RequireRole("Admin", "Vendor"));
                 //options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
             });

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace WebAPI.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Policy = "PlotPolicy")]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
