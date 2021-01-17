@@ -39,6 +39,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/admin/token")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginInputModel model)
         {
             _logger.LogInformation("Trying To Login");
