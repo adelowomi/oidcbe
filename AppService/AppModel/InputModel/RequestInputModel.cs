@@ -16,5 +16,8 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public DateTime Date { get; set; }
+
+        [Required]
+        public int PlotId { get; set; }
     }
 }
