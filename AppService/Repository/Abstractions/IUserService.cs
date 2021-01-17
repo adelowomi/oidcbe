@@ -96,5 +96,12 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         Task<AppUser> UpdateCurrentUserAsync(AppUser appUser);
+
+        /// <summary>
+        /// Create Vendor & Assign Role to it
+        /// </summary>
+        /// <param name="vendor"></param>
+        /// <returns></returns>
+        Task<ResponseViewModel> CreateVendor(VendorCreateInputModel vendor);
     }
 }

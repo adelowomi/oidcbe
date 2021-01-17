@@ -37,7 +37,6 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPost]
         [Route("api/admin/token")]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginInputModel model)
@@ -57,7 +56,6 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPost]
         [Route("api/admin/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterInputModel model)
@@ -78,7 +76,6 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         /// 
         [HttpGet]
-        [AllowAnonymous]
         [Route("api/admin/reset")]
         public async Task<IActionResult> GetResetToken(string email, string platform)
         {
@@ -102,7 +99,6 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpPut]
         [Route("api/admin/complete-reset")]
         public async Task<IActionResult> CompleteResetAsync([FromBody] CompleteForgotPasswordInputModel model)
@@ -128,7 +124,6 @@ namespace WebAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut]
-        [AllowAnonymous]
         [Route("api/admin/change-password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordInputModel model)
         {
@@ -147,7 +142,6 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
         [Route("api/admin/details")]
         public IActionResult VendorDetails()
         {
@@ -161,7 +155,6 @@ namespace WebAPI.Controllers
         /// <param name="platform"></param>
         /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
         [Route("api/admin/request-otp")]
         public IActionResult RequestOtp(string emailAddress, string platform)
         {
@@ -179,7 +172,6 @@ namespace WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [AllowAnonymous]
         [Route("api/admin/confirm-otp")]
         public IActionResult ConfirmOTP([FromBody] ConfirmOTPInputModel request)
         {
@@ -198,7 +190,7 @@ namespace WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [AllowAnonymous]
+        
         [Route("api/admin/subscriber/individual")]
         public IActionResult CreateIndividual([FromBody] SubcriberIndividualInputModel request)
         {
@@ -211,7 +203,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+       
         [Route("api/admin/subscriber/corporate")]
         public IActionResult CreateCorporate([FromBody] SubscriberCorporateInputModel request)
         {
@@ -225,7 +217,7 @@ namespace WebAPI.Controllers
 
 
         [HttpGet]
-        [AllowAnonymous]
+        
         [Route("api/admin/subscriber/{id}")]
         public IActionResult GetSubscriberById(int id)
         {
@@ -238,7 +230,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        
         [Route("api/admin/subscribers")]
         public IActionResult GetSubscribers()
         {
@@ -251,7 +243,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        
         [Route("api/admin/vendors")]
         public IActionResult GetVendors()
         {
@@ -264,7 +256,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        
         [Route("api/admin/vendor/{id}")]
         public IActionResult GetVendors(int id)
         {
@@ -277,7 +269,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        
         [Route("api/admin/job")]
         public IActionResult CreateJob([FromBody] JobInputModel job)
         {
@@ -305,7 +297,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPut]
-        [AllowAnonymous]
+        
         [Route("api/admin/proposal/approve")]
         public IActionResult Approve(int proposalId)
         {
@@ -319,7 +311,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPut]
-        [AllowAnonymous]
+        
         [Route("api/admin/proposal/decline")]
         public IActionResult Decline(int proposalId)
         {
@@ -329,6 +321,18 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_proposalAppService.ApproveOrDisapprove(3, proposalId));
+        }
+
+        [HttpPost]
+        [Route("api/admin/vendor/create")]
+        public IActionResult CreateVendor([FromBody] VendorCreateInputModel vendor)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_userService.CreateVendor(vendor));
         }
     }
 }

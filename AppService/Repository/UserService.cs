@@ -83,9 +83,10 @@ namespace AppService.Repository
             try
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
                 AppUser user = new AppUser();
 
-                if (!result.Succeeded) return ResponseViewModel.Create(false)
+                if (!result.Succeeded) return Create(false)
                             .AddStatusCode(ResponseErrorCodeStatus.INVALID_CREDENTIALS)
                             .AddStatusMessage(ResponseMessageViewModel.INVALID_CREDENTIALS);
 
@@ -655,6 +656,32 @@ namespace AppService.Repository
             var result = await _userManager.UpdateAsync(appUser);
 
             return appUser;
+        }
+
+        public async Task<ResponseViewModel> CreateVendor(VendorCreateInputModel model)
+        {
+            var user = new AppUser
+            {
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                LastName = model.LastName,
+            };
+
+            var result =  _userManager.CreateAsync(user).Result;
+
+            if(!result.Succeeded)
+            {
+                return Failed(ResponseMessageViewModel.UNABLE_TO_CREATE_VENDOR, ResponseErrorCodeStatus.UNABLE_TO_CREATE_VENDOR);
+            }
+
+            var task = await _userManager.AddToRoleAsync(user, Res.VENDOR);
+
+            if(!task.Succeeded)
+            {
+                return Failed(ResponseMessageViewModel.UNABLE_ASSIGN_ROLE_TO_VENDOR, ResponseErrorCodeStatus.UNABLE_ASSIGN_ROLE_TO_VENDOR);
+            }
+
+            return Ok();
         }
     }
 }

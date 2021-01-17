@@ -297,6 +297,8 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_PLATFORM = "Invalid platform entered! Please try again!";
         public static string INVALID_JOB = "Invalid job detail";
         public static string INVALID_EMAIL_ADDRESS = "Invalid Email Address";
+        public static string UNABLE_TO_CREATE_VENDOR = "Unable to create vendor, please try again!";
+        public static string UNABLE_ASSIGN_ROLE_TO_VENDOR = "Unable to assign role to vendor, please try again!";
     }
 
     /// <summary>
@@ -364,6 +366,8 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_PROPOSAL = "40";
         public static readonly string INVALID_PLATFORM = "41";
         public static readonly string INVALID_JOB = "42";
+        public static readonly string UNABLE_TO_CREATE_VENDOR = "44";
+        public static readonly string UNABLE_ASSIGN_ROLE_TO_VENDOR = "45";
 
         //FAILURES
         public static readonly string FAIL = "91";
