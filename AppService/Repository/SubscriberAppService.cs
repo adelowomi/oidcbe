@@ -253,7 +253,9 @@ namespace AppService.Repository
 
         public ResponseViewModel GetSubscribers()
         {
-            var subscribers = _userManager.Users.Include(x => x.Plots).Select(_mapper.Map<AppUser, VendorViewModel>);
+            //var subscribers = _userManager.Users.Include(x => x.Plots).Select(_mapper.Map<AppUser, VendorViewModel>);
+
+            var subscribers = _userManager.GetUsersInRoleAsync(Res.VENDOR).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
 
             foreach (var subscriber in subscribers)
             {
@@ -275,8 +277,7 @@ namespace AppService.Repository
 
         public ResponseViewModel GetVendors()
         {
-            var vendors = _userManager.GetUsersInRoleAsync(((int)RoleEnum.VENDOR).ToString()).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
-
+            var vendors = _userManager.GetUsersInRoleAsync(Res.VENDOR).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
             
             foreach (var vendor in vendors)
             {
