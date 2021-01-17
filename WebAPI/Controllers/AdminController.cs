@@ -9,7 +9,8 @@ using Microsoft.Extensions.Logging;
 
 namespace WebAPI.Controllers
 {
-    [Authorize(Roles = "SUPER ADMIN")]
+    //[Authorize(Roles = "SuperAdmin")]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
