@@ -667,7 +667,7 @@ namespace AppService.Repository
                 LastName = model.LastName,
             };
 
-            var result =  _userManager.CreateAsync(user).Result;
+            var result =  _userManager.CreateAsync(user, string.Empty).Result;
 
             if(!result.Succeeded)
             {
