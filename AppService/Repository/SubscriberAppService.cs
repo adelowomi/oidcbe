@@ -255,7 +255,7 @@ namespace AppService.Repository
         {
             //var subscribers = _userManager.Users.Include(x => x.Plots).Select(_mapper.Map<AppUser, VendorViewModel>);
 
-            var subscribers = _userManager.GetUsersInRoleAsync(Res.VENDOR).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
+            var subscribers = _userManager.GetUsersInRoleAsync(Res.SUBSCRIBER).Result.Select(_mapper.Map<AppUser, VendorViewModel>);
 
             foreach (var subscriber in subscribers)
             {
