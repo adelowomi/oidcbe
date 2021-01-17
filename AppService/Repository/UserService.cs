@@ -662,9 +662,12 @@ namespace AppService.Repository
         {
             var user = new AppUser
             {
+                UserName = model.EmailAddress,
+                Email = model.EmailAddress,
                 FirstName = model.FirstName,
                 MiddleName = model.MiddleName,
                 LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber
             };
 
             var result =  _userManager.CreateAsync(user, string.Empty).Result;
