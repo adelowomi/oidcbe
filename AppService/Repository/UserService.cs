@@ -315,7 +315,7 @@ namespace AppService.Repository
                             uploadResult = await
                                BaseContentServer
                                .Build(ContentServerTypeEnum.FIREBASE, _settings)
-                               .UploadDocumentAsync(FileDocument.Create(model.ProfilePhoto, $"{currentUser.FirstName ?? "user"}-profile", currentUser.GUID, FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+                               .UploadDocumentAsync(FileDocument.Create(model.ProfilePhoto, $"{currentUser.Id}", currentUser.GUID, FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
                         }
                         catch (Exception e)
                         {
