@@ -33,8 +33,8 @@ namespace AppService.AutoMapper
                 .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
                 .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender.Name))
-                //.ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/photo?id={src.Id}"))
-                //.ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/document?id={src.Id}"))
+                .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => src.ProfilePhoto))
+                .ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => src.IdentityDocument))
                 .ForMember(dest => dest.HasConfirmedEmail, opts => opts.MapFrom(src => src.EmailConfirmed))
                 .ForMember(dest => dest.HasUploadedProfilePhoto, opts => opts.MapFrom(src => src.HasUploadedProfilePhoto))
                 .ForMember(dest => dest.HasUploadedDocument, opts => opts.MapFrom(src => src.HasUploadedDocument))
@@ -50,8 +50,8 @@ namespace AppService.AutoMapper
                  .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber))
                  .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender.Name))
                  .ForMember(dest => dest.NameOfEntry, opts => opts.MapFrom(src => src.EntryName))
-                 //.ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/photo?id={src.Id}"))
-                 //.ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/assets/document?id={src.Id}"))
+                 .ForMember(dest => dest.PhotoUrl, opts => opts.MapFrom(src => src.ProfilePhoto))
+                 .ForMember(dest => dest.DocumentUrl, opts => opts.MapFrom(src => src.IdentityDocument))
                  .ForMember(dest => dest.HasConfirmedEmail, opts => opts.MapFrom(src => src.EmailConfirmed))
                  .ForMember(dest => dest.HasUploadedProfilePhoto, opts => opts.MapFrom(src => src.HasUploadedProfilePhoto))
                  .ForMember(dest => dest.HasUploadedDocument, opts => opts.MapFrom(src => src.HasUploadedDocument))
@@ -61,12 +61,10 @@ namespace AppService.AutoMapper
                .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.Id))
                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                .ForMember(dest => dest.DocumentName, opts => opts.MapFrom(src => src.Name))
-               //.ForMember(dest => dest.Link, opts => opts.MapFrom(src => $"{settings.BaseUrl}/api/documents/link?name={src.Name}"))
+               .ForMember(dest => dest.Link, opts => opts.MapFrom(src => src.Name))
                .ForMember(dest => dest.DocumentType, opts => opts.MapFrom(src => src.DocumentType.Name))
                .ForMember(dest => dest.DateCreated, opts => opts.MapFrom(src => src.DateCreated))
-               .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified))
-
-               ;
+               .ForMember(dest => dest.DateModified, opts => opts.MapFrom(src => src.DateModified));
 
             CreateMap<DocumentInputModel, Document>()
                .ForMember(dest => dest.DocumentTypeId, opts => opts.MapFrom(src => src.DocumentType))
