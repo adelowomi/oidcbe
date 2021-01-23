@@ -294,7 +294,7 @@ namespace AppService.Repository
 
                 if (!currentUser.EmailConfirmed)
                 {
-                    return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
+                    return Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
                 }
 
                 if (currentUser != null)
@@ -330,16 +330,30 @@ namespace AppService.Repository
 
                     if (!string.IsNullOrEmpty(model.IdentityDocument) && model.IsIdentityDocumentChanged)
                     {
-                        currentUser.IdentityDocument = model.SaveIdentityDocument(_settings);
+                        FileDocument uploadResult = FileDocument.Create();
 
-                        currentUser.HasUploadedDocument = string.IsNullOrEmpty(currentUser.IdentityDocument);
+                        try
+                        {
+                            uploadResult = await
+                               BaseContentServer
+                               .Build(ContentServerTypeEnum.FIREBASE, _settings)
+                               .UploadDocumentAsync(FileDocument.Create(model.IdentityDocument, $"document-{currentUser.Id}", currentUser.GUID, FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+                        }
+                        catch (Exception e)
+                        {
+                            return Failed(ResponseMessageViewModel.ERROR_UPLOADING_FILE, ResponseErrorCodeStatus.ERROR_UPLOADING_FILE);
+                        }
+
+                        currentUser.IdentityDocument = uploadResult.Path;
+
+                        currentUser.HasUploadedDocument = !string.IsNullOrEmpty(currentUser.IdentityDocument);
                     }
 
                     var gender = _utilityRepository.GetGenderByName(model.Gender);
 
                     if (gender == null)
                     {
-                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
+                        return Failed(ResponseMessageViewModel.INVALID_GENDER, ResponseErrorCodeStatus.INVALID_GENDER);
                     }
 
                     currentUser.GenderId = gender.Id;
@@ -348,7 +362,7 @@ namespace AppService.Repository
 
                     if (state == null)
                     {
-                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_STATE, ResponseErrorCodeStatus.INVALID_STATE);
+                        return Failed(ResponseMessageViewModel.INVALID_STATE, ResponseErrorCodeStatus.INVALID_STATE);
                     }
 
                     currentUser.StateOfOriginId = state.Id;
@@ -363,7 +377,7 @@ namespace AppService.Repository
 
                         if (nextOfKinGender == null)
                         {
-                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_NEXT_OF_KIN_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
+                            return Failed(ResponseMessageViewModel.INVALID_NEXT_OF_KIN_GENDER, ResponseErrorCodeStatus.INVALID_NEXT_OF_KIN_GENDER);
                         }
 
                         nextOfKin.GenderId = nextOfKinGender.Id;
@@ -375,7 +389,7 @@ namespace AppService.Repository
 
                     if(userType == null)
                     {
-                        return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_ORGANIZATION_TYPE, ResponseErrorCodeStatus.INVALID_ORGANIZATION_TYPE);
+                        return Failed(ResponseMessageViewModel.INVALID_ORGANIZATION_TYPE, ResponseErrorCodeStatus.INVALID_ORGANIZATION_TYPE);
                     }
 
                     currentUser.OrganizationTypeId = model.UserTypeId;
@@ -384,21 +398,21 @@ namespace AppService.Repository
                     {
                         if(string.IsNullOrEmpty(model.RCNumber))
                         {
-                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_RC_NUMBER, ResponseErrorCodeStatus.INVALID_RC_NUMBER);
+                            return Failed(ResponseMessageViewModel.INVALID_RC_NUMBER, ResponseErrorCodeStatus.INVALID_RC_NUMBER);
                         }
 
                         currentUser.RCNumber = model.RCNumber;
 
                         if(string.IsNullOrEmpty(model.OfficeAddress))
                         {
-                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_OFFICE_ADDRESS, ResponseErrorCodeStatus.INVALID_OFFICE_ADDRESS);
+                            return Failed(ResponseMessageViewModel.INVALID_OFFICE_ADDRESS, ResponseErrorCodeStatus.INVALID_OFFICE_ADDRESS);
                         }
 
                         currentUser.OfficeAddress = model.OfficeAddress;
 
                         if (string.IsNullOrEmpty(model.NameOfEntry))
                         {
-                            return ResponseViewModel.Failed(ResponseMessageViewModel.INVALID_NAME_NAME_OF_ENTRY, ResponseErrorCodeStatus.INVALID_NAME_NAME_OF_ENTRY);
+                            return Failed(ResponseMessageViewModel.INVALID_NAME_NAME_OF_ENTRY, ResponseErrorCodeStatus.INVALID_NAME_NAME_OF_ENTRY);
                         }
 
                         currentUser.EntryName = model.NameOfEntry;
@@ -410,18 +424,17 @@ namespace AppService.Repository
 
                     var mappedResult = _mapper.Map<AppUser, VendorViewModel>(currentUser);
 
-                    return ResponseViewModel.Create(true).AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
+                    return Ok().AddStatusMessage(ResponseMessageViewModel.SUCCESSFUL).AddData(mappedResult);
                 }
                 else
                 {
-                    return ResponseViewModel.Failed();
-
+                    return Failed();
                 }
 
             }
             catch (Exception e)
             {
-                return ResponseViewModel.Create(false, e.Message).AddStatusCode(ResponseErrorCodeStatus.FAIL);
+                return Create(false, e.Message).AddStatusCode(ResponseErrorCodeStatus.FAIL);
             }
         }
 
