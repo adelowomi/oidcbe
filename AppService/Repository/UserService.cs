@@ -324,7 +324,7 @@ namespace AppService.Repository
 
                         currentUser.ProfilePhoto = uploadResult.Path;
 
-                        currentUser.HasUploadedProfilePhoto = string.IsNullOrEmpty(currentUser.ProfilePhoto);
+                        currentUser.HasUploadedProfilePhoto = !string.IsNullOrEmpty(currentUser.ProfilePhoto);
 
                     }
 
