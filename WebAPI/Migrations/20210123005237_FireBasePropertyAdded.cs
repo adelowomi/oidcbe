@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAPI.Migrations
 {
-    public partial class NewFieldMigration : Migration
+    public partial class FireBasePropertyAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -704,7 +704,8 @@ namespace WebAPI.Migrations
                     OfficeAddress = table.Column<string>(nullable: true),
                     WebsiteUrl = table.Column<string>(nullable: true),
                     IsExisting = table.Column<bool>(nullable: false),
-                    FireBaseToken = table.Column<string>(nullable: true)
+                    FireBaseToken = table.Column<string>(nullable: true),
+                    FireBase = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1042,8 +1043,7 @@ namespace WebAPI.Migrations
                     IsAvailable = table.Column<bool>(nullable: false),
                     IsPaymentComplete = table.Column<bool>(nullable: false),
                     PlotStatusId = table.Column<int>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
-                    NewField = table.Column<string>(nullable: true)
+                    Price = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

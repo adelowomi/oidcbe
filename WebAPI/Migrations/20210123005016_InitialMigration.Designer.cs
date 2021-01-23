@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210117113140_PlotStatusId")]
-    partial class PlotStatusId
+    [Migration("20210123005016_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1412,9 +1412,6 @@ namespace WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
                     b.HasKey("Id");

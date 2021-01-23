@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210117114044_NewFieldMigration")]
-    partial class NewFieldMigration
+    [Migration("20210123005237_FireBasePropertyAdded")]
+    partial class FireBasePropertyAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,9 @@ namespace WebAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("EntryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FireBase")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FireBaseToken")
@@ -1403,9 +1406,6 @@ namespace WebAPI.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewField")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PlotStatusId")

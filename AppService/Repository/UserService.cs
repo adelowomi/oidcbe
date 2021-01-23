@@ -22,6 +22,8 @@ using Infrastructure.DataAccess.Repository.Abstractions;
 using BusinessLogic.Repository.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using AppService.Exceptions;
+using AppService.Services.ContentServer.Model;
+using AppService.Services.ContentServer;
 
 namespace AppService.Repository
 {
@@ -306,7 +308,21 @@ namespace AppService.Repository
 
                     if (!string.IsNullOrEmpty(model.ProfilePhoto) && model.IsProfilePhotoChanged)
                     {
-                        currentUser.ProfilePhoto = model.SaveProfilePhoto(_settings);
+                        FileDocument uploadResult = FileDocument.Create();
+
+                        try
+                        {
+                            uploadResult = await
+                               BaseContentServer
+                               .Build(ContentServerTypeEnum.FIREBASE, _settings)
+                               .UploadDocumentAsync(FileDocument.Create(model.ProfilePhoto, currentUser.GUID, $"{currentUser.FirstName ?? "user"}-profile", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+                        }
+                        catch (Exception e)
+                        {
+                            return Failed(ResponseMessageViewModel.ERROR_UPLOADING_FILE, ResponseErrorCodeStatus.ERROR_UPLOADING_FILE);
+                        }
+
+                        currentUser.ProfilePhoto = uploadResult.Path;
 
                         currentUser.HasUploadedProfilePhoto = string.IsNullOrEmpty(currentUser.ProfilePhoto);
 

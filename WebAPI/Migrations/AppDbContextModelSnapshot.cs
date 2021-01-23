@@ -43,6 +43,9 @@ namespace WebAPI.Migrations
                     b.Property<string>("EntryName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FireBase")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FireBaseToken")
                         .HasColumnType("nvarchar(max)");
 
@@ -1401,9 +1404,6 @@ namespace WebAPI.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewField")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PlotStatusId")

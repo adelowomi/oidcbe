@@ -69,6 +69,7 @@ namespace AppService.Repository
                    BaseContentServer
                    .Build(ContentServerTypeEnum.FIREBASE, _settings)
                    .UploadDocumentAsync(FileDocument.Create(document.Document, document.GetDocumentType(), $"{user.GUID}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+
             } catch (Exception e)
             {
                 return Failed(ResponseMessageViewModel.ERROR_UPLOADING_FILE, ResponseErrorCodeStatus.ERROR_UPLOADING_FILE);
