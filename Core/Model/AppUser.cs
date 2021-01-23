@@ -71,6 +71,6 @@ namespace Core.Model
 
         public string FireBaseToken { get; set; }
 
-        public string FireBase { get; set; }
+        //public string FireBase { get; set; }
     }
 }
