@@ -698,7 +698,7 @@ namespace AppService.Repository
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber
             };
-
+            
             var result =  _userManager.CreateAsync(user).Result;
 
             if(!result.Succeeded)
