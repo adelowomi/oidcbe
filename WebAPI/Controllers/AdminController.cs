@@ -52,6 +52,14 @@ namespace WebAPI.Controllers
             return Ok(await _userService.AuthenticateAsync(model));
         }
 
+        [HttpGet]
+        [Route("api/admin/test")]
+        [AllowAnonymous]
+        public string Test()
+        {
+            return "Api is Up and running";
+        }
+
         /// <summary>
         /// Register User
         /// </summary>
