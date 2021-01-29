@@ -3,6 +3,8 @@ namespace AppService.AppModel.ViewModel
 {
     public class ProposalViewModel
     {
+        public int Id { get; set; }
+
         public JobViewModel Job { get; set; }
 
         public int AppUserId { get; set; }
