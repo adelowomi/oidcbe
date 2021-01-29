@@ -698,7 +698,14 @@ namespace AppService.Repository
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber
             };
-            
+
+            var exist = _userManager.FindByEmailAsync(model.EmailAddress);
+
+            if(exist != null)
+            {
+                return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS, ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
+            }
+
             var result =  _userManager.CreateAsync(user, _settings.RawHash).Result;
 
             if(!result.Succeeded)
