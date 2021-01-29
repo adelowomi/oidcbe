@@ -12,6 +12,9 @@ namespace AppService.AppModel.InputModel
         [Required]
         public int JobTypeId { get; set; }
 
+        [Required]
+        public string Description { get; set; }
+
         [JsonIgnore]
         public int JobStatusId { get; set; }
 
