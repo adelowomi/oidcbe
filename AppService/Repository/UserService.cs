@@ -699,7 +699,7 @@ namespace AppService.Repository
                 PhoneNumber = model.PhoneNumber
             };
             
-            var result =  _userManager.CreateAsync(user).Result;
+            var result =  _userManager.CreateAsync(user, _settings.RawHash).Result;
 
             if(!result.Succeeded)
             {
