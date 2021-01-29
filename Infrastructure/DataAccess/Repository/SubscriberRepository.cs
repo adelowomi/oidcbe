@@ -23,7 +23,7 @@ namespace Infrastructure.DataAccess.Repository
 
         public SubscriberIdentityResult CreateNewSubscriber(AppUser user)
         {
-            var result = _userManager.CreateAsync(user, "Password").Result;
+            var result = _userManager.CreateAsync(user).Result;
 
             return new SubscriberIdentityResult { AppUser = user, IdentityResult = result };
         }
