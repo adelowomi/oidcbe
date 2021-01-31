@@ -98,5 +98,11 @@ namespace AppService.AppModel.ViewModel
         public IEnumerable<RequestViewModel> Requests { get; set; }
 
         public int UserTypeId { get; set; }
+
+        public string RepresentativeName { get; set; }
+
+        public string RepresentativeEmail { get; set; }
+
+        public string RepresentativePhoneNumber { get; set; }
     }
 }
