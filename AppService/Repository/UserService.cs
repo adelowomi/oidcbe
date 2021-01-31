@@ -46,6 +46,7 @@ namespace AppService.Repository
         private readonly IHostingEnvironment _env;
         private readonly IOTPService _otpService;
         private readonly IOTPAppService _otpAppService;
+        private readonly IDocumentAppService _documentAppService;
 
         public UserService(IOptions<AppSettings> appSettings,
                            IMapper mapper, IEmailService emailService,
@@ -58,6 +59,7 @@ namespace AppService.Repository
                            IHostingEnvironment env,
                            IOTPService otpService,
                            IOTPAppService otpAppService,
+                           IDocumentAppService documentAppService,
                            IStateService stateService)
         {
             _settings = appSettings.Value;
@@ -73,6 +75,7 @@ namespace AppService.Repository
             _otpService = otpService;
             _otpAppService = otpAppService;
             _env = env;
+            _documentAppService = documentAppService;
         }
 
         /// <summary>
@@ -722,6 +725,16 @@ namespace AppService.Repository
             if(!task.Succeeded)
             {
                 return Failed(ResponseMessageViewModel.UNABLE_ASSIGN_ROLE_TO_VENDOR, ResponseErrorCodeStatus.UNABLE_ASSIGN_ROLE_TO_VENDOR);
+            }
+
+            if(!string.IsNullOrEmpty(model.Document))
+            {
+                await _documentAppService.CreateNewDocument(new DocumentInputModel
+                {
+                    Document = model.Document,
+                    DocumentType = model.DocumentType,
+                    PlotId = 0
+                });
             }
 
             return Ok();

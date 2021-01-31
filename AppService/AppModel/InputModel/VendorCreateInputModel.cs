@@ -28,5 +28,9 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public string CompanyRCNumber { get; set; }
+
+        public string Document { get; set; }
+
+        public int DocumentType { get; set; }
     }
 }
