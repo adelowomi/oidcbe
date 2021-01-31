@@ -694,7 +694,6 @@ namespace AppService.Repository
                 EntryName = model.CompanyName,
                 UserName = model.CompanyEmail,
                 Email = model.CompanyEmail,
-                FirstName = model.CompanyName,
                 PhoneNumber = model.RepresentativePhoneNumber,
                 WebsiteUrl = model.CompanyWebsite,
                 OfficeAddress = model.CompanyAddress,
