@@ -6,19 +6,27 @@ namespace AppService.AppModel.InputModel
     public class VendorCreateInputModel
     {
         [Required]
-        public string EmailAddress { get; set; }
+        public string CompanyName { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
+        public string CompanyAddress { get; set; }
 
         [Required]
-        public string LastName { get; set; }
-
-        public string Gender { get; set; }
+        public string CompanyWebsite { get; set; }
 
         [Required]
-        public string PhoneNumber { get; set; }
+        public string CompanyEmail { get; set; }
+
+        [Required]
+        public string RepresentativeName { get; set; }
+
+        [Required]
+        public string RepresentativeEmail { get; set; }
+
+        [Required]
+        public string RepresentativePhoneNumber { get; set; }
+
+        [Required]
+        public string CompanyRCNumber { get; set; }
     }
 }

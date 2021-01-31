@@ -4,14 +4,16 @@ using Infrastructure.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210131003312_AddedPaymentIdToPaymentInstalment")]
+    partial class AddedPaymentIdToPaymentInstalment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1199,6 +1201,10 @@ namespace WebAPI.Migrations
 
                     b.HasIndex("PaymentId");
 
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("PaymentStatusId");
+
                     b.ToTable("PaymentInstalments");
                 });
 
@@ -2359,6 +2365,18 @@ namespace WebAPI.Migrations
                     b.HasOne("Core.Model.Payment", "Payment")
                         .WithMany("PaymentInstalments")
                         .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Model.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Model.PaymentStatus", "PaymentStatus")
+                        .WithMany()
+                        .HasForeignKey("PaymentStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

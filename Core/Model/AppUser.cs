@@ -70,5 +70,11 @@ namespace Core.Model
         public IEnumerable<ForumSubscription> ForumSubscriptions { get; set; }
 
         public string FireBaseToken { get; set; }
+
+        public string RepresentativeName { get; set; }
+
+        public string RepresentativeEmail { get; set; }
+
+        public string RepresentativePhoneNumber { get; set; }
     }
 }

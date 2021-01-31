@@ -120,6 +120,8 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<JobStatus> JobStatuses { get; set; }
 
+        public DbSet<PaymentInstalment> PaymentInstalments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

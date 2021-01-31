@@ -691,15 +691,20 @@ namespace AppService.Repository
         {
             var user = new AppUser
             {
-                UserName = model.EmailAddress,
-                Email = model.EmailAddress,
-                FirstName = model.FirstName,
-                MiddleName = model.MiddleName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber
+                EntryName = model.CompanyName,
+                UserName = model.CompanyEmail,
+                Email = model.CompanyEmail,
+                FirstName = model.CompanyName,
+                PhoneNumber = model.RepresentativePhoneNumber,
+                WebsiteUrl = model.CompanyWebsite,
+                OfficeAddress = model.CompanyAddress,
+                MailingAddress = model.CompanyAddress,
+                RepresentativePhoneNumber = model.RepresentativePhoneNumber,
+                RepresentativeEmail = model.RepresentativeEmail,
+                RepresentativeName = model.RepresentativeName,
             };
 
-            var exist = _userManager.FindByEmailAsync(model.EmailAddress);
+            var exist = _userManager.FindByEmailAsync(model.CompanyEmail);
 
             if(exist != null)
             {

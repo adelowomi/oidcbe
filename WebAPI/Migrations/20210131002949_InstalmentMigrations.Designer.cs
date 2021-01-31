@@ -4,14 +4,16 @@ using Infrastructure.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210131002949_InstalmentMigrations")]
+    partial class InstalmentMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1177,7 +1179,7 @@ namespace WebAPI.Migrations
                     b.Property<DateTime>("PaymentDueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentId")
+                    b.Property<int?>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<int>("PaymentMethodId")
@@ -1199,7 +1201,11 @@ namespace WebAPI.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("PaymentInstalments");
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("PaymentStatusId");
+
+                    b.ToTable("PaymentInstalment");
                 });
 
             modelBuilder.Entity("Core.Model.PaymentMethod", b =>
@@ -2356,9 +2362,19 @@ namespace WebAPI.Migrations
 
             modelBuilder.Entity("Core.Model.PaymentInstalment", b =>
                 {
-                    b.HasOne("Core.Model.Payment", "Payment")
+                    b.HasOne("Core.Model.Payment", null)
                         .WithMany("PaymentInstalments")
-                        .HasForeignKey("PaymentId")
+                        .HasForeignKey("PaymentId");
+
+                    b.HasOne("Core.Model.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Model.PaymentStatus", "PaymentStatus")
+                        .WithMany()
+                        .HasForeignKey("PaymentStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
