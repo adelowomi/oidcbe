@@ -706,7 +706,7 @@ namespace AppService.Repository
                 RepresentativeName = model.RepresentativeName,
             };
 
-            var exist = _userManager.FindByEmailAsync(model.CompanyEmail);
+            var exist = _userManager.FindByEmailAsync(model.CompanyEmail).Result;
 
             if(exist != null)
             {
