@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Core.Model
 {
     public class Payment : BaseEntity
@@ -30,6 +32,10 @@ namespace Core.Model
         public Subscription Subscription { get; set; }
 
         public string TrnxRef { get; set; }
+
+        public bool IsPaymentCompleted { get; set; }
+
+        public ICollection<PaymentInstalment> PaymentInstalments { get; set; }
     }
 
     public enum PaymentStatusEnum
