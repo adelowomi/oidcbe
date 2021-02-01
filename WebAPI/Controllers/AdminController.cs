@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
+using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -278,16 +280,16 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        
         [Route("api/admin/job")]
-        public IActionResult CreateJob([FromBody] JobInputModel job)
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<JobViewModel>>), 200)]
+        public IActionResult CreateJob([FromBody] JobInputModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_jobAppService.CreateNewJobAsync(job));
+            return Ok(_jobAppService.CreateNewJob(model).Result);
         }
 
 
@@ -343,5 +345,22 @@ namespace WebAPI.Controllers
 
             return Ok(await _userService.CreateVendor(vendor));
         }
+
+        ///// <summary>
+        ///// Get All Available Jobs
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[Route("api/job/create")]
+        //[ProducesResponseType(typeof(SwaggerResponse<IEnumerable<JobViewModel>>), 200)]
+        //public IActionResult CreateJob([FromBody] JobInputModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    return Ok(_jobAppService.CreateNewJob(model).Result);
+        //}
     }
 }
