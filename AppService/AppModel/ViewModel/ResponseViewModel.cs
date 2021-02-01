@@ -299,6 +299,8 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_EMAIL_ADDRESS = "Invalid Email Address";
         public static string UNABLE_TO_CREATE_VENDOR = "Unable to create vendor, please try again!";
         public static string UNABLE_ASSIGN_ROLE_TO_VENDOR = "Unable to assign role to vendor, please try again!";
+        public static string INVALID_JOB_STATUS = "Invalid job status, please select valid job status and try again!";
+        public static string INVALID_JOB_TYPE = "Invalid job type, please select valid job type and try again!";
     }
 
     /// <summary>
@@ -368,6 +370,8 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_JOB = "42";
         public static readonly string UNABLE_TO_CREATE_VENDOR = "44";
         public static readonly string UNABLE_ASSIGN_ROLE_TO_VENDOR = "45";
+        public static readonly string INVALID_JOB_STATUS = "46";
+        public static readonly string INVALID_JOB_TYPE = "47";
 
         //FAILURES
         public static readonly string FAIL = "91";
