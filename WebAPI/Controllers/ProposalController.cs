@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_proposalAppService.CreateProposalJob(model));
+            return Ok(_proposalAppService.GetProposalBy(0, id));
         }
     }
 }
