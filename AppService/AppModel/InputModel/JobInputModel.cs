@@ -25,6 +25,7 @@ namespace AppService.AppModel.InputModel
 
         public string Document { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime ValidityPeriod { get; set; }
     }
 }
