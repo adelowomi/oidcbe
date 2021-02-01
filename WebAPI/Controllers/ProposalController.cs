@@ -90,5 +90,22 @@ namespace WebAPI.Controllers
 
             return Ok(_proposalAppService.CreateProposalJob(model));
         }
+
+        /// <summary>
+        /// Get By Id
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/proposal/job/{id}")]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<ProposalViewModel>>), 200)]
+        public IActionResult GetProposalByJobId(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_proposalAppService.CreateProposalJob(model));
+        }
     }
 }

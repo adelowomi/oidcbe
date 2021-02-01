@@ -11,6 +11,8 @@ namespace AppService.Repository.Abstractions
 
         ResponseViewModel GetProposalBy(int id);
 
+        ResponseViewModel GetProposalBy(int id, int jobIds);
+
         ResponseViewModel CreateProposalJob(ProposalInputModel proposal);
 
         ResponseViewModel UpdateProposal(ProposalInputModel proposal);

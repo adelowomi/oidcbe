@@ -80,6 +80,13 @@ namespace AppService.Repository
             return Ok(_mapper.Map<Proposal, ProposalViewModel>(_proposalRepository.GetProposalBy(id)));
         }
 
+        public ResponseViewModel GetProposalBy(int id, int jobId)
+        {
+            var result = _proposalRepository.GetProposals().Where(x => x.JobId == jobId).Select(_mapper.Map<Proposal, ProposalViewModel>);
+
+            return Ok(result);
+        }
+
         public ResponseViewModel GetProposalStatuses()
         {
             var results = _proposalRepository.GetProposalStatuses()
