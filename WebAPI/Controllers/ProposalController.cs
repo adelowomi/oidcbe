@@ -95,7 +95,7 @@ namespace WebAPI.Controllers
         /// Get By Id
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("api/proposal/job/{id}")]
         [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<ProposalViewModel>>), 200)]
         public IActionResult GetProposalByJobId(int id)
