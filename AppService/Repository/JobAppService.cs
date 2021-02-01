@@ -39,6 +39,7 @@ namespace AppService.Repository
             //}
 
             var jobType = _jobRepository.GetJobTypes().FirstOrDefault(x => x.Id == model.JobTypeId);
+            model.ValidityPeriod = DateTime.Now;
 
             if (jobType == null)
             {
