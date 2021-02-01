@@ -31,6 +31,12 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> CreateNewJob(JobInputModel model)
         {
+            var job = _jobRepository.GetJobs().FirstOrDefault(x => x.Name == model.Name);
+
+            if(job == null)
+            {
+                return Failed(ResponseMessageViewModel.INVALID_JOB);
+            }
 
             var mappedResult = _mapper.Map<JobInputModel, Job>(model);
 
