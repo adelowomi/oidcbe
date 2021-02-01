@@ -31,12 +31,12 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> CreateNewJob(JobInputModel model)
         {
-            var jobStatus = _jobRepository.GetJobStatuses().FirstOrDefault(x => x.Id == model.JobStatusId);
+            //var jobStatus = _jobRepository.GetJobStatuses().FirstOrDefault(x => x.Id == model.JobStatusId);
 
-            if(jobStatus == null)
-            {
-                return Failed(ResponseMessageViewModel.INVALID_JOB_STATUS, ResponseErrorCodeStatus.INVALID_JOB_STATUS);
-            }
+            //if(jobStatus == null)
+            //{
+            //    return Failed(ResponseMessageViewModel.INVALID_JOB_STATUS, ResponseErrorCodeStatus.INVALID_JOB_STATUS);
+            //}
 
             var jobType = _jobRepository.GetJobTypes().FirstOrDefault(x => x.Id == model.JobTypeId);
 
