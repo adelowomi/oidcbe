@@ -23,6 +23,7 @@ namespace AppService.AppModel.InputModel
     {
         SURVEY = 1,
         CONTRACT,
-        DEED
+        DEED,
+        JOB
     }
 }

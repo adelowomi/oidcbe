@@ -18,7 +18,12 @@ namespace AppService.AppModel.InputModel
         [JsonIgnore]
         public int JobStatusId { get; set; }
 
+        [JsonIgnore]
         public int? AppUserId { get; set; }
+
+        public string Address { get; set; }
+
+        public string Document { get; set; }
 
         public DateTime ValidityPeriod { get; set; }
     }

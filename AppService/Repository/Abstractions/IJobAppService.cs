@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 
@@ -11,7 +12,7 @@ namespace AppService.Repository.Abstractions
 
         ResponseViewModel GetJobBy(int id);
 
-        ResponseViewModel CreateNewJob(JobInputModel job);
+        Task<ResponseViewModel> CreateNewJob(JobInputModel job);
 
         ResponseViewModel UpdateJob(JobInputModel job);
 

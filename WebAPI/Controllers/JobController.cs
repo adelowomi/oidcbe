@@ -89,5 +89,22 @@ namespace WebAPI.Controllers
 
             return Ok(_jobAppService.GetJobBy(id));
         }
+
+        /// <summary>
+        /// Get All Available Jobs
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/job")]
+        [ProducesResponseType(typeof(SwaggerResponse<IEnumerable<JobViewModel>>), 200)]
+        public IActionResult CreateJob([FromBody] JobInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_jobAppService.CreateNewJobAsync(model));
+        }
     }
 }

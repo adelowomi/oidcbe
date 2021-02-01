@@ -17,6 +17,10 @@ namespace Core.Model
 
         public AppUser AppUser { get; set; }
 
+        public string Address { get; set; }
+
+        public string Document { get; set; }
+
         public DateTime ValidityPeriod { get; set; }
     }
 }

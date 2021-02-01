@@ -287,7 +287,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(_jobAppService.CreateNewJob(job));
+            return Ok(_jobAppService.CreateNewJobAsync(job));
         }
 
 

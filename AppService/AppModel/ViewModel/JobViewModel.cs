@@ -17,6 +17,10 @@ namespace AppService.AppModel.ViewModel
 
         public VendorViewModel AppUser { get; set; }
 
+        public string Address { get; set; }
+
+        public string Document { get; set; }
+
         public DateTime ValidityPeriod { get; set; }
     }
 }

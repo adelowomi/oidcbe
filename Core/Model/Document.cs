@@ -23,6 +23,7 @@ namespace Core.Model
     {
         SURVEY = 1,
         CONTRACT,
-        DEED
+        DEED,
+        JOB
     }
 }
