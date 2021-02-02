@@ -32,6 +32,7 @@ namespace AppService.Repository
         protected readonly IUtilityRepository _utilityRepository;
         protected readonly IPaymentService _paymentService;
         protected readonly IRequestRepository _requestRepository;
+        protected readonly IUserService _userService;
 
         /// <summary>
         /// Constructor
@@ -45,6 +46,7 @@ namespace AppService.Repository
                                     UserManager<AppUser> userManager,
                                     IOptions<AppSettings> appSettings,
                                     IPaymentService paymentService,
+                                    IUserService userService,
                                     IRequestRepository requestRepository,
                                     IEmailService emailService)
         {
@@ -58,6 +60,7 @@ namespace AppService.Repository
             _utilityRepository = utilityRepository;
             _paymentService = paymentService;
             _requestRepository = requestRepository;
+            _userService = userService;
         }
 
         public async Task<ResponseViewModel> AddNewSubscriberIndividual(SubcriberIndividualInputModel model)
@@ -299,8 +302,18 @@ namespace AppService.Repository
 
         public ResponseViewModel GetVendors(int id)
         {
-            var vendor = _mapper.Map<AppUser, VendorViewModel>(_userManager.GetUsersInRoleAsync(((int)RoleEnum.VENDOR).ToString()).Result.FirstOrDefault(x => x.Id == id));
+           // var results = _userManager.GetUsersInRoleAsync(((int)RoleEnum.VENDOR).ToString()).Result.FirstOrDefault(x => x.Id == id);
 
+            var results = _userManager
+                .Users
+                .Include(x => x.Identification)
+                .Include(x => x.OrganizationType)
+                .Include(x => x.State)
+                .ToList()
+                ;
+
+            var vendor = results.Select(_mapper.Map<AppUser, VendorViewModel>);
+            
             return Ok(vendor);
         }
     }
