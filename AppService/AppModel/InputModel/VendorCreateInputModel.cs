@@ -32,5 +32,8 @@ namespace AppService.AppModel.InputModel
         public string Document { get; set; }
 
         public int DocumentType { get; set; }
+
+        [Required]
+        public int DepartmentId { get; set; }
     }
 }

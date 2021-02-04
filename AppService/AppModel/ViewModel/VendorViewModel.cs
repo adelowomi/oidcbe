@@ -105,6 +105,6 @@ namespace AppService.AppModel.ViewModel
 
         public string RepresentativePhoneNumber { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
     }
 }

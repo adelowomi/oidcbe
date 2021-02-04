@@ -293,6 +293,7 @@ namespace AppService.AutoMapper
             CreateMap<ProposalInputModel, Proposal>();
             CreateMap<JobStatus, JobStatusViewModel>();
             CreateMap<ProposalStatus, ProposalStatusViewModel>();
+            CreateMap<Department, DepartmentViewModel>();
         }
     }
 }

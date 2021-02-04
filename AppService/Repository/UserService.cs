@@ -35,18 +35,18 @@ namespace AppService.Repository
     {
         protected readonly AppSettings _settings;
         protected readonly UserManager<AppUser> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        protected readonly IHttpContextAccessor _httpContextAccessor;
         protected readonly SignInManager<AppUser> _signInManager;
         protected readonly RoleManager<Role> _roleManager;
         protected readonly IMapper _mapper;
         protected readonly IUtilityRepository _utilityRepository;
-        private readonly IEmailService _emailService;
-        private readonly AppDbContext _context;
-        private readonly IStateService _stateService;
-        private readonly IHostingEnvironment _env;
-        private readonly IOTPService _otpService;
-        private readonly IOTPAppService _otpAppService;
-        private readonly IDocumentAppService _documentAppService;
+        protected readonly IEmailService _emailService;
+        protected readonly AppDbContext _context;
+        protected readonly IStateService _stateService;
+        protected readonly IHostingEnvironment _env;
+        protected readonly IOTPService _otpService;
+        protected readonly IOTPAppService _otpAppService;
+        protected readonly IDocumentAppService _documentAppService;
 
         public UserService(IOptions<AppSettings> appSettings,
                            IMapper mapper, IEmailService emailService,
@@ -692,6 +692,20 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> CreateVendor(VendorCreateInputModel model)
         {
+            var department = _utilityRepository.DepartmentBy(model.DepartmentId);
+
+            if (department == null)
+            {
+                return Failed(ResponseMessageViewModel.INVALID_DEPARTMENT, ResponseErrorCodeStatus.INVALID_DEPARTMENT);
+            }
+
+            var exist = _userManager.FindByEmailAsync(model.CompanyEmail).Result;
+
+            if(exist != null)
+            {
+                return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS, ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
+            }
+
             var user = new AppUser
             {
                 EntryName = model.CompanyName,
@@ -704,14 +718,8 @@ namespace AppService.Repository
                 RepresentativePhoneNumber = model.RepresentativePhoneNumber,
                 RepresentativeEmail = model.RepresentativeEmail,
                 RepresentativeName = model.RepresentativeName,
+                DepartmentId = model.DepartmentId
             };
-
-            var exist = _userManager.FindByEmailAsync(model.CompanyEmail).Result;
-
-            if(exist != null)
-            {
-                return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS, ResponseErrorCodeStatus.ACCOUNT_ALREADY_EXIST);
-            }
 
             var result =  _userManager.CreateAsync(user, _settings.RawHash).Result;
 
