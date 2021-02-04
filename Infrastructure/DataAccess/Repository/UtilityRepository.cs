@@ -90,5 +90,10 @@ namespace Infrastructure.DataAccess.Repository
         {
             return (ICollection<PaymentProvider>)_context.PaymentMethods;
         }
+
+        public ICollection<AppUser> GetUsersBy(int departmentId)
+        {
+            return _context.Users.Where(x => x.DepartmentId == departmentId).ToList();
+        }
     }
 }

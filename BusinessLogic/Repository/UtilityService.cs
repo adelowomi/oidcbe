@@ -26,6 +26,21 @@ namespace BusinessLogic.Repository
             _utilityRepository = utilityRepository;
         }
 
+        public Department DepartmentBy(int id)
+        {
+            return _utilityRepository.DepartmentBy(id);
+        }
+
+        public Department DepartmentBy(int id, string name)
+        {
+            return _utilityRepository.DepartmentBy(id, name);
+        }
+
+        public ICollection<Department> Departments()
+        {
+            return _utilityRepository.Departments();
+        }
+
         /// <summary>
         /// Get Gender By Id
         /// </summary>
@@ -53,6 +68,11 @@ namespace BusinessLogic.Repository
         public IEnumerable<PaymentProvider> GetPaymentProviders()
         {
             return _utilityRepository.GetPaymentProviders();
+        }
+
+        public ICollection<AppUser> GetUsersBy(int departmentId)
+        {
+            return _utilityRepository.GetUsersBy(departmentId);
         }
     }
 }

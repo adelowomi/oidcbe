@@ -70,6 +70,6 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// </summary>
         /// <param name="departmentId"></param>
         /// <returns></returns>
-        ICollection<Department> GetUsersBy(int departmentId);
+        ICollection<AppUser> GetUsersBy(int departmentId);
     }
 }
