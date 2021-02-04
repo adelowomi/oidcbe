@@ -739,5 +739,10 @@ namespace AppService.Repository
 
             return Ok();
         }
+
+        public async Task<ResponseViewModel> GetDepartments()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

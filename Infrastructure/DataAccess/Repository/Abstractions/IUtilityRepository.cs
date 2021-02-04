@@ -43,5 +43,33 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         ICollection<PaymentProvider> GetPaymentProviders();
+
+        /// <summary>
+        /// Get All Departments
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Department> Departments();
+
+        /// <summary>
+        /// Get Department
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Department DepartmentBy(int id);
+
+        /// <summary>
+        /// Get Department By Name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        Department DepartmentBy(int id, string name);
+
+        /// <summary>
+        /// Get Users By Department Id
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <returns></returns>
+        ICollection<Department> GetUsersBy(int departmentId);
     }
 }

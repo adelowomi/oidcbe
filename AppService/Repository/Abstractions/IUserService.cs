@@ -103,5 +103,11 @@ namespace AppService.Repository.Abstractions
         /// <param name="vendor"></param>
         /// <returns></returns>
         Task<ResponseViewModel> CreateVendor(VendorCreateInputModel vendor);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseViewModel> GetDepartments();
     }
 }

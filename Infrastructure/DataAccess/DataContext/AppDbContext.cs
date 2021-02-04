@@ -122,15 +122,16 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<PaymentInstalment> PaymentInstalments { get; set; }
 
+        public DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            return base.SaveChangesAsync(cancellationToken);
-        }
+        //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    return base.SaveChangesAsync(cancellationToken);
+        //}
     }
 }

@@ -254,7 +254,6 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        
         [Route("api/admin/vendors")]
         public IActionResult GetVendors()
         {
@@ -267,7 +266,6 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        
         [Route("api/admin/vendor/{id}")]
         public IActionResult GetVendors(int id)
         {
@@ -344,6 +342,15 @@ namespace WebAPI.Controllers
             }
 
             return Ok(await _userService.CreateVendor(vendor));
+        }
+
+        [HttpGet]
+        [Route("api/admin/departments")]
+        public async Task<IActionResult> GetDepartments()
+        {
+
+            //return Ok(await _userService.CreateVendor(vendor));
+            return Ok();
         }
 
         ///// <summary>

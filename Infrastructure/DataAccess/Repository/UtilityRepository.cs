@@ -37,6 +37,21 @@ namespace Infrastructure.DataAccess.Repository
             return nextOfKin;
         }
 
+        public Department DepartmentBy(int id)
+        {
+            return _context.Departments.FirstOrDefault(x => x.Id == id);
+        }
+
+        public Department DepartmentBy(int id, string name)
+        {
+            return _context.Departments.FirstOrDefault(x => x.Name == name);
+        }
+
+        public ICollection<Department> Departments()
+        {
+            return _context.Departments.ToList();
+        }
+
         /// <summary>
         /// Get Gender By It's Id
         /// </summary>
