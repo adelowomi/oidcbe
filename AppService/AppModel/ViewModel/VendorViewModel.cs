@@ -104,5 +104,7 @@ namespace AppService.AppModel.ViewModel
         public string RepresentativeEmail { get; set; }
 
         public string RepresentativePhoneNumber { get; set; }
+
+        public int DepartmentId { get; set; }
     }
 }
