@@ -165,6 +165,7 @@ namespace WebAPI
 
             services.AddTransient<IProposalRepository, ProposalRepository>();
             services.AddTransient<IProposalAppService, ProposalAppService>();
+            services.AddTransient<IDepartmentAppService, DepartmentAppService>();
 
             services.AddHttpContextAccessor();
 
