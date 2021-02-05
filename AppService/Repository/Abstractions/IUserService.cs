@@ -109,5 +109,12 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         Task<ResponseViewModel> GetDepartments();
+
+        /// <summary>
+        /// Create a new admin
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<ResponseViewModel> CreateAdmin(AdminInputModel model);
     }
 }

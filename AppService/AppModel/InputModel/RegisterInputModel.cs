@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace AppService.AppModel.InputModel
 {
@@ -31,6 +32,12 @@ namespace AppService.AppModel.InputModel
         public OrganizationEnumType OrganizationType { get; set; }
 
         public string Platform { get; set; }
+
+        [JsonIgnore]
+        public bool IsAdmin { get; set; }
+
+        [Required]
+        public int DepartmentId { get; set; }
     }
 
     public enum UserTypeEnum

@@ -344,30 +344,16 @@ namespace WebAPI.Controllers
             return Ok(await _userService.CreateVendor(vendor));
         }
 
-        [HttpGet]
-        [Route("api/admin/departments")]
-        public async Task<IActionResult> GetDepartments()
+        [HttpPost]
+        [Route("api/admin/create")]
+        public async Task<IActionResult> CreateAdmin([FromBody] AdminInputModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-            //return Ok(await _userService.CreateVendor(vendor));
-            return Ok();
+            return Ok(await _userService.CreateAdmin(model));
         }
-
-        ///// <summary>
-        ///// Get All Available Jobs
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpPost]
-        //[Route("api/job/create")]
-        //[ProducesResponseType(typeof(SwaggerResponse<IEnumerable<JobViewModel>>), 200)]
-        //public IActionResult CreateJob([FromBody] JobInputModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    return Ok(_jobAppService.CreateNewJob(model).Result);
-        //}
     }
 }

@@ -213,7 +213,15 @@ namespace AppService.Repository
 
                     _ = _emailService.SendEmail(model.Email, Res.ACCOUNT_SETUP, emailHtmlTemplate);
 
-                    _ = await _userManager.AddToRoleAsync(user, model.UserType == UserTypeEnum.VENDOR ? UserType.VENDOR : UserType.SUBSCRIBER);
+                    if(!model.IsAdmin) {
+                        _ = await _userManager.AddToRoleAsync(user, model.UserType == UserTypeEnum.VENDOR ? UserType.VENDOR : UserType.SUBSCRIBER);
+                    } else
+                    {
+                        _ = await _userManager.AddToRoleAsync(user, UserType.ADMIN);
+                        user.DepartmentId = model.DepartmentId;
+                        _ = await _userManager.UpdateAsync(user);
+                    }
+                    
                       
                     var mappedUser = _mapper.Map<AppUser, RegisterViewModel>(user);
 
@@ -692,13 +700,6 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> CreateVendor(VendorCreateInputModel model)
         {
-            var department = _utilityRepository.DepartmentBy(model.DepartmentId);
-
-            if (department == null)
-            {
-                return Failed(ResponseMessageViewModel.INVALID_DEPARTMENT, ResponseErrorCodeStatus.INVALID_DEPARTMENT);
-            }
-
             var exist = _userManager.FindByEmailAsync(model.CompanyEmail).Result;
 
             if(exist != null)
@@ -718,7 +719,7 @@ namespace AppService.Repository
                 RepresentativePhoneNumber = model.RepresentativePhoneNumber,
                 RepresentativeEmail = model.RepresentativeEmail,
                 RepresentativeName = model.RepresentativeName,
-                DepartmentId = model.DepartmentId
+                //DepartmentId = model.DepartmentId
             };
 
             var result =  _userManager.CreateAsync(user, _settings.RawHash).Result;
@@ -751,6 +752,22 @@ namespace AppService.Repository
         public async Task<ResponseViewModel> GetDepartments()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ResponseViewModel> CreateAdmin(AdminInputModel model)
+        {
+            var department = _utilityRepository.DepartmentBy(model.DepartmentId);
+
+            if (department == null)
+            {
+                return Failed(ResponseMessageViewModel.INVALID_DEPARTMENT, ResponseErrorCodeStatus.INVALID_DEPARTMENT);
+            }
+
+            model.IsAdmin = true;
+
+            var result = await RegisterAsync(model);
+
+            return result;
         }
     }
 }
