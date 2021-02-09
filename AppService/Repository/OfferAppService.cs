@@ -12,13 +12,14 @@ namespace AppService.Repository
     public class OfferAppService : ResponseViewModel, IOfferAppService
     {
         protected readonly IOfferService _offerService;
-
         protected readonly IMapper _mapper;
+        protected readonly IUserService _userService;
 
-        public OfferAppService(IOfferService offerService, IMapper mapper)
+        public OfferAppService(IOfferService offerService, IMapper mapper, IUserService userService)
         {
             _offerService = offerService;
             _mapper = mapper;
+            _userService = userService;
         }
 
         /// <summary>
@@ -28,7 +29,9 @@ namespace AppService.Repository
         /// <returns></returns>
         public ResponseViewModel GeneratorOffer(OfferInputModel offer)
         {
-            var mapped = _offerService.GenerateOffer(_mapper.Map<OfferInputModel, Offer>(offer));
+            var data = _mapper.Map<OfferInputModel, Offer>(offer);
+
+            var mapped = _offerService.GenerateOffer(data);
 
             var result = _mapper.Map<Offer, OfferViewModel>(mapped);
 

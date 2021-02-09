@@ -91,5 +91,10 @@ namespace Infrastructure.DataAccess.Repository
                 .Include(x => x.Subscription.SubscriptionStatus);
             return result;
         }
+
+        public IEnumerable<PaymentCycle> GetPaymentCycles()
+        {
+            return _context.PaymentCycles.ToList();
+        }
     }
 }

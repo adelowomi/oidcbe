@@ -138,5 +138,12 @@ namespace AppService.Repository
 
             return Ok(mappedResult);
         }
+
+        public ResponseViewModel GetPaymentCycle()
+        {
+            var result = _paymentService.GetAvailablePaymentCycles().Select(_mapper.Map<PaymentCycle, PaymentCyleViewModel>);
+
+            return Ok(result);
+        }
     }
 }

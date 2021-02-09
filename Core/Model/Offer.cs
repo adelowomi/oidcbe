@@ -19,8 +19,6 @@ namespace Core.Model
 
         public bool IsPaymentCompleted { get; }
 
-
-
         public double AdministrativeFee { get; set; }
 
         public double LegalCharge { get; set; }

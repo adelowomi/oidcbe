@@ -49,5 +49,10 @@ namespace BusinessLogic.Repository
         {
             return _paymentRepository.ConfirmPayment(trnxRef);
         }
+
+        public IEnumerable<PaymentCycle> GetAvailablePaymentCycles()
+        {
+            return _paymentRepository.GetPaymentCycles();
+        }
     }
 }

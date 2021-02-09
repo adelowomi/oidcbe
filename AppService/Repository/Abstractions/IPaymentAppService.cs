@@ -20,5 +20,7 @@ namespace AppService.Repository.Abstractions
         ResponseViewModel QueryPayment(string trnxRef);
 
         ResponseViewModel GetPaymentHistory();
+
+        ResponseViewModel GetPaymentCycle();
     }
 }

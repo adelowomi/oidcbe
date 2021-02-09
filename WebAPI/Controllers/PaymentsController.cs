@@ -133,5 +133,18 @@ namespace WebAPI.Controllers
 
             return Ok(_paymentAppService.GetPaymentHistory());
         }
+
+
+        /// <summary>
+        /// Get Offer By OfferId
+        /// </summary>
+        /// <param name="offerId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/payment/cycles")]
+        public IActionResult GetPaymentCycles()
+        {
+            return Ok(_paymentAppService.GetPaymentCycle());
+        }
     }
 }

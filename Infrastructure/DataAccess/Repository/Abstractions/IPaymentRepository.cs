@@ -19,5 +19,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         Payment LogPayment(int subscriptionId, int paymentType, int paymentMethod, int paymentProviderId, double amount);
 
         Payment ConfirmPayment(string trnxRef);
+
+        IEnumerable<PaymentCycle> GetPaymentCycles();
     }
 }

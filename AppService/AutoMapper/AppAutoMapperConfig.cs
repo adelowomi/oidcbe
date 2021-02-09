@@ -294,6 +294,7 @@ namespace AppService.AutoMapper
             CreateMap<JobStatus, JobStatusViewModel>();
             CreateMap<ProposalStatus, ProposalStatusViewModel>();
             CreateMap<Department, DepartmentViewModel>();
+            CreateMap<PaymentCycle, PaymentCyleViewModel>();
         }
     }
 }
