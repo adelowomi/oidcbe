@@ -47,5 +47,8 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public int PaymentInNumberOfMonths { get; set; }
+
+        [Required]
+        public int PaymentInNumberOfCycle { get; set; }
     }
 }
