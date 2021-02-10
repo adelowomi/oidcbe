@@ -34,5 +34,7 @@ namespace Core.Model
         public int PercentagePerCycle { get; set; }
 
         public int PaymentInNumberOfMonths { get; set; }
+
+        public int PaymentInNumberOfCycle { get; set; }
     }
 }
