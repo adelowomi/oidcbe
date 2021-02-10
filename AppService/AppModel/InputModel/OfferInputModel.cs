@@ -50,5 +50,14 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public int PaymentInNumberOfCycle { get; set; }
+
+        [Required]
+        public bool IsPrimarySale { get; set; }
+
+        [Required]
+        public bool IsSecondarySale { get; set; }
+
+        [Required]
+        public double PricePerSquareMeter { get; set; }
     }
 }
