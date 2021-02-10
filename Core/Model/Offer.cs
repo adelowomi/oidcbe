@@ -36,5 +36,11 @@ namespace Core.Model
         public int PaymentInNumberOfMonths { get; set; }
 
         public int PaymentInNumberOfCycle { get; set; }
+
+        public bool IsPrimarySale { get; set; }
+
+        public bool IsSecondarySale { get; set; }
+
+        public double PricePerSquareMeter { get; set; }
     }
 }

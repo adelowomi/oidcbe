@@ -26,5 +26,11 @@ namespace AppService.AppModel.ViewModel
         public int PercentagePerCycle { get; set; }
 
         public int PaymentInNumberOfMonths { get; set; }
+
+        public bool IsPrimarySale { get; set; }
+
+        public bool IsSecondarySale { get; set; }
+
+        public double PricePerSquareMeter { get; set; }
     }
 }
