@@ -21,5 +21,9 @@ namespace AppService.Repository.Abstractions
         IEnumerable<WorkOrderViewModel> GetWorkOrderByPlot(int subscriptionId);
 
         IEnumerable<WorkOrderTypeViewModel> GetWorkOrderTypes();
+
+        ResponseViewModel Approve(int workOrderId);
+
+        ResponseViewModel Decline(int workOrderId);
     }
 }

@@ -19,5 +19,9 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         IEnumerable<WorkOrder> GetAllByPlotId(int plotId);
 
         IEnumerable<WorkOrderType> GetWorkOrderTypes();
+
+        WorkOrder Approve(int id);
+
+        WorkOrder Decline(int id);
     }
 }

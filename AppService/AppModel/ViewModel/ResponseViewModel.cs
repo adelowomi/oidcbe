@@ -302,6 +302,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_JOB_STATUS = "Invalid job status, please select valid job status and try again!";
         public static string INVALID_JOB_TYPE = "Invalid job type, please select valid job type and try again!";
         public static string INVALID_DEPARTMENT = "Invalid Department";
+        public static string INVALID_WORK_ORDER = "Invalid work order";
     }
 
     /// <summary>
@@ -374,6 +375,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_JOB_STATUS = "46";
         public static readonly string INVALID_JOB_TYPE = "47";
         public static readonly string INVALID_DEPARTMENT = "48";
+        public static readonly string INVALID_WORK_ORDER = "49";
 
         //FAILURES
         public static readonly string FAIL = "91";

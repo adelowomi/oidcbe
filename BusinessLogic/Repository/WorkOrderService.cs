@@ -51,5 +51,19 @@ namespace BusinessLogic.Repository
         {
             return _workOrderRepository.GetWorkOrderTypes();
         }
+
+        public WorkOrder Approve(int workOrderId)
+        {
+            var result = _workOrderRepository.Approve(workOrderId);
+
+            return result;
+        }
+
+        public WorkOrder DisApprove(int workOrderId)
+        {
+            var result = _workOrderRepository.Decline(workOrderId);
+
+            return result;
+        }
     }
 }

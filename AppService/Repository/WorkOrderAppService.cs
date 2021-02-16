@@ -109,5 +109,33 @@ namespace AppService.Repository
             return _workOrderService.GetWorkOrderTypes().Select(_mapper.Map<WorkOrderType, WorkOrderTypeViewModel>);
         }
 
+        public ResponseViewModel Approve(int workOrderId)
+        {
+
+            var workOrder = _workOrderService.GetById(workOrderId);
+
+            if(workOrder == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_WORK_ORDER, ResponseErrorCodeStatus.INVALID_WORK_ORDER);
+            }
+
+            var result = _mapper.Map<WorkOrder, WorkOrderViewModel>(_workOrderService.Approve(workOrderId));
+
+            return Ok(result);
+        }
+
+        public ResponseViewModel Decline(int workOrderId)
+        {
+            var workOrder = _workOrderService.GetById(workOrderId);
+
+            if (workOrder == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_WORK_ORDER, ResponseErrorCodeStatus.INVALID_WORK_ORDER);
+            }
+
+            var result = _mapper.Map<WorkOrder, WorkOrderViewModel>(_workOrderService.DisApprove(workOrderId));
+
+            return Ok(result);
+        }
     }
 }

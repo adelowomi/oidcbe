@@ -18,12 +18,14 @@ namespace WebAPI.Controllers
         private readonly ISubscriberAppService _subscriberAppService;
         private readonly IJobAppService _jobAppService;
         private readonly IProposalAppService _proposalAppService;
+        private readonly IWorkOrderAppService _workOrderAppService;
         private readonly ILogger<AdminController> _logger;
             
         public AdminController(IUserService userService,
                                 ISubscriberAppService subscriberAppService,
                                 IJobAppService jobAppService,
                                 IProposalAppService proposalAppService,
+                                IWorkOrderAppService workOrderAppService,
                                 ILogger<AdminController> logger)
         {
             _userService = userService;
@@ -31,6 +33,7 @@ namespace WebAPI.Controllers
             _logger = logger;
             _jobAppService = jobAppService;
             _proposalAppService = proposalAppService;
+            _workOrderAppService = workOrderAppService;
         }
 
         //}
@@ -354,6 +357,30 @@ namespace WebAPI.Controllers
             }
 
             return Ok(await _userService.CreateAdmin(model));
+        }
+
+        [HttpPost]
+        [Route("api/admin/work-order/decline")]
+        public IActionResult DeclineWorkOrder(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_workOrderAppService.Decline(id));
+        }
+
+        [HttpPost]
+        [Route("api/admin/work-order/approve")]
+        public IActionResult ApproveWorkOrder(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_workOrderAppService.Approve(id));
         }
     }
 }

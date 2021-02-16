@@ -14,12 +14,34 @@ namespace Infrastructure.DataAccess.Repository
 
         }
 
+        public WorkOrder Approve(int id)
+        {
+            var workOrder = GetById(id);
+
+            workOrder.WorkOrderStatusId = (int)WorkOrderStatusEnum.APPROVED;
+
+            Save();
+
+            return workOrder;
+        }
+
         public WorkOrder CreateNewWorkOrder(WorkOrder workOrder)
         {
             workOrder.WorkOrderStatusId = (int) WorkOrderStatusEnum.PENDING;
             var work = CreateAndReturn(workOrder);
 
             return GetAllWorkOrders().FirstOrDefault(x => x.Id == work.Id);
+        }
+
+        public WorkOrder Decline(int id)
+        {
+            var workOrder = GetById(id);
+
+            workOrder.WorkOrderStatusId = (int)WorkOrderStatusEnum.DECLINED;
+
+            Save();
+
+            return workOrder;
         }
 
         public IEnumerable<WorkOrder> GetAllByPlotId(int plotId)
@@ -56,5 +78,7 @@ namespace Infrastructure.DataAccess.Repository
         {
             return _context.WorkOrderTypes.ToList();
         }
+
+
     }
 }

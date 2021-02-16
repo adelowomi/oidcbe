@@ -19,5 +19,9 @@ namespace BusinessLogic.Repository.Abstractions
         IEnumerable<WorkOrder> GetAllByPlot(int subscriptionId);
 
         IEnumerable<WorkOrderType> GetWorkOrderTypes();
+
+        WorkOrder Approve(int workOrderId);
+
+        WorkOrder DisApprove(int workOrderId);
     }
 }
