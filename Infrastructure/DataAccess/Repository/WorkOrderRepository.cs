@@ -22,12 +22,13 @@ namespace Infrastructure.DataAccess.Repository
 
             Save();
 
-            return workOrder;
+            return GetAllWorkOrders().FirstOrDefault(x => x.Id == id);
         }
 
         public WorkOrder CreateNewWorkOrder(WorkOrder workOrder)
         {
             workOrder.WorkOrderStatusId = (int) WorkOrderStatusEnum.PENDING;
+
             var work = CreateAndReturn(workOrder);
 
             return GetAllWorkOrders().FirstOrDefault(x => x.Id == work.Id);
@@ -41,7 +42,7 @@ namespace Infrastructure.DataAccess.Repository
 
             Save();
 
-            return workOrder;
+            return GetAllWorkOrders().FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<WorkOrder> GetAllByPlotId(int plotId)
