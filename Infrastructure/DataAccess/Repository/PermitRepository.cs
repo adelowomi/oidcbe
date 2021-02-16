@@ -57,7 +57,7 @@ namespace Infrastructure.DataAccess.Repository
 
             Save();
 
-            return permit;
+            return All().FirstOrDefault(x => x.Id == permitId);
         }
 
         public Permit Decline(int permitId)
@@ -68,7 +68,7 @@ namespace Infrastructure.DataAccess.Repository
 
             Save();
 
-            return permit;
+            return All().FirstOrDefault(x => x.Id == permitId);
         }
 
         public Permit Suspend(int permitId)
@@ -79,7 +79,7 @@ namespace Infrastructure.DataAccess.Repository
 
             Save();
 
-            return permit;
+            return All().FirstOrDefault(x => x.Id == permitId);
         }
     }
 }
