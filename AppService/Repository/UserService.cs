@@ -470,7 +470,7 @@ namespace AppService.Repository
                 return NotFound(ResponseMessageViewModel.INVALID_PLATFORM, ResponseErrorCodeStatus.INVALID_PLATFORM);
             }
 
-            if ((model.Platform ?? Res.MOBILE_PLATFORM).ToLower() == Res.MOBILE_PLATFORM) {
+            if ((model.Platform ?? Res.MOBILE_PLATFORM).ToLower() == Res.MOBILE_PLATFORM || (model.Platform.ToLower() == Res.WEB_PLATFORM)) {
 
                  currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
 
@@ -479,6 +479,8 @@ namespace AppService.Repository
             
             try
             {
+                currentUser = _userManager.FindByEmailAsync(model.EmailAddress).Result;
+
                 _otpAppService.ValidateOTP(currentUser.Id, model.Code, model.Platform);
 
                 currentUser.EmailConfirmed = true;
