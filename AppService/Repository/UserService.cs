@@ -480,6 +480,12 @@ namespace AppService.Repository
             try
             {
                 _otpAppService.ValidateOTP(currentUser.Id, model.Code, model.Platform);
+
+                currentUser.EmailConfirmed = true;
+
+                _ = _userManager.UpdateAsync(currentUser).Result;
+
+                return Ok(ResponseMessageViewModel.EMAIL_ADDRESS_CONFIRMED);
             }
             catch (InvalidTokenCodeExcepton e)
             {
@@ -489,12 +495,7 @@ namespace AppService.Repository
             {
                 return Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
             }
-
-            currentUser.EmailConfirmed = true;
-
-            _ = _userManager.UpdateAsync(currentUser).Result;
-
-            return Ok(ResponseMessageViewModel.EMAIL_ADDRESS_CONFIRMED);
+            
         }
         /// <summary>
         /// Asynchronous Method, To Reset Password
