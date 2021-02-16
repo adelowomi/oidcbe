@@ -20,6 +20,7 @@ GO
 
 GO
 
+
 ALTER TABLE [Transactions] ADD [TotalAmount] float NOT NULL DEFAULT 0.0E0;
 
 ALTER TABLE [Offer] ADD [IsInstalmentalPayment] BIT NOT NULL DEFAULT CAST(0 AS BIT)

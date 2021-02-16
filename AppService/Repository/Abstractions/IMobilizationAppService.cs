@@ -12,6 +12,8 @@ namespace AppService.Repository.Abstractions
 
         ResponseViewModel GetByPlot(int id);
 
+        ResponseViewModel GetMobilizationBy(int id);
+
         Task<ResponseViewModel> GetByUserAsync();
 
         Task<ResponseViewModel> CreateNew(MobilizationInputModel model);

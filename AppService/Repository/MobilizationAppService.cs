@@ -119,6 +119,16 @@ namespace AppService.Repository.Abstractions
             return Ok(result);
         }
 
+        public ResponseViewModel GetMobilizationBy(int id)
+        {
+            var result = _mobilizationService
+                                .GetAllMobilization()
+                                .Where(x => x.Id == id)
+                                .Select(_mapper.Map<Mobilization, MobilizationViewModel>);
+
+            return Ok(result);
+        }
+
         public ResponseViewModel Suspend(int id)
         {
             var result = _mapper.Map<Mobilization, MobilizationViewModel>(_mobilizationService.Suspend(id));

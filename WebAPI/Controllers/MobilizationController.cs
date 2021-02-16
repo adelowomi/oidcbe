@@ -70,6 +70,23 @@ namespace WebAPI.Controllers
             return Ok(_mobilizationAppService.Update(id, model));
         }
 
+        /// <summary>
+        /// Edit Mobilization
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/mobilization/{id}")]
+        public IActionResult GetMobilizationBy(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_mobilizationAppService.GetMobilizationBy(id));
+        }
+
 
         /// <summary>
         /// Get Mobilization By Plot Id
