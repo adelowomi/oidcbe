@@ -20,6 +20,7 @@ namespace WebAPI.Controllers
         private readonly IProposalAppService _proposalAppService;
         private readonly IWorkOrderAppService _workOrderAppService;
         private readonly IPermitAppService _permitAppService;
+        private readonly IMobilizationAppService _mobilizationAppService;
         private readonly ILogger<AdminController> _logger;
             
         public AdminController(IUserService userService,
@@ -28,6 +29,7 @@ namespace WebAPI.Controllers
                                 IProposalAppService proposalAppService,
                                 IWorkOrderAppService workOrderAppService,
                                 IPermitAppService permitAppService,
+                                IMobilizationAppService mobilizationAppService,
                                 ILogger<AdminController> logger)
         {
             _userService = userService;
@@ -37,6 +39,7 @@ namespace WebAPI.Controllers
             _proposalAppService = proposalAppService;
             _workOrderAppService = workOrderAppService;
             _permitAppService = permitAppService;
+            _mobilizationAppService = mobilizationAppService;
         }
 
         //}
@@ -419,6 +422,57 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_permitAppService.PermitSuspend(id));
+        }
+
+        /// <summary>
+        /// Get Mobilization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/admin/mobilization/approve")]
+        public IActionResult ApproveMobilization(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_mobilizationAppService.Approve(id));
+        }
+
+        /// <summary>
+        /// Get Mobilization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/admin/mobilization/decline")]
+        public IActionResult DeclineMobilization(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_mobilizationAppService.Decline(id));
+        }
+
+        /// <summary>
+        /// Get Mobilization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/admin/mobilization/suspend")]
+        public IActionResult SuspendMobilization(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_mobilizationAppService.Suspend(id));
         }
     }
 }

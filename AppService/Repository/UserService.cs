@@ -490,7 +490,11 @@ namespace AppService.Repository
                 return Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
             }
 
-            return Ok();
+            currentUser.EmailConfirmed = true;
+
+            _ = _userManager.UpdateAsync(currentUser).Result;
+
+            return Ok(ResponseMessageViewModel.EMAIL_ADDRESS_CONFIRMED);
         }
         /// <summary>
         /// Asynchronous Method, To Reset Password
@@ -568,7 +572,7 @@ namespace AppService.Repository
 
                 if (!user.EmailConfirmed)
                 {
-                    return ResponseViewModel.Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
+                    return Failed(ResponseMessageViewModel.EMAIL_NOT_CONFIRMED, ResponseErrorCodeStatus.EMAIL_NOT_CONFIRMED);
                 }
 
                 try
@@ -578,13 +582,11 @@ namespace AppService.Repository
                 }
                 catch (InvalidTokenCodeExcepton e) {
 
-                    return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
-
+                    return Failed(e.Message, ResponseErrorCodeStatus.INVALID_CONFIRMATION_CODE);
                 }
                 catch (ExpiredTokenCodeException e) {
 
-                    return ResponseViewModel.Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
-
+                    return Failed(e.Message, ResponseErrorCodeStatus.EXPIRED_CONFIRMATION_CODE);
                 }
 
                 var token = await _userManager.ResetPasswordAsync(user, user.Token, model.Password);
@@ -593,15 +595,15 @@ namespace AppService.Repository
                 {
                     _ = _emailService.SendCompleteResetPassword(user.Email, user.FirstName);
 
-                    return ResponseViewModel.Ok();
+                    return Ok();
                 }
 
-                return ResponseViewModel.Failed(ResponseMessageViewModel.UNABLE_TO_RESET_PASSWORD, ResponseErrorCodeStatus.UNABLE_TO_RESET_PASSWORD);
+                return Failed(ResponseMessageViewModel.UNABLE_TO_RESET_PASSWORD, ResponseErrorCodeStatus.UNABLE_TO_RESET_PASSWORD);
 
             }
             catch (Exception e)
             {
-                return ResponseViewModel.Create(false, ResponseMessageViewModel.UNSUCCESSFUL);
+                return Create(false, ResponseMessageViewModel.UNSUCCESSFUL);
             }
         }
 

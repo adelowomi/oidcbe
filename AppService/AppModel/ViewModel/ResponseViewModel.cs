@@ -304,6 +304,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_DEPARTMENT = "Invalid Department, please try again";
         public static string INVALID_WORK_ORDER = "Invalid work order, please try again";
         public static string INVALID_PERMIT = "Invalid Permit, please try again";
+        public static string EMAIL_ADDRESS_CONFIRMED = "Email address confirmed!";
     }
 
     /// <summary>
@@ -378,6 +379,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_DEPARTMENT = "48";
         public static readonly string INVALID_WORK_ORDER = "49";
         public static readonly string INVALID_PERMIT = "50";
+        public static readonly string EMAIL_ADDRESS_CONFIRMED = "51";
 
         //FAILURES
         public static readonly string FAIL = "91";

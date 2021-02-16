@@ -16,6 +16,10 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
 
         Mobilization Update(Mobilization mobilization);
 
-        //Mobilization Approve(int id);
+        Mobilization Approve(int id);
+
+        Mobilization Decline(int id);
+
+        Mobilization Suspend(int id);
     }
 }

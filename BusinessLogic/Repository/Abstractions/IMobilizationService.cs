@@ -17,5 +17,11 @@ namespace BusinessLogic.Repository.Abstractions
         IEnumerable<Mobilization> GetMobilizationByPlot(int id);
 
         IEnumerable<Mobilization> GetMobilizationByUser(int id);
+
+        Mobilization Approve(int id);
+
+        Mobilization Decline(int id);
+
+        Mobilization Suspend(int id);
     }
 }

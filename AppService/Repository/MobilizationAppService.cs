@@ -42,6 +42,13 @@ namespace AppService.Repository.Abstractions
             _plotService = plotService;
         }
 
+        public ResponseViewModel Approve(int id)
+        {
+            var result = _mapper.Map<Mobilization, MobilizationViewModel>(_mobilizationService.Approve(id));
+
+            return Ok(result);
+        }
+
         public async Task<ResponseViewModel> CreateNew(MobilizationInputModel model)
         {
             var user = await _userManager.FindByIdAsync(_httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>().ToString());
@@ -78,6 +85,13 @@ namespace AppService.Repository.Abstractions
             return Ok(result);
         }
 
+        public ResponseViewModel Decline(int id)
+        {
+            var result = _mapper.Map<Mobilization, MobilizationViewModel>(_mobilizationService.Suspend(id));
+
+            return Ok(result);
+        }
+
         public ResponseViewModel GetAll()
         {
             var result = _mobilizationService.GetAllMobilization().Select(_mapper.Map<Mobilization, MobilizationViewModel>);
@@ -101,6 +115,13 @@ namespace AppService.Repository.Abstractions
             var result = _mobilizationService
                            .GetMobilizationByUser(currentUser.Id)
                                .Select(_mapper.Map<Mobilization, MobilizationViewModel>);
+
+            return Ok(result);
+        }
+
+        public ResponseViewModel Suspend(int id)
+        {
+            var result = _mapper.Map<Mobilization, MobilizationViewModel>(_mobilizationService.Suspend(id));
 
             return Ok(result);
         }

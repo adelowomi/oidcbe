@@ -16,10 +16,20 @@ namespace BusinessLogic.Repository
             _mobilizationRepository = mobilizationRepository;
         }
 
+        public Mobilization Approve(int id)
+        {
+            return _mobilizationRepository.Approve(id);
+        }
+
         public Mobilization CreateNew(Mobilization mobilization)
         {
             mobilization.MobilizationStatusId = (int) MobilizationStatusEnum.PENDING;
             return _mobilizationRepository.CreateAndReturn(mobilization);
+        }
+
+        public Mobilization Decline(int id)
+        {
+            return _mobilizationRepository.Decline(id);
         }
 
         public IEnumerable<Mobilization> GetAllMobilization()
@@ -40,6 +50,11 @@ namespace BusinessLogic.Repository
         public IEnumerable<Mobilization> GetMobilizationByUser(int id)
         {
             return _mobilizationRepository.All().Where(x => x.AppUserId == id);
+        }
+
+        public Mobilization Suspend(int id)
+        {
+            return _mobilizationRepository.Suspend(id);
         }
 
         public Mobilization Update(Mobilization mobilization)

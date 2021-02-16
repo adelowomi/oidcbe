@@ -17,5 +17,11 @@ namespace AppService.Repository.Abstractions
         Task<ResponseViewModel> CreateNew(MobilizationInputModel model);
 
         ResponseViewModel Update(int id, MobilizationInputModel model);
+
+        ResponseViewModel Approve(int id);
+
+        ResponseViewModel Decline(int id);
+
+        ResponseViewModel Suspend(int id);
     }
 }

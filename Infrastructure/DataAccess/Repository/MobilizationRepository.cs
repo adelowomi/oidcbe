@@ -20,5 +20,38 @@ namespace Infrastructure.DataAccess.Repository
             return _context.Mobilizations
                 .Include(x => x.MobilizationStatus).ToList();
         }
+
+        public Mobilization Approve(int id)
+        {
+            var mobililization = GetById(id);
+
+            mobililization.MobilizationStatusId = (int)MobilizationStatusEnum.APPROVED;
+
+            Save();
+
+            return All().FirstOrDefault(x => x.Id == id);
+        }
+
+        public Mobilization Decline(int id)
+        {
+            var mobililization = GetById(id);
+
+            mobililization.MobilizationStatusId = (int)MobilizationStatusEnum.DECLINED;
+
+            Save();
+
+            return All().FirstOrDefault(x => x.Id == id);
+        }
+
+        public Mobilization Suspend(int id)
+        {
+            var mobililization = GetById(id);
+
+            mobililization.MobilizationStatusId = (int)MobilizationStatusEnum.SUSPENDED;
+
+            Save();
+
+            return All().FirstOrDefault(x => x.Id == id);
+        }
     }
 }

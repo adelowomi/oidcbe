@@ -22,8 +22,10 @@ namespace AppService.AppModel.InputModel
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
         public string OtpCode { get; set; }
 
+        [Required]
         public string Platform { get; set; }
     }
 }
