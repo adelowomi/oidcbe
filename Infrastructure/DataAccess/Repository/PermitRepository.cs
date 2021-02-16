@@ -48,5 +48,38 @@ namespace Infrastructure.DataAccess.Repository
         {
             return _context.PermitStatuses.ToList();
         }
+
+        public Permit Approve(int permitId)
+        {
+            var permit = GetById(permitId);
+
+            permit.PermitStatusId = (int)PermitStatusEnum.APPROVED;
+
+            Save();
+
+            return permit;
+        }
+
+        public Permit Decline(int permitId)
+        {
+            var permit = GetById(permitId);
+
+            permit.PermitStatusId = (int)PermitStatusEnum.DECLINED;
+
+            Save();
+
+            return permit;
+        }
+
+        public Permit Suspend(int permitId)
+        {
+            var permit = GetById(permitId);
+
+            permit.PermitStatusId = (int)PermitStatusEnum.SUSPENDED;
+
+            Save();
+
+            return permit;
+        }
     }
 }

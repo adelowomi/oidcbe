@@ -19,6 +19,7 @@ namespace WebAPI.Controllers
         private readonly IJobAppService _jobAppService;
         private readonly IProposalAppService _proposalAppService;
         private readonly IWorkOrderAppService _workOrderAppService;
+        private readonly IPermitAppService _permitAppService;
         private readonly ILogger<AdminController> _logger;
             
         public AdminController(IUserService userService,
@@ -26,6 +27,7 @@ namespace WebAPI.Controllers
                                 IJobAppService jobAppService,
                                 IProposalAppService proposalAppService,
                                 IWorkOrderAppService workOrderAppService,
+                                IPermitAppService permitAppService,
                                 ILogger<AdminController> logger)
         {
             _userService = userService;
@@ -34,6 +36,7 @@ namespace WebAPI.Controllers
             _jobAppService = jobAppService;
             _proposalAppService = proposalAppService;
             _workOrderAppService = workOrderAppService;
+            _permitAppService = permitAppService;
         }
 
         //}
@@ -309,7 +312,6 @@ namespace WebAPI.Controllers
 
 
         [HttpPut]
-        
         [Route("api/admin/proposal/approve")]
         public IActionResult Approve(int proposalId)
         {
@@ -359,7 +361,7 @@ namespace WebAPI.Controllers
             return Ok(await _userService.CreateAdmin(model));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/admin/work-order/decline")]
         public IActionResult DeclineWorkOrder(int id)
         {
@@ -371,7 +373,7 @@ namespace WebAPI.Controllers
             return Ok(_workOrderAppService.Decline(id));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/admin/work-order/approve")]
         public IActionResult ApproveWorkOrder(int id)
         {
@@ -381,6 +383,42 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_workOrderAppService.Approve(id));
+        }
+
+        [HttpGet]
+        [Route("api/admin/permit/approve")]
+        public IActionResult ApprovePermit(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.PermitApprove(id));
+        }
+
+        [HttpGet]
+        [Route("api/admin/permit/decline")]
+        public IActionResult DeclinePermit(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.PermitDecline(id));
+        }
+
+        [HttpGet]
+        [Route("api/admin/permit/suspend")]
+        public IActionResult SuspendPermit(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.PermitSuspend(id));
         }
     }
 }

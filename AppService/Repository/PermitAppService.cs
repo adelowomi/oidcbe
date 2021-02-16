@@ -117,5 +117,41 @@ namespace AppService.Repository
 
             return Ok(result);
         }
+
+        public ResponseViewModel PermitApprove(int id)
+        {
+            var permit = _permitService.GetPermitBy(id);
+
+            if(permit == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PERMIT, ResponseErrorCodeStatus.INVALID_PERMIT);
+            }
+
+            return Ok(_permitService.ApprovePermit(id));
+        }
+
+        public ResponseViewModel PermitDecline(int id)
+        {
+            var permit = _permitService.GetPermitBy(id);
+
+            if (permit == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PERMIT, ResponseErrorCodeStatus.INVALID_PERMIT);
+            }
+
+            return Ok(_permitService.DeclinePermit(id));
+        }
+
+        public ResponseViewModel PermitSuspend(int id)
+        {
+            var permit = _permitService.GetPermitBy(id);
+
+            if (permit == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PERMIT, ResponseErrorCodeStatus.INVALID_PERMIT);
+            }
+
+            return Ok(_permitService.SuspendPermit(id));
+        }
     }
 }

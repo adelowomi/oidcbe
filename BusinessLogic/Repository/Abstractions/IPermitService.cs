@@ -21,5 +21,11 @@ namespace BusinessLogic.Repository.Abstractions
         PermitType CreateNewPermitType(PermitType permitType);
 
         IEnumerable<PermitStatus> GetPermitStatuses();
+
+        Permit ApprovePermit(int permitId);
+
+        Permit DeclinePermit(int permitId);
+
+        Permit SuspendPermit(int permitId);
     }
 }

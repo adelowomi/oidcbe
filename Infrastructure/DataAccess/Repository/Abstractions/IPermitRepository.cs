@@ -21,5 +21,11 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         IEnumerable<PermitStatus> GetPermitStatuses();
 
         Permit CreatePermit(Permit permit);
+
+        Permit Approve(int permitId);
+
+        Permit Decline(int permitId);
+
+        Permit Suspend(int permitId);
     }
 }

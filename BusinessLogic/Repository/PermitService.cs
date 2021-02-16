@@ -81,5 +81,26 @@ namespace BusinessLogic.Repository
         {
             return _permitRepository.GetPermitStatuses();
         }
+
+        public Permit ApprovePermit(int permitId)
+        {
+            var permit = _permitRepository.Approve(permitId);
+
+            return permit;
+        }
+
+        public Permit DeclinePermit(int permitId)
+        {
+            var permit = _permitRepository.Decline(permitId);
+
+            return permit;
+        }
+
+        public Permit SuspendPermit(int permitId)
+        {
+            var permit = _permitRepository.Suspend(permitId);
+
+            return permit;
+        }
     }
 }

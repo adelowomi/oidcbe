@@ -301,8 +301,9 @@ namespace AppService.AppModel.ViewModel
         public static string UNABLE_ASSIGN_ROLE_TO_VENDOR = "Unable to assign role to vendor, please try again!";
         public static string INVALID_JOB_STATUS = "Invalid job status, please select valid job status and try again!";
         public static string INVALID_JOB_TYPE = "Invalid job type, please select valid job type and try again!";
-        public static string INVALID_DEPARTMENT = "Invalid Department";
-        public static string INVALID_WORK_ORDER = "Invalid work order";
+        public static string INVALID_DEPARTMENT = "Invalid Department, please try again";
+        public static string INVALID_WORK_ORDER = "Invalid work order, please try again";
+        public static string INVALID_PERMIT = "Invalid Permit, please try again";
     }
 
     /// <summary>
@@ -376,6 +377,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_JOB_TYPE = "47";
         public static readonly string INVALID_DEPARTMENT = "48";
         public static readonly string INVALID_WORK_ORDER = "49";
+        public static readonly string INVALID_PERMIT = "50";
 
         //FAILURES
         public static readonly string FAIL = "91";

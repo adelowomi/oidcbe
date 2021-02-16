@@ -19,5 +19,11 @@ namespace AppService.Repository.Abstractions
         ResponseViewModel GetPermitTypes();
 
         ResponseViewModel GetPermitStatuses();
+
+        ResponseViewModel PermitApprove(int id);
+
+        ResponseViewModel PermitDecline(int id);
+
+        ResponseViewModel PermitSuspend(int id);
     }
 }
