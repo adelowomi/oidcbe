@@ -54,7 +54,7 @@ namespace BusinessLogic.Repository
 
         public Permit GetPermitBy(int id)
         {
-            return _permitRepository.GetById(id);
+            return GetPermits().FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Permit> GetPermits()
