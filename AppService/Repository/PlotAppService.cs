@@ -121,10 +121,5 @@ namespace AppService.Repository
 
             return Ok((mappedResult));
         }
-
-        public ResponseViewModel GetPaymentById(int id)
-        {
-            
-        }
     }
 }
