@@ -153,5 +153,12 @@ namespace AppService.Repository
 
             return Ok(_permitService.SuspendPermit(id));
         }
+
+        public ResponseViewModel GetPermitsBy(int id)
+        {
+            var result = _mapper.Map<Permit, PermitViewModel>(_permitService.GetPermitBy(id));
+
+            return Ok(result);
+        }
     }
 }

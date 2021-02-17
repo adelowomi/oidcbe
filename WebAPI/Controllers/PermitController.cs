@@ -1,4 +1,5 @@
 ﻿using AppService.AppModel.InputModel;
+using AppService.AppModel.ViewModel;
 using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using Microsoft.AspNetCore.Authorization;
@@ -102,6 +103,21 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_permitAppService.GetPermitStatuses());
+        }
+
+
+        [HttpGet]
+        [Route("api/permit/{id}")]
+        [ProducesResponseType(typeof(PermitViewModel), 200)]
+        [ProducesResponseType(typeof(PermitViewModel), 400)]
+        public IActionResult GetPermitById(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_permitAppService.GetPermitsBy(id));
         }
     }
 }
