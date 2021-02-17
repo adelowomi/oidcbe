@@ -22,5 +22,7 @@ namespace AppService.Repository.Abstractions
         ResponseViewModel GetPaymentHistory();
 
         ResponseViewModel GetPaymentCycle();
+
+        ResponseViewModel GetPaymentById(int id);
     }
 }

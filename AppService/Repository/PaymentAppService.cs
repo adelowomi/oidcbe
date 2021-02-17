@@ -139,9 +139,25 @@ namespace AppService.Repository
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Get Payment Cyle
+        /// </summary>
+        /// <returns></returns>
         public ResponseViewModel GetPaymentCycle()
         {
             var result = _paymentService.GetAvailablePaymentCycles().Select(_mapper.Map<PaymentCycle, PaymentCyleViewModel>);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get Payment By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ResponseViewModel GetPaymentById(int id)
+        {
+            var result = _mapper.Map<Payment, PaymentViewModel>(_paymentService.GetPayments().FirstOrDefault(x => x.Id == id));
 
             return Ok(result);
         }

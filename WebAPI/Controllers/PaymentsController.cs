@@ -134,7 +134,6 @@ namespace WebAPI.Controllers
             return Ok(_paymentAppService.GetPaymentHistory());
         }
 
-
         /// <summary>
         /// Get Offer By OfferId
         /// </summary>
@@ -145,6 +144,18 @@ namespace WebAPI.Controllers
         public IActionResult GetPaymentCycles()
         {
             return Ok(_paymentAppService.GetPaymentCycle());
+        }
+
+        /// <summary>
+        /// Get Offer By OfferId
+        /// </summary>
+        /// <param name="offerId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/payment/query/{id}")]
+        public IActionResult GetPaymentById(int id)
+        {
+            return Ok(_paymentAppService.GetPaymentById(id));
         }
     }
 }
