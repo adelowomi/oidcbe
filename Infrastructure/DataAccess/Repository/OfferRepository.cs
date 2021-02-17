@@ -27,6 +27,7 @@ namespace Infrastructure.DataAccess.Repository
             var result = _context.Offers
                 .Include(x => x.Plot)
                 .Include(x => x.Payments)
+                .Include(x => x.Plot.AppUser)
                 .Include(x => x.OfferStatus);
 
             return result;

@@ -32,5 +32,11 @@ namespace AppService.AppModel.ViewModel
         public bool IsSecondarySale { get; set; }
 
         public double PricePerSquareMeter { get; set; }
+
+        public double OutrightPurchase { get; set; }
+
+        public double TotalPrice => Plot.Price;
+
+        public double TotalPaid { get; set; }
     }
 }
