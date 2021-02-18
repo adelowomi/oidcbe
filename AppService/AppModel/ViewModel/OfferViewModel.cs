@@ -3,6 +3,8 @@ namespace AppService.AppModel.ViewModel
 {
     public class OfferViewModel
     {
+        public int Id { get; set; }
+
         public int PlotId { get; set; }
 
         public PlotViewModel Plot { get; set; }
