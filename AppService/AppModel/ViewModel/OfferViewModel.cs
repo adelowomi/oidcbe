@@ -40,5 +40,7 @@ namespace AppService.AppModel.ViewModel
         public double TotalPrice => Plot.Price;
 
         public double TotalPaid { get; set; }
+
+        public DateTime DateCreated { get; set; }
     }
 }
