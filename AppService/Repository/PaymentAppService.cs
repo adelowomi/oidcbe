@@ -161,5 +161,27 @@ namespace AppService.Repository
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Get All Payments
+        /// </summary>
+        /// <returns></returns>
+        public ResponseViewModel GetAllPayments()
+        {
+            var result = _paymentService.GetPayments().Select(_mapper.Map<Payment, PaymentViewModel>);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get Payments By Status Approved
+        /// </summary>
+        /// <returns></returns>
+        public ResponseViewModel GetApprovedPayments()
+        {
+            var result =_paymentService.GetPayments().Where(x => x.PaymentStatusId == (int)PaymentStatusEnum.APPROVED).Select(_mapper.Map<Payment, PaymentViewModel>);
+
+            return Ok(result);
+        }
     }
 }

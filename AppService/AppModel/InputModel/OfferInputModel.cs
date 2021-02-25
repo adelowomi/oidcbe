@@ -25,8 +25,6 @@ namespace AppService.AppModel.InputModel
 
         public double SellingPrice { get; set; }
 
-        // public int DurationInMonths { get; set; }
-
         [Required]
         public double AdministrativeFee { get; set; }
 
