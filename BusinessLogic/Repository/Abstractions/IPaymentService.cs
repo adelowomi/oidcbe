@@ -21,7 +21,5 @@ namespace BusinessLogic.Repository.Abstractions
         Payment QueryPayment(string trnxRef);
 
         IEnumerable<PaymentCycle> GetAvailablePaymentCycles();
-
-        IEnumerable<Payment> GetApprovedPayments();
     }
 }
