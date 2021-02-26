@@ -3,6 +3,8 @@ namespace AppService.AppModel.ViewModel
 {
     public class SubscriptionViewModel 
     {
+        public VendorViewModel AppUser { get; set; }
+
         public int SubscriptionId  { get; set; }
 
         public string Status { get; set; }
