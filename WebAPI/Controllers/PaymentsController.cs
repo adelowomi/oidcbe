@@ -125,14 +125,14 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("api/payment")]
-        public IActionResult GetPaymentByTrnxId(int trnxId)
+        public IActionResult GetPaymentById(int paymentId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_plotService.GetByVendorId(1)));
+            return Ok(_paymentAppService.GetPaymentById(paymentId));
         }
 
         [HttpGet]
@@ -178,7 +178,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/payment/query/{id}")]
-        public IActionResult GetPaymentById(int id)
+        public IActionResult QueryPaymentById(int id)
         {
             return Ok(_paymentAppService.GetPaymentById(id));
         }

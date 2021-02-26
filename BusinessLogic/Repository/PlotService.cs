@@ -58,6 +58,16 @@ namespace BusinessLogic.Repository
             return _plotRepository.GetSubscriberPlots(subscriberId);
         }
 
+        /// <summary>
+        /// Get Plot By Subscriber Id
+        /// </summary>
+        /// <param name="subscriberId"></param>
+        /// <returns></returns>
+        public IEnumerable<Plot> GetPlotByPaymentId(int paymentId)
+        {
+            return _plotRepository.GetSubscriberPlots(paymentId);
+        }
+
 
         /// <summary>
         /// Get Plot By VendorId
