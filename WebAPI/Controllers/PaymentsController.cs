@@ -83,7 +83,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_paymentAppService.GetAllPayments()));
+            return Ok(_paymentAppService.GetAllPayments());
         }
 
 
