@@ -53,6 +53,12 @@ namespace BusinessLogic.Repository
             return _otpRepository.GetPlatformBy(id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="platformName"></param>
+        /// <returns></returns>
         public Platform GetPlatformByIts(int id, string platformName)
         {
             return _otpRepository.GetPlatformBy(id, platformName);

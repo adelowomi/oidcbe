@@ -88,7 +88,7 @@ namespace WebAPI.Controllers
 
 
         [HttpGet]
-        [Route("api/payments/approve")]
+        [Route("api/payments/approved")]
         public IActionResult GetApprovedPayments()
         {
             if (!ModelState.IsValid)

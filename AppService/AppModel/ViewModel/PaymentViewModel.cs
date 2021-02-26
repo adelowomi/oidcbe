@@ -3,6 +3,8 @@ namespace AppService.AppModel.ViewModel
 {
     public class PaymentViewModel
     {
+        public int Id { get; set; }
+
         public double Amount { get; set; }
 
         public string PaymentType { get; set; }
