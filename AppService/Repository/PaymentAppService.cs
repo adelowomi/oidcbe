@@ -183,5 +183,25 @@ namespace AppService.Repository
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Approve Payment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ResponseViewModel Approve(int id)
+        {
+            return Ok(_mapper.Map<Payment, PaymentViewModel>(_paymentService.DeclinePayment(id)));
+        }
+
+        /// <summary>
+        /// Decline Payment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ResponseViewModel Decline(int id)
+        {
+            return Ok(_mapper.Map<Payment, PaymentViewModel>(_paymentService.DeclinePayment(id)));
+        }
     }
 }

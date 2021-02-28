@@ -23,5 +23,9 @@ namespace BusinessLogic.Repository.Abstractions
         IEnumerable<PaymentCycle> GetAvailablePaymentCycles();
 
         Payment EnableDisable(int paymentId, int statusId);
+
+        Payment ApprovePayment(int id);
+
+        Payment DeclinePayment(int id);
     }
 }

@@ -59,5 +59,15 @@ namespace BusinessLogic.Repository
         {
             return _paymentRepository.ChangeStatus(paymentId, statusId);
         }
+
+        public Payment ApprovePayment(int id)
+        {
+            return _paymentRepository.ChangeStatus(id, (int)PaymentStatusEnum.APPROVED);
+        }
+
+        public Payment DeclinePayment(int id)
+        {
+            return _paymentRepository.ChangeStatus(id, (int)PaymentStatusEnum.DECLINED);
+        }
     }
 }
