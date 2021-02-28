@@ -22,7 +22,8 @@ namespace WebAPI.Controllers
         private readonly IPermitAppService _permitAppService;
         private readonly IMobilizationAppService _mobilizationAppService;
         private readonly ILogger<AdminController> _logger;
-            
+        private readonly IPaymentAppService _paymentAppService;
+
         public AdminController(IUserService userService,
                                 ISubscriberAppService subscriberAppService,
                                 IJobAppService jobAppService,
@@ -30,6 +31,7 @@ namespace WebAPI.Controllers
                                 IWorkOrderAppService workOrderAppService,
                                 IPermitAppService permitAppService,
                                 IMobilizationAppService mobilizationAppService,
+                                IPaymentAppService paymentAppService,
                                 ILogger<AdminController> logger)
         {
             _userService = userService;
@@ -40,6 +42,7 @@ namespace WebAPI.Controllers
             _workOrderAppService = workOrderAppService;
             _permitAppService = permitAppService;
             _mobilizationAppService = mobilizationAppService;
+            _paymentAppService = paymentAppService;
         }
 
         //}
@@ -473,6 +476,40 @@ namespace WebAPI.Controllers
             }
 
             return Ok(_mobilizationAppService.Suspend(id));
+        }
+
+        /// <summary>
+        /// Get Mobilization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/admin/payment/approve")]
+        public IActionResult ApprovePayment(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_paymentAppService.Approve(id));
+        }
+
+        /// <summary>
+        /// Get Mobilization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/admin/payment/decline")]
+        public IActionResult DeclinePayment(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_paymentAppService.Decline(id));
         }
     }
 }

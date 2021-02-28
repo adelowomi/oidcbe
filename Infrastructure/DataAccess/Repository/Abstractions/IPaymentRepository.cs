@@ -21,5 +21,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         Payment ConfirmPayment(string trnxRef);
 
         IEnumerable<PaymentCycle> GetPaymentCycles();
+
+        Payment ChangeStatus(int paymentId, int statusId);
     }
 }

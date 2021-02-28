@@ -97,5 +97,16 @@ namespace Infrastructure.DataAccess.Repository
         {
             return _context.PaymentCycles.ToList();
         }
+
+        public Payment ChangeStatus(int paymentId, int statusId)
+        {
+            var payment = GetAllPayments().FirstOrDefault(x => x.Id == paymentId);
+
+            payment.PaymentStatusId = statusId;
+
+            Save();
+
+            return payment;
+        }
     }
 }

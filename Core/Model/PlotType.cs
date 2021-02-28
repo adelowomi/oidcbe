@@ -1,8 +1,8 @@
 ﻿using System;
 namespace Core.Model
 {
-    public class PlotType : BaseEntity
+    public class PlotType : BaseNameEntity
     {
-        public string Name { get; set; }
+        
     }
 }

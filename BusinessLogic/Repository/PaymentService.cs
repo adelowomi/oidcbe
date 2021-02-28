@@ -54,5 +54,10 @@ namespace BusinessLogic.Repository
         {
             return _paymentRepository.GetPaymentCycles();
         }
+
+        public Payment EnableDisable(int paymentId, int statusId)
+        {
+            return _paymentRepository.ChangeStatus(paymentId, statusId);
+        }
     }
 }

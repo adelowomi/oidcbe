@@ -75,5 +75,19 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         ResponseViewModel GetApprovedPayments();
+
+        /// <summary>
+        /// Approve Payment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        ResponseViewModel Approve(int id);
+
+        /// <summary>
+        /// Decline Payment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        ResponseViewModel Decline(int id);
     }
 }
