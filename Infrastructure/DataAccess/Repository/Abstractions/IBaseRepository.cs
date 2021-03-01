@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-/// <summary>
-///  LICENSE:   ALL RIGHT RESERVED TO COUSANT LIMITED (2020)
-/// </summary>
+
 namespace Infrastructure.DataAccess.Repository.Abstractions
 {
     public interface IBaseRepository<T> where T : BaseEntity
