@@ -78,7 +78,6 @@ namespace WebAPI.Controllers
             return Ok(_workOrderAppService.CreateNew(model).Result);
         }
 
-
         [HttpGet]
         [Route("api/work/types")]
         public IActionResult GetWorkTypes()
@@ -89,6 +88,18 @@ namespace WebAPI.Controllers
             }
 
             return Ok(ResponseViewModel.Ok(_workOrderAppService.GetWorkOrderTypes()));
+        }
+
+        [HttpGet]
+        [Route("api/work/{id}")]
+        public IActionResult GetWorkById(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_workOrderAppService.GetById(id)));
         }
     }
 }

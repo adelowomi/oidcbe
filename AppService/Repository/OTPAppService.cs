@@ -1,10 +1,8 @@
-﻿using System;
-using AppService.Exceptions;
+﻿using AppService.Exceptions;
 using AppService.Repository.Abstractions;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
 using AppService.Helpers;
 
 namespace AppService.Repository
