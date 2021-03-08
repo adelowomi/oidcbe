@@ -11,6 +11,10 @@ namespace AppService.AppModel.InputModel
 
         public DateTime CheckOutDateTime { get; set; }
 
+        public string DriverName { get; set; }
+
+        public string VisitorName { get; set; }
+
         public int VehicleTypeId { get; set; }
     }
 }
