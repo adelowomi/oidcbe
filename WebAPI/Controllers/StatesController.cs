@@ -20,6 +20,7 @@ namespace WebAPI.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStateAppService _stateAppService;
         private readonly IEmailService _emailService;
+        private readonly IQRCodeAppService _qRCodeAppService;
 
         /// <summary>
         /// Constructor 
@@ -33,6 +34,7 @@ namespace WebAPI.Controllers
             UserManager<AppUser> userManager,
             IHttpContextAccessor httpContextAccessor,
             IEmailService emailService,
+            IQRCodeAppService qRCodeAppService,
             IStateAppService stateAppService)
         {
             _userService = userService;
@@ -40,6 +42,7 @@ namespace WebAPI.Controllers
             _httpContextAccessor = httpContextAccessor;
             _stateAppService = stateAppService;
             _emailService = emailService;
+            _qRCodeAppService = qRCodeAppService;
         }
 
         /// <summary>
@@ -68,13 +71,16 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));
         }
 
-        //[HttpGet]
-        //[Route("api/state/test")]
-        //public IActionResult TestAsync(string stateName)
-        //{
-        //    _emailService.SendEmail("liquidcoding2009@gmail.com", "Hey", "How are you?");
 
-        //    return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));
-        //}
+        [HttpGet]
+        [Route("api/state/test")]
+        public IActionResult TestAsync(string stateName)
+        {
+            //_emailService.SendEmail("liquidcoding2009@gmail.com", "Hey", "How are you?");
+
+            //return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));
+
+            return Ok(_qRCodeAppService.GenerateCodeAsync());
+        }
     }
 }

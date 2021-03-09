@@ -167,6 +167,8 @@ namespace WebAPI
             services.AddTransient<IProposalAppService, ProposalAppService>();
             services.AddTransient<IDepartmentAppService, DepartmentAppService>();
 
+            services.AddScoped<IQRCodeAppService, QRCodeAppService>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<IdentityOptions>(options =>
