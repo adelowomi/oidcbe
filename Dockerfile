@@ -1,4 +1,11 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+
+RUN apt-get update
+RUN apt-get install -y apt-utils
+RUN apt-get install -y libgdiplus
+RUN apt-get install -y libc6-dev 
+RUN ln -s /usr/lib/libgdiplus.so/usr/lib/gdiplus.dll
+
 WORKDIR /app 
 #
 # copy csproj and restore as distinct layers
