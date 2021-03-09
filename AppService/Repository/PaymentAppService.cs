@@ -203,5 +203,11 @@ namespace AppService.Repository
         {
             return Ok(_mapper.Map<Payment, PaymentViewModel>(_paymentService.DeclinePayment(id)));
         }
+         
+        public ResponseViewModel GetDuePayments()
+        {
+            var result = _paymentService.GetDuePayments().Select(_mapper.Map<Payment, PaymentViewModel>);
+            return Ok(result);
+        }
     }
 }

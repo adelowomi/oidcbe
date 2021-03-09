@@ -89,5 +89,11 @@ namespace AppService.Repository.Abstractions
         /// <param name="id"></param>
         /// <returns></returns>
         ResponseViewModel Decline(int id);
+
+        /// <summary>
+        /// Get Due Payments
+        /// </summary>
+        /// <returns></returns>
+        ResponseViewModel GetDuePayments();
     }
 }

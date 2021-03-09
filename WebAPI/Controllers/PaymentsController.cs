@@ -95,7 +95,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_paymentAppService.GetApprovedPayments()));
+            return Ok(_paymentAppService.GetDuePayments());
         }
 
         [HttpGet]
@@ -107,7 +107,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_paymentAppService.GetApprovedPayments()));
+            return Ok(_paymentAppService.GetApprovedPayments());
         }
 
         [HttpGet]
@@ -119,7 +119,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_paymentAppService.GetAllPaymentStatuses()));
+            return Ok(_paymentAppService.GetAllPaymentStatuses());
         }
 
         [HttpGet]

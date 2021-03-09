@@ -30,5 +30,7 @@ namespace AppService.AppModel.ViewModel
         public DateTime PaymentDate { get; set; }
 
         public string QRCodeCodeLink { get; set; }
+
+        public string PurposeOfVisit { get; set; }
     }
 }

@@ -24,6 +24,8 @@ namespace Core.Model
         public PermitStatus PermitStatus { get; set; }
 
         public string QRCodeCodeLink { get; set; }
+
+        public string PurposeOfVisit { get; set; }
     }
 
     public enum PermitTypeEnum

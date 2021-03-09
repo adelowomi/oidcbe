@@ -93,6 +93,7 @@ namespace Infrastructure.DataAccess.Repository
             return result;
         }
 
+
         public IEnumerable<PaymentCycle> GetPaymentCycles()
         {
             return _context.PaymentCycles.ToList();
@@ -107,6 +108,11 @@ namespace Infrastructure.DataAccess.Repository
             Save();
 
             return payment;
+        }
+
+        public IEnumerable<Payment> DuePayments()
+        {
+            return GetAllPayments().Where(x => x.IsPaymentCompleted == false);
         }
     }
 }

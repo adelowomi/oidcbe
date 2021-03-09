@@ -69,5 +69,10 @@ namespace BusinessLogic.Repository
         {
             return _paymentRepository.ChangeStatus(id, (int)PaymentStatusEnum.DECLINED);
         }
+
+        public IEnumerable<Payment> GetDuePayments()
+        {
+            return _paymentRepository.DuePayments();
+        }
     }
 }
