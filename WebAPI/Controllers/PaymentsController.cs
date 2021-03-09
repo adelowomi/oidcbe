@@ -86,6 +86,17 @@ namespace WebAPI.Controllers
             return Ok(_paymentAppService.GetAllPayments());
         }
 
+        [HttpGet]
+        [Route("api/payments/due")]
+        public IActionResult GetDuePayments()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok(_paymentAppService.GetApprovedPayments()));
+        }
 
         [HttpGet]
         [Route("api/payments/approved")]
