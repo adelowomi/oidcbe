@@ -18,5 +18,7 @@ namespace AppService.AppModel.ViewModel
         public PermitTypeVieModel PermitType { get; set; }
 
         public string Status { get; set; }
+
+        public string QRCodeCodeLink { get; set; }
     }
 }
