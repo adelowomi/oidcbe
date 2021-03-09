@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
             return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/state/test")]
         public IActionResult TestAsync(string stateName)
