@@ -74,13 +74,13 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("api/qrcode/test")]
-        public IActionResult TestAsync(string stateName)
+        public IActionResult GenerateTestQRCode()
         {
             //_emailService.SendEmail("liquidcoding2009@gmail.com", "Hey", "How are you?");
 
             //return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));
 
-            return Ok(ResponseViewModel.Ok(_qRCodeAppService.GenerateCodeAsync()));
+            return Ok(ResponseViewModel.Ok(_qRCodeAppService.GenerateCodeAsync().Result));
         }
     }
 }
