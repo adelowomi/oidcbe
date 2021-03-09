@@ -208,7 +208,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(ResponseViewModel.Ok(_paymentAppService.PaymentAllocation(model).Result));
+            return Ok(_paymentAppService.PaymentAllocation(model).Result);
         }
     }
 }
