@@ -232,14 +232,14 @@ namespace AppService.Repository
 
             if(plot == null)
             {
-                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseMessageViewModel.INVALID_PLOT);
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseErrorCodeStatus.INVALID_PLOT);
             }
 
              var paymentType = _paymentService.GetAllPaymentTypes().FirstOrDefault(x => x.Id == model.PaymentType);
 
             if(paymentType == null)
             {
-                return NotFound(ResponseMessageViewModel.INVALID_PAYMENT_TYPE, ResponseMessageViewModel.INVALID_PAYMENT_TYPE);
+                return NotFound(ResponseMessageViewModel.INVALID_PAYMENT_TYPE, ResponseErrorCodeStatus.INVALID_PAYMENT_TYPE);
             }
 
             FileDocument uploadResult = FileDocument.Create();
