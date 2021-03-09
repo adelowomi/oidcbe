@@ -269,7 +269,9 @@ namespace AppService.Repository
 
             allocation.PaymentStatusId = (int) PaymentStatusEnum.PENDING;
 
-            allocation.AppUserId = _userService.GetCurrentLoggedOnUserAsync().Result.Id;
+            var user = await _userService.GetCurrentLoggedOnUserAsync();
+
+            allocation.AppUserId = user.Id;
 
             var created = _paymentService.Allocate(allocation);
 
