@@ -193,5 +193,17 @@ namespace WebAPI.Controllers
         {
             return Ok(_paymentAppService.GetPaymentById(id));
         }
+
+        [HttpPost]
+        [Route("api/payment/allocate")]
+        public IActionResult PaymentAllocation([FromBody] PaymentAllocationInputModel model) {
+
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(ResponseViewModel.Ok());
+        }
     }
 }
