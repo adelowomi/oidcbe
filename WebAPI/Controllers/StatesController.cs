@@ -83,7 +83,7 @@ namespace WebAPI.Controllers
 
             var result = await _qRCodeAppService.GenerateCodeAsync();
             
-            return Ok(ResponseViewModel.Ok());
+            return Ok(ResponseViewModel.Ok(result));
         }
     }
 }
