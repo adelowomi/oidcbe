@@ -5,7 +5,7 @@ namespace Core.Model
     {
         public int AppUserId { get; set; }
 
-        public AppUser AppUser { get; set; }
+      //  public AppUser AppUser { get; set; }
 
         public int PlotId { get; set; }
 
