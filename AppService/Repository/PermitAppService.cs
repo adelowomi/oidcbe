@@ -21,7 +21,7 @@ namespace AppService.Repository
         protected readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IVehicleRepository _vehicleRepository;
-        private readonly IQRCodeAppService _qRCodeAppService;
+      //  private readonly IQRCodeAppService _qRCodeAppService;
 
         public PermitAppService(IPermitService permitService,
             IMapper mapper, UserManager<AppUser> userManager,
@@ -34,7 +34,7 @@ namespace AppService.Repository
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _vehicleRepository = vehicleRepository;
-            _qRCodeAppService = qRCodeAppService;
+          //  _qRCodeAppService = qRCodeAppService;
         }
 
         public async Task<ResponseViewModel> CreatePermit(PermitInputModel model)
@@ -56,7 +56,7 @@ namespace AppService.Repository
 
                 result.AppUserId = user.Id;
 
-                var qrcCode = _qRCodeAppService.GenerateCodeAsync().Result;
+               // var qrcCode = _qRCodeAppService.GenerateCodeAsync().Result;
 
                 result.QRCodeCodeLink = qrcCode;
 
