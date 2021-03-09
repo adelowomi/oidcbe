@@ -29,5 +29,7 @@ namespace BusinessLogic.Repository.Abstractions
         Payment DeclinePayment(int id);
 
         IEnumerable<Payment> GetDuePayments();
+
+        PaymentAllocation Allocate(PaymentAllocation paymentAllocation);
     }
 }

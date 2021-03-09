@@ -25,5 +25,7 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         IEnumerable<PaymentCycle> GetPaymentCycles();
 
         Payment ChangeStatus(int paymentId, int statusId);
+
+        PaymentAllocation PaymentAllocation(PaymentAllocation payment);
     }
 }

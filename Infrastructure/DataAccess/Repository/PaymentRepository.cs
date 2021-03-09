@@ -114,5 +114,14 @@ namespace Infrastructure.DataAccess.Repository
         {
             return GetAllPayments().Where(x => x.IsPaymentCompleted == false);
         }
+
+        public PaymentAllocation PaymentAllocation(PaymentAllocation payment)
+        {
+            _context.PaymentAllocations.Add(payment);
+
+            Save();
+
+            return payment;
+        }
     }
 }

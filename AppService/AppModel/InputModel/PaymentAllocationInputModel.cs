@@ -14,6 +14,12 @@ namespace AppService.AppModel.InputModel
         [Required]
         public int PaymentType { get; set; }
 
+        [Required]
+        public int Amount { get; set; }
+
+        [Required]
+        public int PaymentMethodId { get; set; }
+
         public string Note { get; set; }
     }
 }

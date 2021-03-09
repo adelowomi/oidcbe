@@ -295,6 +295,12 @@ namespace AppService.AutoMapper
             CreateMap<ProposalStatus, ProposalStatusViewModel>();
             CreateMap<Department, DepartmentViewModel>();
             CreateMap<PaymentCycle, PaymentCyleViewModel>();
+
+            CreateMap<PaymentAllocationInputModel, PaymentAllocation>()
+                .ForMember(dest => dest.PaymentReceiptPath, opts => opts.MapFrom(src => src.Receipt))
+                .ForMember(dest => dest.PaymentTypeId, opts => opts.MapFrom(src => src.PaymentType));
+
+            CreateMap<PaymentAllocation, PaymentAllocationViewModel>();
         }
     }
 }

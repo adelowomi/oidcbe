@@ -74,5 +74,12 @@ namespace BusinessLogic.Repository
         {
             return _paymentRepository.DuePayments();
         }
+
+        public PaymentAllocation Allocate(PaymentAllocation paymentAllocation)
+        {
+            var result = _paymentRepository.PaymentAllocation(paymentAllocation);
+
+            return result;
+        }
     }
 }

@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
+using AppService.Helpers;
 using AppService.Repository.Abstractions;
 using AppService.Services.Abstractions;
+using AppService.Services.ContentServer;
+using AppService.Services.ContentServer.Model;
 using AutoMapper;
+using BusinessLogic.Repository;
 using BusinessLogic.Repository.Abstractions;
 using Core.Model;
+using Infrastructure.Helpers;
+using Microsoft.Extensions.Options;
 
 namespace AppService.Repository
 {
@@ -17,6 +24,9 @@ namespace AppService.Repository
         private readonly IMapper _mapper;
         private readonly ISubscriptionAppService _subscriptionAppService;
         private readonly INotificationAppService _notificationAppService;
+        private readonly IPlotService _plotService;
+        private readonly AppSettings _settings;
+        private readonly IUserService _userService;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -26,12 +36,18 @@ namespace AppService.Repository
         public PaymentAppService(IPaymentService paymentService,
                                  ISubscriptionAppService subscriptionAppService,
                                  INotificationAppService notificationAppService,
+                                 IPlotService plotService,
+                                 IOptions<AppSettings> options,
+                                 IUserService userService,
                                  IMapper mapper) : base()
         {
             _paymentService = paymentService;
             _mapper = mapper;
             _subscriptionAppService = subscriptionAppService;
             _notificationAppService = notificationAppService;
+            _plotService = plotService;
+            _settings = options.Value;
+            _userService = userService;
         }
 
         /// <summary>
@@ -208,6 +224,49 @@ namespace AppService.Repository
         {
             var result = _paymentService.GetDuePayments().Select(_mapper.Map<Payment, PaymentViewModel>);
             return Ok(result);
+        }
+
+        public async Task<ResponseViewModel> PaymentAllocation(PaymentAllocationInputModel model)
+        {
+            var plot = _plotService.GetByPlotId(model.PlotId);
+
+            if(plot == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PLOT, ResponseMessageViewModel.INVALID_PLOT);
+            }
+
+             var paymentType = _paymentService.GetAllPaymentTypes().FirstOrDefault(x => x.Id == model.PaymentType);
+
+            if(paymentType == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PAYMENT_TYPE, ResponseMessageViewModel.INVALID_PAYMENT_TYPE);
+            }
+
+            FileDocument uploadResult = FileDocument.Create();
+
+            try
+            {
+                uploadResult = await
+                   BaseContentServer
+                   .Build(ContentServerTypeEnum.FIREBASE, _settings)
+                   .UploadDocumentAsync(FileDocument.Create(model.Receipt, $"{Helper.RandomNumber(10)}", $"{Helper.RandomNumber(10)}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+
+                model.Receipt = uploadResult.Path;
+            }
+            catch (Exception e)
+            {
+                return Failed(ResponseMessageViewModel.UNABLE_TO_UPLOAD_RECEIPT, ResponseErrorCodeStatus.UNABLE_TO_UPLOAD_RECEIPT);
+            }
+
+            var allocation = _paymentService.Allocate(_mapper.Map<PaymentAllocationInputModel, PaymentAllocation>(model));
+
+            allocation.PaymentStatusId = (int) PaymentStatusEnum.PENDING;
+
+            allocation.AppUserId = _userService.GetCurrentLoggedOnUserAsync().Result.Id;
+
+            var created = _paymentService.Allocate(allocation);
+
+            return Ok(_mapper.Map<PaymentAllocation, PaymentAllocationViewModel>(created));
         }
     }
 }

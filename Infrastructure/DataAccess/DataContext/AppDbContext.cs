@@ -126,6 +126,8 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<PaymentCycle> PaymentCycles { get; set; }
 
+        public DbSet<PaymentAllocation> PaymentAllocations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

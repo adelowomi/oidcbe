@@ -305,6 +305,7 @@ namespace AppService.AppModel.ViewModel
         public static string INVALID_WORK_ORDER = "Invalid work order, please try again";
         public static string INVALID_PERMIT = "Invalid Permit, please try again";
         public static string EMAIL_ADDRESS_CONFIRMED = "Email address confirmed!";
+        public static string UNABLE_TO_UPLOAD_RECEIPT = "Unable to upload receipt";
     }
 
     /// <summary>
@@ -380,6 +381,7 @@ namespace AppService.AppModel.ViewModel
         public static readonly string INVALID_WORK_ORDER = "49";
         public static readonly string INVALID_PERMIT = "50";
         public static readonly string EMAIL_ADDRESS_CONFIRMED = "51";
+        public static readonly string UNABLE_TO_UPLOAD_RECEIPT = "52";
 
         //FAILURES
         public static readonly string FAIL = "91";

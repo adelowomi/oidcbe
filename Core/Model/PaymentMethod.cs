@@ -7,7 +7,7 @@ namespace Core.Model
     }
 }
 
-enum PaymentMethoEnum
+public enum PaymentMethoEnum
 {
     ONLINE = 1,
     DEPOSIT,
