@@ -8,6 +8,8 @@ namespace AppService.AppModel.InputModel
 {
     public class VendorInputModel
     {
+        public string Title { get; set; }
+
         [Required]
         public string FirstName { get; set; }
 

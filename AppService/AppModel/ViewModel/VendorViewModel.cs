@@ -6,6 +6,8 @@ namespace AppService.AppModel.ViewModel
 {
     public class VendorViewModel
     {
+        public string Title { get; set; }
+
         public int UserId { get; set; }
 
         public string FullName => $"{FirstName} {MiddleName} {LastName}";
