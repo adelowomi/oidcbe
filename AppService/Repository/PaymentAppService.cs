@@ -242,6 +242,13 @@ namespace AppService.Repository
                 return NotFound(ResponseMessageViewModel.INVALID_PAYMENT_TYPE, ResponseErrorCodeStatus.INVALID_PAYMENT_TYPE);
             }
 
+            var paymentMethod = _paymentService.GetAllPaymentMethods().FirstOrDefault(x => x.Id == model.PaymentMethodId);
+
+            if(paymentMethod == null)
+            {
+                return NotFound(ResponseMessageViewModel.INVALID_PAYMENT_METHOD, ResponseErrorCodeStatus.INVALID_PAYMENT_METHOD);
+            }
+
             FileDocument uploadResult = FileDocument.Create();
 
             try

@@ -298,7 +298,10 @@ namespace AppService.AutoMapper
 
             CreateMap<PaymentAllocationInputModel, PaymentAllocation>()
                 .ForMember(dest => dest.PaymentReceiptPath, opts => opts.MapFrom(src => src.Receipt))
-                .ForMember(dest => dest.PaymentTypeId, opts => opts.MapFrom(src => src.PaymentType));
+                .ForMember(dest => dest.PaymentTypeId, opts => opts.MapFrom(src => src.PaymentType))
+                .ForMember(dest => dest.PaymentType, opts => opts.Ignore())
+
+                ;
 
             CreateMap<PaymentAllocation, PaymentAllocationViewModel>();
         }
