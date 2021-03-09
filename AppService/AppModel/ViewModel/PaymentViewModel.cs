@@ -28,5 +28,7 @@ namespace AppService.AppModel.ViewModel
         public int PlotId { get; set; }
 
         public DateTime PaymentDate { get; set; }
+
+        public string QRCodeCodeLink { get; set; }
     }
 }
