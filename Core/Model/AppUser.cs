@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Identity;
 namespace Core.Model
 {
     public class AppUser : IdentityUser<int>
-    { 
+    {
+        public string Title { get; set; }
+
         public string GUID { get; set; }
 
         public string FirstName { get; set; }
