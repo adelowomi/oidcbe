@@ -1,4 +1,5 @@
-﻿using AppService.AppModel.ViewModel;
+﻿using System.Threading.Tasks;
+using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using AppService.Services.Abstractions;
 using Core.Model;
@@ -74,13 +75,15 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("api/qrcode/test")]
-        public IActionResult GenerateTestQRCode()
+        public async Task<IActionResult> GenerateTestQRCodeAsync()
         {
             //_emailService.SendEmail("liquidcoding2009@gmail.com", "Hey", "How are you?");
 
             //return Ok(ResponseViewModel.Ok(_stateAppService.GetStateByIts(stateName)));
 
-            return Ok(ResponseViewModel.Ok(_qRCodeAppService.GenerateCodeAsync().Result));
+            var result = await _qRCodeAppService.GenerateCodeAsync();
+            
+            return Ok(ResponseViewModel.Ok());
         }
     }
 }

@@ -39,7 +39,7 @@ namespace AppService.Repository
                 uploadResult = await
                    BaseContentServer
                    .Build(ContentServerTypeEnum.FIREBASE, _settings)
-                   .UploadDocumentAsync(FileDocument.Create(qrCodeImageAsBase64, "QRCode", $"{Helper.RandomNumber(10)}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
+                   .UploadDocumentAsync(FileDocument.Create(qrCodeImageAsBase64, $"{Helper.RandomNumber(10)}", $"{Helper.RandomNumber(10)}", FileDocumentType.GetDocumentType(MIMETYPE.IMAGE)));
 
                 link = uploadResult.Path;
             }
