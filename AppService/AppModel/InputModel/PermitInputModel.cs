@@ -8,5 +8,7 @@ namespace AppService.AppModel.InputModel
         public VehicleInputModel Vehicle { get; set; }
 
         public int PermitTypeId { get; set; }
+
+        public string PurposeOfVisit { get; set; }
     }
 }
