@@ -58,7 +58,7 @@ namespace AppService.Repository
 
                // var qrcCode = _qRCodeAppService.GenerateCodeAsync().Result;
 
-                result.QRCodeCodeLink = "https://firebasestorage.googleapis.com/v0/b/oidc-1606928364813.appspot.com/o/oidc%2FSM7DSVM8XP%2F5X3EMM9WH6.jpg?alt=media&token=7378502b-c969-4b8a-a37c-c9d5ee2e1fa3";
+                //result.QRCodeCodeLink = "https://firebasestorage.googleapis.com/v0/b/oidc-1606928364813.appspot.com/o/oidc%2FSM7DSVM8XP%2F5X3EMM9WH6.jpg?alt=media&token=7378502b-c969-4b8a-a37c-c9d5ee2e1fa3";
 
             } else {
 
@@ -76,7 +76,7 @@ namespace AppService.Repository
 
                 //var qrcCode =_qRCodeAppService.GenerateCodeAsync().Result;
 
-                result.QRCodeCodeLink = "https://firebasestorage.googleapis.com/v0/b/oidc-1606928364813.appspot.com/o/oidc%2FSM7DSVM8XP%2F5X3EMM9WH6.jpg?alt=media&token=7378502b-c969-4b8a-a37c-c9d5ee2e1fa3";
+                //result.QRCodeCodeLink = "https://firebasestorage.googleapis.com/v0/b/oidc-1606928364813.appspot.com/o/oidc%2FSM7DSVM8XP%2F5X3EMM9WH6.jpg?alt=media&token=7378502b-c969-4b8a-a37c-c9d5ee2e1fa3";
 
                 result.Vehicle.AppUserId = user.Id;
 
