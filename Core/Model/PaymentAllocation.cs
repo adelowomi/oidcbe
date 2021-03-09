@@ -37,6 +37,6 @@ namespace Core.Model
 
         public int PaymentStatusId { get; set; }
 
-        public PaymentStatus PaymentStatus { get; set; }
+       // public PaymentStatus PaymentStatus { get; set; }
     }
 }
