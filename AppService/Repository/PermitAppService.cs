@@ -26,7 +26,7 @@ namespace AppService.Repository
         public PermitAppService(IPermitService permitService,
             IMapper mapper, UserManager<AppUser> userManager,
             IVehicleRepository vehicleRepository,
-            IQRCodeAppService qRCodeAppService,
+           // IQRCodeAppService qRCodeAppService,
             IHttpContextAccessor httpContextAccessor)
         {
             _permitService = permitService;
@@ -56,10 +56,6 @@ namespace AppService.Repository
 
                 result.AppUserId = user.Id;
 
-                // var qrcCode = _qRCodeAppService.GenerateCodeAsync().Result;
-
-                //result.QRCodeCodeLink = "";////result.QRCodeCodeLink = "https://firebasestorage.googleapis.com/v0/b/oidc-1606928364813.appspot.com/o/oidc%2FSM7DSVM8XP%2F5X3EMM9WH6.jpg?alt=media&token=7378502b-c969-4b8a-a37c-c9d5ee2e1fa3";
-
             } else {
 
                 if(model.Vehicle == null)
@@ -74,10 +70,7 @@ namespace AppService.Repository
                     return NotFound(ResponseMessageViewModel.INVALID_VEHICLE_TYPE, ResponseErrorCodeStatus.INVALID_VEHICLE_TYPE);
                 }
 
-                //var qrcCode =_qRCodeAppService.GenerateCodeAsync().Result;
-
-                //result.QRCodeCodeLink = "";// "https://firebasestorage.googleapis.com/v0/b/oidc-1606928364813.appspot.com/o/oidc%2FSM7DSVM8XP%2F5X3EMM9WH6.jpg?alt=media&token=7378502b-c969-4b8a-a37c-c9d5ee2e1fa3";
-
+                
                 result.Vehicle.AppUserId = user.Id;
 
                 result.AppUserId = user.Id;                
@@ -85,7 +78,7 @@ namespace AppService.Repository
 
             result.PermitStatusId = (int)PermitStatusEnum.PENDING;
 
-            result.QRCodeCodeLink = string.Empty;
+            result.QRCodeCodeLink = null;
 
             var savedResult =_permitService.Create(result);
 
