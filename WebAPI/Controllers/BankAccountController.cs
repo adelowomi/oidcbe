@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         [Route("api/bank/account")]
         public IActionResult PostAccount([FromBody] AccountInputModel model)
         {
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return BadRequest();
             }

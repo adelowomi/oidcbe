@@ -33,7 +33,7 @@ namespace AppService.Repository
             var valid = _utiityService.GetAccounts().FirstOrDefault(x => x.Name == account.AccountName
                                                                             && x.Number == account.AccountNumber);
 
-            if(valid == null) { return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS); }
+            if(valid != null) { return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS); }
 
             return Ok(_mapper.Map<Account, AccountViewModel>
                             (_utiityService.Create(_mapper.Map<AccountInputModel, Account>(account))));
