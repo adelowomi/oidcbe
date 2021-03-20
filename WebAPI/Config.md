@@ -80,3 +80,6 @@ ALTER TABLE [Offers] ADD [PaymentInNumberOfMonths] INT NOT NULL DEFAULT 0;
 
 INSERT INTO [PaymentCycles] ([DateCreated], [DateModified], [IsEnabled], [Name])
 VALUES (N'2020-10-10', N'2020-10-10', 1, N'MONTHLY')
+
+
+ dotnet ef migrations add AccountMigrationAgain --verbose --project=WebAPI && dotnet ef migrations script --output WebAPI/Scripts/MigrationScript.sql --verbose --project=WebAPI
