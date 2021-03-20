@@ -304,6 +304,16 @@ namespace AppService.AutoMapper
                 ;
 
             CreateMap<PaymentAllocation, PaymentAllocationViewModel>();
+
+            CreateMap<Account, AccountViewModel>()
+                .ForMember(dest => dest.AccountNumber, opts => opts.MapFrom(src => src.Number))
+                .ForMember(dest => dest.AccountName, opts => opts.MapFrom(src => src.Name))
+                ;
+
+            CreateMap<AccountInputModel, Account>()
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.AccountName))
+                .ForMember(dest => dest.Number, opts => opts.MapFrom(src => src.AccountNumber))
+                ;
         }
     }
 }

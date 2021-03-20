@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Repository.Abstractions;
 using AutoMapper;
@@ -11,7 +12,7 @@ namespace AppService.Repository
     /// <summary>
     /// Concrete Implementation Of IUtilityAppService
     /// </summary>
-    public class UtilityAppService : IUtilityAppService
+    public class UtilityAppService : ResponseViewModel, IUtilityAppService
     {
         private readonly IUtilityService _utiityService;
         private readonly IMapper _mapper;
@@ -25,6 +26,17 @@ namespace AppService.Repository
         {
             _utiityService = utilityService;
             _mapper = mapper;
+        }
+
+        public ResponseViewModel CreateNewAccount(AccountInputModel account)
+        {
+            var valid = _utiityService.GetAccounts().FirstOrDefault(x => x.Name == account.AccountName
+                                                                            && x.Number == account.AccountNumber);
+
+            if(valid == null) { return Failed(ResponseMessageViewModel.ACCOUNT_ALREADY_EXITS); }
+
+            return Ok(_mapper.Map<Account, AccountViewModel>
+                            (_utiityService.Create(_mapper.Map<AccountInputModel, Account>(account))));
         }
 
         /// <summary>
@@ -45,6 +57,13 @@ namespace AppService.Repository
         public GenderViewModel GenderByName(string name)
         {
             return _mapper.Map<Gender, GenderViewModel>(_utiityService.GetGender(name));
+        }
+
+        public ResponseViewModel GetAccounts()
+        {
+            var result = _utiityService.GetAccounts().Select(_mapper.Map<Account, AccountViewModel>);
+
+            return Ok(result);
         }
 
         /// <summary>

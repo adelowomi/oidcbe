@@ -55,5 +55,18 @@ namespace BusinessLogic.Repository.Abstractions
         /// <param name="departmentId"></param>
         /// <returns></returns>
         ICollection<AppUser> GetUsersBy(int departmentId);
+
+        /// <summary>
+        /// Create Account
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        Account Create(Account account);
+
+        /// <summary>
+        /// Get List Of Accounts
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Account> GetAccounts();
     }
 }

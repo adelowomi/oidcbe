@@ -128,6 +128,8 @@ namespace Infrastructure.DataAccess.DataContext
 
         public DbSet<PaymentAllocation> PaymentAllocations { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

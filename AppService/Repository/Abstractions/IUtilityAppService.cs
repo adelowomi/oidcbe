@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 
 namespace AppService.Repository.Abstractions
@@ -25,5 +26,18 @@ namespace AppService.Repository.Abstractions
         /// </summary>
         /// <returns></returns>
         IEnumerable<PaymentProviderViewModel> GetPaymentProviders();
+
+        /// <summary>
+        /// Get List Of Accounts
+        /// </summary>
+        /// <returns></returns>
+        ResponseViewModel GetAccounts();
+
+        /// <summary>
+        /// Create New Account
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        ResponseViewModel CreateNewAccount(AccountInputModel account);
     }
 }

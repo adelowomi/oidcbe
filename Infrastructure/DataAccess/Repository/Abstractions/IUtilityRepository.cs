@@ -71,5 +71,18 @@ namespace Infrastructure.DataAccess.Repository.Abstractions
         /// <param name="departmentId"></param>
         /// <returns></returns>
         ICollection<AppUser> GetUsersBy(int departmentId);
+
+        /// <summary>
+        /// Get List Of Accounts
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Account> GetAccounts();
+
+        /// <summary>
+        /// Create new account
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        Account CreateNewAccount(Account account);
     }
 }

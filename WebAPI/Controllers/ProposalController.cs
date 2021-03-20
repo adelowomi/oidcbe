@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Helpers;
@@ -20,7 +19,6 @@ namespace WebAPI.Controllers
         {
             _proposalAppService = proposalAppService;
         }
-
 
         /// <summary>
         /// Get All Available Proposals

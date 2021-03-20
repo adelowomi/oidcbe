@@ -26,6 +26,11 @@ namespace BusinessLogic.Repository
             _utilityRepository = utilityRepository;
         }
 
+        public Account Create(Account account)
+        {
+            return _utilityRepository.CreateNewAccount(account);
+        }
+
         public Department DepartmentBy(int id)
         {
             return _utilityRepository.DepartmentBy(id);
@@ -39,6 +44,11 @@ namespace BusinessLogic.Repository
         public ICollection<Department> Departments()
         {
             return _utilityRepository.Departments();
+        }
+
+        public ICollection<Account> GetAccounts()
+        {
+            return _utilityRepository.GetAccounts();
         }
 
         /// <summary>

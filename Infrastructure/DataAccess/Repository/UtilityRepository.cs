@@ -37,6 +37,13 @@ namespace Infrastructure.DataAccess.Repository
             return nextOfKin;
         }
 
+        public Account CreateNewAccount(Account account)
+        {
+            _context.Accounts.Add(account);
+            Save();
+            return account;
+        }
+
         public Department DepartmentBy(int id)
         {
             return _context.Departments.FirstOrDefault(x => x.Id == id);
@@ -50,6 +57,11 @@ namespace Infrastructure.DataAccess.Repository
         public ICollection<Department> Departments()
         {
             return _context.Departments.ToList();
+        }
+
+        public ICollection<Account> GetAccounts()
+        {
+            return _context.Accounts.ToList();
         }
 
         /// <summary>
