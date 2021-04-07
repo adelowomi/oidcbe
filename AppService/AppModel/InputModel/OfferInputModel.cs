@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Core.Model;
-using Temboo.Library.Google.BigQuery.TableData;
 
 namespace AppService.AppModel.InputModel
 {

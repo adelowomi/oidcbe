@@ -48,9 +48,5 @@
     <PackageReference Include="FCM.Net.Core" Version="1.0.1" />
     <PackageReference Include="QRCoder" Version="1.4.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="TembooSDK">
-      <HintPath>..\ThirdParty\TembooSDK.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
 </Project>
