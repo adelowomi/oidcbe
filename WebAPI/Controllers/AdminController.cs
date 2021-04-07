@@ -250,10 +250,10 @@ namespace WebAPI.Controllers
         [Route("api/admin/subscriber/{id}")]
         public IActionResult GetSubscriberById(int id)
         {
-            for (int i = 1132; i < 1254; i++)
-            {
-                _subscriberAppService.GetSubscriberById(i);
-            }
+            // for (int i = 1132; i < 1254; i++)
+            // {
+            //     _subscriberAppService.GetSubscriberById(i);
+            // }
             if (!ModelState.IsValid)
             {
                 return BadRequest();
