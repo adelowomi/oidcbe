@@ -42,5 +42,7 @@ namespace Core.Model
         public bool IsSecondarySale { get; set; }
 
         public double PricePerSquareMeter { get; set; }
+
+        public List<PaymentInstalment> PaymentInstalments { get; set; }
     }
 }

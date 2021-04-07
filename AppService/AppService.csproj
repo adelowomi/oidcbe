@@ -5,16 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AppModel\" />
     <Folder Include="AppModel\InputModel\" />
-    <Folder Include="AppModel\ViewModel\" />
     <Folder Include="AutoMapper\" />
     <Folder Include="Extensions\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Repository\" />
     <Folder Include="Services\" />
     <Folder Include="Validations\" />
-    <Folder Include="Repository\Abstractions\" />
     <Folder Include="Services\Abstractions\" />
     <Folder Include="Services\Background\" />
     <Folder Include="Services\Event\" />

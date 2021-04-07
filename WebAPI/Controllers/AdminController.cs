@@ -3,15 +3,18 @@ using System.Threading.Tasks;
 using AppService.AppModel.InputModel;
 using AppService.AppModel.ViewModel;
 using AppService.Helpers;
+using AppService.Repository;
 using AppService.Repository.Abstractions;
+using Core.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace WebAPI.Controllers
 {
     //[Authorize(Policy = "PlotPolicy")]
-    [Authorize]
+    //[Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -23,6 +26,7 @@ namespace WebAPI.Controllers
         private readonly IMobilizationAppService _mobilizationAppService;
         private readonly ILogger<AdminController> _logger;
         private readonly IPaymentAppService _paymentAppService;
+        private readonly UserManager<AppUser> _userManager;
 
         public AdminController(IUserService userService,
                                 ISubscriberAppService subscriberAppService,
@@ -32,6 +36,7 @@ namespace WebAPI.Controllers
                                 IPermitAppService permitAppService,
                                 IMobilizationAppService mobilizationAppService,
                                 IPaymentAppService paymentAppService,
+                                UserManager<AppUser> userManager,
                                 ILogger<AdminController> logger)
         {
             _userService = userService;
@@ -43,6 +48,7 @@ namespace WebAPI.Controllers
             _permitAppService = permitAppService;
             _mobilizationAppService = mobilizationAppService;
             _paymentAppService = paymentAppService;
+            _userManager = userManager;
         }
 
         //}
@@ -244,6 +250,10 @@ namespace WebAPI.Controllers
         [Route("api/admin/subscriber/{id}")]
         public IActionResult GetSubscriberById(int id)
         {
+            for (int i = 1132; i < 1254; i++)
+            {
+                _subscriberAppService.GetSubscriberById(i);
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest();
@@ -257,6 +267,7 @@ namespace WebAPI.Controllers
         [Route("api/admin/subscribers")]
         public IActionResult GetSubscribers()
         {
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest();

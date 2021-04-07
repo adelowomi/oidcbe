@@ -233,13 +233,16 @@ namespace AppService.Repository
 
         public async Task<ResponseViewModel> GetSubscriberById(int id)
         {
-            //var user = await _userManager.FindByIdAsync(id.ToString());
+            
+            var user = await _userManager.FindByIdAsync(id.ToString());
 
-            var user = _subscriberService.GetExistingSubscribers().FirstOrDefault(x => x.Id == id);
+           // var user = _subscriberService.GetExistingSubscribers().FirstOrDefault(x => x.Id == id);
+
+            await _userManager.AddToRoleAsync(user, UserType.SUBSCRIBER);
 
             //Check is In Role _userManager.IsInRoleAsync()
 
-            if(user == null)
+            if (user == null)
             {
                 return NotFound(ResponseMessageViewModel.SUBSCRIBER_NOT_EXITS, ResponseErrorCodeStatus.SUBSCRIBER_NOT_EXITS);
             }
@@ -254,8 +257,23 @@ namespace AppService.Repository
             return Ok(subscriber);
         }
 
+        public async void AddUserToSubScriberRole(AppUser user)
+        {
+            
+
+            
+            
+        }
+
         public ResponseViewModel GetSubscribers()
         {
+            //var allUsers = _userManager.Users;
+
+            //foreach (var VARIABLE in allUsers)
+            //{
+            //    AddUserToSubScriberRole(VARIABLE);
+            //}
+            
             //var subscribers = _userManager.Users.Include(x => x.Plots).Select(_mapper.Map<AppUser, VendorViewModel>);
 
             var subscribers = _userManager.GetUsersInRoleAsync(Res.SUBSCRIBER).Result.Select(_mapper.Map<AppUser, VendorViewModel>);

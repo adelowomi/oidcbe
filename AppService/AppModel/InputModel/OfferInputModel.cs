@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Core.Model;
+using Temboo.Library.Google.BigQuery.TableData;
 
 namespace AppService.AppModel.InputModel
 {
@@ -39,9 +42,8 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public int? PaymentCycleId { get; set; }
-
-        [Required]
-        public int PercentagePerCycle { get; set; }
+            
+        public int? PercentagePerCycle { get; set; }
 
         [Required]
         public int PaymentInNumberOfMonths { get; set; }
@@ -57,5 +59,8 @@ namespace AppService.AppModel.InputModel
 
         [Required]
         public double PricePerSquareMeter { get; set; }
+
+        [Required]
+        public List<PaymentInstalment> PaymentInstalments { get; set; }
     }
 }

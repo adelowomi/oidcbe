@@ -26,5 +26,10 @@ namespace Core.Model
         public double? InterestRate { get; set; }
 
         public DateTime PaymentDueDate { get; set; }
+
+        public int offerId { get; set; }
+        public int Percentage { get; set; }
+
+        public virtual Offer Offer { get; set; }
     }
 }

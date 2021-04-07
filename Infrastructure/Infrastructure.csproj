@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccess\" />
     <Folder Include="Helpers\" />
     <Folder Include="DataAccess\DataContext\" />
-    <Folder Include="DataAccess\Repository\" />
-    <Folder Include="DataAccess\Repository\Abstractions\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
